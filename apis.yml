@@ -1,0 +1,77 @@
+aid: getresponse
+name: GetResponse
+description: >-
+  GetResponse is an online marketing platform offering email marketing,
+  marketing automation, landing pages, webinars, and conversion funnels for
+  small businesses, marketers, and enterprises. The platform provides tools
+  to grow email lists, automate campaigns, segment audiences, and engage
+  customers across multiple channels. The GetResponse API v3 is a JSON REST
+  API that uses X-Auth-Token header authentication to manage contacts,
+  campaigns, newsletters, autoresponders, landing pages, webinars, and more.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Email Marketing
+  - Marketing Automation
+  - Landing Pages
+  - Webinars
+  - Conversion Funnels
+  - CRM
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/getresponse/refs/heads/main/apis.yml
+created: '2026-05-11'
+modified: '2026-05-11'
+specificationVersion: '0.19'
+apis:
+  - aid: getresponse:rest-api
+    name: GetResponse API v3
+    description: >-
+      JSON REST API for managing contacts, campaigns, newsletters,
+      autoresponders, landing pages, webinars, custom fields, tags,
+      segments, and workflows in the GetResponse platform. Authentication
+      uses an X-Auth-Token header carrying a personal API key.
+    humanURL: https://apireference.getresponse.com/
+    baseURL: https://api.getresponse.com/v3
+    tags:
+      - Email Marketing
+      - Marketing Automation
+      - Contacts
+      - Campaigns
+      - Newsletters
+      - Autoresponders
+      - Webinars
+      - Landing Pages
+    properties:
+      - type: Documentation
+        url: https://apidocs.getresponse.com/v3
+      - type: API Reference
+        url: https://apireference.getresponse.com/
+      - type: Authentication
+        url: https://apidocs.getresponse.com/v3/authentication
+      - type: Webhooks
+        url: https://apidocs.getresponse.com/v3/callbacks
+      - type: Rate Limits
+        url: https://apidocs.getresponse.com/v3/limits
+
+common:
+  - type: Website
+    url: https://www.getresponse.com
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: API Reference
+    url: https://apireference.getresponse.com/
+  - type: Sign Up
+    url: https://app.getresponse.com/create_account
+  - type: Pricing
+    url: https://www.getresponse.com/pricing
+  - type: Login
+    url: https://app.getresponse.com/login
+  - type: Support
+    url: https://www.getresponse.com/help
+  - type: Blog
+    url: https://www.getresponse.com/blog
+  - type: GitHub Organization
+    url: https://github.com/GetResponse
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
