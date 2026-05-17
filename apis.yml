@@ -44,13 +44,13 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.getresponse.com/v3
-      - type: API Reference
+      - type: APIReference
         url: https://apireference.getresponse.com/
       - type: Authentication
         url: https://apidocs.getresponse.com/v3/authentication
       - type: Webhooks
         url: https://apidocs.getresponse.com/v3/callbacks
-      - type: Rate Limits
+      - type: RateLimits
         url: https://apidocs.getresponse.com/v3/limits
 
 common:
@@ -58,9 +58,9 @@ common:
     url: https://www.getresponse.com
   - type: Documentation
     url: https://apidocs.getresponse.com/v3
-  - type: API Reference
+  - type: APIReference
     url: https://apireference.getresponse.com/
-  - type: Sign Up
+  - type: SignUp
     url: https://app.getresponse.com/create_account
   - type: Pricing
     url: https://www.getresponse.com/pricing
@@ -70,7 +70,7 @@ common:
     url: https://www.getresponse.com/help
   - type: Blog
     url: https://www.getresponse.com/blog
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/GetResponse
 maintainers:
   - FN: Kin Lane
