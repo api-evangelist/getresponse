@@ -54,6 +54,8 @@ apis:
         url: https://apidocs.getresponse.com/v3/limits
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/getresponse
   - type: Website
     url: https://www.getresponse.com
   - type: Documentation
