@@ -2,6 +2,13 @@
   "repo": "getresponse",
   "feeds": [
     {
+      "source": "https://www.getresponse.com/blog/feed",
+      "feed_url": "https://www.getresponse.com/blog/feed",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://www.getresponse.com/help",
       "feed_url": "https://www.getresponse.com/help",
       "title": "",
@@ -10,5 +17,5 @@
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-01T23:35:02Z"
+  "fetched": "2026-06-14T20:42:17Z"
 }
