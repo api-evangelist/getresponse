@@ -9,7 +9,7 @@ description: >-
   API that uses X-Auth-Token header authentication to manage contacts,
   campaigns, newsletters, autoresponders, landing pages, webinars, and more.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Email Marketing
   - Marketing Automation
