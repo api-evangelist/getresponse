@@ -54,6 +54,12 @@ apis:
         url: https://apidocs.getresponse.com/v3/limits
 
 common:
+  - type: TrustCenter
+    url: security/getresponse-trust-center.yml
+  - type: DomainSecurity
+    url: security/getresponse-domain-security.yml
+  - type: Authentication
+    url: authentication/getresponse-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/getresponse
   - type: Website

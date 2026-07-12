@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.getresponse.com/security
+url: https://www.getresponse.com/security
+certifications:
+- SOC 2
+- PCI DSS
+- GDPR
+evidence:
+- source: https://www.getresponse.com/security
+  keywords:
+  - soc2
+  - pci dss
+  - gdpr
