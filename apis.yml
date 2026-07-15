@@ -54,6 +54,8 @@ apis:
         url: https://apidocs.getresponse.com/v3/limits
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/getresponse-agentic-access.yml
   - type: TrustCenter
     url: security/getresponse-trust-center.yml
   - type: DomainSecurity
