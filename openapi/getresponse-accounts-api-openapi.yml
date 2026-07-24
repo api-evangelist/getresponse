@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: GetResponse API v3 Accounts API
+  version: 3.0.0
+  description: 'Best-effort OpenAPI 3.1 description of the GetResponse v3 JSON REST API used to
+
+    manage contacts, campaigns, newsletters, autoresponders, custom fields, tags,
+
+    segments, accounts, and webhooks. Authentication uses an X-Auth-Token header
+
+    carrying a personal API key prefixed with "api-key ". Sourced from
+
+    https://apidocs.getresponse.com/v3 and https://apireference.getresponse.com/.
+
+    '
+  contact:
+    name: GetResponse Developer Support
+    url: https://apidocs.getresponse.com/v3
+servers:
+- url: https://api.getresponse.com/v3
+  description: Retail / standard GetResponse accounts
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX (Enterprise) platform
+security:
+- apiKey: []
+tags:
+- name: Accounts
+paths:
+  /accounts:
+    get:
+      summary: Get account information for the authenticated user
+      operationId: getAccount
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: Account information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        companyName:
+          type: string
+        timeZone:
+          type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Auth-Token
+      description: 'Personal API key sent as "api-key YOUR_API_KEY". Keys expire after 90
+
+        days of inactivity.
+
+        '
