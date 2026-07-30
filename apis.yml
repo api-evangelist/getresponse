@@ -9,7 +9,19 @@ description: >-
   API that uses X-Auth-Token header authentication to manage contacts,
   campaigns, newsletters, autoresponders, landing pages, webinars, and more.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/getresponse.png
 tags:
   - Email Marketing
   - Marketing Automation
@@ -23,36 +35,114 @@ created: '2026-05-11'
 modified: '2026-05-11'
 specificationVersion: '0.19'
 apis:
-  - aid: getresponse:rest-api
-    name: GetResponse API v3
-    description: >-
-      JSON REST API for managing contacts, campaigns, newsletters,
-      autoresponders, landing pages, webinars, custom fields, tags,
-      segments, and workflows in the GetResponse platform. Authentication
-      uses an X-Auth-Token header carrying a personal API key.
-    humanURL: https://apireference.getresponse.com/
-    baseURL: https://api.getresponse.com/v3
-    tags:
-      - Email Marketing
-      - Marketing Automation
-      - Contacts
-      - Campaigns
-      - Newsletters
-      - Autoresponders
-      - Webinars
-      - Landing Pages
-    properties:
-      - type: Documentation
-        url: https://apidocs.getresponse.com/v3
-      - type: APIReference
-        url: https://apireference.getresponse.com/
-      - type: Authentication
-        url: https://apidocs.getresponse.com/v3/authentication
-      - type: Webhooks
-        url: https://apidocs.getresponse.com/v3/callbacks
-      - type: RateLimits
-        url: https://apidocs.getresponse.com/v3/limits
-
+- aid: getresponse:rest-api
+  name: GetResponse API v3
+  description: >-
+    JSON REST API for managing contacts, campaigns, newsletters, autoresponders, landing pages, webinars,
+    custom fields, tags, segments, and workflows in the GetResponse platform. Authentication uses an X-Auth-Token
+    header carrying a personal API key.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Email Marketing
+  - Marketing Automation
+  - Contacts
+  - Campaigns
+  - Newsletters
+  - Autoresponders
+  - Webinars
+  - Landing Pages
+  properties:
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/callbacks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+- aid: getresponse:getresponse-accounts-api
+  name: GetResponse Accounts API
+  description: The Accounts API from GetResponse — 1 operation(s) for accounts.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-accounts-api-openapi.yml
+- aid: getresponse:getresponse-autoresponders-api
+  name: GetResponse Autoresponders API
+  description: The Autoresponders API from GetResponse — 2 operation(s) for autoresponders.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Autoresponders
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-autoresponders-api-openapi.yml
+- aid: getresponse:getresponse-campaigns-api
+  name: GetResponse Campaigns API
+  description: The Campaigns API from GetResponse — 2 operation(s) for campaigns.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-campaigns-api-openapi.yml
+- aid: getresponse:getresponse-contacts-api
+  name: GetResponse Contacts API
+  description: The Contacts API from GetResponse — 2 operation(s) for contacts.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-contacts-api-openapi.yml
+- aid: getresponse:getresponse-custom-fields-api
+  name: GetResponse Custom Fields API
+  description: The Custom Fields API from GetResponse — 1 operation(s) for custom fields.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-custom-fields-api-openapi.yml
+- aid: getresponse:getresponse-newsletters-api
+  name: GetResponse Newsletters API
+  description: The Newsletters API from GetResponse — 2 operation(s) for newsletters.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Newsletters
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-newsletters-api-openapi.yml
+- aid: getresponse:getresponse-tags-api
+  name: GetResponse Tags API
+  description: The Tags API from GetResponse — 1 operation(s) for tags.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-tags-api-openapi.yml
+- aid: getresponse:getresponse-webhooks-api
+  name: GetResponse Webhooks API
+  description: The Webhooks API from GetResponse — 1 operation(s) for webhooks.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-webhooks-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/getresponse-agentic-access.yml
