@@ -1,0 +1,431 @@
+openapi: 3.1.0
+info:
+  title: GetResponse API v3
+  version: "3.0.0"
+  description: |
+    Best-effort OpenAPI 3.1 description of the GetResponse v3 JSON REST API used to
+    manage contacts, campaigns, newsletters, autoresponders, custom fields, tags,
+    segments, accounts, and webhooks. Authentication uses an X-Auth-Token header
+    carrying a personal API key prefixed with "api-key ". Sourced from
+    https://apidocs.getresponse.com/v3 and https://apireference.getresponse.com/.
+  contact:
+    name: GetResponse Developer Support
+    url: https://apidocs.getresponse.com/v3
+servers:
+  - url: https://api.getresponse.com/v3
+    description: Retail / standard GetResponse accounts
+  - url: https://api3.getresponse360.com/v3
+    description: GetResponse MAX (Enterprise) platform
+security:
+  - apiKey: []
+paths:
+  /accounts:
+    get:
+      summary: Get account information for the authenticated user
+      operationId: getAccount
+      tags: [Accounts]
+      responses:
+        "200":
+          description: Account information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+  /campaigns:
+    get:
+      summary: List campaigns (lists)
+      operationId: listCampaigns
+      tags: [Campaigns]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: A page of campaigns
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Campaign"
+    post:
+      summary: Create a new campaign
+      operationId: createCampaign
+      tags: [Campaigns]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaign"
+      responses:
+        "201":
+          description: Campaign created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+  /campaigns/{campaignId}:
+    parameters:
+      - $ref: "#/components/parameters/CampaignId"
+    get:
+      summary: Get a single campaign
+      operationId: getCampaign
+      tags: [Campaigns]
+      responses:
+        "200":
+          description: Campaign
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+  /contacts:
+    get:
+      summary: List contacts
+      operationId: listContacts
+      tags: [Contacts]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - in: query
+          name: query[email]
+          schema: { type: string, format: email }
+        - in: query
+          name: query[campaignId]
+          schema: { type: string }
+      responses:
+        "200":
+          description: Contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contact"
+    post:
+      summary: Add (or import) a contact to a campaign
+      operationId: createContact
+      tags: [Contacts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contact"
+      responses:
+        "202":
+          description: Contact accepted for processing
+  /contacts/{contactId}:
+    parameters:
+      - $ref: "#/components/parameters/ContactId"
+    get:
+      summary: Get a contact
+      operationId: getContact
+      tags: [Contacts]
+      responses:
+        "200":
+          description: Contact
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+    post:
+      summary: Update a contact
+      operationId: updateContact
+      tags: [Contacts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contact"
+      responses:
+        "200":
+          description: Updated contact
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+    delete:
+      summary: Delete a contact
+      operationId: deleteContact
+      tags: [Contacts]
+      responses:
+        "204":
+          description: Contact deleted
+  /newsletters:
+    get:
+      summary: List newsletters
+      operationId: listNewsletters
+      tags: [Newsletters]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: Newsletters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Newsletter"
+    post:
+      summary: Create / send a newsletter
+      operationId: createNewsletter
+      tags: [Newsletters]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Newsletter"
+      responses:
+        "202":
+          description: Newsletter queued for sending
+  /newsletters/{newsletterId}:
+    parameters:
+      - in: path
+        name: newsletterId
+        required: true
+        schema: { type: string }
+    get:
+      summary: Get a newsletter
+      operationId: getNewsletter
+      tags: [Newsletters]
+      responses:
+        "200":
+          description: Newsletter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Newsletter"
+  /autoresponders:
+    get:
+      summary: List autoresponders
+      operationId: listAutoresponders
+      tags: [Autoresponders]
+      responses:
+        "200":
+          description: Autoresponders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Autoresponder"
+  /autoresponders/{autoresponderId}:
+    parameters:
+      - in: path
+        name: autoresponderId
+        required: true
+        schema: { type: string }
+    get:
+      summary: Get autoresponder
+      operationId: getAutoresponder
+      tags: [Autoresponders]
+      responses:
+        "200":
+          description: Autoresponder
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autoresponder"
+  /custom-fields:
+    get:
+      summary: List custom fields
+      operationId: listCustomFields
+      tags: [Custom Fields]
+      responses:
+        "200":
+          description: Custom fields
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomField"
+    post:
+      summary: Create custom field
+      operationId: createCustomField
+      tags: [Custom Fields]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomField"
+      responses:
+        "201":
+          description: Created
+  /tags:
+    get:
+      summary: List tags
+      operationId: listTags
+      tags: [Tags]
+      responses:
+        "200":
+          description: Tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tag"
+    post:
+      summary: Create a tag
+      operationId: createTag
+      tags: [Tags]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tag"
+      responses:
+        "201":
+          description: Created
+  /webhooks:
+    get:
+      summary: List webhooks
+      operationId: listWebhooks
+      tags: [Webhooks]
+      responses:
+        "200":
+          description: Webhooks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Webhook"
+    post:
+      summary: Create a webhook
+      operationId: createWebhook
+      tags: [Webhooks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Webhook"
+      responses:
+        "201":
+          description: Created
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Auth-Token
+      description: |
+        Personal API key sent as "api-key YOUR_API_KEY". Keys expire after 90
+        days of inactivity.
+  parameters:
+    Page:
+      in: query
+      name: page
+      schema: { type: integer, minimum: 1, default: 1 }
+    PerPage:
+      in: query
+      name: perPage
+      schema: { type: integer, minimum: 1, maximum: 1000, default: 100 }
+    CampaignId:
+      in: path
+      name: campaignId
+      required: true
+      schema: { type: string }
+    ContactId:
+      in: path
+      name: contactId
+      required: true
+      schema: { type: string }
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountId: { type: string }
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string, format: email }
+        companyName: { type: string }
+        timeZone: { type: string }
+    Campaign:
+      type: object
+      properties:
+        campaignId: { type: string }
+        name: { type: string }
+        techName: { type: string }
+        languageCode: { type: string }
+        isDefault: { type: boolean }
+        createdOn: { type: string, format: date-time }
+    Contact:
+      type: object
+      properties:
+        contactId: { type: string }
+        name: { type: string }
+        email: { type: string, format: email }
+        campaign:
+          type: object
+          properties:
+            campaignId: { type: string }
+        customFieldValues:
+          type: array
+          items:
+            type: object
+            properties:
+              customFieldId: { type: string }
+              value:
+                type: array
+                items: { type: string }
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              tagId: { type: string }
+    Newsletter:
+      type: object
+      properties:
+        newsletterId: { type: string }
+        name: { type: string }
+        subject: { type: string }
+        fromField:
+          type: object
+          properties:
+            fromFieldId: { type: string }
+        content:
+          type: object
+          properties:
+            html: { type: string }
+            plain: { type: string }
+    Autoresponder:
+      type: object
+      properties:
+        autoresponderId: { type: string }
+        name: { type: string }
+        subject: { type: string }
+        status: { type: string, enum: [enabled, disabled] }
+    CustomField:
+      type: object
+      properties:
+        customFieldId: { type: string }
+        name: { type: string }
+        type: { type: string }
+        valueType: { type: string }
+        values:
+          type: array
+          items: { type: string }
+    Tag:
+      type: object
+      properties:
+        tagId: { type: string }
+        name: { type: string }
+    Webhook:
+      type: object
+      properties:
+        webhookId: { type: string }
+        url: { type: string, format: uri }
+        actions:
+          type: object
+          additionalProperties: { type: string }
