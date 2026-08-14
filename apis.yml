@@ -1,13 +1,16 @@
 aid: getresponse
 name: GetResponse
-description: >-
-  GetResponse is an online marketing platform offering email marketing,
-  marketing automation, landing pages, webinars, and conversion funnels for
-  small businesses, marketers, and enterprises. The platform provides tools
-  to grow email lists, automate campaigns, segment audiences, and engage
-  customers across multiple channels. The GetResponse API v3 is a JSON REST
-  API that uses X-Auth-Token header authentication to manage contacts,
-  campaigns, newsletters, autoresponders, landing pages, webinars, and more.
+description: GetResponse is an all-in-one marketing platform for email marketing, marketing automation,
+  landing pages, websites, webinars, SMS, web push, ecommerce and content monetization, used by small
+  businesses, marketers and enterprises. The GetResponse API v3 is a JSON REST API authenticated with
+  an X-Auth-Token header carrying an API key prefixed with "api-key ", or with OAuth 2.0. The provider
+  publishes a machine-readable OpenAPI 3.0.0 describing 220 operations across 141 paths and 42 product
+  areas — contacts, campaigns, newsletters, autoresponders, transactional email, SMS, forms and popups,
+  landing pages, websites, webinars, workflows, imports, suppressions and a full ecommerce tree of shops,
+  products, variants, categories, carts, orders and taxes. The spec is discoverable through an RFC 9727
+  API catalog at /.well-known/api-catalog, and GetResponse also publishes an llms.txt and its own Agent
+  Skill for the public API. Enterprise customers run on the separate GetResponse MAX platform, which requires
+  an additional X-Domain header.
 type: Index
 accessModel:
   pricing: unknown
@@ -23,24 +26,33 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/getresponse.png
 tags:
-  - Email Marketing
-  - Marketing Automation
-  - Landing Pages
-  - Webinars
-  - Conversion Funnels
-  - CRM
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/getresponse/refs/heads/main/apis.yml
+- Email Marketing
+- Marketing Automation
+- Landing Pages
+- Webinars
+- Conversion Funnels
+- CRM
+- Transactional Email
+- SMS
+- Ecommerce
+- Web Push
+- Forms
+- Newsletters
+- Autoresponders
+- Contacts
+- Marketing
+url: https://raw.githubusercontent.com/api-evangelist/getresponse/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-11'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: getresponse:rest-api
   name: GetResponse API v3
-  description: >-
-    JSON REST API for managing contacts, campaigns, newsletters, autoresponders, landing pages, webinars,
-    custom fields, tags, segments, and workflows in the GetResponse platform. Authentication uses an X-Auth-Token
-    header carrying a personal API key.
+  description: The complete GetResponse API v3 — a JSON REST API of 220 operations across 141 paths and
+    42 product areas, described by a provider-published OpenAPI 3.0.0. Authentication is an X-Auth-Token
+    header carrying an API key prefixed with "api-key ", or OAuth 2.0 with a single "all" scope. Every
+    response carries X-RateLimit-* headers; errors return a custom ErrorResponse envelope discriminated
+    by a numeric code rather than by HTTP status.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
@@ -50,9 +62,11 @@ apis:
   - Campaigns
   - Newsletters
   - Autoresponders
-  - Webinars
-  - Landing Pages
+  - Ecommerce
+  - Transactional Email
   properties:
+  - type: OpenAPI
+    url: openapi/_original/getresponse-open-api-original.json
   - type: Documentation
     url: https://apidocs.getresponse.com/v3
   - type: APIReference
@@ -60,118 +74,649 @@ apis:
   - type: Authentication
     url: https://apidocs.getresponse.com/v3/authentication
   - type: Webhooks
-    url: https://apidocs.getresponse.com/v3/callbacks
+    url: https://apidocs.getresponse.com/v3/webhooks
   - type: RateLimits
     url: https://apidocs.getresponse.com/v3/limits
-- aid: getresponse:getresponse-accounts-api
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-a-b-tests
+  name: GetResponse A/B tests API
+  description: A/B tests API documentation The A/B tests area of the GetResponse API v3 — 2 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - A/B tests
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-a-b-tests-openapi.yml
+- aid: getresponse:getresponse-a-b-tests-subject
+  name: GetResponse A/B tests - subject API
+  description: A/B tests - subject API documentation The A/B tests - subject area of the GetResponse API
+    v3 — 6 operation(s) across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - A/B tests - subject
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-a-b-tests-subject-openapi.yml
+- aid: getresponse:getresponse-accounts
   name: GetResponse Accounts API
-  description: The Accounts API from GetResponse — 1 operation(s) for accounts.
+  description: Accounts API documentation The Accounts area of the GetResponse API v3 — 14 operation(s)
+    across 9 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Accounts
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-accounts-api-openapi.yml
-- aid: getresponse:getresponse-autoresponders-api
+    url: openapi/getresponse-accounts-openapi.yml
+- aid: getresponse:getresponse-addresses
+  name: GetResponse Addresses API
+  description: Addresses API documentation The Addresses area of the GetResponse API v3 — 5 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-addresses-openapi.yml
+- aid: getresponse:getresponse-autoresponders
   name: GetResponse Autoresponders API
-  description: The Autoresponders API from GetResponse — 2 operation(s) for autoresponders.
+  description: Autoresponders API documentation The Autoresponders area of the GetResponse API v3 — 8
+    operation(s) across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Autoresponders
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-autoresponders-api-openapi.yml
-- aid: getresponse:getresponse-campaigns-api
-  name: GetResponse Campaigns API
-  description: The Campaigns API from GetResponse — 2 operation(s) for campaigns.
+    url: openapi/getresponse-autoresponders-openapi.yml
+- aid: getresponse:getresponse-campaigns-lists
+  name: GetResponse Campaigns (Lists) API
+  description: 'Our API v3 uses the terminology from the previous version of GetResponse.
+
+
+    **Campaigns and lists are the same resource under a different name.** For now, please refer to lists
+    as campaigns.
+
+
+    Our API v4 will use the updated terminology. The Campaigns (Lists) area of the GetResponse API v3
+    — 13 operation(s) across 10 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.'
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Campaigns
+  - Campaigns (Lists)
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-campaigns-api-openapi.yml
-- aid: getresponse:getresponse-contacts-api
+    url: openapi/getresponse-campaigns-lists-openapi.yml
+- aid: getresponse:getresponse-carts
+  name: GetResponse Carts API
+  description: Carts API documentation The Carts area of the GetResponse API v3 — 5 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Carts
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-carts-openapi.yml
+- aid: getresponse:getresponse-categories
+  name: GetResponse Categories API
+  description: Categories API documentation The Categories area of the GetResponse API v3 — 5 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-categories-openapi.yml
+- aid: getresponse:getresponse-click-tracks
+  name: GetResponse Click Tracks API
+  description: Click tracking refers to the data collected about each link click, such as how many people
+    clicked it, how many clicks resulted in desired actions such as sales, forwards or subscriptions.
+    The Click Tracks area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split by tag from
+    the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Click Tracks
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-click-tracks-openapi.yml
+- aid: getresponse:getresponse-contacts
   name: GetResponse Contacts API
-  description: The Contacts API from GetResponse — 2 operation(s) for contacts.
+  description: API documentation for contacts and their properties (e.g., tags, custom fields) The Contacts
+    area of the GetResponse API v3 — 11 operation(s) across 8 path(s), split by tag from the provider-published
+    OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Contacts
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-contacts-api-openapi.yml
-- aid: getresponse:getresponse-custom-fields-api
+    url: openapi/getresponse-contacts-openapi.yml
+- aid: getresponse:getresponse-custom-events
+  name: GetResponse Custom Events API
+  description: Custom Events API documentation The Custom Events area of the GetResponse API v3 — 6 operation(s)
+    across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Custom Events
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-custom-events-openapi.yml
+- aid: getresponse:getresponse-custom-fields
   name: GetResponse Custom Fields API
-  description: The Custom Fields API from GetResponse — 1 operation(s) for custom fields.
+  description: Custom Fields API documentation The Custom Fields area of the GetResponse API v3 — 5 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Custom Fields
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-custom-fields-api-openapi.yml
-- aid: getresponse:getresponse-newsletters-api
+    url: openapi/getresponse-custom-fields-openapi.yml
+- aid: getresponse:getresponse-custom-reports
+  name: GetResponse Custom Reports API
+  description: Custom Reports API documentation The Custom Reports area of the GetResponse API v3 — 3
+    operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Custom Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-custom-reports-openapi.yml
+- aid: getresponse:getresponse-ecommerce
+  name: GetResponse Ecommerce API
+  description: The Ecommerce area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split by
+    tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Ecommerce
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-ecommerce-openapi.yml
+- aid: getresponse:getresponse-file-library
+  name: GetResponse File Library API
+  description: File Library API documentation The File Library area of the GetResponse API v3 — 8 operation(s)
+    across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - File Library
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-file-library-openapi.yml
+- aid: getresponse:getresponse-form-and-popup
+  name: GetResponse Form and Popup API
+  description: The Form and Popup area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split
+    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Form and Popup
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-form-and-popup-openapi.yml
+- aid: getresponse:getresponse-forms
+  name: GetResponse Forms API
+  description: Forms API documentation The Forms area of the GetResponse API v3 — 3 operation(s) across
+    3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-forms-openapi.yml
+- aid: getresponse:getresponse-forms-and-popups
+  name: GetResponse Forms and Popups API
+  description: Forms and Popups API documentation The Forms and Popups area of the GetResponse API v3
+    — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Forms and Popups
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-forms-and-popups-openapi.yml
+- aid: getresponse:getresponse-from-fields
+  name: GetResponse From Fields API
+  description: From Fields API documentation The From Fields area of the GetResponse API v3 — 5 operation(s)
+    across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - From Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-from-fields-openapi.yml
+- aid: getresponse:getresponse-gdpr-fields
+  name: GetResponse GDPR Fields API
+  description: The GDPR Fields area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split
+    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - GDPR Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-gdpr-fields-openapi.yml
+- aid: getresponse:getresponse-imports
+  name: GetResponse Imports API
+  description: Imports API documentation The Imports area of the GetResponse API v3 — 3 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Imports
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-imports-openapi.yml
+- aid: getresponse:getresponse-landing-page
+  name: GetResponse Landing Page API
+  description: The Landing Page area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split
+    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Landing Page
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-landing-page-openapi.yml
+- aid: getresponse:getresponse-landing-pages
+  name: GetResponse Landing Pages API
+  description: The Landing Pages area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split
+    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Landing Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-landing-pages-openapi.yml
+- aid: getresponse:getresponse-legacy-forms
+  name: GetResponse Legacy Forms API
+  description: Legacy Forms API documentation The Legacy Forms area of the GetResponse API v3 — 2 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Legacy Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-legacy-forms-openapi.yml
+- aid: getresponse:getresponse-legacy-landing-pages
+  name: GetResponse Legacy Landing Pages API
+  description: Legacy Landing Pages description The Legacy Landing Pages area of the GetResponse API v3
+    — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Legacy Landing Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-legacy-landing-pages-openapi.yml
+- aid: getresponse:getresponse-meta-fields
+  name: GetResponse Meta Fields API
+  description: Meta Fields API documentation The Meta Fields area of the GetResponse API v3 — 5 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Meta Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-meta-fields-openapi.yml
+- aid: getresponse:getresponse-multimedia
+  name: GetResponse Multimedia API
+  description: Multimedia API documentation The Multimedia area of the GetResponse API v3 — 2 operation(s)
+    across 1 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Multimedia
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-multimedia-openapi.yml
+- aid: getresponse:getresponse-newsletters
   name: GetResponse Newsletters API
-  description: The Newsletters API from GetResponse — 2 operation(s) for newsletters.
+  description: Newsletters API documentation The Newsletters area of the GetResponse API v3 — 10 operation(s)
+    across 8 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Newsletters
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-newsletters-api-openapi.yml
-- aid: getresponse:getresponse-tags-api
+    url: openapi/getresponse-newsletters-openapi.yml
+- aid: getresponse:getresponse-orders
+  name: GetResponse Orders API
+  description: Orders API documentation The Orders area of the GetResponse API v3 — 5 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-orders-openapi.yml
+- aid: getresponse:getresponse-predefined-fields
+  name: GetResponse Predefined Fields API
+  description: Predefined Fields API documentation The Predefined Fields area of the GetResponse API v3
+    — 5 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Predefined Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-predefined-fields-openapi.yml
+- aid: getresponse:getresponse-product-variants
+  name: GetResponse Product Variants API
+  description: Product Variants API documentation The Product Variants area of the GetResponse API v3
+    — 5 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Product Variants
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-product-variants-openapi.yml
+- aid: getresponse:getresponse-products
+  name: GetResponse Products API
+  description: Products API documentation The Products area of the GetResponse API v3 — 7 operation(s)
+    across 4 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-products-openapi.yml
+- aid: getresponse:getresponse-rss-newsletters
+  name: GetResponse RSS Newsletters API
+  description: RSS Newsletters API documentation The RSS Newsletters area of the GetResponse API v3 —
+    7 operation(s) across 4 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - RSS Newsletters
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-rss-newsletters-openapi.yml
+- aid: getresponse:getresponse-sms-automation-messages
+  name: GetResponse SMS Automation Messages API
+  description: SMS Automation Messages API documentation The SMS Automation Messages area of the GetResponse
+    API v3 — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - SMS Automation Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-sms-automation-messages-openapi.yml
+- aid: getresponse:getresponse-sms-messages
+  name: GetResponse SMS Messages API
+  description: SMS Messages API documentation The SMS Messages area of the GetResponse API v3 — 4 operation(s)
+    across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - SMS Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-sms-messages-openapi.yml
+- aid: getresponse:getresponse-search-contacts
+  name: GetResponse Search Contacts API
+  description: Search Contacts API documentation API documentation The Search Contacts area of the GetResponse
+    API v3 — 8 operation(s) across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Search Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-search-contacts-openapi.yml
+- aid: getresponse:getresponse-shops
+  name: GetResponse Shops API
+  description: Shops API documentation The Shops area of the GetResponse API v3 — 5 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Shops
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-shops-openapi.yml
+- aid: getresponse:getresponse-sms
+  name: GetResponse Sms API
+  description: The Sms area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split by tag
+    from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Sms
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-sms-openapi.yml
+- aid: getresponse:getresponse-subscription-confirmations
+  name: GetResponse Subscription Confirmations API
+  description: Subscription Confirmations API documentation The Subscription Confirmations area of the
+    GetResponse API v3 — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI
+    at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Subscription Confirmations
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-subscription-confirmations-openapi.yml
+- aid: getresponse:getresponse-suppressions
+  name: GetResponse Suppressions API
+  description: Suppressions API documentaion The Suppressions area of the GetResponse API v3 — 5 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Suppressions
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-suppressions-openapi.yml
+- aid: getresponse:getresponse-tags
   name: GetResponse Tags API
-  description: The Tags API from GetResponse — 1 operation(s) for tags.
+  description: Tags API documentation The Tags area of the GetResponse API v3 — 5 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Tags
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-tags-api-openapi.yml
-- aid: getresponse:getresponse-webhooks-api
-  name: GetResponse Webhooks API
-  description: The Webhooks API from GetResponse — 1 operation(s) for webhooks.
+    url: openapi/getresponse-tags-openapi.yml
+- aid: getresponse:getresponse-taxes
+  name: GetResponse Taxes API
+  description: Taxes API documentation The Taxes area of the GetResponse API v3 — 5 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Webhooks
+  - Taxes
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-webhooks-api-openapi.yml
+    url: openapi/getresponse-taxes-openapi.yml
+- aid: getresponse:getresponse-tracking
+  name: GetResponse Tracking API
+  description: Tracking API documentation The Tracking area of the GetResponse API v3 — 2 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-tracking-openapi.yml
+- aid: getresponse:getresponse-transactional-emails
+  name: GetResponse Transactional Emails API
+  description: Transactional Emails API documentation The Transactional Emails area of the GetResponse
+    API v3 — 4 operation(s) across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Transactional Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-transactional-emails-openapi.yml
+- aid: getresponse:getresponse-transactional-emails-templates
+  name: GetResponse Transactional Emails Templates API
+  description: The Transactional Emails Templates area of the GetResponse API v3 — 5 operation(s) across
+    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Transactional Emails Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-transactional-emails-templates-openapi.yml
+- aid: getresponse:getresponse-webinars
+  name: GetResponse Webinars API
+  description: Webinars API documentation The Webinars area of the GetResponse API v3 — 2 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Webinars
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-webinars-openapi.yml
+- aid: getresponse:getresponse-website
+  name: GetResponse Website API
+  description: The Website area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split by
+    tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Website
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-website-openapi.yml
+- aid: getresponse:getresponse-websites
+  name: GetResponse Websites API
+  description: Websites API documentation The Websites area of the GetResponse API v3 — 2 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Websites
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-websites-openapi.yml
+- aid: getresponse:getresponse-workflows
+  name: GetResponse Workflows API
+  description: Workflows API documentation The Workflows area of the GetResponse API v3 — 3 operation(s)
+    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-workflows-openapi.yml
 common:
-  - type: AgenticAccess
-    url: agentic-access/getresponse-agentic-access.yml
-  - type: TrustCenter
-    url: security/getresponse-trust-center.yml
-  - type: DomainSecurity
-    url: security/getresponse-domain-security.yml
-  - type: Authentication
-    url: authentication/getresponse-authentication.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/getresponse
-  - type: Website
-    url: https://www.getresponse.com
-  - type: Documentation
-    url: https://apidocs.getresponse.com/v3
-  - type: APIReference
-    url: https://apireference.getresponse.com/
-  - type: Signup
-    url: https://app.getresponse.com/create_account
-  - type: Pricing
-    url: https://www.getresponse.com/pricing
-  - type: Login
-    url: https://app.getresponse.com/login
-  - type: Support
-    url: https://www.getresponse.com/help
-  - type: Blog
-    url: https://www.getresponse.com/blog
-  - type: GitHubOrganization
-    url: https://github.com/GetResponse
+- type: OpenAPI
+  url: openapi/_original/getresponse-open-api-original.json
+- type: WellKnown
+  url: well-known/getresponse-well-known.yml
+- type: APICatalog
+  url: https://www.getresponse.com/.well-known/api-catalog
+- type: LLMsTxt
+  url: llms/getresponse-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/getresponse-packages.yml
+- type: SDKs
+  url: packages/getresponse-packages.yml
+- type: Authentication
+  url: authentication/getresponse-authentication.yml
+- type: OAuthScopes
+  url: scopes/getresponse-scopes.yml
+- type: Conventions
+  url: conventions/getresponse-conventions.yml
+- type: ErrorCatalog
+  url: errors/getresponse-error-codes.yml
+- type: ErrorCodes
+  url: errors/getresponse-problem-types.yml
+- type: RateLimits
+  url: rate-limits/getresponse-rate-limits.yml
+- type: Plans
+  url: plans/getresponse-plans-pricing.yml
+- type: Lifecycle
+  url: lifecycle/getresponse-lifecycle.yml
+- type: StatusPage
+  url: https://status.getresponse.com/
+- type: Webhooks
+  url: asyncapi/getresponse-webhooks.yml
+- type: Conformance
+  url: conformance/getresponse-conformance.yml
+- type: Compliance
+  url: https://www.getresponse.com/security
+- type: TrustCenter
+  url: security/getresponse-trust-center.yml
+- type: DomainSecurity
+  url: security/getresponse-domain-security.yml
+- type: DataModel
+  url: data-model/getresponse-data-model.yml
+- type: Overlay
+  url: overlays/getresponse-openapi-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/getresponse-agentic-access.yml
+- type: Postman
+  url: https://apidocs.getresponse.com/v3/collections
+- type: PostmanCollection
+  url: collections/getresponse.postman_collection.json
+- type: Website
+  url: https://www.getresponse.com
+- type: DeveloperPortal
+  url: https://apidocs.getresponse.com/v3
+- type: Documentation
+  url: https://apidocs.getresponse.com/v3
+- type: APIReference
+  url: https://apireference.getresponse.com/
+- type: GettingStarted
+  url: https://apidocs.getresponse.com/v3/authentication
+- type: Support
+  url: https://www.getresponse.com/help
+- type: Blog
+  url: https://www.getresponse.com/blog
+- type: GitHubOrganization
+  url: https://github.com/GetResponse
+- type: Pricing
+  url: https://www.getresponse.com/pricing
+- type: SignUp
+  url: https://app.getresponse.com/create_account
+- type: Login
+  url: https://app.getresponse.com/login
+- type: TermsOfService
+  url: https://www.getresponse.com/legal/terms-us
+- type: PrivacyPolicy
+  url: https://www.getresponse.com/legal/privacy-us
+- type: LinkedIn
+  url: https://www.linkedin.com/company/getresponse
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
