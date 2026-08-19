@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Website",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Website",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get details for website statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/statistics/wbe/:websiteId/performance",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "ce84fabc-1349-4992-a2d7-0c44c5534128",
+                "type": "path",
+                "description": "The website ID"
+              },
+              {
+                "name": "query[date][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show a single website statistics from this date"
+              },
+              {
+                "name": "query[date][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show a single website statistics to this date"
+              },
+              {
+                "name": "query[location]",
+                "value": "",
+                "type": "query",
+                "description": "Website statistics by location"
+              },
+              {
+                "name": "query[device]",
+                "value": "",
+                "type": "query",
+                "description": "Website statistics by device"
+              },
+              {
+                "name": "query[page]",
+                "value": "",
+                "type": "query",
+                "description": "Website statistics by a page UUID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get details for website statistics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

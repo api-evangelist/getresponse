@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Custom Fields",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single custom field definition by the custom field ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/custom-fields/:customFieldId",
+            "params": [
+              {
+                "name": "customFieldId",
+                "value": "pas",
+                "type": "path",
+                "description": "Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of custom fields"
+        },
+        {
+          "info": {
+            "name": "Update the custom field definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/custom-fields/:customFieldId",
+            "params": [
+              {
+                "name": "customFieldId",
+                "value": "pas",
+                "type": "path",
+                "description": "Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update the custom field definition"
+        },
+        {
+          "info": {
+            "name": "Delete a single custom field definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/custom-fields/:customFieldId",
+            "params": [
+              {
+                "name": "customFieldId",
+                "value": "pas",
+                "type": "path",
+                "description": "Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a single custom field definition"
+        },
+        {
+          "info": {
+            "name": "Get a list of custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/custom-fields",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search custom fields by name"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create a custom field",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/custom-fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a custom field"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

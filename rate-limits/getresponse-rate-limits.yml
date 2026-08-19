@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.getresponse.com/v3/limits
+docs: https://apidocs.getresponse.com/v3/limits
+api: GetResponse API v3
+limit_count: 3
+note: >-
+  GetResponse both documents its limits in prose AND declares the runtime headers in the
+  OpenAPI itself — all 220 operations attach X-RateLimit-Limit / -Remaining / -Reset to their
+  responses, and a 429 response is declared on every one of them. An agent can therefore read
+  its remaining budget from the contract rather than from the docs. There is no Retry-After
+  header; the wait is expressed in seconds via X-RateLimit-Reset and the context.timeToReset
+  field on the 429 body.
+window:
+  duration: 10 minutes
+  description: >-
+    A time frame is the period over which call limits are calculated. Limits reset at the start
+    of each frame.
+limits:
+  - scope: per-account
+    window: 10 minutes
+    limit: 30000
+    unit: requests
+    description: Each user may make 30,000 API calls per 10-minute time frame.
+  - scope: per-account
+    window: 1 second
+    limit: 80
+    unit: requests
+    description: Each user may make 80 API calls per second.
+  - scope: per-account
+    window: concurrent
+    limit: 10
+    unit: simultaneous requests
+    burst: 10
+    description: Up to 10 requests may be in flight at once.
+response_headers:
+  - name: X-RateLimit-Limit
+    description: The total number of requests available per time frame.
+    declared_in_openapi: true
+  - name: X-RateLimit-Remaining
+    description: The number of requests left in the current time frame.
+    declared_in_openapi: true
+  - name: X-RateLimit-Reset
+    description: Seconds left in the current time frame, e.g. "432 seconds".
+    declared_in_openapi: true
+retry_after_header: false
+exhaustion:
+  status: 429
+  error_code: 1015
+  body_fields:
+    - name: context.currentLimit
+      description: The total number of requests available per time frame.
+    - name: context.timeToReset
+      description: Seconds left before the frame resets.
+  guidance: >-
+    Wait for the number of seconds in context.timeToReset (or X-RateLimit-Reset) before making
+    another request.
+other_ceilings:
+  - name: contacts batch size
+    limit: 1000
+    unit: contacts per request
+    source: >-
+      POST /contacts/batch, as documented in the provider's own published Agent Skill
+      (github.com/GetResponse/public-api-agent-skills).
+  - name: webhook batch size
+    limit: 100
+    unit: events per delivery
+    source: https://apidocs.getresponse.com/v3/webhooks
+  - name: webhook endpoint timeout
+    limit: 5
+    unit: seconds
+    source: https://apidocs.getresponse.com/v3/webhooks
+  - name: legacy callback timeout
+    limit: 4
+    unit: seconds
+    source: https://apidocs.getresponse.com/v3/callbacks
+    note: Callbacks exceeding the threshold are not retried and are permanently lost.

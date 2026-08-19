@@ -1,0 +1,335 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Products",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a product list.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by name"
+              },
+              {
+                "name": "query[vendor]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by vendor"
+              },
+              {
+                "name": "query[category]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by category name"
+              },
+              {
+                "name": "query[categoryId]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by category ID"
+              },
+              {
+                "name": "query[externalId]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by external ID"
+              },
+              {
+                "name": "query[variantName]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by product variant name"
+              },
+              {
+                "name": "query[metaFieldNames]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by meta field name (the list of names must be separated by a comma [,])"
+              },
+              {
+                "name": "query[metaFieldValues]",
+                "value": "",
+                "type": "query",
+                "description": "Search products by meta field value (the list of values must be separated by a comma [,])"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search products created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search products created to this date"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **GET** request to this URL returns a collection of product resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n * name\n * vendor\n * category\n * categoryId\n * externalId\n * variantName\n * metaFieldNames\n * metaFieldValues\n * createdOn\n\nThe `metaFieldNames` and `metaFieldValues` fields can be a list of values separated by "
+        },
+        {
+          "info": {
+            "name": "Create product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **POST** request to this URL will create a new product resource.\n\nIn order to create a new product, you need to send the product resource in the body of the request (remember that you need to serialize the body into a JSON string)\n\nYou don't need a separate endpoint for each element (e.g. variant, category, meta-field). You can create them all with this method.\n\nPlease note that categories aren't required, but if a product has at least one category, then one of those categories must b"
+        },
+        {
+          "info": {
+            "name": "Get a single product by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method returns product according to the given `productId` in the context of a given `shopId`.\n\n"
+        },
+        {
+          "info": {
+            "name": "Update product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate the properties of a shop's product. You should only send those fields that need to be changed. The remaining properties will stay the same.\nHowever, when updating variants, categories, and meta fields, you need to send entire collections. Individual fields can't be updated.\nIf you want to update particular fields, you can do so using their specific endpoints, i.e.:\n\n * categories - `POST /v3/shops/{shopId}/categories/{categoryId}`\n * variants - POST `/v3/shops/{shopId}/products/{productI"
+        },
+        {
+          "info": {
+            "name": "Delete product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete product"
+        },
+        {
+          "info": {
+            "name": "Upsert product categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/categories",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method makes it possible to assign product categories, and to set a default product category. This method doesn't remove or unassign product categories. It returns a list of product categories.\n\nPlease note that if you assign only one category to a given product, that category is marked as default. If you try to remove the default mark, your change won't be executed.\n\n"
+        },
+        {
+          "info": {
+            "name": "Upsert product meta fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/meta-fields",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method makes it possible to assign meta fields. It doesn't remove or unassign meta fields. It returns a list of product meta fields.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

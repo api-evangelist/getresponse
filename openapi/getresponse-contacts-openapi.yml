@@ -1,0 +1,2131 @@
+openapi: 3.0.0
+info:
+  title: GetResponse APIv3 Contacts
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Contacts operations of the GetResponse APIv3, split by tag from the provider-published
+    OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Contacts
+  description: API documentation for contacts and their properties (e.g., tags, custom fields)
+paths:
+  /contacts/{contactId}/activities:
+    get:
+      tags:
+      - Contacts
+      summary: Get a list of contact activities
+      description: By default, only activities from the last 14 days are returned. To get earlier data,
+        use `query[createdOn]` parameter. You can filter the resource using criteria specified as `query[*]`.
+        You can provide multiple criteria, to use AND logic. You can sort the resource using parameters
+        specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getActivities
+      parameters:
+      - name: query[createdOn][from]
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactActivityList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    parameters:
+    - $ref: '#/components/parameters/contactId'
+  /campaigns/{campaignId}/contacts:
+    get:
+      tags:
+      - Contacts
+      summary: Get contacts from a single campaign
+      description: Provides all contacts from a single campaign. You can filter the resource using criteria
+        specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the
+        resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getContactsFromCampaign
+      parameters:
+      - name: query[email]
+        in: query
+        description: Search contacts by email
+        required: false
+        schema:
+          type: string
+      - name: query[name]
+        in: query
+        description: Search contacts by name
+        required: false
+        schema:
+          type: string
+      - name: query[createdOn][from]
+        in: query
+        description: Return only contacts created on or after the given date. Use ISO 8601 format
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Return only contacts created on or before the given date. Use ISO 8601 format
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: sort[email]
+        in: query
+        description: Sort contacts by email
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[name]
+        in: query
+        description: Sort contacts by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[createdOn]
+        in: query
+        description: Sort contacts by creation date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    parameters:
+    - $ref: '#/components/parameters/campaignId'
+  /contacts/{contactId}/custom-fields:
+    post:
+      tags:
+      - Contacts
+      summary: Upsert the custom fields of a contact
+      description: Upsert (add or update) the custom fields of a contact. This method doesn't remove (unassign)
+        custom fields.
+      operationId: upsertContactCustoms
+      requestBody:
+        $ref: '#/components/requestBodies/UpsertContactCustomFields'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactCustomFieldList'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-type: upsert
+    parameters:
+    - $ref: '#/components/parameters/contactId'
+  /contacts/{contactId}/tags:
+    post:
+      tags:
+      - Contacts
+      summary: Upsert the tags of a contact
+      description: Upsert (add or update) the tags of a contact. This method doesn't remove (unassign)
+        tags.
+      operationId: upsertTags
+      requestBody:
+        $ref: '#/components/requestBodies/UpsertContactTags'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpsertContactTags'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-type: upsert
+    parameters:
+    - $ref: '#/components/parameters/contactId'
+  /contacts/{contactId}:
+    get:
+      tags:
+      - Contacts
+      summary: Get contact details by contact ID
+      description: Returns all available information about an active (non-deleted) contact identified
+        by `contactId`. The response includes basic contact data, associated tags, and values of custom
+        fields
+      operationId: getContactById
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    parameters:
+    - $ref: '#/components/parameters/contactId'
+    post:
+      tags:
+      - Contacts
+      summary: Update contact details
+      description: Skip the fields you don't want to update. If tags and custom fields are provided, they'll
+        be **replaced** with the values sent in this request.  If the `campaignId` changes, the contact
+        will be moved from the original campaign (list) to the new campaign (list). Their activity history
+        and statistics will also be moved.
+      operationId: updateContact
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateContact'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    delete:
+      tags:
+      - Contacts
+      summary: Delete a contact by contact ID
+      operationId: deleteContact
+      parameters:
+      - name: messageId
+        in: query
+        description: '>
+
+          The ID of a message (such as a newsletter, an autoresponder, or an RSS-newsletter).
+
+          When passed, this method will simulate the unsubscribe process, as if the contact clicked the
+          unsubscribe link in a given message.'
+        required: false
+        schema:
+          type: string
+      - name: ipAddress
+        in: query
+        description: This makes it possible to pass the IP from which the contact unsubscribed. Used only
+          if the `messageId` was send.
+        schema:
+          type: string
+          format: ipv4
+      responses:
+        '204':
+          description: Empty response.
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /contacts:
+    get:
+      tags:
+      - Contacts
+      summary: Get contact list
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide
+        multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`.
+        You can specify multiple fields to sort by.
+      operationId: getContactList
+      parameters:
+      - name: query[email]
+        in: query
+        description: Search contacts by email
+        required: false
+        schema:
+          type: string
+      - name: query[name]
+        in: query
+        description: Search contacts by name
+        required: false
+        schema:
+          type: string
+      - name: query[campaignId]
+        in: query
+        description: Search contacts by campaign ID
+        required: false
+        schema:
+          type: string
+      - name: query[origin]
+        in: query
+        description: Search contacts by origin
+        required: false
+        schema:
+          type: string
+          enum:
+          - import
+          - email
+          - www
+          - panel
+          - leads
+          - sale
+          - api
+          - survey
+          - iphone
+          - copy
+          - landing_page
+          - webinar
+          - website_builder_elegant
+          - chat
+          - course
+          - premium_newsletter
+      - name: query[createdOn][from]
+        in: query
+        description: Return only contacts created on or after the given date. Use ISO 8601 format
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Return only contacts created on or before the given date. Use ISO 8601 format
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[changedOn][from]
+        in: query
+        description: Return only contacts whose data was changed on or after the given date. Use ISO 8601
+          format
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[changedOn][to]
+        in: query
+        description: Return only contacts whose data was changed on or before the given date. Use ISO
+          8601 format
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: sort[email]
+        in: query
+        description: Sort by email
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[name]
+        in: query
+        description: Sort by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[createdOn]
+        in: query
+        description: Sort contacts by subscription date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[changedOn]
+        in: query
+        description: Sort by change date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[campaignId]
+        in: query
+        description: Sort by campaign ID
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: additionalFlags
+        in: query
+        description: The additional flags parameter with the value 'exactMatch' will search for contacts
+          with the exact value of the email and name provided in the query string. Without this flag,
+          matching is done via a standard 'like' comparison, which may sometimes be slow.
+        required: false
+        schema:
+          type: string
+        x-set:
+        - exactMatch
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Contacts
+      summary: Create a new contact
+      operationId: createContact
+      requestBody:
+        $ref: '#/components/requestBodies/NewContact'
+      responses:
+        '202':
+          description: ">\nIf the request is successful, the API returns the HTTP code **202 Accepted**.\n\
+            This means that the contact has been preliminarily validated and added to the queue. \nIt\
+            \ may take a few minutes to process the queue and add the contact to the list. If your contact\
+            \ didn't appear on the list, there's a possibility that it was rejected at a later stage of\
+            \ processing. \n\n### Double opt-in\n\nCampaigns can be set to double opt-in.\nThis means\
+            \ that the contact has to click a link in a confirmation message before they can be added\
+            \ to your list.\nUnconfirmed contacts are not returned by the API and can only be found using\
+            \ Search Contacts."
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /contacts/batch:
+    post:
+      tags:
+      - Contacts
+      summary: Create multiple contacts at once
+      description: "This endpoint lets you create multiple contacts in one request.\n\n**Note** \n\nThis\
+        \ endpoint is subject to special limits and throttling. You can make 80 calls per time frame (10\
+        \ minutes) and only 1 call per second. The allowed batch size is 1000 contacts. For more information,\
+        \ check our [API Docs](https://apidocs.getresponse.com/v3/case-study/adding-batch-contacts)."
+      operationId: createBatchContacts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - campaignId
+              - contacts
+              properties:
+                campaignId:
+                  description: ID of the destination campaign (list).
+                  type: string
+                  example: C
+                contacts:
+                  description: Contacts that will be created.
+                  type: array
+                  items:
+                    required:
+                    - email
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        example: john.doe@example.com
+                      name:
+                        type: string
+                        maxLength: 128
+                        minLength: 1
+                        example: John Doe
+                      dayOfCycle:
+                        description: The day a contact is on in an autoresponder cycle.
+                        type: string
+                        example: '42'
+                      scoring:
+                        description: Contact's score
+                        type: number
+                        example: 8
+                      ipAddress:
+                        description: Contact's IP address. IPv4 and IPv6 formats are accepted.
+                        example: 1.2.3.4
+                        oneOf:
+                        - type: string
+                          format: ipv4
+                        - type: string
+                          format: ipv6
+                      tags:
+                        required:
+                        - ids
+                        properties:
+                          ids:
+                            description: List of tag IDs.
+                            type: array
+                            items:
+                              type: string
+                              example: kL6Nh
+                        type: object
+                      customFieldValues:
+                        type: array
+                        items:
+                          required:
+                          - customFieldId
+                          - value
+                          properties:
+                            customFieldId:
+                              description: Custom field ID.
+                              type: string
+                              example: kL6Nh
+                            value:
+                              type: array
+                              items:
+                                type: string
+                                example: 18-35
+                          type: object
+                    type: object
+              type: object
+      responses:
+        '202':
+          description: ">\nIf the request is successful, the API returns the HTTP code **202 Accepted**.\n\
+            This means that the contacts has been preliminarily validated and added to the queue. \nIt\
+            \ may take a few minutes to process the queue and add the contacts to the list. If your contact\
+            \ doesn't appear on the list, they were likely rejected during the late processing stages.\
+            \ \n\n### Double opt-in\n\nCampaigns (lists) can be set to use double opt-in.\nThis means\
+            \ that a contact has to click a link in a confirmation message before they can be added to\
+            \ your list.\nUnconfirmed contacts are not returned by API and can only be found using Search\
+            \ Contacts."
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /contacts/{contactId}/consents:
+    get:
+      tags:
+      - Contacts
+      summary: Get contact's consent fields
+      description: Returns a list of all consent fields assigned to the contact, including their current
+        status and history of changes.
+      operationId: getContactConsentsById
+      parameters:
+      - $ref: '#/components/parameters/contactId'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContactConsentList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  headers:
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated
+        by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    campaignId:
+      name: campaignId
+      in: path
+      description: 'Unique identifier of the campaign (contact list). You can retrieve this ID from the
+        [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`.'
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
+    contactId:
+      name: contactId
+      in: path
+      description: 'Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList)
+        field: contactId'
+      required: true
+      schema:
+        type: string
+      example: pV3r
+  requestBodies:
+    NewContact:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewContact'
+    UpdateContact:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateContact'
+    UpsertContactCustomFields:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertContactCustomFields'
+    UpsertContactTags:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertContactTags'
+  responses:
+    ContactActivityList:
+      description: The list of contact activities.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactActivity'
+    ContactConsentList:
+      description: A collection of contact consent fields with their full history.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactConsent'
+    ContactCustomFieldList:
+      description: The list of custom fields
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactCustomFieldList'
+    ContactDetails:
+      description: The contact details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactDetails'
+    ContactList:
+      description: The list of contacts.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactListElement'
+    UpsertContactTags:
+      description: ' The list of contact tags.'
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              properties:
+                tagId:
+                  type: string
+                  example: hR
+                name:
+                  type: string
+                  example: super_promo
+                href:
+                  type: string
+                  format: uri
+                  example: https://api.getresponse.com/v3/tags/hR
+                color:
+                  type: string
+                  example: ''
+                  deprecated: true
+                createdAt:
+                  type: string
+                  format: date-time
+                  readOnly: true
+                  example: 2024-07-20T06:24:14+0000
+              type: object
+  schemas:
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type: string
+          readOnly: true
+          example: Promo campaign
+          nullable: true
+      type: object
+    Contact:
+      required:
+      - contactId
+      - href
+      - email
+      properties:
+        contactId:
+          type: string
+          readOnly: true
+          example: pV3r
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+          example: John Doe
+        origin:
+          type: string
+          enum:
+          - import
+          - email
+          - www
+          - panel
+          - leads
+          - sale
+          - api
+          - survey
+          - iphone
+          - copy
+          - landing_page
+          - webinar
+          - website_builder_elegant
+          - chat
+          - course
+          - premium_newsletter
+          readOnly: true
+        timeZone:
+          description: The time zone of a contact, uses the time zone database format (https://www.iana.org/time-zones)
+          type: string
+          readOnly: true
+          example: Europe/Warsaw
+        activities:
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/contacts/pV3r/activities
+        changedOn:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2017-12-19T13:11:48+0000
+        createdOn:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2017-03-02T07:30:49+0000
+        campaign:
+          $ref: '#/components/schemas/CampaignReference'
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        dayOfCycle:
+          description: The day on which the contact is in the Autoresponder cycle. `null` indicates the
+            contacts is not in the cycle.
+          type: string
+          example: '42'
+          nullable: true
+        scoring:
+          description: Contact scoring, pass null to remove the score from a contact
+          type: number
+          example: 8
+          nullable: true
+        engagementScore:
+          description: Engagement Score is a feature that presents a visual estimate of a contact's engagement
+            with mailings. The score is based on the contact's interactions with your e-mails. Via API,
+            it's returned in the form of numbers ranging from 1 (Not Engaged) to 5 (Highly Engaged).
+          type: integer
+          format: int32
+          maximum: 5
+          minimum: 1
+          readOnly: true
+          example: 3
+          nullable: true
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/contacts/pV3r
+      type: object
+    ContactActivity:
+      properties:
+        activity:
+          description: The type of activity
+          type: string
+          enum:
+          - send
+          - open
+          - click
+          example: click
+        subject:
+          type: string
+          example: Shop offer update!
+        createdOn:
+          description: The activity date
+          type: string
+          format: date-time
+        previewUrl:
+          description: This is only available for the `send` activity. It includes a link to the message
+            preview
+          type: string
+          format: uri
+          example: https://www.grnewsletters.com/archive/campaign_name55f6b0ff01/Test-2135303.html
+          nullable: true
+        resource:
+          $ref: '#/components/schemas/ContactActivityResource'
+        clickTrack:
+          description: This is only available for the `click` activity. It includes the clicked link data
+          type: object
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/ContactActivityClickTrack'
+      type: object
+      readOnly: true
+    ContactActivityClickTrack:
+      properties:
+        id:
+          description: The click tracking ID
+          type: string
+          example: 62WrE
+        name:
+          description: The name of the clicked link
+          type: string
+          example: Go to shop
+        url:
+          description: The URL of the clicked link
+          type: string
+          format: uri
+          example: https://my-shop.example.com/
+      type: object
+    ContactActivityResource:
+      properties:
+        resourceId:
+          type: string
+          example: oY2n
+          nullable: true
+        resourceType:
+          type: string
+          enum:
+          - newsletters
+          - splittests
+          - autoresponders
+          - rss-newsletters
+          - sms
+          example: newsletters
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/newsletters/oY2n
+      type: object
+    ContactConsent:
+      properties:
+        consentId:
+          description: The unique identifier of the consent field.
+          type: string
+          readOnly: true
+          example: 8J3k
+        name:
+          description: The name of the consent field.
+          type: string
+          example: Marketing Consent
+        content:
+          description: The actual text content of the consent field.
+          type: string
+          example: I agree to receive marketing emails and SMS messages.
+        isGranted:
+          description: Information whether the consent field is currently granted (true) or not (false).
+          type: boolean
+          example: true
+        history:
+          description: The history of changes to the consent field text.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactConsentHistoryItem'
+      type: object
+    ContactConsentHistoryItem:
+      properties:
+        content:
+          description: The text content of the consent field.
+          type: string
+          example: I agree to receive marketing emails.
+        wasGranted:
+          description: Information whether the consent field was granted.
+          type: boolean
+          example: true
+        declaredAt:
+          description: The date and time when the consent field status was declared by the contact (ISO
+            8601).
+          type: string
+          format: date-time
+          example: 2024-07-20T06:24:14+0000
+        createdAt:
+          description: The date and time when this consent field version was created (ISO 8601).
+          type: string
+          format: date-time
+          example: 2024-07-20T06:24:14+0000
+      type: object
+    ContactCustomField:
+      properties:
+        customFieldId:
+          type: string
+          example: kL6Nh
+        values:
+          type: array
+          items:
+            type: string
+            example: 18-35
+      type: object
+    ContactCustomFieldList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactCustomField'
+    ContactCustomFieldValue:
+      required:
+      - customFieldId
+      - name
+      - type
+      - value
+      - values
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          example: 4klkN
+        name:
+          type: string
+          example: age
+        value:
+          type: array
+          items:
+            type: string
+            example: 18-35
+        values:
+          type: array
+          items:
+            type: string
+            example: 18-35
+        type:
+          type: string
+          example: single_select
+        fieldType:
+          type: string
+          example: single_select
+        valueType:
+          type: string
+          example: string
+      type: object
+    ContactDetails:
+      type: object
+      allOf:
+      - properties:
+          geolocation:
+            $ref: '#/components/schemas/ContactGeolocation'
+          tags:
+            description: The list of contact tags, limited to 500 tags.
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactTag'
+          customFieldValues:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactCustomFieldValue'
+        type: object
+      - $ref: '#/components/schemas/ContactListElement'
+    ContactGeolocation:
+      properties:
+        latitude:
+          type: string
+          example: '54.35'
+          nullable: true
+        longitude:
+          type: string
+          example: '18.6667'
+          nullable: true
+        continentCode:
+          type: string
+          enum:
+          - OC
+          - AN
+          - SA
+          - NA
+          - AS
+          - EU
+          - AF
+          example: EU
+          nullable: true
+        countryCode:
+          description: The country code, compliant with ISO 3166-1 alpha-2
+          type: string
+          example: PL
+          nullable: true
+        region:
+          type: string
+          example: '82'
+          nullable: true
+        postalCode:
+          type: string
+          example: 80-387
+          nullable: true
+        dmaCode:
+          type: string
+          nullable: true
+        city:
+          type: string
+          example: Gdansk
+          nullable: true
+      type: object
+    ContactListElement:
+      allOf:
+      - properties:
+          note:
+            type: string
+            maxLength: 255
+            minLength: 0
+            nullable: true
+          ipAddress:
+            description: The contact's IP address. IPv4 and IPv6 formats are accepted.
+            example: 1.2.3.4
+            oneOf:
+            - type: string
+              format: ipv4
+            - type: string
+              format: ipv6
+        type: object
+      - $ref: '#/components/schemas/Contact'
+    ContactTag:
+      properties:
+        tagId:
+          type: string
+          example: hR
+        name:
+          type: string
+          example: super_promo
+        href:
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/tags/hR
+        color:
+          type: string
+          example: ''
+          deprecated: true
+      type: object
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    NewContact:
+      required:
+      - email
+      - campaign
+      type: object
+      allOf:
+      - properties:
+          ipAddress:
+            description: The contact's IP address. IPv4 and IPv6 formats are accepted.
+            example: 1.2.3.4
+            oneOf:
+            - type: string
+              format: ipv4
+            - type: string
+              format: ipv6
+        type: object
+      - $ref: '#/components/schemas/Contact'
+      - $ref: '#/components/schemas/NewContactTags'
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
+    NewContactCustomFieldValue:
+      required:
+      - customFieldId
+      - value
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          example: kL6Nh
+        value:
+          type: array
+          items:
+            type: string
+            example: 18-35
+      type: object
+    NewContactCustomFieldValues:
+      properties:
+        customFieldValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactCustomFieldValue'
+      type: object
+    NewContactTag:
+      required:
+      - tagId
+      properties:
+        tagId:
+          type: string
+          example: m7E2
+      type: object
+    NewContactTags:
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactTag'
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    UpdateContact:
+      type: object
+      allOf:
+      - properties:
+          contactId:
+            type: string
+            readOnly: true
+            example: pV3r
+          name:
+            type: string
+            maxLength: 128
+            minLength: 1
+            example: John Doe
+          origin:
+            type: string
+            enum:
+            - import
+            - email
+            - www
+            - panel
+            - leads
+            - sale
+            - api
+            - survey
+            - iphone
+            - copy
+            - landing_page
+            - webinar
+            - website_builder_elegant
+            - chat
+            - course
+            - premium_newsletter
+            readOnly: true
+          timeZone:
+            description: The time zone of a contact, uses the time zone database format (https://www.iana.org/time-zones)
+            type: string
+            readOnly: true
+            example: Europe/Warsaw
+          activities:
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/contacts/pV3r/activities
+          changedOn:
+            type: string
+            format: date-time
+            readOnly: true
+            example: 2017-12-19T13:11:48+0000
+          createdOn:
+            type: string
+            format: date-time
+            readOnly: true
+            example: 2017-03-02T07:30:49+0000
+          campaign:
+            type: object
+            allOf:
+            - properties:
+                campaignId:
+                  description: Campaign ID
+                  type: string
+                  example: C
+                href:
+                  description: Direct hyperlink to a resource
+                  type: string
+                  format: uri
+                  readOnly: true
+                  example: https://api.getresponse.com/v3/campaigns/C
+                name:
+                  description: The campaign name
+                  type: string
+                  readOnly: true
+                  example: Promo campaign
+                  nullable: true
+              type: object
+          email:
+            type: string
+            format: email
+            example: john.doe@example.com
+          dayOfCycle:
+            description: The day on which the contact is in the Autoresponder cycle. `null` indicates
+              the contacts is not in the cycle.
+            type: string
+            example: '42'
+            nullable: true
+          scoring:
+            description: Contact scoring, pass null to remove the score from a contact
+            type: number
+            example: 8
+            nullable: true
+          engagementScore:
+            description: Engagement Score is a feature that presents a visual estimate of a contact's
+              engagement with mailings. The score is based on the contact's interactions with your e-mails.
+              Via API, it's returned in the form of numbers ranging from 1 (Not Engaged) to 5 (Highly
+              Engaged).
+            type: integer
+            format: int32
+            maximum: 5
+            minimum: 1
+            readOnly: true
+            example: 3
+            nullable: true
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/contacts/pV3r
+          note:
+            type: string
+            maxLength: 255
+            minLength: 0
+            nullable: true
+        type: object
+      - $ref: '#/components/schemas/NewContactTags'
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
+    UpsertContactCustomFields:
+      required:
+      - customFieldValues
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
+    UpsertContactTags:
+      required:
+      - tags
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NewContactTags'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

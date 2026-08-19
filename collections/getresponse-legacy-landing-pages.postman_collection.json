@@ -1,0 +1,993 @@
+{
+  "item": [
+    {
+      "id": "156a430f-083f-45b8-9a29-d0da4086222b",
+      "name": "Legacy Landing Pages",
+      "description": {
+        "content": "Legacy Landing Pages description",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "09f183a1-623c-4463-9a2c-a03267f417be",
+          "name": "Get single landing page by ID",
+          "request": {
+            "name": "Get single landing page by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "landing-pages",
+                ":landingPageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "landingPageId",
+                  "description": "(Required) The landing page ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "93a994c6-1c06-4037-9db8-f02b66ab33c9",
+              "name": "The landing pages details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages",
+                    ":landingPageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "landingPageId",
+                      "description": "(Required) The landing page ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3943"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3943"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"metaDescription\": \"Some meta description\",\n    \"metaNoindex\": \"yes\",\n    \"dayOfCycle\": 2,\n    \"optin\": \"double\",\n    \"favicoUrl\": \"https://my-landing-page.mohahaha.com/favico.ico\",\n    \"thankYouPageType\": \"custom_url\",\n    \"thankYouPageUrl\": \"https://my-landing-page.mohahaha.com/thank_you.html\",\n    \"url\": \"https://my-landing-page.mohahaha.com\",\n    \"variants\": [\n      {\n        \"variantId\": \"PKxn\",\n        \"variant\": \"0\",\n        \"winner\": true,\n        \"visitors\": \"12\",\n        \"uniqueVisitors\": \"2\",\n        \"subscribed\": \"2\"\n      },\n      {\n        \"variantId\": \"PKxn\",\n        \"variant\": \"0\",\n        \"winner\": true,\n        \"visitors\": \"12\",\n        \"uniqueVisitors\": \"2\",\n        \"subscribed\": \"2\"\n      }\n    ],\n    \"landingPageId\": \"avYn\",\n    \"href\": \"https://api.getresponse.com/v3/landing-pages/avYn\",\n    \"metaTitle\": \"Some meta title\",\n    \"domain\": \"gr8.new\",\n    \"subdomain\": \"summer-sale\",\n    \"userDomain\": \"\",\n    \"userDomainPath\": \"\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"disabled\",\n    \"userDomainStatus\": \"active\",\n    \"testAB\": \"true\",\n    \"createdOn\": \"1974-05-05T22:23:06.965Z\",\n    \"updatedOn\": \"1967-01-20T14:20:55.163Z\"\n  },\n  {\n    \"metaDescription\": \"Some meta description\",\n    \"metaNoindex\": \"yes\",\n    \"dayOfCycle\": 2,\n    \"optin\": \"single\",\n    \"favicoUrl\": \"https://my-landing-page.mohahaha.com/favico.ico\",\n    \"thankYouPageType\": \"stay_on_page\",\n    \"thankYouPageUrl\": \"https://my-landing-page.mohahaha.com/thank_you.html\",\n    \"url\": \"https://my-landing-page.mohahaha.com\",\n    \"variants\": [\n      {\n        \"variantId\": \"PKxn\",\n        \"variant\": \"0\",\n        \"winner\": true,\n        \"visitors\": \"12\",\n        \"uniqueVisitors\": \"2\",\n        \"subscribed\": \"2\"\n      },\n      {\n        \"variantId\": \"PKxn\",\n        \"variant\": \"0\",\n        \"winner\": true,\n        \"visitors\": \"12\",\n        \"uniqueVisitors\": \"2\",\n        \"subscribed\": \"2\"\n      }\n    ],\n    \"landingPageId\": \"avYn\",\n    \"href\": \"https://api.getresponse.com/v3/landing-pages/avYn\",\n    \"metaTitle\": \"Some meta title\",\n    \"domain\": \"gr8.new\",\n    \"subdomain\": \"summer-sale\",\n    \"userDomain\": \"\",\n    \"userDomainPath\": \"\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"enabled\",\n    \"userDomainStatus\": \"active\",\n    \"testAB\": \"true\",\n    \"createdOn\": \"1949-01-22T11:22:42.389Z\",\n    \"updatedOn\": \"1951-11-18T21:20:53.446Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8129e8c4-bf51-4f54-9203-6dba5aa5163c",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages",
+                    ":landingPageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "landingPageId",
+                      "description": "(Required) The landing page ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05c7914e-d82b-4284-a08b-a8e4788df400",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages",
+                    ":landingPageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "landingPageId",
+                      "description": "(Required) The landing page ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9b8e580-150a-4196-930f-7ed73916b720",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages",
+                    ":landingPageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "landingPageId",
+                      "description": "(Required) The landing page ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79b74984-2b83-408e-899e-6b7d264a59ef",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages",
+                    ":landingPageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "landingPageId",
+                      "description": "(Required) The landing page ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e69f87e-0a3d-43f3-aa2c-35bd485bb962",
+          "name": "Get a list of landing pages",
+          "request": {
+            "name": "Get a list of landing pages",
+            "description": {
+              "content": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "landing-pages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[domain]",
+                  "value": "<string>",
+                  "description": "Search landing pages by domain"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[status]",
+                  "value": "<string>",
+                  "description": "Search landing pages by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[subdomain]",
+                  "value": "<string>",
+                  "description": "Search landing pages by subdomain"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[metaTitle]",
+                  "value": "<string>",
+                  "description": "Search landing pages by metaTitle field"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[userDomain]",
+                  "value": "<string>",
+                  "description": "Search landing pages by user provided domain"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[campaignId]",
+                  "value": "<string>",
+                  "description": "Search landing pages by ID of the assigned campaign. Campaign ID must be encoded! You can get the campaign list with encoded IDs by calling the `/v3/campaigns` endpoint. You can search by multiple comma separated values eg. `o5lx,34er`."
+                },
+                {
+                  "disabled": false,
+                  "key": "query[createdOn][from]",
+                  "value": "<date>",
+                  "description": "Show landing pages created from this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[createdOn][to]",
+                  "value": "<date>",
+                  "description": "Show landing pages created to this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[createdOn]",
+                  "value": "<string>",
+                  "description": "Sort by date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[domain]",
+                  "value": "<string>",
+                  "description": "Sort by domain"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[campaignId]",
+                  "value": "<string>",
+                  "description": "Sort by campaign"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[metaTitle]",
+                  "value": "<string>",
+                  "description": "Sort by metaTitle"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c311b969-9b04-4633-ac5f-672e06fc6670",
+              "name": "The list of landing pages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[subdomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[userDomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3943"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3943"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "3943"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "3943"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "3943"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"landingPageId\": \"avYn\",\n    \"href\": \"https://api.getresponse.com/v3/landing-pages/avYn\",\n    \"metaTitle\": \"Some meta title\",\n    \"domain\": \"gr8.new\",\n    \"subdomain\": \"summer-sale\",\n    \"userDomain\": \"\",\n    \"userDomainPath\": \"\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"<string>\",\n    \"userDomainStatus\": \"waiting\",\n    \"testAB\": \"true\",\n    \"createdOn\": \"2004-10-21T08:58:53.621Z\",\n    \"updatedOn\": \"1950-08-21T14:51:28.119Z\"\n  },\n  {\n    \"landingPageId\": \"avYn\",\n    \"href\": \"https://api.getresponse.com/v3/landing-pages/avYn\",\n    \"metaTitle\": \"Some meta title\",\n    \"domain\": \"gr8.new\",\n    \"subdomain\": \"summer-sale\",\n    \"userDomain\": \"\",\n    \"userDomainPath\": \"\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"<string>\",\n    \"userDomainStatus\": \"waiting\",\n    \"testAB\": \"true\",\n    \"createdOn\": \"1993-09-13T05:37:08.283Z\",\n    \"updatedOn\": \"2013-03-02T22:51:47.014Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee2cc299-86cc-448d-9e36-fe101074a8d9",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[subdomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[userDomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83759b9f-763b-48b2-8763-ddfb9df7402a",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[subdomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[userDomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22999f1b-326f-4bc7-b2b7-cbdf72bad104",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "landing-pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[subdomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[userDomain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[domain]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[metaTitle]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "342678e1-8910-46fa-9a14-c5ed2b38a5aa",
+    "name": "GetResponse APIv3 Legacy Landing Pages",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Legacy Landing Pages operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

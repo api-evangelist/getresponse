@@ -1,0 +1,505 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Contacts",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of contact activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId/activities",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "By default, only activities from the last 14 days are returned. To get earlier data, use `query[createdOn]` parameter. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Get contacts from a single campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/:campaignId/contacts",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "3Va2e",
+                "type": "path",
+                "description": "Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`."
+              },
+              {
+                "name": "query[email]",
+                "value": "",
+                "type": "query",
+                "description": "Search contacts by email"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search contacts by name"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Return only contacts created on or after the given date. Use ISO 8601 format"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Return only contacts created on or before the given date. Use ISO 8601 format"
+              },
+              {
+                "name": "sort[email]",
+                "value": "",
+                "type": "query",
+                "description": "Sort contacts by email"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort contacts by name"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort contacts by creation date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides all contacts from a single campaign. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Upsert the custom fields of a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId/custom-fields",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upsert (add or update) the custom fields of a contact. This method doesn't remove (unassign) custom fields."
+        },
+        {
+          "info": {
+            "name": "Upsert the tags of a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId/tags",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upsert (add or update) the tags of a contact. This method doesn't remove (unassign) tags."
+        },
+        {
+          "info": {
+            "name": "Get contact details by contact ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all available information about an active (non-deleted) contact identified by `contactId`. The response includes basic contact data, associated tags, and values of custom fields"
+        },
+        {
+          "info": {
+            "name": "Update contact details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Skip the fields you don't want to update. If tags and custom fields are provided, they'll be **replaced** with the values sent in this request.  If the `campaignId` changes, the contact will be moved from the original campaign (list) to the new campaign (list). Their activity history and statistics will also be moved."
+        },
+        {
+          "info": {
+            "name": "Delete a contact by contact ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": ">\nThe ID of a message (such as a newsletter, an autoresponder, or an RSS-newsletter).\nWhen passed, this method will simulate the unsubscribe process, as if the contact clicked the unsubscribe link in a given message."
+              },
+              {
+                "name": "ipAddress",
+                "value": "",
+                "type": "query",
+                "description": "This makes it possible to pass the IP from which the contact unsubscribed. Used only if the `messageId` was send."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a contact by contact ID"
+        },
+        {
+          "info": {
+            "name": "Get contact list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/contacts",
+            "params": [
+              {
+                "name": "query[email]",
+                "value": "",
+                "type": "query",
+                "description": "Search contacts by email"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search contacts by name"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search contacts by campaign ID"
+              },
+              {
+                "name": "query[origin]",
+                "value": "",
+                "type": "query",
+                "description": "Search contacts by origin"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Return only contacts created on or after the given date. Use ISO 8601 format"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Return only contacts created on or before the given date. Use ISO 8601 format"
+              },
+              {
+                "name": "query[changedOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Return only contacts whose data was changed on or after the given date. Use ISO 8601 format"
+              },
+              {
+                "name": "query[changedOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Return only contacts whose data was changed on or before the given date. Use ISO 8601 format"
+              },
+              {
+                "name": "sort[email]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by email"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort contacts by subscription date"
+              },
+              {
+                "name": "sort[changedOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by change date"
+              },
+              {
+                "name": "sort[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by campaign ID"
+              },
+              {
+                "name": "additionalFlags",
+                "value": "",
+                "type": "query",
+                "description": "The additional flags parameter with the value 'exactMatch' will search for contacts with the exact value of the email and name provided in the query string. Without this flag, matching is done via a standard 'like' comparison, which may sometimes be slow."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create a new contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new contact"
+        },
+        {
+          "info": {
+            "name": "Create multiple contacts at once",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/contacts/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint lets you create multiple contacts in one request.\n\n**Note** \n\nThis endpoint is subject to special limits and throttling. You can make 80 calls per time frame (10 minutes) and only 1 call per second. The allowed batch size is 1000 contacts. For more information, check our [API Docs](https://apidocs.getresponse.com/v3/case-study/adding-batch-contacts)."
+        },
+        {
+          "info": {
+            "name": "Get contact's consent fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/contacts/:contactId/consents",
+            "params": [
+              {
+                "name": "contactId",
+                "value": "pV3r",
+                "type": "path",
+                "description": "Unique identifier of the contact. You can retrieve this ID from the [list of contacts](https://apireference.getresponse.com/#operation/getContactList) field: contactId"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all consent fields assigned to the contact, including their current status and history of changes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

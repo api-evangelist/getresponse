@@ -1,0 +1,179 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Transactional Emails Templates",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactional Emails Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single template by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/transactional-emails/templates/:transactionalEmailTemplateId",
+            "params": [
+              {
+                "name": "transactionalEmailTemplateId",
+                "value": "abc",
+                "type": "path",
+                "description": "Transactional emails template identifier"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single template by ID"
+        },
+        {
+          "info": {
+            "name": "Update transactional email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/transactional-emails/templates/:transactionalEmailTemplateId",
+            "params": [
+              {
+                "name": "transactionalEmailTemplateId",
+                "value": "abc",
+                "type": "path",
+                "description": "Transactional emails template identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This method allows you to update transactional email template"
+        },
+        {
+          "info": {
+            "name": "Delete transactional email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/transactional-emails/templates/:transactionalEmailTemplateId",
+            "params": [
+              {
+                "name": "transactionalEmailTemplateId",
+                "value": "abc",
+                "type": "path",
+                "description": "Transactional emails template identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete transactional email template"
+        },
+        {
+          "info": {
+            "name": "Get the list of transactional email templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/transactional-emails/templates",
+            "params": [
+              {
+                "name": "query[subject]",
+                "value": "",
+                "type": "query",
+                "description": "Search templates by subject"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by creation date"
+              },
+              {
+                "name": "sort[subject]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by template subject"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create transactional email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/transactional-emails/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This method creates a new transactional email template"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

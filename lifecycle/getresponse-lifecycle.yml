@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://apidocs.getresponse.com/v3, https://status.getresponse.com/,
+  openapi/_original/getresponse-open-api-original.json
+api: GetResponse API v3
+versioning:
+  scheme: uri-path
+  current: v3
+  spec_version: '3.2026-07-28T07:58:55+00:00'
+  docs: https://apidocs.getresponse.com/v3
+  policy: >-
+    GetResponse states that future updates will be backward compatible and that the version
+    number increments only for breaking changes. There is no dedicated versioning-policy page;
+    the statement lives in the API docs overview. The OpenAPI info.version is a build timestamp
+    rather than a semantic version, which does at least let a consumer tell when the contract
+    was last regenerated.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No published deprecation policy, no Sunset or Deprecation response headers, and no advance
+    notice window stated anywhere in the developer documentation. The only deprecation signal
+    GetResponse ships is the `deprecated: true` flag inside the OpenAPI itself, on two
+    operations. Because no policy pointer exists, none is emitted.
+deprecated_operations:
+  - operation: getNewsletterActivities
+    method: GET
+    path: /newsletters/{newsletterId}/activities
+    source: openapi/getresponse-newsletters-openapi.yml
+  - operation: updateTag
+    method: POST
+    path: /tags/{tagId}
+    source: openapi/getresponse-tags-openapi.yml
+changelog:
+  url: null
+  note: >-
+    No dated API changelog is published. Probed /v3/changelog, /v3/changes,
+    apireference.getresponse.com/changelog, /help/whats-new and /product-updates — all 404.
+    The date-stamped OpenAPI info.version is the only machine-readable "when did this change"
+    signal, and it carries no diff.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment. GetResponse MAX (Enterprise) is sold with "dedicated
+    support" but the terms are not published.
+status_page:
+  url: https://status.getresponse.com/
+  platform: Atlassian Statuspage
+  http_status: 200
+  subscribable: true
+support:
+  developer_contact: getresponse-devzone@cs.getresponse.com
+  feedback_url: https://app.getresponse.com/feedback.html?devzone=yes
+  source: OpenAPI info.contact
+key_lifecycle:
+  api_key_expiry_days: 90
+  note: >-
+    Unused API keys expire after 90 days of inactivity and must be regenerated at
+    https://app.getresponse.com/api. This is a real operational trap for a low-frequency
+    integration or an agent that runs on a monthly cadence — the credential silently dies
+    between runs and returns error code 1014.

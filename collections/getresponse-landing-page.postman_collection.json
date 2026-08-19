@@ -1,0 +1,462 @@
+{
+  "item": [
+    {
+      "id": "42117f68-e246-4a3c-b575-f86331cb8190",
+      "name": "Landing Page",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38dbddca-5df0-4204-bfd3-db3469346ba2",
+          "name": "Get details for landing page statistics",
+          "request": {
+            "name": "Get details for landing page statistics",
+            "description": {},
+            "url": {
+              "path": [
+                "statistics",
+                "lps",
+                ":lpsId",
+                "performance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[date][from]",
+                  "value": "<date>",
+                  "description": "Show a single landing page statistics from this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[date][to]",
+                  "value": "<date>",
+                  "description": "Show a single landing page statistics to this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[location]",
+                  "value": "<string>",
+                  "description": "Landing page statistics by location"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[device]",
+                  "value": "<string>",
+                  "description": "Landing page statistics by device"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[page]",
+                  "value": "<string>",
+                  "description": "Landing page statistics by page UUID"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lpsId",
+                  "description": "(Required) The landing page ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7cc69eff-39b0-4cad-90a8-a7012e7e7048",
+              "name": "Landing page statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statistics",
+                    "lps",
+                    ":lpsId",
+                    "performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[date][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[date][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[location]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[device]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[page]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5401"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5401"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lpsId\": \"6ee7597f-9bde-4b92-9411-2fb228c9fa34\",\n  \"name\": \"Some example landing page\",\n  \"pageViews\": 9,\n  \"visits\": 5,\n  \"uniqueVisitors\": 5,\n  \"thumbnailUrl\": \"https://us-wbe-img2.gr-cdn.com/user/X/Y.webp\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b6ed90f-934f-408e-bd1a-7904f6e551c8",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statistics",
+                    "lps",
+                    ":lpsId",
+                    "performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[date][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[date][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[location]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[device]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[page]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bdb8b9b-0941-4334-a69b-95ea5b693017",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statistics",
+                    "lps",
+                    ":lpsId",
+                    "performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[date][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[date][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[location]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[device]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[page]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2977d91-2386-4a03-b957-9d67538420c1",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "statistics",
+                    "lps",
+                    ":lpsId",
+                    "performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[date][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[date][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[location]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[device]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[page]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c91aef9c-ab92-4d4c-8fdc-7d551558cae8",
+    "name": "GetResponse APIv3 Landing Page",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Landing Page operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

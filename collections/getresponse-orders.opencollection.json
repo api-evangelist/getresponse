@@ -1,0 +1,241 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Orders",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/orders",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "query[description]",
+                "value": "",
+                "type": "query",
+                "description": "Search order by description"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search order by status"
+              },
+              {
+                "name": "query[externalId]",
+                "value": "",
+                "type": "query",
+                "description": "Search order by external ID"
+              },
+              {
+                "name": "query[processedAt][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show orders processed from this date"
+              },
+              {
+                "name": "query[processedAt][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show orders processed to this date"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a  **GET** request to this URL returns a collection of order resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n * description\n * status\n * externalId\n * processedAt\n\nThe `description` fields can be a pattern and we'll try to match this phrase.\n\n You can filter the resource using criteria specified as `query[*]`. You can p"
+        },
+        {
+          "info": {
+            "name": "Create order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/orders",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "additionalFlags",
+                "value": "skipAutomation",
+                "type": "query",
+                "description": "The additional flags parameter with the value `skipAutomation` will skip the triggering `Make a purchase` element in an automated workflow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **POST** request to this URL will create a new order resource.\n\nIn order to create a new order, you need to send the order resource in the body of the request (remember that you need to serialize the body into a JSON string).\n\n"
+        },
+        {
+          "info": {
+            "name": "Get a single order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/orders/:orderId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "orderId",
+                "value": "fOh",
+                "type": "path",
+                "description": "The order ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method returns the order according to the given `orderId`.\n\n"
+        },
+        {
+          "info": {
+            "name": "Update order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/orders/:orderId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "orderId",
+                "value": "fOh",
+                "type": "path",
+                "description": "The order ID"
+              },
+              {
+                "name": "additionalFlags",
+                "value": "skipAutomation",
+                "type": "query",
+                "description": "The additional flags parameter with the value `skipAutomation` will skip the triggering `Make a purchase` element in an automated workflow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate the properties of a shop's order. You should send only those fields that need to be changed. The rest of the properties will stay the same.\nHowever, in case of `billingAddress` and `shippingAddress`, you must send the entire representation. Individual fields can't be updated.\nIf you want to update individual fields of an address, you can do so using `POST /v3/addresses/{addressId}`.\n\nIn case of `selectedVariants`, when the collection is updated, the old collection is completely removed. "
+        },
+        {
+          "info": {
+            "name": "Delete order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/orders/:orderId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "orderId",
+                "value": "fOh",
+                "type": "path",
+                "description": "The order ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete order"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

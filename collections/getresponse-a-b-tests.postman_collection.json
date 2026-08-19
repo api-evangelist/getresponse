@@ -1,0 +1,886 @@
+{
+  "item": [
+    {
+      "id": "a0d54fbc-df65-4440-8f7d-599922bfb3f0",
+      "name": "A/B tests",
+      "description": {
+        "content": "A/B tests API documentation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "76862457-2e05-4f11-9781-629f25c7da4c",
+          "name": "Get a single A/B test.",
+          "request": {
+            "name": "Get a single A/B test.",
+            "description": {
+              "content": "Get a single A/B test by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "splittests",
+                ":splittestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "splittestId",
+                  "description": "(Required) The send settings for the A/B test"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ced5c522-894d-460a-a0a3-2ba2aa32499e",
+              "name": "A/B test details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests",
+                    ":splittestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "splittestId",
+                      "description": "(Required) The send settings for the A/B test"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3074"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3074"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"splittestId\": \"A3r\",\n  \"href\": \"https://api.getresponse.com/v3/splittests/A3r\",\n  \"name\": \"A/B test\",\n  \"campaign\": {\n    \"campaignId\": \"C\",\n    \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n    \"name\": \"Promo campaign\"\n  },\n  \"status\": \"active\",\n  \"winningCriteria\": \"click\",\n  \"winningTarget\": \"10\",\n  \"stage\": \"choose_winning\",\n  \"type\": \"content\",\n  \"samplingPercentage\": \"18\",\n  \"samplingTime\": \"86400\",\n  \"chooseWinning\": \"manual\",\n  \"winningScoreOpens\": \"5\",\n  \"winningScoreClicks\": \"3\",\n  \"winningDelivered\": \"12\",\n  \"winningScheduleOn\": \"2015-06-25T20:05:10+0000\",\n  \"nextStepOn\": \"2015-07-25T20:05:10+0000\",\n  \"evaluationSkippedOn\": \"2015-07-25T20:05:10+0000\",\n  \"canceledOn\": \"2015-07-25T20:05:10+0000\",\n  \"createdOn\": \"2015-07-25T20:05:10+0000\",\n  \"newsletters\": [\n    {\n      \"newsletterId\": \"Z6e\",\n      \"href\": \"https://api.getresponse.com/v3/newsletters/B2fvv\",\n      \"name\": \"Newsletter name\",\n      \"subject\": \"Example subject\",\n      \"fromField\": {\n        \"fromFieldId\": \"V\",\n        \"href\": \"https://api.getresponse.com/v3/from-fields/V\"\n      },\n      \"status\": \"rejected\",\n      \"sendOn\": \"2015-06-25T20:05:10+0000\",\n      \"samplingTargets\": \"2\",\n      \"samplingDelivered\": \"2\",\n      \"scoreOpens\": \"2\",\n      \"scoreClicks\": \"2\"\n    },\n    {\n      \"newsletterId\": \"Z6e\",\n      \"href\": \"https://api.getresponse.com/v3/newsletters/B2fvv\",\n      \"name\": \"Newsletter name\",\n      \"subject\": \"Example subject\",\n      \"fromField\": {\n        \"fromFieldId\": \"V\",\n        \"href\": \"https://api.getresponse.com/v3/from-fields/V\"\n      },\n      \"status\": \"sampled\",\n      \"sendOn\": \"2015-06-25T20:05:10+0000\",\n      \"samplingTargets\": \"2\",\n      \"samplingDelivered\": \"2\",\n      \"scoreOpens\": \"2\",\n      \"scoreClicks\": \"2\"\n    }\n  ],\n  \"sendSettings\": {\n    \"selectedCampaigns\": [\n      \"C\",\n      \"C\"\n    ],\n    \"selectedSegments\": [\n      \"Se\",\n      \"Se\"\n    ],\n    \"selectedSupressions\": [\n      \"Ss\",\n      \"Ss\"\n    ],\n    \"excludedCampaigns\": [\n      \"eC\",\n      \"eC\"\n    ],\n    \"excludedSegments\": [\n      \"eSs\",\n      \"eSs\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b039c043-fa91-49b6-9422-fa7983814441",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests",
+                    ":splittestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "splittestId",
+                      "description": "(Required) The send settings for the A/B test"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "359e990e-b9e0-484d-8afc-86e22c5c5cf5",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests",
+                    ":splittestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "splittestId",
+                      "description": "(Required) The send settings for the A/B test"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc2e7bc1-2edb-4eeb-a0a3-d0ef707ae643",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests",
+                    ":splittestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "splittestId",
+                      "description": "(Required) The send settings for the A/B test"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "938832bf-c45d-41ce-9ebd-7d0efa9e2200",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests",
+                    ":splittestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "splittestId",
+                      "description": "(Required) The send settings for the A/B test"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0909a264-9f04-4267-bb04-ddcb1f0d4efc",
+          "name": "The list of A/B tests.",
+          "request": {
+            "name": "The list of A/B tests.",
+            "description": {
+              "content": "The list of A/B tests. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "splittests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[name]",
+                  "value": "<string>",
+                  "description": "Search A/B tests by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[type]",
+                  "value": "<string>",
+                  "description": "Search A/B tests by type"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[status]",
+                  "value": "active",
+                  "description": "Search A/B tests by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[createdOn][from]",
+                  "value": "<date>",
+                  "description": "Search A/B tests created from this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[createdOn][to]",
+                  "value": "<date>",
+                  "description": "Search A/B tests created to this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[name]",
+                  "value": "<string>",
+                  "description": "Sort by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[createdOn]",
+                  "value": "<string>",
+                  "description": "Sort by creation date"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f7794c3f-902b-46a6-bf1d-28d62fe8f735",
+              "name": "The list of A/B tests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "active"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3074"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3074"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "3074"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "3074"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "3074"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"splittestId\": \"A3r\",\n    \"href\": \"https://api.getresponse.com/v3/splittests/A3r\",\n    \"name\": \"A/B test\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"inactive\",\n    \"winningCriteria\": \"open\",\n    \"winningTarget\": \"10\",\n    \"stage\": \"canceled_queued\",\n    \"type\": \"content\",\n    \"samplingPercentage\": \"18\",\n    \"samplingTime\": \"86400\",\n    \"chooseWinning\": \"automatic\",\n    \"winningScoreOpens\": \"5\",\n    \"winningScoreClicks\": \"3\",\n    \"winningDelivered\": \"12\",\n    \"winningScheduleOn\": \"2015-06-25T20:05:10+0000\",\n    \"nextStepOn\": \"2015-07-25T20:05:10+0000\",\n    \"evaluationSkippedOn\": \"2015-07-25T20:05:10+0000\",\n    \"canceledOn\": \"2015-07-25T20:05:10+0000\",\n    \"createdOn\": \"2015-07-25T20:05:10+0000\",\n    \"newsletters\": [\n      {\n        \"newsletterId\": \"Z6e\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/B2fvv\",\n        \"name\": \"Newsletter name\",\n        \"subject\": \"Example subject\",\n        \"fromField\": {\n          \"fromFieldId\": \"V\",\n          \"href\": \"https://api.getresponse.com/v3/from-fields/V\"\n        },\n        \"status\": \"sampled\",\n        \"sendOn\": \"2015-06-25T20:05:10+0000\",\n        \"samplingTargets\": \"2\",\n        \"samplingDelivered\": \"2\",\n        \"scoreOpens\": \"2\",\n        \"scoreClicks\": \"2\"\n      },\n      {\n        \"newsletterId\": \"Z6e\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/B2fvv\",\n        \"name\": \"Newsletter name\",\n        \"subject\": \"Example subject\",\n        \"fromField\": {\n          \"fromFieldId\": \"V\",\n          \"href\": \"https://api.getresponse.com/v3/from-fields/V\"\n        },\n        \"status\": \"sampled\",\n        \"sendOn\": \"2015-06-25T20:05:10+0000\",\n        \"samplingTargets\": \"2\",\n        \"samplingDelivered\": \"2\",\n        \"scoreOpens\": \"2\",\n        \"scoreClicks\": \"2\"\n      }\n    ],\n    \"sendSettings\": {\n      \"selectedCampaigns\": [\n        \"C\",\n        \"C\"\n      ],\n      \"selectedSegments\": [\n        \"Se\",\n        \"Se\"\n      ],\n      \"selectedSupressions\": [\n        \"Ss\",\n        \"Ss\"\n      ],\n      \"excludedCampaigns\": [\n        \"eC\",\n        \"eC\"\n      ],\n      \"excludedSegments\": [\n        \"eSs\",\n        \"eSs\"\n      ]\n    }\n  },\n  {\n    \"splittestId\": \"A3r\",\n    \"href\": \"https://api.getresponse.com/v3/splittests/A3r\",\n    \"name\": \"A/B test\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"inactive\",\n    \"winningCriteria\": \"open\",\n    \"winningTarget\": \"10\",\n    \"stage\": \"queued\",\n    \"type\": \"subject\",\n    \"samplingPercentage\": \"18\",\n    \"samplingTime\": \"86400\",\n    \"chooseWinning\": \"manual\",\n    \"winningScoreOpens\": \"5\",\n    \"winningScoreClicks\": \"3\",\n    \"winningDelivered\": \"12\",\n    \"winningScheduleOn\": \"2015-06-25T20:05:10+0000\",\n    \"nextStepOn\": \"2015-07-25T20:05:10+0000\",\n    \"evaluationSkippedOn\": \"2015-07-25T20:05:10+0000\",\n    \"canceledOn\": \"2015-07-25T20:05:10+0000\",\n    \"createdOn\": \"2015-07-25T20:05:10+0000\",\n    \"newsletters\": [\n      {\n        \"newsletterId\": \"Z6e\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/B2fvv\",\n        \"name\": \"Newsletter name\",\n        \"subject\": \"Example subject\",\n        \"fromField\": {\n          \"fromFieldId\": \"V\",\n          \"href\": \"https://api.getresponse.com/v3/from-fields/V\"\n        },\n        \"status\": \"sampled\",\n        \"sendOn\": \"2015-06-25T20:05:10+0000\",\n        \"samplingTargets\": \"2\",\n        \"samplingDelivered\": \"2\",\n        \"scoreOpens\": \"2\",\n        \"scoreClicks\": \"2\"\n      },\n      {\n        \"newsletterId\": \"Z6e\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/B2fvv\",\n        \"name\": \"Newsletter name\",\n        \"subject\": \"Example subject\",\n        \"fromField\": {\n          \"fromFieldId\": \"V\",\n          \"href\": \"https://api.getresponse.com/v3/from-fields/V\"\n        },\n        \"status\": \"sampled\",\n        \"sendOn\": \"2015-06-25T20:05:10+0000\",\n        \"samplingTargets\": \"2\",\n        \"samplingDelivered\": \"2\",\n        \"scoreOpens\": \"2\",\n        \"scoreClicks\": \"2\"\n      }\n    ],\n    \"sendSettings\": {\n      \"selectedCampaigns\": [\n        \"C\",\n        \"C\"\n      ],\n      \"selectedSegments\": [\n        \"Se\",\n        \"Se\"\n      ],\n      \"selectedSupressions\": [\n        \"Ss\",\n        \"Ss\"\n      ],\n      \"excludedCampaigns\": [\n        \"eC\",\n        \"eC\"\n      ],\n      \"excludedSegments\": [\n        \"eSs\",\n        \"eSs\"\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01ed9d28-62d9-4616-b4df-ffb7540888c9",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "active"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b585cb3-c1d2-4056-b956-a872e4bfc4ed",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "active"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "387d697e-e266-4c04-a3b8-79f748f03cac",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "splittests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "active"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7717f545-273a-4dec-988d-19d70e24e470",
+    "name": "GetResponse APIv3 A/B tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The A/B tests operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

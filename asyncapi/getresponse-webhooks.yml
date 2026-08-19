@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.getresponse.com/v3/webhooks, https://apidocs.getresponse.com/v3/callbacks
+spec_type: Webhooks
+asyncapi: null
+note: >-
+  GetResponse publishes no AsyncAPI document — probed /asyncapi.yaml, /asyncapi.json and the
+  GitHub org, all miss. It does document a real, current event surface in two generations, and
+  they are NOT the same product. The modern "Webhooks" surface (13 events, JSON payloads,
+  batching, retries, HTTPS-only) is configured in the app UI and has no REST management
+  endpoints in the 220-operation OpenAPI. The legacy "Callbacks" surface (6 events,
+  form-encoded query-string payloads, no retry) is managed by API at /accounts/callbacks. An
+  integrator choosing by API-manageability alone would land on the older, lossier one.
+surfaces:
+  - name: Webhooks
+    generation: current
+    docs: https://apidocs.getresponse.com/v3/webhooks
+    configured_via: GetResponse application UI (Webhooks section) — "Create webhook", pick event, give URL
+    api_manageable: false
+    transport: HTTPS only, valid SSL certificate required
+    payload_format: JSON object per event; batched deliveries arrive as a JSON array
+    batch_size: 100
+    endpoint_timeout_seconds: 5
+    expected_response: '2xx with a JSON body of {"status": "OK"}'
+    authentication: >-
+      Optional query-string verification only — the subscriber may append a custom parameter
+      (e.g. ?secret=xyz) to the registered URL and check it on receipt. There is no HMAC
+      signature header, so payload integrity cannot be verified.
+    source_ip_allowlist: true
+    retry_policy:
+      retries: 3
+      retried_on: [network errors, 429, 5xx, timeouts]
+      not_retried_on: [1xx, 3xx, 4xx except 429]
+    events:
+      - name: Message opened
+        category: engagement
+      - name: Link clicked
+        category: engagement
+      - name: SMS link clicked
+        category: engagement
+      - name: Contact subscribed
+        category: contact-lifecycle
+      - name: Contact copied
+        category: contact-lifecycle
+      - name: Contact moved
+        category: contact-lifecycle
+      - name: Contact unsubscribed
+        category: contact-lifecycle
+      - name: Contact bounce removed
+        category: deliverability
+      - name: Contact rejected
+        category: deliverability
+      - name: Custom field value changed
+        category: contact-data
+      - name: Contact's email changed
+        category: contact-data
+      - name: Import finished
+        category: async-job
+        note: >-
+          The completion signal for POST /contacts and POST /contacts/batch, which are
+          asynchronous — the provider's own Agent Skill tells agents to verify an import via
+          this webhook, or by sampled polling with exponential backoff when no webhook is
+          configured.
+      - name: Custom report file status changed
+        category: async-job
+  - name: Callbacks
+    generation: legacy
+    docs: https://apidocs.getresponse.com/v3/callbacks
+    configured_via: https://app.getresponse.com/callback or the REST API
+    api_manageable: true
+    api_operations:
+      - 'GET /accounts/callbacks'
+      - 'POST /accounts/callbacks'
+      - 'DELETE /accounts/callbacks'
+    transport: HTTP or HTTPS
+    payload_format: >-
+      URL query string, not JSON — e.g.
+      action=open&ACCOUNT_ID=A1&account_login=myaccount&CAMPAIGN_ID=C1&campaign_name=mycampaign&MESSAGE_ID=M1
+    endpoint_timeout_seconds: 4
+    retry_policy:
+      retries: 0
+      note: A callback that exceeds the 4-second threshold is not retried and is permanently lost.
+    authentication: none documented
+    events:
+      - name: subscribe
+      - name: unsubscribe
+      - name: open
+      - name: click
+      - name: goal
+      - name: survey
+gaps:
+  - No AsyncAPI document is published for either surface.
+  - >-
+    No signature/HMAC verification on either surface; the strongest available check is a
+    shared secret in the webhook query string.
+  - >-
+    The modern Webhooks surface cannot be created, listed or deleted through the API, so an
+    agent cannot self-provision its own event subscription.

@@ -1,0 +1,927 @@
+{
+  "item": [
+    {
+      "id": "fc0a6ec4-164a-4a94-9feb-dc8df9df28e6",
+      "name": "SMS Automation Messages",
+      "description": {
+        "content": "SMS Automation Messages API documentation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f62fa89a-9455-47db-8fec-3d0be8187011",
+          "name": "Get a single automated SMS message by its ID.",
+          "request": {
+            "name": "Get a single automated SMS message by its ID.",
+            "description": {},
+            "url": {
+              "path": [
+                "sms-automation",
+                ":smsId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "smsId",
+                  "description": "(Required) The automated SMS message ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c166f7c-44a5-4a79-8ef6-d5e1d2b27117",
+              "name": "The automated SMS message details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation",
+                    ":smsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "smsId",
+                      "description": "(Required) The automated SMS message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5512"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5512"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"smsId\": \"N\",\n  \"workflows\": [\n    {\n      \"workflowId\": \"wkFiD\",\n      \"name\": \"Workflow 1\",\n      \"href\": \"https://api.getresponse.com/v3/workflow/wkFiD\"\n    },\n    {\n      \"workflowId\": \"wkFiD\",\n      \"name\": \"Workflow 1\",\n      \"href\": \"https://api.getresponse.com/v3/workflow/wkFiD\"\n    }\n  ],\n  \"clickTracks\": [\n    {\n      \"clickTrackId\": \"a2\",\n      \"href\": \"https://api.getresponse.com/v3/click-tracks/a2\",\n      \"url\": \"https://example.com\",\n      \"label\": \"example-link\",\n      \"amount\": 2,\n      \"uniqueAmount\": 1\n    },\n    {\n      \"clickTrackId\": \"a2\",\n      \"href\": \"https://api.getresponse.com/v3/click-tracks/a2\",\n      \"url\": \"https://example.com\",\n      \"label\": \"example-link\",\n      \"amount\": 2,\n      \"uniqueAmount\": 1\n    }\n  ],\n  \"content\": \"Hello, world!\",\n  \"href\": \"https://api.getresponse.com/v3/sms-automation/N\",\n  \"name\": \"New message\",\n  \"campaign\": {\n    \"campaignId\": \"C\",\n    \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n    \"name\": \"Promo campaign\"\n  },\n  \"modifiedOn\": \"2012-10-22T04:18:26.473Z\",\n  \"status\": \"in_use\",\n  \"statistics\": {\n    \"sent\": 12,\n    \"delivered\": 10,\n    \"clicks\": 8\n  },\n  \"senderName\": \"string\",\n  \"hasLinks\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efd36eac-dbd1-4feb-b507-e7b587a2c23c",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation",
+                    ":smsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "smsId",
+                      "description": "(Required) The automated SMS message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50a66669-6552-4f1a-b217-4c6b335aa298",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation",
+                    ":smsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "smsId",
+                      "description": "(Required) The automated SMS message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4453828f-b9dd-4eea-9921-dd1f80a47c26",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation",
+                    ":smsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "smsId",
+                      "description": "(Required) The automated SMS message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35f6b540-0a1e-48f1-be80-908935e2be48",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation",
+                    ":smsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "smsId",
+                      "description": "(Required) The automated SMS message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68c0589a-70ef-43f5-9562-7a5af30b4e6b",
+          "name": "Get the list of automated SMS messages.",
+          "request": {
+            "name": "Get the list of automated SMS messages.",
+            "description": {
+              "content": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms-automation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[name]",
+                  "value": "<string>",
+                  "description": "Search automated SMS messages by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[campaignId]",
+                  "value": "<string>",
+                  "description": "Search automated SMS messages by campaign (list) ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[hasLinks]",
+                  "value": "<boolean>",
+                  "description": "Search for automated SMS messages containing links"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[status]",
+                  "value": "<string>",
+                  "description": "Sort by the status of the SMS message"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[name]",
+                  "value": "<string>",
+                  "description": "Sort by the name of the automated SMS message"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[modifiedOn]",
+                  "value": "<string>",
+                  "description": "Sort by the date the SMS message was modified on"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[delivered]",
+                  "value": "<string>",
+                  "description": "Sort by the number of delivered SMS messages"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[sent]",
+                  "value": "<string>",
+                  "description": "Sort by the number of sent SMS messages"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[clicks]",
+                  "value": "<string>",
+                  "description": "Sort by the number of link clicks"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "44683422-5a83-49eb-986c-7025d59a285c",
+              "name": "The list of the automated SMS messages",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[hasLinks]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[modifiedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[delivered]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[sent]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[clicks]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5512"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5512"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "5512"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "5512"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "5512"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"smsId\": \"N\",\n  \"href\": \"https://api.getresponse.com/v3/sms-automation/N\",\n  \"name\": \"New message\",\n  \"campaign\": {\n    \"campaignId\": \"C\",\n    \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n    \"name\": \"Promo campaign\"\n  },\n  \"modifiedOn\": \"1949-07-24T20:24:07.839Z\",\n  \"status\": \"in_use\",\n  \"statistics\": {\n    \"sent\": 12,\n    \"delivered\": 10,\n    \"clicks\": 8\n  },\n  \"senderName\": \"string\",\n  \"hasLinks\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8afbd50-1fca-4ebc-b1de-422699acafb8",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[hasLinks]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[modifiedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[delivered]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[sent]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[clicks]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0483c2d9-3713-45b0-9af9-71f6afa294ba",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[hasLinks]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[modifiedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[delivered]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[sent]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[clicks]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfba373d-0f76-4826-a72b-4386ec5004a5",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms-automation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[hasLinks]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[modifiedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[delivered]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[sent]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[clicks]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3df14433-b445-41c4-8eb5-992c8db75502",
+    "name": "GetResponse APIv3 SMS Automation Messages",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SMS Automation Messages operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

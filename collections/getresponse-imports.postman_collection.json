@@ -1,0 +1,1268 @@
+{
+  "item": [
+    {
+      "id": "d1086df0-8f8c-4d05-b3fe-3b8e575e1a1a",
+      "name": "Imports",
+      "description": {
+        "content": "Imports API documentation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d63bd99a-dcfa-44e3-8841-ce024b24c4ca",
+          "name": "Get import details by ID.",
+          "request": {
+            "name": "Get import details by ID.",
+            "description": {},
+            "url": {
+              "path": [
+                "imports",
+                ":importId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "importId",
+                  "description": "(Required) The import ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "20f346af-f8b2-4262-8870-fe01fd0b8ebc",
+              "name": "The import details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "importId",
+                      "description": "(Required) The import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"importId\": \"o6gE\",\n  \"campaign\": {\n    \"campaignId\": \"C\",\n    \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n    \"name\": \"Promo campaign\"\n  },\n  \"status\": \"canceled\",\n  \"statistics\": {\n    \"uploaded\": 25,\n    \"invalid\": 5,\n    \"updated\": 10,\n    \"addedToList\": 10\n  },\n  \"errorStatistics\": {\n    \"syntaxErrors\": 2,\n    \"alreadyInQueue\": 1,\n    \"invalidDomains\": 1,\n    \"blacklist\": 1,\n    \"policyFailures\": 1,\n    \"mismatchedCriteria\": 1\n  },\n  \"createdOn\": \"1977-03-26T20:16:13.273Z\",\n  \"finishedOn\": \"1969-09-30T15:26:06.576Z\",\n  \"href\": \"https://api.getresponse.com/v3/imports/o6gE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "220a1049-671a-4785-9bb9-9f35b7e8a461",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "importId",
+                      "description": "(Required) The import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7fbe6f5-d007-4e94-b056-836679aea622",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "importId",
+                      "description": "(Required) The import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fd36483-2e0c-4da0-8180-081ec4912ede",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "importId",
+                      "description": "(Required) The import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43922b9c-0b45-4ece-afae-802a0eea61c3",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "importId",
+                      "description": "(Required) The import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de52ea34-b3c0-4d7b-af4b-b71c89f16cd1",
+          "name": "Get a list of imports.",
+          "request": {
+            "name": "Get a list of imports.",
+            "description": {
+              "content": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[campaignId]",
+                  "value": "<string>",
+                  "description": "Search imports by campaignId"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[createdOn][from]",
+                  "value": "<date>",
+                  "description": "Search imports created from this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[createdOn][to]",
+                  "value": "<date>",
+                  "description": "Search imports created to this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[createdOn]",
+                  "value": "<string>",
+                  "description": "Sort imports by creation date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[finishedOn]",
+                  "value": "<string>",
+                  "description": "Sort imports by finish date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[campaignName]",
+                  "value": "<string>",
+                  "description": "Sort imports by campaign name"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[uploadedContacts]",
+                  "value": "<string>",
+                  "description": "Sort imports by uploaded contact count"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[updatedContacts]",
+                  "value": "<string>",
+                  "description": "Sort imports by updated contact count"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[addedContacts]",
+                  "value": "<string>",
+                  "description": "Sort imports by inserted contact count"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[invalidContacts]",
+                  "value": "<string>",
+                  "description": "Sort imports by invalid contact count"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[status]",
+                  "value": "<string>",
+                  "description": "Sort imports by status (uploaded, to_review, approved, finished, rejected, canceled)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "453a6d3f-7643-42c6-a937-309aca23cdf2",
+              "name": "The list of imports.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[finishedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignName]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[uploadedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[addedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[invalidContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "5776"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"importId\": \"o6gE\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"canceled\",\n    \"statistics\": {\n      \"uploaded\": 25,\n      \"invalid\": 5,\n      \"updated\": 10,\n      \"addedToList\": 10\n    },\n    \"errorStatistics\": {\n      \"syntaxErrors\": 2,\n      \"alreadyInQueue\": 1,\n      \"invalidDomains\": 1,\n      \"blacklist\": 1,\n      \"policyFailures\": 1,\n      \"mismatchedCriteria\": 1\n    },\n    \"createdOn\": \"1964-10-28T10:25:12.725Z\",\n    \"finishedOn\": \"1986-09-13T20:16:35.933Z\",\n    \"href\": \"https://api.getresponse.com/v3/imports/o6gE\"\n  },\n  {\n    \"importId\": \"o6gE\",\n    \"campaign\": {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    \"status\": \"rejected\",\n    \"statistics\": {\n      \"uploaded\": 25,\n      \"invalid\": 5,\n      \"updated\": 10,\n      \"addedToList\": 10\n    },\n    \"errorStatistics\": {\n      \"syntaxErrors\": 2,\n      \"alreadyInQueue\": 1,\n      \"invalidDomains\": 1,\n      \"blacklist\": 1,\n      \"policyFailures\": 1,\n      \"mismatchedCriteria\": 1\n    },\n    \"createdOn\": \"1998-08-20T14:37:51.172Z\",\n    \"finishedOn\": \"1976-09-17T00:53:26.677Z\",\n    \"href\": \"https://api.getresponse.com/v3/imports/o6gE\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d5e6f7c-5fd4-4151-ad8c-458ad52ed946",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[finishedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignName]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[uploadedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[addedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[invalidContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8eae68e0-b5fc-477f-b568-5df2e42b0fdb",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[finishedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignName]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[uploadedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[addedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[invalidContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58783b0d-e941-4709-99fb-787c74278235",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[createdOn][from]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "query[createdOn][to]",
+                      "value": "2018-04-15"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[finishedOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[campaignName]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[uploadedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[addedContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[invalidContacts]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45b9c9e0-b577-472d-b9ff-5b2fbfb7d4ba",
+          "name": "Schedule a new contact import",
+          "request": {
+            "name": "Schedule a new contact import",
+            "description": {
+              "content": "This endpoint lets you schedule a contact import. That way, you can add and update your contacts using a single API call. Since API imports are asynchronous, you should check periodically for updates while your original API request is being processed. To keep track of your import status, use [GET import](https://apireference.getresponse.com/#operation/getImportById) (provide the importId  from the response), or subscribe to an [import finished](https://apidocs.getresponse.com/v3/payloads#contacts-import-finished) webhook. Please note, that this endpoint has **specific rate limits** - for details please refer to [Create Import Limits](https://apidocs.getresponse.com/v3/case-study/create-import#limits). For more information on imports, check our [API Docs](https://apidocs.getresponse.com/v3/case-study/create-import) or [Help Center](https://www.getresponse.com/help/how-do-i-prepare-a-file-for-import.html)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaignId\": \"<string>\",\n  \"contacts\": [\n    [\n      \"<string>\",\n      \"<string>\"\n    ],\n    [\n      \"<string>\",\n      \"<string>\"\n    ]\n  ],\n  \"fieldMapping\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa2ad8e8-f32b-46c9-9a13-5038ae8b5806",
+              "name": "The import details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5776"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"importId\": \"o6gE\",\n  \"campaign\": {\n    \"campaignId\": \"C\",\n    \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n    \"name\": \"Promo campaign\"\n  },\n  \"status\": \"canceled\",\n  \"statistics\": {\n    \"uploaded\": 25,\n    \"invalid\": 5,\n    \"updated\": 10,\n    \"addedToList\": 10\n  },\n  \"errorStatistics\": {\n    \"syntaxErrors\": 2,\n    \"alreadyInQueue\": 1,\n    \"invalidDomains\": 1,\n    \"blacklist\": 1,\n    \"policyFailures\": 1,\n    \"mismatchedCriteria\": 1\n  },\n  \"createdOn\": \"1977-03-26T20:16:13.273Z\",\n  \"finishedOn\": \"1969-09-30T15:26:06.576Z\",\n  \"href\": \"https://api.getresponse.com/v3/imports/o6gE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bfa96cf-0513-44f0-bc9e-c9303431eef9",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25645658-60d0-4eec-aaf2-c060feaa5883",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8d25900-36ca-412d-943d-913d4c3a88a6",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 409,\n  \"code\": 1008,\n  \"codeDescription\": \"There is another resource with the same value of unique property\",\n  \"message\": \"Property value is already taken\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1008\",\n  \"context\": {\n    \"value\": \"test-value\"\n  },\n  \"uuid\": \"b89a0d53-67f6-4269-b207-223b42b6bfbd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07476ba3-a4a0-4d43-940b-0f7e1860ddc6",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c5ea47fa-c4a8-42f0-9c2e-010647363f6b",
+    "name": "GetResponse APIv3 Imports",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Imports operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

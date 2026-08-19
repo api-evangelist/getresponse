@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Sms",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get details for the SMS message statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/statistics/sms/:smsId",
+            "params": [
+              {
+                "name": "smsId",
+                "value": "N",
+                "type": "path",
+                "description": "The SMS message ID"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Get statistics for a single SMS from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Get statistics for a single SMS to this date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get details for the SMS message statistics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

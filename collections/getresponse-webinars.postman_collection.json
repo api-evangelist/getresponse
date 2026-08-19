@@ -1,0 +1,883 @@
+{
+  "item": [
+    {
+      "id": "9be8f2f4-4928-48b4-ac46-21e73b3cb99e",
+      "name": "Webinars",
+      "description": {
+        "content": "Webinars API documentation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "97a02c5e-db1c-40bc-b6b0-3698142b2c86",
+          "name": "Get a webinar by ID",
+          "request": {
+            "name": "Get a webinar by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "webinars",
+                ":webinarId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webinarId",
+                  "description": "(Required) The webinar ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7a616e50-8105-4b11-87f4-1884e2690fbb",
+              "name": "The webinar details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars",
+                    ":webinarId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webinarId",
+                      "description": "(Required) The webinar ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "2633"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "2633"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"webinarId\": \"yK6d\",\n  \"href\": \"https://api.getresponse.com/v3/webinars/yK6d\",\n  \"createdOn\": \"2003-03-18T16:30:01.640Z\",\n  \"startsOn\": \"2024-08-10T04:37:26.882Z\",\n  \"webinarUrl\": \"http://lAsUsLYhGoHiaMVbvFSHbSUyYrvuvqR.lryf7eveZ,cM5EmmNlfe1jVzXNFKpBYh6o+JVUipSY0hvIEpEAeGVU\",\n  \"status\": \"upcoming\",\n  \"type\": \"on_demand\",\n  \"campaigns\": [\n    {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    },\n    {\n      \"campaignId\": \"C\",\n      \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n      \"name\": \"Promo campaign\"\n    }\n  ],\n  \"newsletters\": [\n    {\n      \"newsletterId\": \"NuE4\",\n      \"href\": \"https://api.getresponse.com/v3/newsletters/NuE4\"\n    },\n    {\n      \"newsletterId\": \"NuE4\",\n      \"href\": \"https://api.getresponse.com/v3/newsletters/NuE4\"\n    }\n  ],\n  \"statistics\": {\n    \"registrants\": 15,\n    \"visitors\": 10,\n    \"attendees\": 5\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9401fbd1-3ad6-47c6-9421-8a8d7f71c198",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars",
+                    ":webinarId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webinarId",
+                      "description": "(Required) The webinar ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d634ffaf-578b-46aa-b019-11a97d407f25",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars",
+                    ":webinarId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webinarId",
+                      "description": "(Required) The webinar ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d68b3e4-1c26-4856-b243-f4c75ab8e47d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars",
+                    ":webinarId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webinarId",
+                      "description": "(Required) The webinar ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d06f38d5-8beb-4141-8d60-9e75b3f5c912",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars",
+                    ":webinarId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webinarId",
+                      "description": "(Required) The webinar ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd3c55ef-d593-4a7d-9d53-c0b4df4fe204",
+          "name": "Get a list of webinars",
+          "request": {
+            "name": "Get a list of webinars",
+            "description": {
+              "content": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webinars"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[name]",
+                  "value": "<string>",
+                  "description": "Search webinars by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[campaignId]",
+                  "value": "<string>",
+                  "description": "The list of campaign resource IDs (string separated with ',')"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[status]",
+                  "value": "<string>",
+                  "description": "Search webinars by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[name]",
+                  "value": "<string>",
+                  "description": "Sort webinars by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[createdOn]",
+                  "value": "<string>",
+                  "description": "Sort webinars by creation date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[startsOn]",
+                  "value": "<string>",
+                  "description": "Sort webinars by update date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[type]",
+                  "value": "<string>",
+                  "description": "Search webinars by type"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "107373fe-0406-419e-ba0e-93f8380b49de",
+              "name": "The list of webinars",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[startsOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "2633"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "2633"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "2633"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "2633"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "2633"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"webinarId\": \"yK6d\",\n    \"href\": \"https://api.getresponse.com/v3/webinars/yK6d\",\n    \"createdOn\": \"2012-11-05T05:12:28.339Z\",\n    \"startsOn\": \"2010-03-12T13:19:54.487Z\",\n    \"webinarUrl\": \"https://MzAYfPRpAWJfzMUeovieddzL.ujXlWeN1lSEhVh8ZFhAUiEv\",\n    \"status\": \"published\",\n    \"type\": \"on_demand\",\n    \"campaigns\": [\n      {\n        \"campaignId\": \"C\",\n        \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n        \"name\": \"Promo campaign\"\n      },\n      {\n        \"campaignId\": \"C\",\n        \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n        \"name\": \"Promo campaign\"\n      }\n    ],\n    \"newsletters\": [\n      {\n        \"newsletterId\": \"NuE4\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/NuE4\"\n      },\n      {\n        \"newsletterId\": \"NuE4\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/NuE4\"\n      }\n    ],\n    \"statistics\": {\n      \"registrants\": 15,\n      \"visitors\": 10,\n      \"attendees\": 5\n    }\n  },\n  {\n    \"webinarId\": \"yK6d\",\n    \"href\": \"https://api.getresponse.com/v3/webinars/yK6d\",\n    \"createdOn\": \"1972-10-18T05:48:43.016Z\",\n    \"startsOn\": \"1954-04-05T00:44:59.069Z\",\n    \"webinarUrl\": \"https://oQhEYjkrmgQlLJcbAVDQOcSGRds.ndcXzXGJAatz2DsOQ+xb4AM0RFSwovHj5qCjvOs8NKOfVwArrvXdE\",\n    \"status\": \"upcoming\",\n    \"type\": \"all\",\n    \"campaigns\": [\n      {\n        \"campaignId\": \"C\",\n        \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n        \"name\": \"Promo campaign\"\n      },\n      {\n        \"campaignId\": \"C\",\n        \"href\": \"https://api.getresponse.com/v3/campaigns/C\",\n        \"name\": \"Promo campaign\"\n      }\n    ],\n    \"newsletters\": [\n      {\n        \"newsletterId\": \"NuE4\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/NuE4\"\n      },\n      {\n        \"newsletterId\": \"NuE4\",\n        \"href\": \"https://api.getresponse.com/v3/newsletters/NuE4\"\n      }\n    ],\n    \"statistics\": {\n      \"registrants\": 15,\n      \"visitors\": 10,\n      \"attendees\": 5\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc6e8823-30f2-4470-8d71-dc4fa7dbb919",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[startsOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "876b9566-5297-4f67-a01e-0c33e44583fe",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[startsOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec38de22-d4a1-4e55-86e2-c020578aa4f3",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webinars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[campaignId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[startsOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e6eee79e-1716-4091-aac6-9cb87e2d52c4",
+    "name": "GetResponse APIv3 Webinars",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Webinars operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

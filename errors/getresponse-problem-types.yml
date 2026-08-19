@@ -1,0 +1,124 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/getresponse-open-api-original.json
+format: custom-json
+rfc9457: false
+note: Derived from every 4xx/5xx response declared in the provider-published OpenAPI. GetResponse does
+  not use application/problem+json; every failure returns the same ErrorResponse envelope and the discriminating
+  value is the numeric `code` field, enumerated in errors/getresponse-error-codes.yml. Note that authentication
+  failures are declared as 401 in the spec but documented as 403/code 1014 in the error reference — a
+  real contract/doc divergence, recorded rather than reconciled. No 5xx response is declared on any operation,
+  although the docs document code 1 (500) and code 1019 (503).
+envelope_schema: ErrorResponse
+problems:
+- status: 400
+  title: Bad Request
+  description: Request validation error
+  content_type:
+  - application/json
+  schema:
+  - ErrorResponse
+  operation_count: 218
+  error_codes:
+  - 1000
+  - 1001
+  - 1002
+  - 1003
+  - 1004
+  - 1005
+  - 1006
+  - 1007
+  - 1009
+  - 1010
+  - 1011
+  - 1012
+  - 1021
+  - 1027
+  - 1028
+  - 1029
+  example_operations:
+  - GetAbTestSubjectList
+  - cancelAbTest
+  - cancelMessageSend
+  - createAddress
+  - createAutoresponder
+  - createBatchContacts
+  - createCampaign
+  - createCart
+- status: 401
+  title: Unauthorized
+  description: Authentication error
+  content_type:
+  - application/json
+  schema:
+  - ErrorResponse
+  operation_count: 220
+  error_codes:
+  - 1014
+  example_operations:
+  - GetAbTestSubjectList
+  - cancelAbTest
+  - cancelMessageSend
+  - createAddress
+  - createAutoresponder
+  - createBatchContacts
+  - createCampaign
+  - createCart
+- status: 404
+  title: Not Found
+  description: Callbacks are disabled for the account
+  content_type:
+  - application/json
+  schema:
+  - ErrorResponse
+  operation_count: 117
+  error_codes:
+  - 1013
+  - 1024
+  example_operations:
+  - cancelAbTest
+  - cancelMessageSend
+  - createCart
+  - createCategory
+  - createCustomReport
+  - createFromField
+  - createMetaField
+  - createNewsletter
+- status: 409
+  title: Conflict
+  description: Conflict
+  content_type:
+  - application/json
+  schema:
+  - ErrorResponse
+  operation_count: 15
+  error_codes:
+  - 1008
+  example_operations:
+  - cancelAbTest
+  - createAutoresponder
+  - createBatchContacts
+  - createCampaign
+  - createContact
+  - createFolder
+  - createImport
+  - createPredefinedField
+- status: 429
+  title: Too Many Requests
+  description: The throttling limit has been reached
+  content_type:
+  - application/json
+  schema:
+  - ErrorResponse
+  operation_count: 220
+  error_codes:
+  - 1015
+  example_operations:
+  - GetAbTestSubjectList
+  - cancelAbTest
+  - cancelMessageSend
+  - createAddress
+  - createAutoresponder
+  - createBatchContacts
+  - createCampaign
+  - createCart

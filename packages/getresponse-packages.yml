@@ -1,0 +1,137 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/GetResponse (official org), https://www.getresponse.com/llms.txt
+  (the provider's own SDK list), Packagist, npm, WordPress.org and the GitHub Releases API.
+note: >-
+  GetResponse ships no first-party JavaScript, Python, Ruby, Go, Java, .NET or Rust client for
+  the v3 REST API. The only server-side SDK is PHP; the three Mobile SDKs wrap Mobile Push
+  (Firebase Cloud Messaging), not the REST API, and are distributed from GitHub only with no
+  package-registry presence. Currency is the story here: the PHP SDK last published 2023-08-22,
+  before the spec version stamped 2026-07-28 that it is meant to wrap, and the official
+  WordPress plugin was permanently closed on WordPress.org on 2024-04-29 at the author's request.
+packages:
+  - language: php
+    registry: packagist
+    name: getresponse/sdk-php
+    url: https://packagist.org/packages/getresponse/sdk-php
+    repository: https://github.com/GetResponse/sdk-php
+    install: composer require getresponse/sdk-php
+    official: true
+    version: 3.0.0
+    published: '2023-08-22'
+    covers: GetResponse API v3 REST
+    note: >-
+      The only first-party server-side SDK for the REST API. Last published 2023-08-22 — roughly
+      three years before the spec revision it wraps (info.version 3.2026-07-28T07:58:55+00:00),
+      so operations added since 2023 are not covered by the client.
+  - language: php
+    registry: packagist
+    name: getresponse/oauth2-getresponse
+    url: https://packagist.org/packages/getresponse/oauth2-getresponse
+    repository: https://github.com/GetResponse/oauth2-getresponse
+    install: composer require getresponse/oauth2-getresponse
+    official: true
+    version: 1.0.0
+    published: '2019-05-08'
+    covers: OAuth 2.0 provider for thephpleague/oauth2-client
+    note: Single 1.0.0 release in 2019; no publish since.
+  - language: kotlin
+    registry: github
+    name: GetResponse/MobileSDK-Android
+    url: https://github.com/GetResponse/MobileSDK-Android
+    install: null
+    official: true
+    version: 1.0.1
+    published: '2024-03-26'
+    covers: GetResponse Mobile Push for Android (FCM) — not the REST API
+    note: >-
+      No Maven Central artifact — a search of search.maven.org for "getresponse" returns zero
+      results. Version read from the GitHub Releases API; consumers must depend on the repo.
+  - language: swift
+    registry: github
+    name: GetResponse/MobileSDK-IOS
+    url: https://github.com/GetResponse/MobileSDK-IOS
+    install: null
+    official: true
+    version: null
+    published: null
+    covers: GetResponse Mobile Push for iOS — not the REST API
+    note: >-
+      Checked, nothing to record — the GitHub Releases API returns 404 (no tagged release) and
+      cocoapods.org/pods/GetResponseMobileSDK does not resolve. Distribution is an untagged
+      repository, so a consumer cannot tell which version they are getting either.
+  - language: dart
+    registry: github
+    name: GetResponse/MobileSDK-Flutter
+    url: https://github.com/GetResponse/MobileSDK-Flutter
+    install: null
+    official: true
+    version: null
+    published: null
+    covers: GetResponse Mobile Push for Flutter (FCM) — not the REST API
+    note: >-
+      Checked, nothing to record — no GitHub release, and pub.dev has no package under any
+      getresponse name (pub.dev/api/search?q=getresponse returns unrelated packages).
+  - language: php
+    registry: github
+    name: GetResponse/magento
+    url: https://github.com/GetResponse/magento
+    install: null
+    official: true
+    version: 21.2.0
+    published: '2026-07-30'
+    covers: Magento / Magento 2 ecommerce integration
+    note: The most actively maintained first-party code GetResponse publishes.
+  - language: php
+    registry: github
+    name: GetResponse/GetresponseForPrestashop
+    url: https://github.com/GetResponse/GetresponseForPrestashop
+    install: null
+    official: true
+    version: 2.0.11
+    published: '2026-05-04'
+    covers: PrestaShop ecommerce integration
+  - language: php
+    registry: wordpress.org
+    name: getresponse-integration
+    url: https://wordpress.org/plugins/getresponse-integration/
+    repository: https://github.com/GetResponse/wordpress
+    install: null
+    official: true
+    version: null
+    published: null
+    covers: GetResponse for WordPress
+    status: closed
+    note: >-
+      Checked, nothing to record — the WordPress.org plugin API reports the listing closed on
+      2024-04-29, permanently, at the author's request. The plugin is no longer downloadable
+      from the registry.
+  - language: javascript
+    registry: npm
+    name: eslint-config-getresponse
+    url: https://www.npmjs.com/package/eslint-config-getresponse
+    install: npm install eslint-config-getresponse
+    official: true
+    version: 6.0.3
+    published: '2022-04-13'
+    covers: Internal engineering tooling — NOT an API client
+    api_client: false
+    note: >-
+      Listed for completeness because it is a genuine first-party npm publish, but it is a
+      shareable ESLint config for GetResponse's own React codebase. It does not talk to the API.
+absent:
+  - registry: npm
+    note: No first-party JavaScript/TypeScript client for the v3 REST API.
+  - registry: pypi
+    note: No first-party Python client.
+  - registry: rubygems
+    note: No first-party Ruby client.
+  - registry: nuget
+    note: No first-party .NET client.
+  - registry: pkg.go.dev
+    note: No first-party Go client.
+  - registry: maven-central
+    note: Searched search.maven.org for "getresponse" — zero artifacts.
+  - registry: crates.io
+    note: No first-party Rust client.

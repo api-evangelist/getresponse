@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 A/B tests - subject",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "A/B tests - subject",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Choose A/B test winner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/ab-tests/subject/:abTestId/winner",
+            "params": [
+              {
+                "name": "abTestId",
+                "value": "xyz",
+                "type": "path",
+                "description": "A/B test ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Choose A/B test winner"
+        },
+        {
+          "info": {
+            "name": "Get a single A/B test by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/ab-tests/subject/:abTestId",
+            "params": [
+              {
+                "name": "abTestId",
+                "value": "xyz",
+                "type": "path",
+                "description": "A/B test ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single A/B test by ID"
+        },
+        {
+          "info": {
+            "name": "Cancel A/B test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/ab-tests/:abTestId/cancel",
+            "params": [
+              {
+                "name": "abTestId",
+                "value": "xyz",
+                "type": "path",
+                "description": "A/B test ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This method allows you to schedule the cancellation of an A/B test. Cancelling an A/B test is an asynchronous operation."
+        },
+        {
+          "info": {
+            "name": "Delete A/B test",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/ab-tests/:abTestId",
+            "params": [
+              {
+                "name": "abTestId",
+                "value": "xyz",
+                "type": "path",
+                "description": "A/B test ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This method allows you to delete an A/B test. Deletion is only permitted when the test is in one of the following states: `draft`, `cancelled`, `finished`, or `completed`."
+        },
+        {
+          "info": {
+            "name": "The list of A/B tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/ab-tests/subject",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search A/B tests by name"
+              },
+              {
+                "name": "query[stage]",
+                "value": "",
+                "type": "query",
+                "description": "Search A/B tests by stage"
+              },
+              {
+                "name": "query[abTestId]",
+                "value": "",
+                "type": "query",
+                "description": "Search A/B tests by ID. You can search for multiple A/B tests using comma-separated values, for example, `pgIH, CNXF`"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search A/B tests by list ID. You can search for multiple A/B tests using comma-separated list IDs, for example, `pgIH, CNXF`"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "sort[stage]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by stage"
+              },
+              {
+                "name": "sort[sendOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by send date"
+              },
+              {
+                "name": "sort[totalDelivered]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by total delivered"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create a new A/B test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/ab-tests/subject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new A/B test"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,502 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/getresponse-open-api-original.json
+note: 'Entity graph derived from the provider-published OpenAPI: every *Details schema is treated as a
+  canonical resource representation, and relationships come from $ref links plus <name>Id reference fields.
+  435 schemas back 141 paths and 220 operations. The core is Campaign (a contact list) — Contact, Newsletter,
+  Autoresponder, Form and the ecommerce Shop tree all hang off it via campaignId.'
+entity_count: 47
+schema_count: 435
+core_entities:
+- Campaign
+- Contact
+- Newsletter
+- Autoresponder
+- CustomField
+- Tag
+- Shop
+- Product
+- Order
+- Webinar
+entities:
+- entity: AbtestsSubject
+  schema: AbtestsSubjectDetails
+  property_count: 18
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: MessageContent
+    via: content
+  - kind: belongs_to
+    target: AbTest
+    via: abTestId
+- entity: AccountBadge
+  schema: AccountBadgeDetails
+  property_count: 1
+  id_field: null
+  relationships: []
+- entity: AccountSummaryReport
+  schema: AccountSummaryReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Autoresponder
+  schema: AutoresponderDetails
+  property_count: 18
+  id_field: null
+  relationships:
+  - kind: has_many
+    target: ClickTrack
+    via: clickTracks
+  - kind: belongs_to
+    target: Autoresponder
+    via: autoresponderId
+  - kind: belongs_to
+    target: Campaign
+    via: campaignId
+  - kind: has_one
+    target: MessageContent
+    via: content
+  - kind: has_one
+    target: MessageFlagsArray
+    via: flags
+- entity: BaseSearchContacts
+  schema: BaseSearchContactsDetails
+  property_count: 4
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: SearchContact
+    via: searchContactId
+- entity: BouncesReport
+  schema: BouncesReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Contact
+  schema: ContactDetails
+  property_count: 18
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: ContactGeolocation
+    via: geolocation
+  - kind: has_many
+    target: ContactTag
+    via: tags
+  - kind: has_many
+    target: ContactCustomFieldValue
+    via: customFieldValues
+  - kind: belongs_to
+    target: Contact
+    via: contactId
+  - kind: has_one
+    target: CampaignReference
+    via: campaign
+- entity: CustomEventAttribute
+  schema: CustomEventAttributeDetails
+  property_count: 3
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomEventAttribute
+    via: customEventAttributeId
+- entity: CustomEvent
+  schema: CustomEventDetails
+  property_count: 5
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomEvent
+    via: customEventId
+  - kind: has_many
+    target: CustomEventAttributeDetails
+    via: attributes
+- entity: CustomReport
+  schema: CustomReportDetails
+  property_count: 8
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Form
+  schema: FormDetails
+  property_count: 12
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: FormSettings
+    via: settings
+  - kind: has_many
+    target: FormVariant
+    via: variants
+  - kind: belongs_to
+    target: Form
+    via: formId
+  - kind: belongs_to
+    target: Webform
+    via: webformId
+  - kind: has_one
+    target: FormStatistics
+    via: statistics
+  - kind: has_one
+    target: CampaignReference
+    via: campaign
+- entity: FormVariant
+  schema: FormVariantDetails
+  property_count: 11
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Form
+    via: formId
+  - kind: belongs_to
+    target: Webform
+    via: webformId
+- entity: GDPRField
+  schema: GDPRFieldDetails
+  property_count: 5
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: GDPRFieldLatestVersion
+    via: latestVersion
+  - kind: belongs_to
+    target: GdprField
+    via: gdprFieldId
+- entity: Image
+  schema: ImageDetails
+  property_count: 7
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Image
+    via: imageId
+- entity: ImportErrorReport
+  schema: ImportErrorReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: IspMessageStatsReport
+  schema: IspMessageStatsReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: ListSummaryReport
+  schema: ListSummaryReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Lps
+  schema: LpsDetails
+  property_count: 13
+  id_field: null
+  relationships:
+  - kind: has_many
+    target: LpsPage
+    via: pages
+  - kind: belongs_to
+    target: Lps
+    via: lpsId
+- entity: MessageActivityReport
+  schema: MessageActivityReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: MessageClicksReport
+  schema: MessageClicksReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: MessageStatsReport
+  schema: MessageStatsReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Newsletter
+  schema: NewsletterDetails
+  property_count: 18
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: MessageContent
+    via: content
+  - kind: has_many
+    target: ClickTrack
+    via: clickTracks
+  - kind: has_one
+    target: MessageFlagsArray
+    via: flags
+  - kind: belongs_to
+    target: Newsletter
+    via: newsletterId
+  - kind: has_many
+    target: NewsletterAttachment
+    via: attachments
+- entity: NewsletterSendSettings
+  schema: NewsletterSendSettingsDetails
+  property_count: 10
+  id_field: null
+  relationships: []
+- entity: Popup
+  schema: PopupDetails
+  property_count: 8
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Popup
+    via: popupId
+- entity: PredefinedField
+  schema: PredefinedFieldDetails
+  property_count: 5
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: PredefinedField
+    via: predefinedFieldId
+  - kind: has_one
+    target: CampaignReference
+    via: campaign
+- entity: RssNewsletter
+  schema: RssNewsletterDetails
+  property_count: 14
+  id_field: null
+  relationships:
+  - kind: has_many
+    target: ClickTrack
+    via: clickTracks
+  - kind: has_one
+    target: MessageFlagsArray
+    via: flags
+  - kind: belongs_to
+    target: RssNewsletter
+    via: rssNewsletterId
+  - kind: has_one
+    target: MessageContent
+    via: content
+- entity: RssNewsletterSendSettings
+  schema: RssNewsletterSendSettingsDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: MessageSendSettingSelectedCampaigns
+    via: selectedCampaigns
+  - kind: has_one
+    target: MessageSendSettingSelectedSegments
+    via: selectedSegments
+  - kind: has_one
+    target: MessageSendSettingSelectedSuppressions
+    via: selectedSuppressions
+  - kind: has_one
+    target: MessageSendSettingExcludedCampaigns
+    via: excludedCampaigns
+  - kind: has_one
+    target: MessageSendSettingExcludedSegments
+    via: excludedSegments
+  - kind: has_one
+    target: MessageSendSettingSelectedContacts
+    via: selectedContacts
+- entity: SearchContactsConditions
+  schema: SearchContactsConditionsDetails
+  property_count: 2
+  id_field: null
+  relationships:
+  - kind: has_many
+    target: SearchContactSection
+    via: section
+- entity: SearchContacts
+  schema: SearchContactsDetails
+  property_count: 7
+  id_field: null
+  relationships:
+  - kind: has_many
+    target: SearchContactSection
+    via: section
+  - kind: belongs_to
+    target: SearchContact
+    via: searchContactId
+- entity: SearchedContact
+  schema: SearchedContactDetails
+  property_count: 10
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Contact
+    via: contactId
+- entity: Shop
+  schema: ShopDetails
+  property_count: 10
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Shop
+    via: shopId
+- entity: SmsAutomation
+  schema: SmsAutomationDetails
+  property_count: 12
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Sms
+    via: smsId
+- entity: Sms
+  schema: SmsDetails
+  property_count: 14
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Sms
+    via: smsId
+- entity: StandardSubscriberActivityReport
+  schema: StandardSubscriberActivityReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: SubscriptionRejectionsReport
+  schema: SubscriptionRejectionsReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Suppression
+  schema: SuppressionDetails
+  property_count: 5
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Suppression
+    via: suppressionId
+- entity: Tag
+  schema: TagDetails
+  property_count: 4
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: Tag
+    via: tagId
+- entity: TransactionalEmailBounceReport
+  schema: TransactionalEmailBounceReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: TransactionalEmail
+  schema: TransactionalEmailDetails
+  property_count: 7
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: TransactionalEmail
+    via: transactionalEmailId
+- entity: TransactionalEmailRecipient
+  schema: TransactionalEmailRecipientDetails
+  property_count: 5
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: TransactionalEmailRecipientStatuses
+    via: statuses
+  - kind: has_many
+    target: TransactionalEmailRecipientClickedLink
+    via: clickedLinks
+- entity: TransactionalEmailRecipients
+  schema: TransactionalEmailRecipientsDetails
+  property_count: 3
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: TransactionalEmailRecipientDetails
+    via: to
+  - kind: has_many
+    target: TransactionalEmailRecipientDetails
+    via: cc
+  - kind: has_many
+    target: TransactionalEmailRecipientDetails
+    via: bcc
+- entity: TransactionalEmailsTemplate
+  schema: TransactionalEmailsTemplateDetails
+  property_count: 7
+  id_field: null
+  relationships:
+  - kind: has_one
+    target: TransactionalEmailTemplateContent
+    via: content
+  - kind: belongs_to
+    target: Template
+    via: templateId
+- entity: UnconfirmedContactsStatsReport
+  schema: UnconfirmedContactsStatsReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: UnsubscribeContactsListsReport
+  schema: UnsubscribeContactsListsReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: UserActivityReport
+  schema: UserActivityReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: WebinarParticipantsReport
+  schema: WebinarParticipantsReportDetails
+  property_count: 9
+  id_field: null
+  relationships:
+  - kind: belongs_to
+    target: CustomReport
+    via: customReportId
+- entity: Website
+  schema: WebsiteDetails
+  property_count: 11
+  id_field: null
+  relationships:
+  - kind: has_many
+    target: WebsitePage
+    via: pages
+  - kind: belongs_to
+    target: Website
+    via: websiteId

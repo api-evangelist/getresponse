@@ -1,0 +1,265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Product Variants",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Product Variants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of product variants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/variants",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search variant by name"
+              },
+              {
+                "name": "query[sku]",
+                "value": "",
+                "type": "query",
+                "description": "Search variant by SKU"
+              },
+              {
+                "name": "query[description]",
+                "value": "",
+                "type": "query",
+                "description": "Search variant by description"
+              },
+              {
+                "name": "query[externalId]",
+                "value": "",
+                "type": "query",
+                "description": "Search variant by external ID"
+              },
+              {
+                "name": "query[createdAt][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show variants starting from this date"
+              },
+              {
+                "name": "query[createdAt][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show variants starting to this date"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **GET** request to this URL returns a collection of product variant resources that belong to the given shop and product.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n* name\n* sku\n* description\n\nThe `description` fields can be a pattern and we'll try to match this phrase.\n\n"
+        },
+        {
+          "info": {
+            "name": "Create product variant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/variants",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **POST** request to this URL will create a new product variant resource.\n\nIn order to create a new product variant, you need to send a product variant resource in the body of the request (remember that you need to serialize the body into a JSON string)\n\nThere is no need to create every element (like: image, meta field, tax) one by one by their own endpoints. All these elements can be created during this method.\n\n"
+        },
+        {
+          "info": {
+            "name": "Get a single product variant by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/variants/:variantId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              },
+              {
+                "name": "variantId",
+                "value": "VTB",
+                "type": "path",
+                "description": "The variant ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method returns product variant according to the given `variantId` in the context of a given `shopId` and `productId`\n\n"
+        },
+        {
+          "info": {
+            "name": "Update product variant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/variants/:variantId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              },
+              {
+                "name": "variantId",
+                "value": "VTB",
+                "type": "path",
+                "description": "The variant ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate properties of a product variant. You should send only those fields that need to be changed. The remaining properties will stay the same. However, when updating metafields, images, and taxes, you need to send entire collections. Individual fields can't be updated. If you want to update particular metafields or tax resources, you can do so using their particular endpoints, i.e:\n\n * taxes - `POST /v3/shops/{shopId}/taxes/{taxId}`\n * metaFields - `POST /v3/shops/{shopId}/meta-fields/{metaFie"
+        },
+        {
+          "info": {
+            "name": "Delete product variant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/products/:productId/variants/:variantId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "productId",
+                "value": "9I",
+                "type": "path",
+                "description": "The product ID"
+              },
+              {
+                "name": "variantId",
+                "value": "VTB",
+                "type": "path",
+                "description": "The variant ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete product variant"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

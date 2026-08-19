@@ -1,0 +1,99 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of each /.well-known/ path on every apis.yml and OpenAPI servers[] host
+note: >-
+  GetResponse serves a real RFC 9727 API catalog at www.getresponse.com/.well-known/api-catalog.
+  It is a genuine linkset — content-type application/linkset+json — and it is how the live
+  provider-published OpenAPI was found: its service-desc link points at
+  https://apireference.getresponse.com/open-api.json, which returns a 2.4 MB OpenAPI 3.0.0 with
+  220 operations. No security.txt, no OIDC/OAuth discovery document and no agent card is served
+  on any host. Every 404 below is a real 404 body, not an SPA shell.
+hosts_probed:
+  - www.getresponse.com
+  - api.getresponse.com
+  - apidocs.getresponse.com
+  - apireference.getresponse.com
+  - app.getresponse.com
+  - api3.getresponse360.com
+documents:
+  - host: www.getresponse.com
+    path: /.well-known/api-catalog
+    status: 200
+    content_type: application/linkset+json
+    spec: RFC 9727 (API catalog / linkset)
+    file: getresponse-api-catalog.json
+  - host: www.getresponse.com
+    path: /.well-known/security.txt
+    status: 404
+  - host: www.getresponse.com
+    path: /.well-known/openid-configuration
+    status: 404
+  - host: www.getresponse.com
+    path: /.well-known/oauth-authorization-server
+    status: 404
+  - host: www.getresponse.com
+    path: /.well-known/ai-plugin.json
+    status: 404
+  - host: www.getresponse.com
+    path: /.well-known/agent-card.json
+    status: 404
+  - host: www.getresponse.com
+    path: /.well-known/agent.json
+    status: 404
+  - host: api.getresponse.com
+    path: /.well-known/security.txt
+    status: 404
+  - host: api.getresponse.com
+    path: /.well-known/openid-configuration
+    status: 404
+  - host: api.getresponse.com
+    path: /.well-known/oauth-authorization-server
+    status: 404
+  - host: api.getresponse.com
+    path: /.well-known/api-catalog
+    status: 404
+  - host: api.getresponse.com
+    path: /.well-known/agent-card.json
+    status: 404
+  - host: api.getresponse.com
+    path: /.well-known/agent.json
+    status: 404
+  - host: apidocs.getresponse.com
+    path: /.well-known/api-catalog
+    status: 404
+  - host: apidocs.getresponse.com
+    path: /.well-known/security.txt
+    status: 404
+  - host: apidocs.getresponse.com
+    path: /.well-known/agent-card.json
+    status: 404
+  - host: apireference.getresponse.com
+    path: /.well-known/api-catalog
+    status: 404
+  - host: apireference.getresponse.com
+    path: /.well-known/agent-card.json
+    status: 404
+  - host: app.getresponse.com
+    path: /.well-known/openid-configuration
+    status: 404
+  - host: app.getresponse.com
+    path: /.well-known/oauth-authorization-server
+    status: 404
+  - host: app.getresponse.com
+    path: /.well-known/agent-card.json
+    status: 404
+  - host: api3.getresponse360.com
+    path: /.well-known/api-catalog
+    status: 404
+  - host: api3.getresponse360.com
+    path: /.well-known/security.txt
+    status: 404
+also_served:
+  - host: www.getresponse.com
+    path: /llms.txt
+    status: 200
+    file: ../llms/getresponse-llms.txt
+    note: >-
+      Not a /.well-known/ path, but discovered on the same sweep and saved verbatim. It is a
+      substantial, hand-curated document that links the OpenAPI, the SDKs and the provider's
+      own published Agent Skills repository.

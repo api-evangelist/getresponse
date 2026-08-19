@@ -1,0 +1,484 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Campaigns (Lists)",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns (Lists)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns campaign blocklist masks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/:campaignId/blocklists",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "3Va2e",
+                "type": "path",
+                "description": "Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`."
+              },
+              {
+                "name": "query[mask]",
+                "value": "",
+                "type": "query",
+                "description": "Blocklist mask to search for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns campaign blocklist masks"
+        },
+        {
+          "info": {
+            "name": "Updates campaign blocklist masks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/campaigns/:campaignId/blocklists",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "3Va2e",
+                "type": "path",
+                "description": "Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`."
+              },
+              {
+                "name": "additionalFlags",
+                "value": "",
+                "type": "query",
+                "description": "The flag value `add` adds the masks provided in the request body to your blocklist. The flag value `delete` deletes the masks. The masks are replaced if there are no flag values in the request body. \n\n For better performance, use the flag value `noResponse`. It removes the response body and can be used alone or combined with other flags. If multiple flags are used,  separate them by a comma, like this: `additionalFlags=noResponse` or `additionalFlags=add,noResponse`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates campaign blocklist masks"
+        },
+        {
+          "info": {
+            "name": "Get a single campaign by the campaign ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/:campaignId",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "3Va2e",
+                "type": "path",
+                "description": "Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve detailed information about a single campaign (contact list) by its unique campaignId. The response includes additional campaign settings such as postal address, subscription notification and confirmation settings, opt-in type, and profile information."
+        },
+        {
+          "info": {
+            "name": "Update a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/campaigns/:campaignId",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "3Va2e",
+                "type": "path",
+                "description": "Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a campaign"
+        },
+        {
+          "info": {
+            "name": "Get a list of campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve campaigns (contact lists) filtered by name"
+              },
+              {
+                "name": "query[isDefault]",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve campaigns (contact lists) depending on whether they are marked as default (`isDefault` = `true`)"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort campaigns (contact lists) by creation date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of campaigns (contact lists). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/campaigns",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint allows you to create a campaign (contact list). You can create up to 1000 campaigns (contact lists)."
+        },
+        {
+          "info": {
+            "name": "Get subscriber origin statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/origins",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The results are indexed with the campaign ID."
+        },
+        {
+          "info": {
+            "name": "Get subscriber location statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/locations",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The results are indexed with the location name (PL, EN, etc.)."
+        },
+        {
+          "info": {
+            "name": "Get campaign size statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/list-size",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the number of the total added and removed subscribers, grouped by default or by time period."
+        },
+        {
+          "info": {
+            "name": "Get the number and origin of subscription statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/subscriptions",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the number and origin of subscriptions, grouped by a specified campaigns for each day on which any changes were made. Dates in the YYYY-MM-DD format are used as keys in the response."
+        },
+        {
+          "info": {
+            "name": "Get removal statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/removals",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the number and reason for removed contacts. Dates in the YYYY-MM-DD format are used as keys in the response."
+        },
+        {
+          "info": {
+            "name": "Get balance statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/balance",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the balance of subscriptions. Dates in the YYYY-MM-DD format are used as keys in the response."
+        },
+        {
+          "info": {
+            "name": "Get the statistics summary for selected campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/campaigns/statistics/summary",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The results are indexed with the campaign ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Webinars",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webinars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a webinar by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/webinars/:webinarId",
+            "params": [
+              {
+                "name": "webinarId",
+                "value": "yK6d",
+                "type": "path",
+                "description": "The webinar ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a webinar by ID"
+        },
+        {
+          "info": {
+            "name": "Get a list of webinars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/webinars",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search webinars by name"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "The list of campaign resource IDs (string separated with ',')"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search webinars by status"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort webinars by name"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort webinars by creation date"
+              },
+              {
+                "name": "sort[startsOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort webinars by update date"
+              },
+              {
+                "name": "query[type]",
+                "value": "",
+                "type": "query",
+                "description": "Search webinars by type"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

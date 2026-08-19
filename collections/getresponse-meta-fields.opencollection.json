@@ -1,0 +1,229 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Meta Fields",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Meta Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the shop meta fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/meta-fields",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search meta fields by name"
+              },
+              {
+                "name": "query[description]",
+                "value": "",
+                "type": "query",
+                "description": "Search meta fields by description"
+              },
+              {
+                "name": "query[value]",
+                "value": "",
+                "type": "query",
+                "description": "Search meta fields by value"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search meta fields created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search meta fields created to this date"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **GET** request to this URL returns a collection of meta field resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n\n * name\n * value\n * description\n * createdOn\n\n\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parame"
+        },
+        {
+          "info": {
+            "name": "Create meta field",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/meta-fields",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **POST** request to this URL will create a new meta field resource.\n\nIn order to create a new meta field, you need to send a meta field resource in the body of the request (remember that you need to serialize the body into a JSON string)\n"
+        },
+        {
+          "info": {
+            "name": "Get the meta field by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/meta-fields/:metaFieldId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "metaFieldId",
+                "value": "hgF",
+                "type": "path",
+                "description": "The metafield ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method returns meta field with a given `metaFieldId` in the context of a given `shopId`\n"
+        },
+        {
+          "info": {
+            "name": "Update meta field",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/meta-fields/:metaFieldId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "metaFieldId",
+                "value": "hgF",
+                "type": "path",
+                "description": "The metafield ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate the properties of a shop's meta field. You should send only those fields that need to be changed. The rest of the properties will stay the same.\n"
+        },
+        {
+          "info": {
+            "name": "Delete meta field",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/meta-fields/:metaFieldId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "metaFieldId",
+                "value": "hgF",
+                "type": "path",
+                "description": "The metafield ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete meta field"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

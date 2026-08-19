@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 SMS Messages",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMS Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single SMS message by its ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/sms/:smsId",
+            "params": [
+              {
+                "name": "smsId",
+                "value": "N",
+                "type": "path",
+                "description": "The SMS message ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single SMS message by its ID"
+        },
+        {
+          "info": {
+            "name": "Get the list of SMS messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/sms",
+            "params": [
+              {
+                "name": "query[type]",
+                "value": "",
+                "type": "query",
+                "description": "Search SMS messages by type"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search SMS messages by name"
+              },
+              {
+                "name": "query[sendingStatus]",
+                "value": "",
+                "type": "query",
+                "description": "Search SMS messages by status"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search SMS messages by campaign (list) ID"
+              },
+              {
+                "name": "query[hasLinks]",
+                "value": "",
+                "type": "query",
+                "description": "Search for SMS messages with links"
+              },
+              {
+                "name": "sort[sendingStatus]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by sending status"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "sort[sendOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by sending date"
+              },
+              {
+                "name": "sort[modifiedOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by modification date"
+              },
+              {
+                "name": "sort[delivered]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by number of delivered messages"
+              },
+              {
+                "name": "sort[sent]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by number of sent messages"
+              },
+              {
+                "name": "sort[clicks]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by number of link clicks"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Send an SMS message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/sms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Sends a new SMS (text) message to a list of recipients"
+        },
+        {
+          "info": {
+            "name": "Get a list of SMS sender names",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/sms/sender-names",
+            "params": [
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search sender names by status"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

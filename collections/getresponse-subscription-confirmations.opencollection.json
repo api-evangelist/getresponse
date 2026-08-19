@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Subscription Confirmations",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscription Confirmations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get collection of SUBSCRIPTION CONFIRMATIONS bodies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/subscription-confirmations/body/:languageCode",
+            "params": [
+              {
+                "name": "languageCode",
+                "value": "en",
+                "type": "path",
+                "description": "ISO 639-1 Language Code Standard"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending **GET** request to this url, returns collection of **SUBSCRIPTION CONFIRMATIONS** bodies.\n\nLanguage code used in url must be in ISO 639-1 Language Code Standard.\n\n"
+        },
+        {
+          "info": {
+            "name": "Get collection of SUBSCRIPTION CONFIRMATIONS subjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/subscription-confirmations/subject/:languageCode",
+            "params": [
+              {
+                "name": "languageCode",
+                "value": "en",
+                "type": "path",
+                "description": "ISO 639-1 Language Code Standard"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending **GET** request to this url, returns collection of **SUBSCRIPTION CONFIRMATIONS** subjects.\n\nLanguage code used in url must be in ISO 639-1 Language Code Standard.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

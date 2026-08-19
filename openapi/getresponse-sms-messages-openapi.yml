@@ -1,0 +1,952 @@
+openapi: 3.0.0
+info:
+  title: GetResponse APIv3 SMS Messages
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The SMS Messages operations of the GetResponse APIv3, split by tag from the provider-published
+    OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: SMS Messages
+  description: SMS Messages API documentation
+paths:
+  /sms/{smsId}:
+    get:
+      tags:
+      - SMS Messages
+      summary: Get a single SMS message by its ID
+      operationId: getSmsById
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/SmsDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-labels:
+      - content: GetResponse MAX
+        class: primary
+      - content: Add-on required
+        class: warning
+    parameters:
+    - $ref: '#/components/parameters/smsId'
+  /sms:
+    get:
+      tags:
+      - SMS Messages
+      summary: Get the list of SMS messages
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide
+        multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`.
+        You can specify multiple fields to sort by.
+      operationId: getSMSList
+      parameters:
+      - name: query[type]
+        in: query
+        description: Search SMS messages by type
+        required: false
+        schema:
+          type: string
+          enum:
+          - sms
+          - draft
+      - name: query[name]
+        in: query
+        description: Search SMS messages by name
+        required: false
+        schema:
+          type: string
+      - name: query[sendingStatus]
+        in: query
+        description: Search SMS messages by status
+        required: false
+        schema:
+          type: string
+          enum:
+          - scheduled
+          - sending
+          - sent
+      - name: query[campaignId]
+        in: query
+        description: Search SMS messages by campaign (list) ID
+        required: false
+        schema:
+          type: string
+      - name: query[hasLinks]
+        in: query
+        description: Search for SMS messages with links
+        required: false
+        schema:
+          type: boolean
+      - name: sort[sendingStatus]
+        in: query
+        description: Sort by sending status
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[name]
+        in: query
+        description: Sort by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[sendOn]
+        in: query
+        description: Sort by sending date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[modifiedOn]
+        in: query
+        description: Sort by modification date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[delivered]
+        in: query
+        description: Sort by number of delivered messages
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[sent]
+        in: query
+        description: Sort by number of sent messages
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[clicks]
+        in: query
+        description: Sort by number of link clicks
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/SmsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-labels:
+      - content: GetResponse MAX
+        class: primary
+      - content: Add-on required
+        class: warning
+    post:
+      tags:
+      - SMS Messages
+      summary: Send an SMS message
+      description: Sends a new SMS (text) message to a list of recipients
+      operationId: sendSms
+      requestBody:
+        $ref: '#/components/requestBodies/SendSms'
+      responses:
+        '201':
+          $ref: '#/components/responses/SmsDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-labels:
+      - content: GetResponse MAX
+        class: primary
+      - content: Add-on required
+        class: warning
+  /sms/sender-names:
+    get:
+      tags:
+      - SMS Messages
+      summary: Get a list of SMS sender names
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide
+        multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`.
+        You can specify multiple fields to sort by.
+      operationId: getSmsSenderNameList
+      parameters:
+      - name: query[status]
+        in: query
+        description: Search sender names by status
+        required: false
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/SmsSenderNameList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-labels:
+      - content: GetResponse MAX
+        class: primary
+      - content: Add-on required
+        class: warning
+components:
+  headers:
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated
+        by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    smsId:
+      name: smsId
+      in: path
+      description: The SMS message ID
+      required: true
+      schema:
+        type: string
+      example: N
+  requestBodies:
+    SendSms:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseSendSms'
+  responses:
+    SmsDetails:
+      description: The SMS message details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SmsDetails'
+    SmsList:
+      description: The SMS message listing
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SmsListItem'
+    SmsSenderNameList:
+      description: The list of sender names
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SmsSenderName'
+  schemas:
+    BaseSendSms:
+      required:
+      - name
+      - content
+      - recipientsType
+      properties:
+        name:
+          description: The SMS message name
+          type: string
+          maxLength: 100
+          minLength: 1
+          example: New message
+        content:
+          description: The SMS message content
+          type: string
+          minLength: 1
+          example: Sample SMS content
+        recipientsType:
+          description: The recipient type. To send a text message to contacts in your list, select `contacts`.
+            To message contacts who are not in any of your lists, select `importedNumbers`
+          type: string
+          enum:
+          - contacts
+          - importedNumbers
+          example: contacts
+      type: object
+      discriminator:
+        propertyName: recipientsType
+        mapping:
+          contacts: '#/components/schemas/SendSmsToContacts'
+          importedNumbers: '#/components/schemas/SendSmsToImportedNumbers'
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type: string
+          readOnly: true
+          example: Promo campaign
+          nullable: true
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eC
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eSs
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional
+        elements in the array will be ignored.
+      type: array
+      items:
+        type: string
+        example: C
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
+    SmsDetails:
+      type: object
+      allOf:
+      - properties:
+          sendSettings:
+            description: How the message will be delivered to the subscriber
+            type: object
+            nullable: true
+            allOf:
+            - properties:
+                contacts:
+                  description: The details of recipients who are in your contact list (recipientsType
+                    = \"contacts\"). If the recipient is not in your GetResponse contacts, the property
+                    is null.
+                  type: object
+                  nullable: true
+                  allOf:
+                  - properties:
+                      selectedCampaigns:
+                        $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+                      selectedSegments:
+                        $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+                      excludedCampaigns:
+                        $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+                      excludedSegments:
+                        $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+                      selectedContacts:
+                        description: The list of contact IDs.
+                        type: array
+                        items:
+                          type: string
+                          example: V2
+                      phoneNumberCustomFieldId:
+                        description: Custom Field ID which was used to select contact's phone number.
+                          ID reffers to custom field resource [Custom field details](#operation/getCustomFieldById).
+                        type: string
+                        example: c2
+                    type: object
+                importedNumbers:
+                  description: The details of recipients whose numbers are imported (recipientsType =
+                    \"importedNumbers\"). If the recipient is in your GetResponse contacts, the property
+                    is null.
+                  type: object
+                  nullable: true
+                  allOf:
+                  - properties:
+                      count:
+                        description: Number of phone numbers entered manually
+                        type: integer
+                        example: 10
+                    type: object
+              type: object
+          clickTracks:
+            description: Details of links attached to SMS message. Maximum 20 links will be returned.
+            type: array
+            items:
+              allOf:
+              - properties:
+                  clickTrackId:
+                    description: The click track ID
+                    type: string
+                    example: a2
+                  href:
+                    description: Direct hyperlink to a resource
+                    type: string
+                    example: https://api.getresponse.com/v3/click-tracks/a2
+                  url:
+                    description: The link URL
+                    type: string
+                    example: https://example.com
+                  label:
+                    description: The link label
+                    type: string
+                    example: example-link
+                  amount:
+                    description: Number of clicks on a link
+                    type: integer
+                    example: 2
+                  uniqueAmount:
+                    description: Number of unique clicks on link
+                    type: integer
+                    example: 1
+                type: object
+      - $ref: '#/components/schemas/SmsListItem'
+    SmsListItem:
+      properties:
+        smsId:
+          description: The SMS message ID
+          type: string
+          readOnly: true
+          example: N
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/sms/N
+        name:
+          description: The SMS message name
+          type: string
+          maxLength: 100
+          minLength: 1
+          example: New message
+        campaign:
+          description: The SMS message campaign
+          allOf:
+          - $ref: '#/components/schemas/CampaignReference'
+        modifiedOn:
+          description: The date the SMS message was last modified on, shown in `ISO 8601` date and time
+            format. e.g. `2022-04-10T10:02:57+0000`
+          type: string
+          format: date-time
+        type:
+          description: The SMS message type
+          type: string
+          enum:
+          - sms
+          - draft
+          readOnly: true
+        sendOn:
+          description: SMS message send date details
+          type: object
+          nullable: true
+          allOf:
+          - properties:
+              date:
+                description: Send date. Shown in format `ISO 8601` without timezone offset e.g. `2022-04-10T10:02:57`.
+                type: string
+                format: date-time
+                example: '2022-03-26T10:35:00'
+              timeZone:
+                description: Time zone details
+                type: object
+                allOf:
+                - properties:
+                    timeZoneId:
+                      description: Time zone ID
+                      type: integer
+                      example: '123'
+                    timeZoneName:
+                      description: Time zone name
+                      type: string
+                      example: America/New_York
+                    timeZoneOffset:
+                      description: Time zone offset
+                      type: string
+                      example: -05:00
+                  type: object
+            type: object
+        recipientsType:
+          description: Type of SMS message recipients
+          type: string
+          enum:
+          - contacts
+          - importedNumbers
+          readOnly: true
+          example: contacts
+        senderName:
+          description: The SMS message sender name
+          type: string
+          readOnly: true
+        content:
+          description: The SMS message content
+          type: string
+          example: This is my SMS content
+        sendMetrics:
+          description: Information about sending process
+          type: object
+          allOf:
+          - properties:
+              progress:
+                description: Sending progress
+                type: string
+              status:
+                description: Sending status
+                type: string
+                enum:
+                - scheduled
+                - sending
+                - sent
+            type: object
+        statistics:
+          description: Message statistics
+          allOf:
+          - properties:
+              sent:
+                description: Number of sent messages
+                type: integer
+                example: 12
+              delivered:
+                description: Number of delivered messages
+                type: integer
+                example: 10
+              clicks:
+                description: Number of clicked messages
+                type: integer
+                example: 8
+            type: object
+      type: object
+    SmsSenderName:
+      properties:
+        senderNameId:
+          description: The sender name id
+          type: string
+          readOnly: true
+          example: sNi
+        name:
+          description: The sender name
+          type: string
+          readOnly: true
+          example: Example Sender
+        status:
+          description: Status of the sender name
+          readOnly: true
+          example: active
+          allOf:
+          - $ref: '#/components/schemas/SmsSenderNameStatusesEnum'
+        isDefault:
+          description: Is the sender name default
+          type: boolean
+          readOnly: true
+          example: true
+      type: object
+    SmsSenderNameStatusesEnum:
+      type: string
+      enum:
+      - pending
+      - active
+      - rejected
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

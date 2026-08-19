@@ -1,0 +1,325 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 RSS Newsletters",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RSS Newsletters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get RSS newsletter by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/rss-newsletters/:rssNewsletterId",
+            "params": [
+              {
+                "name": "rssNewsletterId",
+                "value": "dGer",
+                "type": "path",
+                "description": "The RSS newsletter ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get RSS newsletter by ID"
+        },
+        {
+          "info": {
+            "name": "Update RSS newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/rss-newsletters/:rssNewsletterId",
+            "params": [
+              {
+                "name": "rssNewsletterId",
+                "value": "dGer",
+                "type": "path",
+                "description": "The RSS newsletter ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update RSS newsletter"
+        },
+        {
+          "info": {
+            "name": "Delete RSS newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/rss-newsletters/:rssNewsletterId",
+            "params": [
+              {
+                "name": "rssNewsletterId",
+                "value": "dGer",
+                "type": "path",
+                "description": "The RSS newsletter ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete RSS newsletter"
+        },
+        {
+          "info": {
+            "name": "Get RSS newsletter statistics by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/rss-newsletters/:rssNewsletterId/statistics",
+            "params": [
+              {
+                "name": "rssNewsletterId",
+                "value": "dGer",
+                "type": "path",
+                "description": "The RSS newsletter ID"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query",
+                "description": "Group results by time interval"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Count data from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Count data to this date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Get the list of RSS newsletters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/rss-newsletters",
+            "params": [
+              {
+                "name": "query[subject]",
+                "value": "",
+                "type": "query",
+                "description": "Search RSS newsletters by subject"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search RSS newsletters by status"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search RSS newsletters created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search RSS newsletters created to this date"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search RSS newsletters by campaign ID"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create RSS newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/rss-newsletters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create RSS newsletter"
+        },
+        {
+          "info": {
+            "name": "The statistics for all RSS newsletters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/rss-newsletters/statistics",
+            "params": [
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query",
+                "description": "Group results by time interval"
+              },
+              {
+                "name": "query[rssNewsletterId]",
+                "value": "",
+                "type": "query",
+                "description": "The list of RSS newsletter resource IDs (string separated with ',')"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "The list of campaign resource IDs (string separated with ',')"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Count data from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Count data to this date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

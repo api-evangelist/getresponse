@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.getresponse.com/pricing
+docs: https://www.getresponse.com/pricing
+currency: USD
+plan_count: 4
+billing_periods: [monthly, annual-12-month, annual-24-month]
+note: >-
+  Pricing is per-subscriber, not per-API-call. GetResponse publishes no separate API pricing,
+  no per-call metering and no API add-on — every plan carries the same 30,000-calls-per-10-minute
+  rate limit (see rate-limits/getresponse-rate-limits.yml), and the commercial ceiling an
+  integration actually hits is the contact-list quota, which surfaces in the API as error code
+  1027 ("contact limit reached"). Prices below are the published list rates at the 1,000-contact
+  tier; every plan scales in price with the subscriber count. The annual rate is an 18% discount.
+api_metering: none
+api_included_in_all_plans: true
+plans:
+  - name: Starter
+    price_monthly: 19.00
+    price_annual_monthly: 15.58
+    currency: USD
+    billing_period: [monthly, annual]
+    included_quota:
+      contacts: 1000
+      email_sends: unlimited
+      users: 3
+    limits:
+      automation_workflows: 1
+      ai_tool_uses: 3
+    features: [email marketing, landing page builder, autoresponders, signup forms]
+  - name: Marketer
+    price_monthly: 59.00
+    price_annual_monthly: 48.38
+    currency: USD
+    billing_period: [monthly, annual]
+    most_popular: true
+    included_quota:
+      contacts: 1000
+      email_sends: unlimited
+      users: 5
+    limits:
+      automation_workflows: unlimited
+    features:
+      - advanced audience segmentation
+      - abandoned cart recovery
+      - sales funnels
+      - marketing automation
+  - name: Creator
+    price_monthly: 69.00
+    price_annual_monthly: 56.58
+    currency: USD
+    billing_period: [monthly, annual]
+    included_quota:
+      contacts: 1000
+      email_sends: unlimited
+      users: 5
+      course_students: 500
+      webinar_attendees: 100
+    features: [course creator, website builder, premium newsletters, webinars]
+  - name: Enterprise (GetResponse MAX)
+    price_monthly: null
+    currency: USD
+    billing_period: [annual, 24-month]
+    contact_sales: true
+    included_quota:
+      contacts: flexible
+      users: unlimited
+    features:
+      - SMS marketing
+      - mobile push notifications
+      - dedicated IP address
+      - single sign-on (SSO)
+      - dedicated support
+    api_note: >-
+      MAX accounts talk to a different host (api3.getresponse360.com / api3.getresponse360.pl,
+      both declared in the provider OpenAPI servers[]) and must send an additional X-Domain
+      header on every request.
+overage: null
+free_tier: null

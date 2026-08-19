@@ -1,0 +1,84 @@
+generated: '2026-08-13'
+method: searched
+status: candidate
+source: >-
+  https://www.getresponse.com/llms.txt (provider statement), https://github.com/GetResponse
+  (28 repos, no MCP server), https://apidocs.getresponse.com/v3 (no MCP page — /v3/mcp 404s)
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+note: >-
+  GetResponse ships no MCP server, hosted or local. This is not an inference — the provider says
+  so in its own llms.txt: "Additional AI-focused integration resources, including an MCP server,
+  are planned and will be added to this document as they become publicly available." Probed
+  apidocs.getresponse.com/v3/mcp (404), the GitHub organisation (28 repos, none MCP), and
+  searched the public MCP registries. Third-party GetResponse MCP servers exist — a
+  community server on lobehub and a Zapier-hosted connector — but neither is first-party, so
+  neither is recorded as this provider's agent surface. No endpoint URL is invented here.
+third_party_observed:
+  - name: mateuszkami/getresponse-mcp
+    url: https://lobehub.com/mcp/mateuszkami-getresponse-mcp
+    official: false
+    mode: local-stdio
+    auth: api-key
+    note: Community server; requires GETRESPONSE_API_KEY. Read-only tool set.
+  - name: Zapier MCP — GetResponse
+    url: https://zapier.com/mcp/getresponse
+    official: false
+    mode: remote
+    note: Zapier's brokered connector, not a GetResponse-operated endpoint.
+candidate_tools_source: >-
+  Should GetResponse ship a server, the tool surface is fully derivable from the
+  provider-published OpenAPI — 220 operations across 42 tags, each with a real inputSchema in
+  parameters/requestBody. The provider's own Agent Skill already exercises 11 of them.
+candidate_tools:
+  - name: get_account
+    description: Get account information for the authenticated user.
+    source_operation: openapi/getresponse-accounts-openapi.yml#getAccount
+  - name: get_sending_limits
+    description: Check the account's current sending limits before dispatching bulk email.
+    source_operation: openapi/getresponse-accounts-openapi.yml#getSendingLimits
+  - name: list_campaigns
+    description: List campaigns (contact lists).
+    source_operation: openapi/getresponse-campaigns-lists-openapi.yml#getCampaignList
+  - name: create_campaign
+    description: Create a campaign (contact list).
+    source_operation: openapi/getresponse-campaigns-lists-openapi.yml#createCampaign
+  - name: list_contacts
+    description: List or filter contacts.
+    source_operation: openapi/getresponse-contacts-openapi.yml#getContactList
+  - name: create_contact
+    description: Add a single contact to a campaign.
+    source_operation: openapi/getresponse-contacts-openapi.yml#createContact
+  - name: create_contacts_batch
+    description: Add up to 1000 contacts to a campaign asynchronously.
+    source_operation: openapi/getresponse-contacts-openapi.yml#createBatchContacts
+  - name: search_contacts
+    description: Run a saved or ad-hoc contact search.
+    source_operation: openapi/getresponse-search-contacts-openapi.yml#getContactsFromSearchContactsConditions
+  - name: list_custom_fields
+    description: List custom fields defined on the account.
+    source_operation: openapi/getresponse-custom-fields-openapi.yml#getCustomFieldList
+  - name: create_custom_field
+    description: Define a new custom field.
+    source_operation: openapi/getresponse-custom-fields-openapi.yml#createCustomField
+  - name: list_from_fields
+    description: List verified sender addresses.
+    source_operation: openapi/getresponse-from-fields-openapi.yml#getFromFieldList
+  - name: send_newsletter
+    description: Create and send an HTML newsletter to a campaign or segment.
+    source_operation: openapi/getresponse-newsletters-openapi.yml#createNewsletter
+gaps_for_agents:
+  - >-
+    No idempotency key — a retried send_newsletter can dispatch twice. Error code 1011
+    ("newsletter already being sent") is the only guard, and it is a 400, not a replayed 200.
+  - >-
+    OAuth offers a single "all" scope, so a delegated agent token cannot be scoped down to
+    read-only. Least privilege is not expressible.
+  - >-
+    Webhook subscriptions cannot be created through the API, so an agent cannot self-provision
+    the "Import finished" callback it needs to confirm an async contact import.

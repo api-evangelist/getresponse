@@ -1,18 +1,80 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/getresponse-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/getresponse-open-api-original.json
+docs: https://apidocs.getresponse.com/v3/authentication
+note: >-
+  Consolidated to the provider-level auth profile. The mechanical derive pass emitted the same
+  two schemes once per tag-split spec file (49 copies each); the API declares exactly two, and
+  they are identical across every operation. Upgraded to `searched` with detail the spec does
+  not carry: the 90-day inactivity expiry on API keys, the MAX enterprise headers, and the fact
+  that an auth failure returns HTTP 403 with error code 1014 rather than 401 — the spec declares
+  401 on all 220 operations, so the contract and the error reference disagree. An agent that
+  branches only on 401 will misclassify every GetResponse auth failure.
 summary:
-  types:
-  - apiKey
-  api_key_in:
-  - header
+  types: [apiKey, oauth2]
+  api_key_in: [header]
+  oauth2_flows: [implicit, authorizationCode, clientCredentials, refreshToken]
+  primary: apiKey
+  scope_model: single-scope
 schemes:
-- name: apiKey
-  type: apiKey
-  in: header
-  parameter: X-Auth-Token
-  description: |-
-    Personal API key sent as "api-key YOUR_API_KEY". Keys expire after 90
-    days of inactivity.
-  sources:
-  - openapi/getresponse-openapi.yml
+  - name: api-key
+    type: apiKey
+    in: header
+    parameter: X-Auth-Token
+    value_format: 'api-key <YOUR_API_KEY>'
+    description: >-
+      The primary method, and the one GetResponse says "should be used in most cases". The
+      header value must be prefixed with the literal string "api-key " — a bare key fails.
+    key_source: https://app.getresponse.com/api
+    expiry: >-
+      Unused API keys expire after 90 days of inactivity and must be regenerated. There is no
+      warning signal on the API surface; the key simply starts returning error code 1014.
+    example_request: 'curl -H "X-Auth-Token: api-key <YOUR_API_KEY>" https://api.getresponse.com/v3/accounts'
+    sources: [openapi/_original/getresponse-open-api-original.json]
+  - name: oauth2
+    type: oauth2
+    description: >-
+      Secondary method, sent as `Authorization: Bearer <ACCESS_TOKEN>`. One scope only ("all"),
+      so a delegated token cannot be narrowed — see scopes/getresponse-scopes.yml.
+    flows:
+      - flow: implicit
+        authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+        scopes: [all]
+      - flow: authorizationCode
+        authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+        tokenUrl: https://api.getresponse.com/v3/token
+        scopes: [all]
+      - flow: clientCredentials
+        tokenUrl: https://api.getresponse.com/v3/token
+        scopes: [all]
+      - flow: refreshToken
+        documented_in: docs-prose-only
+    pkce: false
+    sources: [openapi/_original/getresponse-open-api-original.json]
+enterprise:
+  platform: GetResponse MAX (getresponse360)
+  hosts:
+    - https://api3.getresponse360.com/v3
+    - https://api3.getresponse360.pl/v3
+  additional_headers:
+    - header: X-Domain
+      required: true
+      value: 'The account domain only, without a protocol — e.g. example.com'
+      failure: error code 1024 (404, domain not found) or 1021 (400, invalid request headers)
+    - header: X-Parent-Login
+      required: false
+      value: 'e.g. abc@getresponse.com'
+      description: Limits API requests to one specific parent account for multi-parent users.
+failure_behaviour:
+  documented_status: 403
+  documented_code: 1014
+  spec_declared_status: 401
+  divergence: true
+  note: >-
+    The error reference at /v3/errors gives code 1014 an HTTP 403; the OpenAPI declares 401 on
+    every operation. Handle both.
+gaps:
+  - No OIDC discovery document (/.well-known/openid-configuration 404s on every host).
+  - No RFC 8414 authorization-server metadata (/.well-known/oauth-authorization-server 404s).
+  - No PKCE; the deprecated implicit flow is still offered.
+  - Single "all" scope — no least-privilege token for agents.

@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Transactional Emails",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactional Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transactional email details by transactional email ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/transactional-emails/:transactionalEmailId",
+            "params": [
+              {
+                "name": "transactionalEmailId",
+                "value": "tRe4i",
+                "type": "path"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get transactional email details by transactional email ID"
+        },
+        {
+          "info": {
+            "name": "Get the list of transactional emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/transactional-emails",
+            "params": [
+              {
+                "name": "query[sentOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search transactional emails sent from this date"
+              },
+              {
+                "name": "query[sentOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search transactional emails sent to this date"
+              },
+              {
+                "name": "query[tagged]",
+                "value": "",
+                "type": "query",
+                "description": "Search tagged/untagged transactional emails"
+              },
+              {
+                "name": "query[tagId]",
+                "value": "",
+                "type": "query",
+                "description": "Search transactional emails with a specific tag ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Send transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/transactional-emails",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send transactional email"
+        },
+        {
+          "info": {
+            "name": "Get the overall statistics of transactional emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/transactional-emails/statistics",
+            "params": [
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query",
+                "description": "Group results by time interval"
+              },
+              {
+                "name": "query[timeFrame][from]",
+                "value": "",
+                "type": "query",
+                "description": "Count data from this date"
+              },
+              {
+                "name": "query[timeFrame][to]",
+                "value": "",
+                "type": "query",
+                "description": "Count data to this date"
+              },
+              {
+                "name": "query[tagged]",
+                "value": "",
+                "type": "query",
+                "description": "Search tagged/untagged transactional emails"
+              },
+              {
+                "name": "query[tagId]",
+                "value": "",
+                "type": "query",
+                "description": "Search transactional emails with a specific tag ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the overall statistics of transactional emails"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Addresses",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an address by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/addresses/:addressId",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "k9",
+                "type": "path",
+                "description": "The address ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get an address by ID"
+        },
+        {
+          "info": {
+            "name": "Update address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/addresses/:addressId",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "k9",
+                "type": "path",
+                "description": "The address ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate an existing address. You should send only those fields that need to be changed. The rest of the properties will stay the same.\n"
+        },
+        {
+          "info": {
+            "name": "Delete address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/addresses/:addressId",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "k9",
+                "type": "path",
+                "description": "The address ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete address"
+        },
+        {
+          "info": {
+            "name": "Get a list of addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/addresses",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by name"
+              },
+              {
+                "name": "query[firstName]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by first name"
+              },
+              {
+                "name": "query[lastName]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by last name"
+              },
+              {
+                "name": "query[address1]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by address1 field"
+              },
+              {
+                "name": "query[address2]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by address2 field"
+              },
+              {
+                "name": "query[city]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by city"
+              },
+              {
+                "name": "query[zip]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by ZIP"
+              },
+              {
+                "name": "query[province]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by province"
+              },
+              {
+                "name": "query[provinceCode]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by province code"
+              },
+              {
+                "name": "query[phone]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by phone"
+              },
+              {
+                "name": "query[company]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses by company"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search addresses created to this date"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **GET** request to this URL returns collection of address resources.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n* name\n* firstName\n* lastName\n* address1\n* address2\n* city\n* zip\n* province\n* provinceCode\n* phone\n* company\n* createdOn\n\nThe `name` field can be a pattern and we'll try to match this phrase.\n\nYou can specify which page of the results you want"
+        },
+        {
+          "info": {
+            "name": "Create address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

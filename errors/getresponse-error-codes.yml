@@ -1,0 +1,148 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.getresponse.com/v3/errors
+docs: https://apidocs.getresponse.com/v3/errors
+format: custom-json
+rfc9457: false
+note: >-
+  GetResponse publishes a numeric error-code registry that is independent of the HTTP status —
+  one HTTP 400 can carry any of a dozen distinct codes. The `code` field, not the status, is the
+  thing an agent should branch on. The envelope is a custom JSON object (schema ErrorResponse in
+  the provider OpenAPI), NOT RFC 9457 application/problem+json.
+envelope:
+  content_type: application/json
+  schema: ErrorResponse
+  fields: [httpStatus, code, codeDescription, message, moreInfo, context, uuid]
+  retryable_signal: >-
+    context.timeToReset on a 429; there is no Retry-After header.
+error_codes:
+  - code: 1
+    status: 500
+    title: Internal system failure
+    meaning: System failure, database connection issue, or DDoS mitigation.
+    action: Retry with backoff; if persistent, contact support quoting the response uuid.
+  - code: 1000
+    status: 400
+    title: General validation error
+    meaning: Multiple validation issues; the specifics are in the context section.
+    action: Read context and correct the request. Do not retry unchanged.
+  - code: 1001
+    status: 400
+    title: Related resource invalid or nonexistent
+    meaning: A referenced resource (campaign, custom field, from-field) does not exist.
+    action: Resolve the referenced id first, then retry.
+  - code: 1002
+    status: 400
+    title: Resource state forbids that action
+    meaning: The resource is in a state that does not permit the requested operation.
+    action: Re-read the resource and branch on its current state.
+  - code: 1003
+    status: 400
+    title: Parameter format invalid
+    meaning: An id, email, IP, date or similar failed format validation.
+    action: Correct the format. Percent-encode bracketed query keys and values.
+  - code: 1004
+    status: 400
+    title: Array parameter outside allowed bounds
+    meaning: An array parameter breached its min/max item limits.
+    action: Chunk the request — e.g. contacts batches are capped at 1000 per call.
+  - code: 1005
+    status: 400
+    title: Required parameter missing a value
+    action: Supply the parameter.
+  - code: 1006
+    status: 400
+    title: Parameter has the wrong data type
+    action: Coerce to the declared type in the OpenAPI schema.
+  - code: 1007
+    status: 400
+    title: Parameter length exceeds restrictions
+    action: Truncate to the declared maxLength.
+  - code: 1008
+    status: 409
+    title: Duplicate unique property
+    meaning: >-
+      A name, email, URL or other unique property already exists. This is the closest thing
+      GetResponse has to a deduplication guarantee — there is no idempotency key.
+    action: >-
+      Treat as "already created". Look the existing resource up rather than retrying the write.
+  - code: 1009
+    status: 400
+    title: Resource cannot be modified — in use elsewhere
+    action: Not retryable; unbind the resource first.
+  - code: 1010
+    status: 400
+    title: External resource check failed
+    action: Verify the external dependency (e.g. a domain or tracking target) is reachable.
+  - code: 1011
+    status: 400
+    title: Newsletter is already being sent
+    meaning: A send is in flight for this newsletter.
+    action: >-
+      Do NOT retry — retrying a newsletter send is the highest-consequence duplicate in this
+      API. Poll the newsletter status instead.
+  - code: 1012
+    status: 400
+    title: Message parsing error or missing merge words
+    action: Fix the message body / merge tags.
+  - code: 1013
+    status: 404
+    title: Resource not found
+    action: The id does not exist or is not visible to this key.
+  - code: 1014
+    status: 403
+    title: Authentication failure
+    meaning: >-
+      Missing or invalid token. Note the status is 403, not 401 — an agent branching only on
+      401 will misclassify GetResponse auth failures.
+    action: Check the X-Auth-Token header carries the "api-key " prefix and has not expired.
+  - code: 1015
+    status: 429
+    title: Quota exceeded or suspicious request pattern
+    meaning: Rate limit hit, or a pattern flagged as abusive.
+    action: Wait context.timeToReset seconds (or X-RateLimit-Reset) before retrying.
+  - code: 1016
+    status: 403
+    title: Temporary API block
+    meaning: The account has been temporarily blocked for suspected behaviour.
+    action: Stop; back off substantially. Not fixable by retry.
+  - code: 1017
+    status: 403
+    title: Permanent API block
+    action: Not retryable. Contact support.
+  - code: 1018
+    status: 403
+    title: IP address blocked
+    action: Not retryable from this source address.
+  - code: 1019
+    status: 503
+    title: Service unavailable (maintenance)
+    action: Retry with backoff; check https://status.getresponse.com/.
+  - code: 1021
+    status: 400
+    title: Invalid request headers
+    action: >-
+      Check X-Auth-Token formatting, and X-Domain if this is a GetResponse MAX account.
+  - code: 1023
+    status: 403
+    title: Insufficient permissions for account or campaign
+    action: Not retryable with this key.
+  - code: 1024
+    status: 404
+    title: Domain not found
+    action: Verify the X-Domain value (MAX accounts).
+  - code: 1027
+    status: 400
+    title: Contact limit reached
+    meaning: The plan's subscriber quota is exhausted.
+    action: >-
+      Not retryable. This is a commercial limit, not a technical one — see
+      plans/getresponse-plans-pricing.yml.
+  - code: 1028
+    status: 400
+    title: Restricted resource cannot be modified or deleted
+    action: Not retryable.
+  - code: 1029
+    status: 400
+    title: Restricted resource property cannot be used
+    action: Not retryable.

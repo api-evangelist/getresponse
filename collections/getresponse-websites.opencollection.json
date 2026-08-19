@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Websites",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Websites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single Website by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/websites/:websiteId",
+            "params": [
+              {
+                "name": "websiteId",
+                "value": "ce84fabc-1349-4992-a2d7-0c44c5534128",
+                "type": "path",
+                "description": "The website ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single Website by ID"
+        },
+        {
+          "info": {
+            "name": "Get the list of websites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/websites",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search websites by name"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search websites by status"
+              },
+              {
+                "name": "stats[from]",
+                "value": "",
+                "type": "query",
+                "description": "Show statistics for websites from this date"
+              },
+              {
+                "name": "stats[to]",
+                "value": "",
+                "type": "query",
+                "description": "Show statistics for websites to this date"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort websites by name"
+              },
+              {
+                "name": "sort[createdAt]",
+                "value": "",
+                "type": "query",
+                "description": "Sort websites by creation date"
+              },
+              {
+                "name": "sort[updatedAt]",
+                "value": "",
+                "type": "query",
+                "description": "Sort websites by modification date"
+              },
+              {
+                "name": "sort[pageViews]",
+                "value": "",
+                "type": "query",
+                "description": "Sort websites by page views"
+              },
+              {
+                "name": "sort[visits]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by number of site visits"
+              },
+              {
+                "name": "sort[uniqueVisitors]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by number of unique visitors"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,699 @@
+openapi: 3.0.0
+info:
+  title: GetResponse APIv3 Imports
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Imports operations of the GetResponse APIv3, split by tag from the provider-published
+    OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Imports
+  description: Imports API documentation
+paths:
+  /imports/{importId}:
+    get:
+      tags:
+      - Imports
+      summary: Get import details by ID.
+      operationId: getImportById
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/ImportDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    parameters:
+    - $ref: '#/components/parameters/importId'
+  /imports:
+    get:
+      tags:
+      - Imports
+      summary: Get a list of imports.
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide
+        multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`.
+        You can specify multiple fields to sort by.
+      operationId: getImportList
+      parameters:
+      - name: query[campaignId]
+        in: query
+        description: Search imports by campaignId
+        required: false
+        schema:
+          type: string
+      - name: query[createdOn][from]
+        in: query
+        description: Search imports created from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Search imports created to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: sort[createdOn]
+        in: query
+        description: Sort imports by creation date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[finishedOn]
+        in: query
+        description: Sort imports by finish date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[campaignName]
+        in: query
+        description: Sort imports by campaign name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[uploadedContacts]
+        in: query
+        description: Sort imports by uploaded contact count
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[updatedContacts]
+        in: query
+        description: Sort imports by updated contact count
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[addedContacts]
+        in: query
+        description: Sort imports by inserted contact count
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[invalidContacts]
+        in: query
+        description: Sort imports by invalid contact count
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[status]
+        in: query
+        description: Sort imports by status (uploaded, to_review, approved, finished, rejected, canceled)
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/ImportList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Imports
+      summary: Schedule a new contact import
+      description: This endpoint lets you schedule a contact import. That way, you can add and update
+        your contacts using a single API call. Since API imports are asynchronous, you should check periodically
+        for updates while your original API request is being processed. To keep track of your import status,
+        use [GET import](https://apireference.getresponse.com/#operation/getImportById) (provide the importId  from
+        the response), or subscribe to an [import finished](https://apidocs.getresponse.com/v3/payloads#contacts-import-finished)
+        webhook. Please note, that this endpoint has **specific rate limits** - for details please refer
+        to [Create Import Limits](https://apidocs.getresponse.com/v3/case-study/create-import#limits).
+        For more information on imports, check our [API Docs](https://apidocs.getresponse.com/v3/case-study/create-import)
+        or [Help Center](https://www.getresponse.com/help/how-do-i-prepare-a-file-for-import.html)
+      operationId: createImport
+      requestBody:
+        $ref: '#/components/requestBodies/NewImport'
+      responses:
+        '201':
+          $ref: '#/components/responses/ImportDetails'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context
+                      section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method
+                      details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota
+                      window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  headers:
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated
+        by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    importId:
+      name: importId
+      in: path
+      description: The import ID
+      required: true
+      schema:
+        type: string
+      example: o6gE
+  requestBodies:
+    NewImport:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewImport'
+  responses:
+    ImportDetails:
+      description: The import details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Import'
+    ImportList:
+      description: The list of imports.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Import'
+  schemas:
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type: string
+          readOnly: true
+          example: Promo campaign
+          nullable: true
+      type: object
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    Import:
+      properties:
+        importId:
+          description: The import ID
+          type: string
+          readOnly: true
+          example: o6gE
+        campaign:
+          allOf:
+          - $ref: '#/components/schemas/CampaignReference'
+        status:
+          type: string
+          enum:
+          - uploaded
+          - review
+          - approved
+          - rejected
+          - finished
+          - canceled
+          - to_review
+          readOnly: true
+        statistics:
+          description: The import statistics
+          allOf:
+          - $ref: '#/components/schemas/ImportStatistics'
+        errorStatistics:
+          description: The detailed import error statistics
+          allOf:
+          - $ref: '#/components/schemas/ImportErrorStatistics'
+        createdOn:
+          type: string
+          format: date-time
+        finishedOn:
+          type: string
+          format: date-time
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/imports/o6gE
+      type: object
+    ImportErrorStatistics:
+      properties:
+        syntaxErrors:
+          description: The number of contacts with a syntax error
+          type: integer
+          format: int64
+          readOnly: true
+          example: 2
+        alreadyInQueue:
+          description: The number of contacts already in queue
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        invalidDomains:
+          description: The number of contacts with invalid domains
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        blacklist:
+          description: The number of blocked contacts
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        policyFailures:
+          description: The number of contacts rejected for policy reasons
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        mismatchedCriteria:
+          description: The number of contacts rejected because of mismatched criteria, [learn more](https://www.getresponse.com/help/managing-contacts/working-with-contact-lists/where-can-i-find-import-statistics.html#what-do-the-numbers-for-uploaded-approved-and-import-errors-mean)
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+      type: object
+    ImportStatistics:
+      required:
+      - uploaded
+      - invalid
+      - updated
+      - addedToList
+      properties:
+        uploaded:
+          description: The number of uploaded contacts
+          type: integer
+          format: int64
+          readOnly: true
+          example: 25
+        invalid:
+          description: The number of invalid contacts
+          type: integer
+          format: int64
+          readOnly: true
+          example: 5
+        updated:
+          description: The number of updated contacts
+          type: integer
+          format: int64
+          readOnly: true
+          example: 10
+        addedToList:
+          description: The number of added contacts
+          type: integer
+          format: int64
+          readOnly: true
+          example: 10
+      type: object
+    NewImport:
+      required:
+      - campaignId
+      - contacts
+      - fieldMapping
+      properties:
+        campaignId:
+          description: The ID of the destination campaign (list)
+          type: string
+          example: z5c
+        fieldMapping:
+          description: Mapping definition for such contact properties as email address, name, or custom
+            fields. It's the equivalent of column headers in a CSV file used to import contacts in a GetResponse
+            account. The `email` value is required. For custom fields, provide only custom fields name
+            in the mapping. Include their values in the corresponding field in the contact array
+          type: array
+          items:
+            type: string
+            example: email
+        contacts:
+          description: Container for a contact definition. Include the values defined in the `fieldMapping`
+            array
+          type: array
+          items:
+            $ref: '#/components/schemas/NewImportContact'
+      type: object
+    NewImportContact:
+      type: array
+      items:
+        type: string
+        example: example@somedomain.com
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 SMS Automation Messages",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMS Automation Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single automated SMS message by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/sms-automation/:smsId",
+            "params": [
+              {
+                "name": "smsId",
+                "value": "N",
+                "type": "path",
+                "description": "The automated SMS message ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single automated SMS message by its ID."
+        },
+        {
+          "info": {
+            "name": "Get the list of automated SMS messages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/sms-automation",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search automated SMS messages by name"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search automated SMS messages by campaign (list) ID"
+              },
+              {
+                "name": "query[hasLinks]",
+                "value": "",
+                "type": "query",
+                "description": "Search for automated SMS messages containing links"
+              },
+              {
+                "name": "sort[status]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by the status of the SMS message"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by the name of the automated SMS message"
+              },
+              {
+                "name": "sort[modifiedOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by the date the SMS message was modified on"
+              },
+              {
+                "name": "sort[delivered]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by the number of delivered SMS messages"
+              },
+              {
+                "name": "sort[sent]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by the number of sent SMS messages"
+              },
+              {
+                "name": "sort[clicks]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by the number of link clicks"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,235 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Categories",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the shop categories list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/categories",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search category by name"
+              },
+              {
+                "name": "query[parentId]",
+                "value": "",
+                "type": "query",
+                "description": "Search categories by their parent"
+              },
+              {
+                "name": "query[externalId]",
+                "value": "",
+                "type": "query",
+                "description": "Search categories by external ID"
+              },
+              {
+                "name": "search[createdAt][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show categories starting from this date"
+              },
+              {
+                "name": "search[createdAt][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show categories starting to this date"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by name"
+              },
+              {
+                "name": "sort[createdAt]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nSending a **GET** request to this URL returns a collection of category resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n *name\n * createdOn\n * parentId\n\nThe `name` fields can be a pattern and we'll try to match this phrase.\n\nThe `parentId` will search for sub-categories of a given parent category.\n\n\n You can filter the resource "
+        },
+        {
+          "info": {
+            "name": "Create category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/categories",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nCreate shop category. You can pass the `parentId` parameter to create a sub-category of a given parent. Unlike most **POST** methods, this call is idempotent, that is: sending the same request 10 times will not create 10 new categories. Only one category will be created.\n\n"
+        },
+        {
+          "info": {
+            "name": "Get a single category by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/categories/:categoryId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "categoryId",
+                "value": "C3s",
+                "type": "path",
+                "description": "The category ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nThis method returns a category according to the given `categoryId`.\n"
+        },
+        {
+          "info": {
+            "name": "Update category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/categories/:categoryId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "categoryId",
+                "value": "C3s",
+                "type": "path",
+                "description": "The category ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "\nUpdate the properties of the shop category. You can specify a `parentId` to assign a category as sub-category for an existing category. You should send only those fields that need to be changed. The rest of the properties will stay the same.\n\n"
+        },
+        {
+          "info": {
+            "name": "Delete category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/shops/:shopId/categories/:categoryId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "pf3",
+                "type": "path",
+                "description": "The shop ID"
+              },
+              {
+                "name": "categoryId",
+                "value": "C3s",
+                "type": "path",
+                "description": "The category ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete category"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

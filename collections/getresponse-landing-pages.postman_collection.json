@@ -1,0 +1,949 @@
+{
+  "item": [
+    {
+      "id": "a49f5225-5f76-4f49-9b7a-36ca70d5d1a6",
+      "name": "Landing Pages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "16c8e748-6131-4f53-a805-2a6534babc01",
+          "name": "Get a single landing page by ID",
+          "request": {
+            "name": "Get a single landing page by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "lps",
+                ":lpsId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lpsId",
+                  "description": "(Required) The landing page ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a765632c-877d-4d1d-a0b7-fca4305be6f2",
+              "name": "The landing page details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps",
+                    ":lpsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5314"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5314"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pages\": [\n    {\n      \"uuid\": \"6ee7597f-9bde-4b92-9411-2fb228c9fa34\",\n      \"name\": \"Home\",\n      \"status\": \"active\",\n      \"url\": \"https://lGeYSYYuZlPiKOtTinCKs.mtegoP6dnFQq6GpLyWhFI+lyk5LkSXAc5Gjch0Dx4FrO3bpsiODWc9c\",\n      \"redirectUrl\": \"http://hxMeeTEyCVHOcNnCQzXpEXBq.fmkWLYXr8Y\",\n      \"createdAt\": \"2023-03-14T14:42:57\"\n    },\n    {\n      \"uuid\": \"6ee7597f-9bde-4b92-9411-2fb228c9fa34\",\n      \"name\": \"Home\",\n      \"status\": \"active\",\n      \"url\": \"https://dQeUtPfOLhXiuDFqV.glvqdrjS1C.mjYrwL,Z5Y,KaC,A.TkZ,fu.Iv1IxcbGsqs6iChY1G7ePgdbtwoVJE9uiXlz\",\n      \"redirectUrl\": \"http://KPKguqcoxGwtPMkNgulgELajgM.fqtd3zendvdDn84iwVfEkfk4BRyKsgJIVvBXn3K.FSpFWALFS\",\n      \"createdAt\": \"2023-03-14T14:42:57\"\n    }\n  ],\n  \"lpsId\": \"ce84fabc-1349-4992-a2d7-0c44c5534128\",\n  \"href\": \"https://api.getresponse.com/v3/lps/6b0d7d59-71d9-4708-80a6-aa0f13805111\",\n  \"name\": \"Predesigned #017\",\n  \"status\": \"published\",\n  \"domainUrl\": \"http://tU.cafiL5U4WZVhgSxdg-oM5m1YN,x.,vI8Ay01XwN,6waHTd7rGeGVmmBCYA9ZNriOO0CSKm91VJvoxqX\",\n  \"thumbnailUrl\": \"https://us-wbe-img2.gr-cdn.com/user/e5c2094a-2354-459f-9b9f-6d0369ccae2c/6b0d7d59-71d9-4708-80a6-aa0f13805111.png?width=208\",\n  \"isChatsEnabled\": \"true\",\n  \"createdAt\": \"2023-03-14T14:42:57\",\n  \"updatedAt\": \"2023-03-14T14:42:57\",\n  \"pageViews\": 9,\n  \"visits\": 5,\n  \"uniqueVisitors\": 5\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f42cf7f-50f2-4df5-96f2-da9106e8c591",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps",
+                    ":lpsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06874fae-fe31-4153-8ad6-91611d588c62",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps",
+                    ":lpsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfa9f1eb-5700-4b6b-8c62-a293269c4bd1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps",
+                    ":lpsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3550ddf2-15b5-41f5-ad83-a24aff10c79a",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps",
+                    ":lpsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lpsId",
+                      "description": "(Required) The landing page ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07593096-d2f1-43e9-9625-54153c152edf",
+          "name": "Get the list of landing pages",
+          "request": {
+            "name": "Get the list of landing pages",
+            "description": {
+              "content": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "lps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[name]",
+                  "value": "<string>",
+                  "description": "Search landing pages by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[status]",
+                  "value": "<string>",
+                  "description": "Search landing pages by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "stats[from]",
+                  "value": "<dateTime>",
+                  "description": "Show statistics for landing pages from this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "stats[to]",
+                  "value": "<dateTime>",
+                  "description": "Show statistics for landing pages to this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[name]",
+                  "value": "<string>",
+                  "description": "Sort landing pages by name"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[createdAt]",
+                  "value": "<string>",
+                  "description": "Sort landing pages by creation date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[updatedAt]",
+                  "value": "<string>",
+                  "description": "Sort landing pages by modification date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[visits]",
+                  "value": "<string>",
+                  "description": "Sort by number of page visits"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[leads]",
+                  "value": "<string>",
+                  "description": "Sort landing pages by number of leads"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[subscriptionRate]",
+                  "value": "<string>",
+                  "description": "Sort by subscription rate"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "64b5ed0c-1ec7-4a8a-821c-d8cbc2547a92",
+              "name": "The list of tags",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stats[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "stats[to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[visits]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[leads]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[subscriptionRate]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5314"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "5314"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "5314"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "5314"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "5314"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"statistics\": {\n      \"visits\": 9,\n      \"leads\": 5,\n      \"subscriptionRate\": 52\n    },\n    \"lpsId\": \"ce84fabc-1349-4992-a2d7-0c44c5534128\",\n    \"href\": \"https://api.getresponse.com/v3/lps/6b0d7d59-71d9-4708-80a6-aa0f13805111\",\n    \"name\": \"Predesigned #017\",\n    \"status\": \"unpublished\",\n    \"domainUrl\": \"https://IOnSTYxvPMRXF.qsjj+PL00jX-tWbDV+LflN\",\n    \"thumbnailUrl\": \"https://us-wbe-img2.gr-cdn.com/user/e5c2094a-2354-459f-9b9f-6d0369ccae2c/6b0d7d59-71d9-4708-80a6-aa0f13805111.png?width=208\",\n    \"isChatsEnabled\": \"false\",\n    \"createdAt\": \"2023-03-14T14:42:57\",\n    \"updatedAt\": \"2023-03-14T14:42:57\"\n  },\n  {\n    \"statistics\": {\n      \"visits\": 9,\n      \"leads\": 5,\n      \"subscriptionRate\": 52\n    },\n    \"lpsId\": \"ce84fabc-1349-4992-a2d7-0c44c5534128\",\n    \"href\": \"https://api.getresponse.com/v3/lps/6b0d7d59-71d9-4708-80a6-aa0f13805111\",\n    \"name\": \"Predesigned #017\",\n    \"status\": \"unpublished\",\n    \"domainUrl\": \"https://SPastnRNDPCkF.jhsxnpZGTeRYJP-WLQxAu9ZR\",\n    \"thumbnailUrl\": \"https://us-wbe-img2.gr-cdn.com/user/e5c2094a-2354-459f-9b9f-6d0369ccae2c/6b0d7d59-71d9-4708-80a6-aa0f13805111.png?width=208\",\n    \"isChatsEnabled\": \"false\",\n    \"createdAt\": \"2023-03-14T14:42:57\",\n    \"updatedAt\": \"2023-03-14T14:42:57\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f03a7968-e064-42e4-abbf-1112e6ca9869",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stats[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "stats[to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[visits]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[leads]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[subscriptionRate]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9b72232-196d-4222-acf2-5a9eb0b324c6",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stats[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "stats[to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[visits]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[leads]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[subscriptionRate]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a280a8a7-e06a-4723-943f-e1be8d561f4a",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stats[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "stats[to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[createdAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[updatedAt]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[visits]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[leads]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort[subscriptionRate]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "373532c2-0137-4508-9075-e6f351cef5f1",
+    "name": "GetResponse APIv3 Landing Pages",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Landing Pages operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

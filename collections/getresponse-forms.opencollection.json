@@ -1,0 +1,177 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Forms",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get form by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/forms/:formId",
+            "params": [
+              {
+                "name": "formId",
+                "value": "pL4e",
+                "type": "path",
+                "description": "The form ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get form by ID"
+        },
+        {
+          "info": {
+            "name": "Get the list of form variants (A/B tests)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/forms/:formId/variants",
+            "params": [
+              {
+                "name": "formId",
+                "value": "pL4e",
+                "type": "path",
+                "description": "The form ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the list of form variants (A/B tests)"
+        },
+        {
+          "info": {
+            "name": "Get the list of forms.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/forms",
+            "params": [
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search forms by name"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search forms created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search forms created to this date"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search forms assigned to this list (campaign). You can pass multiple comma-separated values, eg. `Xd1P,sC7r`"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search by status. **Note:** `disabled` includes both `unpublished` and `draft` and `enabled` equals `published`"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort[visitors]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort[uniqueVisitors]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort[subscribed]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort[subscriptionRate]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

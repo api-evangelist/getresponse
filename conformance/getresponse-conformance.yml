@@ -1,0 +1,121 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/getresponse-open-api-original.json, https://apidocs.getresponse.com/v3,
+  https://www.getresponse.com/security, https://www.getresponse.com/.well-known/api-catalog
+note: >-
+  Standards conformance read from the provider-published contract and the provider's own
+  compliance pages. The notable positive is RFC 9727 — GetResponse serves a real
+  /.well-known/api-catalog linkset, which very few providers do, and it is what makes the
+  OpenAPI mechanically discoverable. The notable negative is RFC 9457: errors are a bespoke
+  JSON envelope, not problem+json.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      Provider-published OpenAPI 3.0.0 at https://apireference.getresponse.com/open-api.json —
+      141 paths, 220 operations, 435 component schemas.
+  - id: rfc9727-api-catalog
+    conforms: true
+    evidence: >-
+      https://www.getresponse.com/.well-known/api-catalog returns 200 with content-type
+      application/linkset+json and a service-desc link to the OpenAPI.
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      components.securitySchemes.oauth2 declares implicit, authorizationCode and
+      clientCredentials flows; authorizationUrl https://app.getresponse.com/oauth2_authorize.html,
+      tokenUrl https://api.getresponse.com/v3/token. Refresh Token is documented in prose.
+  - id: oauth2-pkce
+    conforms: false
+    evidence: >-
+      No PKCE support documented; the implicit flow — deprecated by OAuth 2.1 — is still
+      offered as a first-class option in the spec.
+  - id: oauth2-scopes
+    conforms: false
+    evidence: >-
+      Exactly one scope exists, "all" ("all data access"), across every flow. There is no
+      least-privilege scope surface — an OAuth token is all-or-nothing over the whole account.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404 on every host.
+  - id: rfc8414-oauth-metadata
+    conforms: false
+    evidence: /.well-known/oauth-authorization-server returns 404 on every host.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use application/json with a bespoke ErrorResponse envelope
+      (httpStatus/code/codeDescription/message/moreInfo/context/uuid), not
+      application/problem+json.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on www, api, apidocs and apireference hosts.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation headers; no published deprecation policy.
+  - id: rate-limit-headers
+    conforms: true
+    evidence: >-
+      X-RateLimit-Limit / -Remaining / -Reset are declared in components.headers and attached to
+      responses on all 220 operations. Note these are the legacy X- form, not the IETF
+      draft RateLimit-* fields, and there is no Retry-After.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      Zero occurrences of "Idempotency" in the 2.4 MB spec; no idempotency key documented.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Page/perPage query parameters with CurrentPage / TotalPages / TotalCount response headers
+      declared in components.headers.
+  - id: json-api
+    conforms: false
+    evidence: Plain JSON resource representations; no JSON:API document structure.
+  - id: webhooks-signed
+    conforms: false
+    evidence: >-
+      No HMAC signature header on either the modern webhook surface or the legacy callbacks;
+      the only verification offered is an optional shared secret in the query string.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      A real event surface exists (13 webhook events, 6 legacy callback events) but no AsyncAPI
+      document is published.
+  - id: mcp
+    conforms: false
+    evidence: >-
+      No MCP server. The provider's own llms.txt says an MCP server is "planned and will be
+      added to this document as it becomes publicly available".
+  - id: a2a
+    conforms: false
+    evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on every host.
+  - id: llms-txt
+    conforms: true
+    evidence: >-
+      https://www.getresponse.com/llms.txt returns 200 — a hand-curated 122-line document that
+      links the OpenAPI, the SDKs and the published Agent Skills repository.
+  - id: agent-skills
+    conforms: true
+    evidence: >-
+      github.com/GetResponse/public-api-agent-skills publishes a SKILL.md-standard Agent Skill
+      with a manifest, an AI-optimised openapi.json, references/ and assets/.
+  - id: gdpr
+    conforms: true
+    evidence: >-
+      "We are fully compliant with the GDPR" — https://www.getresponse.com/security. The API
+      also exposes GDPR fields and consent operations (/gdpr-fields, contact consent).
+  - id: pci-dss
+    conforms: true
+    evidence: '"GetResponse is PCI DSS certified" — https://www.getresponse.com/security'
+  - id: soc2
+    conforms: true
+    evidence: >-
+      SOC 2 materials offered on request at https://www.getresponse.com/security
+      ("SOC2-related materials"). The report itself is not public.
+  - id: iso-27001
+    conforms: false
+    evidence: Not named on the published security page.
+  - id: hipaa
+    conforms: false
+    evidence: Not claimed.

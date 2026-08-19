@@ -1,0 +1,77 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for GetResponse API v3
+  version: 1.0.0
+extends: openapi/_original/getresponse-open-api-original.json
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Derived from this enrichment pass. Captures API Evangelist annotations over the
+  provider-published spec fetched from https://apireference.getresponse.com/open-api.json via the
+  RFC 9727 catalog at https://www.getresponse.com/.well-known/api-catalog. The original is never
+  mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: getresponse
+      x-apievangelist-discovery: >-
+        Spec located through the provider's own /.well-known/api-catalog linkset (RFC 9727),
+        not through the docs host — apidocs and apireference both 404 on /openapi.json.
+      x-apievangelist-operations: 220
+      x-apievangelist-paths: 141
+      x-apievangelist-tags: 42
+      x-apievangelist-schemas: 435
+      x-apievangelist-artifacts:
+        conventions: conventions/getresponse-conventions.yml
+        errors: errors/getresponse-error-codes.yml
+        problem_types: errors/getresponse-problem-types.yml
+        rate_limits: rate-limits/getresponse-rate-limits.yml
+        authentication: authentication/getresponse-authentication.yml
+        scopes: scopes/getresponse-scopes.yml
+        lifecycle: lifecycle/getresponse-lifecycle.yml
+        webhooks: asyncapi/getresponse-webhooks.yml
+        data_model: data-model/getresponse-data-model.yml
+        skills: skills/_index.yml
+  - target: $.info
+    update:
+      x-apievangelist-idempotency:
+        supported: false
+        note: >-
+          No Idempotency-Key header or equivalent anywhere in the spec or docs. Writes are not
+          safe to blind-retry; error code 1008 (409, duplicate unique property) is the only
+          deduplication signal and only where a natural unique constraint exists.
+  - target: $.info
+    update:
+      x-apievangelist-error-model:
+        rfc9457: false
+        envelope: ErrorResponse
+        discriminator: code
+        note: >-
+          The numeric `code` field, not the HTTP status, identifies the failure. One HTTP 400
+          carries sixteen distinct codes. Auth failure is documented as 403/1014 but declared as
+          401 in this spec.
+  - target: $.info
+    update:
+      x-apievangelist-pagination:
+        style: page-number
+        request: [page, perPage]
+        response_headers: [CurrentPage, TotalPages, TotalCount]
+        note: Pagination state is in response headers, not in the JSON body.
+  - target: $.info
+    update:
+      x-apievangelist-query-encoding: >-
+        Filter parameters use a bracketed object form — query[field], sort[field] — whose
+        brackets MUST be percent-encoded on the wire (query%5Bfield%5D). The provider's own
+        published Agent Skill calls unencoded brackets the most common cause of spurious 400s.
+  - target: $.components.securitySchemes.oauth2
+    update:
+      x-apievangelist-scope-model: >-
+        Single scope "all" across every flow — full read and write over the whole account. A
+        delegated agent token cannot be narrowed. No PKCE; the deprecated implicit flow is still
+        offered.
+  - target: $.servers
+    update:
+      x-apievangelist-note: >-
+        Three hosts, not one: api.getresponse.com is retail, api3.getresponse360.com and
+        api3.getresponse360.pl are the GetResponse MAX (Enterprise) platform and require an
+        additional X-Domain header on every request.

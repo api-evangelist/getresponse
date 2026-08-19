@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 From Fields",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "From Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single 'From' address by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/from-fields/:fromFieldId",
+            "params": [
+              {
+                "name": "fromFieldId",
+                "value": "TTzW",
+                "type": "path",
+                "description": "The 'From' address ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single 'From' address by ID"
+        },
+        {
+          "info": {
+            "name": "Delete 'From' address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/from-fields/:fromFieldId",
+            "params": [
+              {
+                "name": "fromFieldId",
+                "value": "TTzW",
+                "type": "path",
+                "description": "The 'From' address ID"
+              },
+              {
+                "name": "fromFieldIdToReplaceWith",
+                "value": "",
+                "type": "query",
+                "description": "The 'From' address ID that should replace the deleted 'From' address"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete 'From' address"
+        },
+        {
+          "info": {
+            "name": "Set a 'From' address as default",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/from-fields/:fromFieldId/default",
+            "params": [
+              {
+                "name": "fromFieldId",
+                "value": "TTzW",
+                "type": "path",
+                "description": "The 'From' address ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Set a 'From' address as default"
+        },
+        {
+          "info": {
+            "name": "Get the list of 'From' addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/from-fields",
+            "params": [
+              {
+                "name": "query[email]",
+                "value": "",
+                "type": "query",
+                "description": "Search 'From' address by email"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search 'From' address by name"
+              },
+              {
+                "name": "query[isDefault]",
+                "value": "",
+                "type": "query",
+                "description": "Search only default 'From' address"
+              },
+              {
+                "name": "query[isActive]",
+                "value": "",
+                "type": "query",
+                "description": "Search only active 'From' addresses"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort 'From' address by date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create 'From' address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/from-fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create 'From' address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

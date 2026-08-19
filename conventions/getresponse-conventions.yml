@@ -1,0 +1,155 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://apidocs.getresponse.com/v3 (Limits & throttling, Authentication, Errors, Callbacks,
+  Webhooks) and openapi/_original/getresponse-open-api-original.json
+docs: https://apidocs.getresponse.com/v3
+api: GetResponse API v3
+
+authentication:
+  style: api-key-header
+  header: X-Auth-Token
+  value_format: 'api-key <YOUR_API_KEY>'
+  note: >-
+    The value MUST be prefixed with the literal string "api-key ". Unused API keys expire after
+    90 days of inactivity and must be regenerated at https://app.getresponse.com/api.
+  alternative:
+    style: oauth2-bearer
+    header: Authorization
+    value_format: 'Bearer <ACCESS_TOKEN>'
+    flows: [authorizationCode, clientCredentials, implicit, refreshToken]
+  enterprise_headers:
+    - header: X-Domain
+      required_for: GetResponse MAX (getresponse360) accounts
+      value: the account domain only, without a protocol — e.g. example.com
+    - header: X-Parent-Login
+      required_for: optional
+      value: >-
+        Limits API requests to one specific parent account for users who have several.
+  see_also: authentication/getresponse-authentication.yml
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    GetResponse publishes no idempotency contract. There is no Idempotency-Key header, request
+    key or replay window in the docs, and a string search of the 2.4 MB provider-published
+    OpenAPI returns zero matches for "Idempotency". Retrying a POST /contacts or POST
+    /newsletters is not safe by protocol — deduplication happens only where the resource has a
+    natural unique constraint (error 1008, "duplicate unique property"), which surfaces as a
+    409 rather than as a replayed success. This is a real gap, recorded honestly; no
+    Idempotency pointer is emitted for this provider.
+
+pagination:
+  style: page-number
+  request_params:
+    - name: page
+      in: query
+      description: The page number to return, 1-indexed.
+    - name: perPage
+      in: query
+      description: Results per page.
+  response_headers:
+    - name: CurrentPage
+      description: The current page number
+    - name: TotalPages
+      description: The total number of pages
+    - name: TotalCount
+      description: The total number of resources found for the specified conditions
+  note: >-
+    Pagination state comes back in response HEADERS, not in the JSON envelope — the body is a
+    bare JSON array of resources. An agent that only reads the body cannot tell whether more
+    pages exist.
+
+filtering:
+  style: bracketed-query-object
+  param_form: >-
+    query[<field>], and query[<field>][from] / query[<field>][to] for ranges
+  encoding_warning: >-
+    Brackets must be percent-encoded in the query string — query%5Bname%5D, not query[name].
+    The provider's own Agent Skill calls unencoded brackets "the most common cause of spurious
+    HTTP 400 errors."
+  example: 'GET /contacts?query%5Bemail%5D=user%40example.com'
+
+sorting:
+  style: bracketed-sort-object
+  param_form: 'sort[<field>]=asc|desc'
+
+sparse_fields:
+  supported: true
+  param: fields
+  description: Comma-separated list of properties to return, reducing payload size.
+
+metadata:
+  supported: true
+  mechanism: >-
+    Custom fields (/custom-fields) and meta fields (/meta-fields) carry user-defined key/value
+    data on contacts and other resources. There is no generic free-form "metadata" object.
+
+request_tracing:
+  request_id_header: null
+  response_field: uuid
+  note: >-
+    Every error response carries a `uuid` field — a per-request identifier to quote to support.
+    There is no request-id header on successful responses, so the trace identifier is only
+    available on failures.
+
+versioning:
+  scheme: uri-path
+  current: v3
+  version_string: '3.2026-07-28T07:58:55+00:00'
+  note: >-
+    The path carries the major version (/v3). The OpenAPI info.version is a date-stamped build
+    identifier rather than a semantic version, so the spec itself records when it was last
+    regenerated. GetResponse states future updates will be backward compatible and that the
+    version number increments only for breaking changes; there is no published deprecation
+    policy or Sunset header support.
+  see_also: lifecycle/getresponse-lifecycle.yml
+
+error_envelope:
+  format: custom-json
+  rfc9457: false
+  content_type: application/json
+  schema: ErrorResponse
+  required_fields: [httpStatus, code, codeDescription, message, moreInfo, context, uuid]
+  fields:
+    - name: httpStatus
+      description: HTTP response code, repeated in the body.
+    - name: code
+      description: Numeric GetResponse API error code (1, 1000–1029).
+    - name: codeDescription
+      description: Short description of the API error code.
+    - name: message
+      description: Human-readable error message.
+    - name: moreInfo
+      description: URL to the error description in the API documentation.
+    - name: context
+      description: >-
+        Object with detail about the failure — validation problems, and on a 429 the
+        currentLimit and timeToReset values.
+    - name: uuid
+      description: Unique identifier for this request, for support.
+  see_also: errors/getresponse-error-codes.yml
+
+rate_limit_signaling:
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  retry_after: false
+  status_on_exhaustion: 429
+  context_fields: [currentLimit, timeToReset]
+  note: >-
+    The rate-limit headers are declared in the OpenAPI itself — every one of the 220 operations
+    attaches X-RateLimit-Limit / -Remaining / -Reset to its responses, so an agent can read the
+    budget from the contract, not just from prose. There is no Retry-After header; the wait is
+    signalled by X-RateLimit-Reset (seconds) and the context.timeToReset field.
+  see_also: rate-limits/getresponse-rate-limits.yml
+
+webhooks:
+  supported: true
+  see_also: asyncapi/getresponse-webhooks.yml
+
+user_agent:
+  header: X-Request-Source
+  note: >-
+    Not required by the API, but the provider's own published Agent Skill sets
+    X-Request-Source: getresponse/getresponse-newsletter-skill@1.2.0 so agent traffic is
+    attributable. Recorded here because it is the provider's stated convention for agents.

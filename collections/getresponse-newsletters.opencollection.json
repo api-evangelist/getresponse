@@ -1,0 +1,464 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Newsletters",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Newsletters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single newsletter by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/newsletters/:newsletterId",
+            "params": [
+              {
+                "name": "newsletterId",
+                "value": "N",
+                "type": "path",
+                "description": "The newsletter ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single newsletter by its ID."
+        },
+        {
+          "info": {
+            "name": "Delete newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getresponse.com/v3/newsletters/:newsletterId",
+            "params": [
+              {
+                "name": "newsletterId",
+                "value": "N",
+                "type": "path",
+                "description": "The newsletter ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete newsletter"
+        },
+        {
+          "info": {
+            "name": "Get newsletter activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/newsletters/:newsletterId/activities",
+            "params": [
+              {
+                "name": "newsletterId",
+                "value": "N",
+                "type": "path",
+                "description": "The newsletter ID"
+              },
+              {
+                "name": "query[activity]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletter activities by activity type"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletter activities from this date. Default value is 14 days earlier. You can get activities for last 30 days only."
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletter activities to this date. Default value is now"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "**DEPRECATED**: This method is deprecated and scheduled for removal. To synchronise newsletter activities please use [custom reports](https://apireference.getresponse.com/#operation/createCustomReport) with type `message_activity_reports`. This is the preferred approach due to better performance. \n\n By default, activities from the **last 14 days** are listed only. You can get activities for last 30 days only. You can filter the resource using criteria specified as `query[*]`. You can provide mul"
+        },
+        {
+          "info": {
+            "name": "Cancel sending the newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/newsletters/:newsletterId/cancel",
+            "params": [
+              {
+                "name": "newsletterId",
+                "value": "N",
+                "type": "path",
+                "description": "The newsletter ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": ">\nUsing this method, you can cancel the sending of the newsletter. It will also turn the newsletter into a **draft**.\n"
+        },
+        {
+          "info": {
+            "name": "The statistics of single newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/newsletters/:newsletterId/statistics",
+            "params": [
+              {
+                "name": "newsletterId",
+                "value": "N",
+                "type": "path",
+                "description": "The newsletter ID"
+              },
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query",
+                "description": "Group results by time interval"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Count data from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Count data to this date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": ">\nThis makes it possible to easily fetch statistics for a single newsletter. You can group the data hourly, daily, monthly and as a\ntotal sum. Remember that all statistics date ranges are given in standard UTC period type objects.\n([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals)).\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`."
+        },
+        {
+          "info": {
+            "name": "Get newsletter thumbnail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/newsletters/:newsletterId/thumbnail",
+            "params": [
+              {
+                "name": "newsletterId",
+                "value": "N",
+                "type": "path",
+                "description": "The newsletter ID"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The size of the thumbnail"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get newsletter thumbnail"
+        },
+        {
+          "info": {
+            "name": "Get the newsletter list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/newsletters",
+            "params": [
+              {
+                "name": "query[subject]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters by subject"
+              },
+              {
+                "name": "query[name]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters by name"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters by status"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters created to this date"
+              },
+              {
+                "name": "query[sendOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search for newsletters sent from this date"
+              },
+              {
+                "name": "query[sendOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search for newsletters sent to this date"
+              },
+              {
+                "name": "query[type]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters by type"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search newsletters by campaign ID"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "sort[sendOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by send on date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Create newsletter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/newsletters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": ">\nThis method creates a new newsletter and puts it in a queue to send.\n\n**NOTE: This method has a limit of 256 calls per day.**\n"
+        },
+        {
+          "info": {
+            "name": "Send the newsletter draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/newsletters/send-draft",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send the newsletter draft"
+        },
+        {
+          "info": {
+            "name": "Total newsletter statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/newsletters/statistics",
+            "params": [
+              {
+                "name": "query[groupBy]",
+                "value": "",
+                "type": "query",
+                "description": "Group results by time interval"
+              },
+              {
+                "name": "query[newsletterId]",
+                "value": "",
+                "type": "query",
+                "description": "The list of newsletter resource IDs (string separated with '')"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "The list of campaign resource IDs (string separated with '')"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Count data from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Count data to this date"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": ">This makes it possible to fetch newsletter statistics based on the list of campaign or newsletter IDs\n(you can pass them in the query parameter - see the description below). Remember that all the statistics date ranges\nare returned in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals)). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource us"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

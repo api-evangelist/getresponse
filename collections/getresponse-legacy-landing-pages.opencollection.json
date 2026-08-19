@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Legacy Landing Pages",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Legacy Landing Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get single landing page by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/landing-pages/:landingPageId",
+            "params": [
+              {
+                "name": "landingPageId",
+                "value": "avYn",
+                "type": "path",
+                "description": "The landing page ID."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get single landing page by ID"
+        },
+        {
+          "info": {
+            "name": "Get a list of landing pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/landing-pages",
+            "params": [
+              {
+                "name": "query[domain]",
+                "value": "",
+                "type": "query",
+                "description": "Search landing pages by domain"
+              },
+              {
+                "name": "query[status]",
+                "value": "",
+                "type": "query",
+                "description": "Search landing pages by status"
+              },
+              {
+                "name": "query[subdomain]",
+                "value": "",
+                "type": "query",
+                "description": "Search landing pages by subdomain"
+              },
+              {
+                "name": "query[metaTitle]",
+                "value": "",
+                "type": "query",
+                "description": "Search landing pages by metaTitle field"
+              },
+              {
+                "name": "query[userDomain]",
+                "value": "",
+                "type": "query",
+                "description": "Search landing pages by user provided domain"
+              },
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search landing pages by ID of the assigned campaign. Campaign ID must be encoded! You can get the campaign list with encoded IDs by calling the `/v3/campaigns` endpoint. You can search by multiple comma separated values eg. `o5lx,34er`."
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show landing pages created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show landing pages created to this date"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by date"
+              },
+              {
+                "name": "sort[domain]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by domain"
+              },
+              {
+                "name": "sort[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by campaign"
+              },
+              {
+                "name": "sort[metaTitle]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by metaTitle"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

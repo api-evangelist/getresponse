@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Imports",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Imports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get import details by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/imports/:importId",
+            "params": [
+              {
+                "name": "importId",
+                "value": "o6gE",
+                "type": "path",
+                "description": "The import ID"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get import details by ID."
+        },
+        {
+          "info": {
+            "name": "Get a list of imports.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/imports",
+            "params": [
+              {
+                "name": "query[campaignId]",
+                "value": "",
+                "type": "query",
+                "description": "Search imports by campaignId"
+              },
+              {
+                "name": "query[createdOn][from]",
+                "value": "",
+                "type": "query",
+                "description": "Search imports created from this date"
+              },
+              {
+                "name": "query[createdOn][to]",
+                "value": "",
+                "type": "query",
+                "description": "Search imports created to this date"
+              },
+              {
+                "name": "sort[createdOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by creation date"
+              },
+              {
+                "name": "sort[finishedOn]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by finish date"
+              },
+              {
+                "name": "sort[campaignName]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by campaign name"
+              },
+              {
+                "name": "sort[uploadedContacts]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by uploaded contact count"
+              },
+              {
+                "name": "sort[updatedContacts]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by updated contact count"
+              },
+              {
+                "name": "sort[addedContacts]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by inserted contact count"
+              },
+              {
+                "name": "sort[invalidContacts]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by invalid contact count"
+              },
+              {
+                "name": "sort[status]",
+                "value": "",
+                "type": "query",
+                "description": "Sort imports by status (uploaded, to_review, approved, finished, rejected, canceled)"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Requested number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+        },
+        {
+          "info": {
+            "name": "Schedule a new contact import",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getresponse.com/v3/imports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint lets you schedule a contact import. That way, you can add and update your contacts using a single API call. Since API imports are asynchronous, you should check periodically for updates while your original API request is being processed. To keep track of your import status, use [GET import](https://apireference.getresponse.com/#operation/getImportById) (provide the importId  from the response), or subscribe to an [import finished](https://apidocs.getresponse.com/v3/payloads#contact"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

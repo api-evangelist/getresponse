@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -22,12 +22,12 @@ domains:
 - domain: getresponse.com
   dnssec: false
   caa:
-  - 0 issue "certum.pl"
-  - 0 issuewild "certum.pl"
-  - 0 issue "godaddy.com"
-  - 0 issue "rapidssl.com"
   - 0 issue "digicert.com"
+  - 0 issue "certum.pl"
+  - 0 issue "godaddy.com"
+  - 0 iodef "mailto:security@getresponse.com"
   - 0 issuewild "rapidssl.com"
+  - 0 issue "letsencrypt.org"
   spf: true
   dmarc: true
   dmarc_policy: reject

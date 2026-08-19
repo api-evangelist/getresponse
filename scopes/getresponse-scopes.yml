@@ -1,0 +1,48 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/getresponse-open-api-original.json
+docs: https://apidocs.getresponse.com/v3/authentication
+note: >-
+  GetResponse's OAuth 2.0 surface has exactly ONE scope — "all", described in the
+  provider-published spec as "all data access" — and it is the same across every flow. There is
+  no read/write split, no per-resource scope and no permissions reference page to search: the
+  authentication docs describe the flows but never enumerate scopes, because there is only the
+  one. This matters for delegated agent access: an OAuth token issued to an agent has full
+  read AND write authority over the entire account, including sending newsletters and deleting
+  contacts. Least privilege is not expressible on this API. The derived pass emitted the same
+  oauth2 scheme 49 times, once per tag-split spec file; it is consolidated here to the single
+  provider-level scheme it actually is.
+scheme_count: 1
+scope_count: 1
+schemes:
+  - name: oauth2
+    type: oauth2
+    source: openapi/_original/getresponse-open-api-original.json
+    flows:
+      - flow: implicit
+        authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+        scopes: [all]
+        note: >-
+          Still offered as a first-class flow although OAuth 2.1 deprecates implicit. No PKCE
+          support is documented.
+      - flow: authorizationCode
+        authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+        tokenUrl: https://api.getresponse.com/v3/token
+        scopes: [all]
+      - flow: clientCredentials
+        tokenUrl: https://api.getresponse.com/v3/token
+        scopes: [all]
+    also_documented:
+      - flow: refreshToken
+        source: https://apidocs.getresponse.com/v3/authentication
+        note: Named in the docs prose but not declared in the OpenAPI flows object.
+scopes:
+  - scope: all
+    description: All data access — full read and write across the entire account.
+    flows: [implicit, authorizationCode, clientCredentials]
+    sources: [openapi/_original/getresponse-open-api-original.json]
+gaps:
+  - No read-only scope.
+  - No per-resource or per-product scopes across 220 operations and 42 product areas.
+  - No PKCE.
+  - No /.well-known/oauth-authorization-server metadata document (probed, 404).

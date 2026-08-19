@@ -1,0 +1,2116 @@
+{
+  "item": [
+    {
+      "id": "0e256462-41ac-458a-a20f-3e268ba853a0",
+      "name": "Orders",
+      "description": {
+        "content": "Orders API documentation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "10881c4d-f5a6-43b9-8cd0-2062c84cefe1",
+          "name": "Get the list of orders",
+          "request": {
+            "name": "Get the list of orders",
+            "description": {
+              "content": "\nSending a  **GET** request to this URL returns a collection of order resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n * description\n * status\n * externalId\n * processedAt\n\nThe `description` fields can be a pattern and we'll try to match this phrase.\n\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shops",
+                ":shopId",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query[description]",
+                  "value": "<string>",
+                  "description": "Search order by description"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[status]",
+                  "value": "<string>",
+                  "description": "Search order by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[externalId]",
+                  "value": "<string>",
+                  "description": "Search order by external ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[processedAt][from]",
+                  "value": "<dateTime>",
+                  "description": "Show orders processed from this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "query[processedAt][to]",
+                  "value": "<dateTime>",
+                  "description": "Show orders processed to this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort[createdOn]",
+                  "value": "<string>",
+                  "description": "Sort by date"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "100",
+                  "description": "Requested number of results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shopId",
+                  "description": "(Required) The shop ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8a3faac8-557e-4f39-8bf8-dff610b35e55",
+              "name": "The list of orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[description]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[externalId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[processedAt][from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "query[processedAt][to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The current page number",
+                  "key": "CurrentPage",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of pages",
+                  "key": "TotalPages",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The total number of resources found for the specified conditions",
+                  "key": "TotalCount",
+                  "value": "3569"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orderId\": \"fOh\",\n    \"href\": \"https://api.getresponse.com/v3/shops/pf3/orders/fOh\",\n    \"contactId\": \"k8u\",\n    \"orderUrl\": \"https://somedomain.com/orders/order446\",\n    \"externalId\": \"DH71239\",\n    \"totalPrice\": 716,\n    \"totalPriceTax\": 358.67,\n    \"currency\": \"PLN\",\n    \"status\": \"NEW\",\n    \"cartId\": \"QBNgBR\",\n    \"description\": \"More information about order.\",\n    \"shippingPrice\": 23,\n    \"shippingAddress\": {\n      \"name\": \"some_shipping_address\",\n      \"countryCode\": \"POL\",\n      \"addressId\": \"k9\",\n      \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n      \"countryName\": \"Poland\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"address1\": \"Arkonska 6\",\n      \"address2\": \"\",\n      \"city\": \"Gdansk\",\n      \"zip\": \"80-387\",\n      \"province\": \"pomorskie\",\n      \"provinceCode\": \"\",\n      \"phone\": \"1122334455\",\n      \"company\": \"GetResponse\",\n      \"createdOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"billingStatus\": \"PENDING\",\n    \"billingAddress\": {\n      \"name\": \"some_shipping_address\",\n      \"countryCode\": \"POL\",\n      \"addressId\": \"k9\",\n      \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n      \"countryName\": \"Poland\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"address1\": \"Arkonska 6\",\n      \"address2\": \"\",\n      \"city\": \"Gdansk\",\n      \"zip\": \"80-387\",\n      \"province\": \"pomorskie\",\n      \"provinceCode\": \"\",\n      \"phone\": \"1122334455\",\n      \"company\": \"GetResponse\",\n      \"createdOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"processedAt\": \"1991-07-24T12:55:50.644Z\",\n    \"metaFields\": [\n      {\n        \"name\": \"Shoe size\",\n        \"value\": \"11\",\n        \"valueType\": \"integer\",\n        \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n        \"metaFieldId\": \"NoF\",\n        \"description\": \"Description of this meta field\"\n      },\n      {\n        \"name\": \"Shoe size\",\n        \"value\": \"11\",\n        \"valueType\": \"integer\",\n        \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n        \"metaFieldId\": \"NoF\",\n        \"description\": \"Description of this meta field\"\n      }\n    ]\n  },\n  {\n    \"orderId\": \"fOh\",\n    \"href\": \"https://api.getresponse.com/v3/shops/pf3/orders/fOh\",\n    \"contactId\": \"k8u\",\n    \"orderUrl\": \"https://somedomain.com/orders/order446\",\n    \"externalId\": \"DH71239\",\n    \"totalPrice\": 716,\n    \"totalPriceTax\": 358.67,\n    \"currency\": \"PLN\",\n    \"status\": \"NEW\",\n    \"cartId\": \"QBNgBR\",\n    \"description\": \"More information about order.\",\n    \"shippingPrice\": 23,\n    \"shippingAddress\": {\n      \"name\": \"some_shipping_address\",\n      \"countryCode\": \"POL\",\n      \"addressId\": \"k9\",\n      \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n      \"countryName\": \"Poland\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"address1\": \"Arkonska 6\",\n      \"address2\": \"\",\n      \"city\": \"Gdansk\",\n      \"zip\": \"80-387\",\n      \"province\": \"pomorskie\",\n      \"provinceCode\": \"\",\n      \"phone\": \"1122334455\",\n      \"company\": \"GetResponse\",\n      \"createdOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"billingStatus\": \"PENDING\",\n    \"billingAddress\": {\n      \"name\": \"some_shipping_address\",\n      \"countryCode\": \"POL\",\n      \"addressId\": \"k9\",\n      \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n      \"countryName\": \"Poland\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"address1\": \"Arkonska 6\",\n      \"address2\": \"\",\n      \"city\": \"Gdansk\",\n      \"zip\": \"80-387\",\n      \"province\": \"pomorskie\",\n      \"provinceCode\": \"\",\n      \"phone\": \"1122334455\",\n      \"company\": \"GetResponse\",\n      \"createdOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"updatedOn\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"processedAt\": \"1998-07-04T21:49:28.269Z\",\n    \"metaFields\": [\n      {\n        \"name\": \"Shoe size\",\n        \"value\": \"11\",\n        \"valueType\": \"integer\",\n        \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n        \"metaFieldId\": \"NoF\",\n        \"description\": \"Description of this meta field\"\n      },\n      {\n        \"name\": \"Shoe size\",\n        \"value\": \"11\",\n        \"valueType\": \"integer\",\n        \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n        \"metaFieldId\": \"NoF\",\n        \"description\": \"Description of this meta field\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16d13c46-3a37-4a17-af45-91e470ff6492",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[description]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[externalId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[processedAt][from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "query[processedAt][to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2eea3890-6353-4e01-9099-5fb7d546079c",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[description]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[externalId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[processedAt][from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "query[processedAt][to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4941360b-7d45-4852-aa02-3321e43b7b05",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query[description]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[status]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[externalId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query[processedAt][from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "query[processedAt][to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort[createdOn]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf681190-4941-4c67-8d46-c0dfc46d828d",
+          "name": "Create order",
+          "request": {
+            "name": "Create order",
+            "description": {
+              "content": "\nSending a **POST** request to this URL will create a new order resource.\n\nIn order to create a new order, you need to send the order resource in the body of the request (remember that you need to serialize the body into a JSON string).\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shops",
+                ":shopId",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "additionalFlags",
+                  "value": "<string>",
+                  "description": "The additional flags parameter with the value `skipAutomation` will skip the triggering `Make a purchase` element in an automated workflow"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shopId",
+                  "description": "(Required) The shop ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "25e4c24c-1e62-413c-a469-d284b6937e1c",
+              "name": "The order details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"selectedVariants\": [\n    {\n      \"variantId\": \"p\",\n      \"price\": 840,\n      \"quantity\": \"<integer>\",\n      \"categories\": [\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        },\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        }\n      ],\n      \"href\": \"https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc\",\n      \"priceTax\": 428,\n      \"taxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"variantId\": \"p\",\n      \"price\": 840,\n      \"quantity\": \"<integer>\",\n      \"categories\": [\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        },\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        }\n      ],\n      \"href\": \"https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc\",\n      \"priceTax\": 428,\n      \"taxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"orderId\": \"fOh\",\n  \"href\": \"https://api.getresponse.com/v3/shops/pf3/orders/fOh\",\n  \"contactId\": \"k8u\",\n  \"orderUrl\": \"https://somedomain.com/orders/order446\",\n  \"externalId\": \"DH71239\",\n  \"totalPrice\": 716,\n  \"totalPriceTax\": 358.67,\n  \"currency\": \"PLN\",\n  \"status\": \"NEW\",\n  \"cartId\": \"QBNgBR\",\n  \"description\": \"More information about order.\",\n  \"shippingPrice\": 23,\n  \"shippingAddress\": {\n    \"name\": \"some_shipping_address\",\n    \"countryCode\": \"POL\",\n    \"addressId\": \"k9\",\n    \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n    \"countryName\": \"Poland\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"Arkonska 6\",\n    \"address2\": \"\",\n    \"city\": \"Gdansk\",\n    \"zip\": \"80-387\",\n    \"province\": \"pomorskie\",\n    \"provinceCode\": \"\",\n    \"phone\": \"1122334455\",\n    \"company\": \"GetResponse\",\n    \"createdOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"updatedOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  },\n  \"billingStatus\": \"PENDING\",\n  \"billingAddress\": {\n    \"name\": \"some_shipping_address\",\n    \"countryCode\": \"POL\",\n    \"addressId\": \"k9\",\n    \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n    \"countryName\": \"Poland\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"Arkonska 6\",\n    \"address2\": \"\",\n    \"city\": \"Gdansk\",\n    \"zip\": \"80-387\",\n    \"province\": \"pomorskie\",\n    \"provinceCode\": \"\",\n    \"phone\": \"1122334455\",\n    \"company\": \"GetResponse\",\n    \"createdOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"updatedOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  },\n  \"processedAt\": \"<dateTime>\",\n  \"metaFields\": [\n    {\n      \"name\": \"Shoe size\",\n      \"value\": \"11\",\n      \"valueType\": \"integer\",\n      \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n      \"metaFieldId\": \"NoF\",\n      \"description\": \"Description of this meta field\"\n    },\n    {\n      \"name\": \"Shoe size\",\n      \"value\": \"11\",\n      \"valueType\": \"integer\",\n      \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n      \"metaFieldId\": \"NoF\",\n      \"description\": \"Description of this meta field\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fb9a025-211b-4c90-b083-52b1a0f001a1",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "820d6ff5-1975-46fd-b3d5-9f5c1508a6ed",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "188109a4-50a1-496c-8d1a-5ad8807108ca",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fb5df97-9fab-4d6a-b0e7-ffe5a4a82196",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "295ff8f0-f8ea-467b-b6e6-39bd39819182",
+          "name": "Get a single order by ID",
+          "request": {
+            "name": "Get a single order by ID",
+            "description": {
+              "content": "\nThis method returns the order according to the given `orderId`.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shops",
+                ":shopId",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shopId",
+                  "description": "(Required) The shop ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) The order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a475b94f-eb3c-46cb-a2b5-958a61690b7c",
+              "name": "The order details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"selectedVariants\": [\n    {\n      \"variantId\": \"p\",\n      \"price\": 840,\n      \"quantity\": \"<integer>\",\n      \"categories\": [\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        },\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        }\n      ],\n      \"href\": \"https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc\",\n      \"priceTax\": 428,\n      \"taxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"variantId\": \"p\",\n      \"price\": 840,\n      \"quantity\": \"<integer>\",\n      \"categories\": [\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        },\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        }\n      ],\n      \"href\": \"https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc\",\n      \"priceTax\": 428,\n      \"taxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"orderId\": \"fOh\",\n  \"href\": \"https://api.getresponse.com/v3/shops/pf3/orders/fOh\",\n  \"contactId\": \"k8u\",\n  \"orderUrl\": \"https://somedomain.com/orders/order446\",\n  \"externalId\": \"DH71239\",\n  \"totalPrice\": 716,\n  \"totalPriceTax\": 358.67,\n  \"currency\": \"PLN\",\n  \"status\": \"NEW\",\n  \"cartId\": \"QBNgBR\",\n  \"description\": \"More information about order.\",\n  \"shippingPrice\": 23,\n  \"shippingAddress\": {\n    \"name\": \"some_shipping_address\",\n    \"countryCode\": \"POL\",\n    \"addressId\": \"k9\",\n    \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n    \"countryName\": \"Poland\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"Arkonska 6\",\n    \"address2\": \"\",\n    \"city\": \"Gdansk\",\n    \"zip\": \"80-387\",\n    \"province\": \"pomorskie\",\n    \"provinceCode\": \"\",\n    \"phone\": \"1122334455\",\n    \"company\": \"GetResponse\",\n    \"createdOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"updatedOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  },\n  \"billingStatus\": \"PENDING\",\n  \"billingAddress\": {\n    \"name\": \"some_shipping_address\",\n    \"countryCode\": \"POL\",\n    \"addressId\": \"k9\",\n    \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n    \"countryName\": \"Poland\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"Arkonska 6\",\n    \"address2\": \"\",\n    \"city\": \"Gdansk\",\n    \"zip\": \"80-387\",\n    \"province\": \"pomorskie\",\n    \"provinceCode\": \"\",\n    \"phone\": \"1122334455\",\n    \"company\": \"GetResponse\",\n    \"createdOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"updatedOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  },\n  \"processedAt\": \"<dateTime>\",\n  \"metaFields\": [\n    {\n      \"name\": \"Shoe size\",\n      \"value\": \"11\",\n      \"valueType\": \"integer\",\n      \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n      \"metaFieldId\": \"NoF\",\n      \"description\": \"Description of this meta field\"\n    },\n    {\n      \"name\": \"Shoe size\",\n      \"value\": \"11\",\n      \"valueType\": \"integer\",\n      \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n      \"metaFieldId\": \"NoF\",\n      \"description\": \"Description of this meta field\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "671c8e28-4428-45bf-b392-4b669212566c",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a8cc3d9-9feb-4aff-8a1c-03fff41e68a4",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ae2b89c-26a8-414b-88dd-fa67237a70f1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c57b61ed-b0c4-48ae-b64b-5a477d7c7f58",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddb848db-e01d-400f-a9ca-8e962e9dd050",
+          "name": "Update order",
+          "request": {
+            "name": "Update order",
+            "description": {
+              "content": "\nUpdate the properties of a shop's order. You should send only those fields that need to be changed. The rest of the properties will stay the same.\nHowever, in case of `billingAddress` and `shippingAddress`, you must send the entire representation. Individual fields can't be updated.\nIf you want to update individual fields of an address, you can do so using `POST /v3/addresses/{addressId}`.\n\nIn case of `selectedVariants`, when the collection is updated, the old collection is completely removed. The same goes for meta fields.\nIndividual fields can't be updated either. The full representations of `selectedVariants` and `metaFields` must be sent instead.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shops",
+                ":shopId",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "additionalFlags",
+                  "value": "<string>",
+                  "description": "The additional flags parameter with the value `skipAutomation` will skip the triggering `Make a purchase` element in an automated workflow"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shopId",
+                  "description": "(Required) The shop ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) The order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac8f81b4-ef04-4c9b-866e-3ed84047f7e8",
+              "name": "The order details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"selectedVariants\": [\n    {\n      \"variantId\": \"p\",\n      \"price\": 840,\n      \"quantity\": \"<integer>\",\n      \"categories\": [\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        },\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        }\n      ],\n      \"href\": \"https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc\",\n      \"priceTax\": 428,\n      \"taxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"variantId\": \"p\",\n      \"price\": 840,\n      \"quantity\": \"<integer>\",\n      \"categories\": [\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        },\n        {\n          \"categoryId\": \"atQ\",\n          \"href\": \"https://api.getresponse.com/v3/shops/pf3/categories/atQ\",\n          \"name\": \"Headwear\",\n          \"parentId\": \"amh\",\n          \"isDefault\": true,\n          \"url\": \"https://somedomain.com/category/446\",\n          \"externalId\": \"ext3343\"\n        }\n      ],\n      \"href\": \"https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc\",\n      \"priceTax\": 428,\n      \"taxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"orderId\": \"fOh\",\n  \"href\": \"https://api.getresponse.com/v3/shops/pf3/orders/fOh\",\n  \"contactId\": \"k8u\",\n  \"orderUrl\": \"https://somedomain.com/orders/order446\",\n  \"externalId\": \"DH71239\",\n  \"totalPrice\": 716,\n  \"totalPriceTax\": 358.67,\n  \"currency\": \"PLN\",\n  \"status\": \"NEW\",\n  \"cartId\": \"QBNgBR\",\n  \"description\": \"More information about order.\",\n  \"shippingPrice\": 23,\n  \"shippingAddress\": {\n    \"name\": \"some_shipping_address\",\n    \"countryCode\": \"POL\",\n    \"addressId\": \"k9\",\n    \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n    \"countryName\": \"Poland\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"Arkonska 6\",\n    \"address2\": \"\",\n    \"city\": \"Gdansk\",\n    \"zip\": \"80-387\",\n    \"province\": \"pomorskie\",\n    \"provinceCode\": \"\",\n    \"phone\": \"1122334455\",\n    \"company\": \"GetResponse\",\n    \"createdOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"updatedOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  },\n  \"billingStatus\": \"PENDING\",\n  \"billingAddress\": {\n    \"name\": \"some_shipping_address\",\n    \"countryCode\": \"POL\",\n    \"addressId\": \"k9\",\n    \"href\": \"https://api.getresponse.com/v3/addresses/k9\",\n    \"countryName\": \"Poland\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"Arkonska 6\",\n    \"address2\": \"\",\n    \"city\": \"Gdansk\",\n    \"zip\": \"80-387\",\n    \"province\": \"pomorskie\",\n    \"provinceCode\": \"\",\n    \"phone\": \"1122334455\",\n    \"company\": \"GetResponse\",\n    \"createdOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    },\n    \"updatedOn\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  },\n  \"processedAt\": \"<dateTime>\",\n  \"metaFields\": [\n    {\n      \"name\": \"Shoe size\",\n      \"value\": \"11\",\n      \"valueType\": \"integer\",\n      \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n      \"metaFieldId\": \"NoF\",\n      \"description\": \"Description of this meta field\"\n    },\n    {\n      \"name\": \"Shoe size\",\n      \"value\": \"11\",\n      \"valueType\": \"integer\",\n      \"href\": \"https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF\",\n      \"metaFieldId\": \"NoF\",\n      \"description\": \"Description of this meta field\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f4ec0c7-7b9a-4a1f-9695-19a5eaca1e1d",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcbc52bb-b6fe-444f-9865-45089a1830f4",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed935bde-89b5-4e6f-aeb4-9574408a21fa",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "additionalFlags",
+                      "value": "skipAutomation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "277d9166-1083-46e2-bee0-76170aaded8a",
+          "name": "Delete order",
+          "request": {
+            "name": "Delete order",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shops",
+                ":shopId",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shopId",
+                  "description": "(Required) The shop ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) The order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Auth-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "375ee05b-553b-4248-8c69-848bfe11f0e4",
+              "name": "Delete order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The total number of requests available per time frame",
+                  "key": "X-RateLimit-Limit",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests left in the current time frame",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3569"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds left in the current time frame, e.g. \"432 seconds\"",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "26d77f2b-c489-4464-ba6d-7bc96a5e2252",
+              "name": "Request validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 400,\n  \"code\": 1000,\n  \"codeDescription\": \"General error of validation process, more details should be in context section\",\n  \"message\": \"Validation error, see context section for more information\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1000\",\n  \"context\": {\n    \"validationType\": \"searchFilter[query]\",\n    \"fieldName\": \"name\",\n    \"originalName\": \"lorem-ipsum\",\n    \"errorDescription\": \"Not allowed search field\"\n  },\n  \"uuid\": \"77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aac6d20-3341-47bc-b52f-c886ad94e1ff",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 401,\n  \"code\": 1014,\n  \"codeDescription\": \"Problem during authentication process, check headers!\",\n  \"message\": \"Unable to authenticate request. Check credentials or authentication method details\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1014\",\n  \"context\": {\n    \"authenticationType\": \"auth_token\"\n  },\n  \"uuid\": \"62417847-4f12-4c25-9b3a-0b619a187efe\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d088eeec-ab93-4d0f-8929-ce57c11ad474",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 404,\n  \"code\": 1013,\n  \"codeDescription\": \"The requested resource was not found\",\n  \"message\": \"Resource not found\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1013\",\n  \"context\": {\n    \"contactId\": \"pVyRW\"\n  },\n  \"uuid\": \"87b90a96-5ee5-4ca4-8180-ac00adcf62c7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12f96893-7985-4f2e-b5c9-7f52806eae75",
+              "name": "The throttling limit has been reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shops",
+                    ":shopId",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shopId",
+                      "description": "(Required) The shop ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 429,\n  \"code\": 1015,\n  \"codeDescription\": \"Too many request to API, quota reached, please wait till next quota window\",\n  \"message\": \"You have reached your requests limit for this time window, please wait...\",\n  \"moreInfo\": \"https://apidocs.getresponse.com/en/v3/errors/1015\",\n  \"context\": {\n    \"currentLimit\": 30000,\n    \"timeToReset\": \"100 seconds\"\n  },\n  \"uuid\": \"510c6726-7f65-46b7-a798-ca403133924f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.getresponse.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "53ebcd2f-37d0-4240-8603-00d7bba93f7a",
+    "name": "GetResponse APIv3 Orders",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Orders operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json\n\nContact Support:\n Name: API Support - DevZone\n Email: getresponse-devzone@cs.getresponse.com",
+      "type": "text/plain"
+    }
+  }
+}

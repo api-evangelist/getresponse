@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GetResponse APIv3 Ecommerce",
+    "version": "3.2026-07-28T07:58:55+00:00"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ecommerce",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the ecommerce revenue statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/statistics/ecommerce/revenue",
+            "params": [
+              {
+                "name": "query[orderDate][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show statistics for orders from this date"
+              },
+              {
+                "name": "query[orderDate][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show statistics for orders to this date"
+              },
+              {
+                "name": "query[shopId]",
+                "value": "",
+                "type": "query",
+                "description": "Search statistics by shop ID. You can get the shop ID by calling the `/v3/shops` endpoint. You can search for multiple shops using comma-separated values, for example, `pgIH, CNXF`"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the ecommerce revenue statistics"
+        },
+        {
+          "info": {
+            "name": "Get the ecommerce general performance statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getresponse.com/v3/statistics/ecommerce/performance",
+            "params": [
+              {
+                "name": "query[orderDate][from]",
+                "value": "",
+                "type": "query",
+                "description": "Show statistics for orders from this date"
+              },
+              {
+                "name": "query[orderDate][to]",
+                "value": "",
+                "type": "query",
+                "description": "Show statistics for orders to this date"
+              },
+              {
+                "name": "query[shopId]",
+                "value": "",
+                "type": "query",
+                "description": "Search statistics by shop ID. You can get the shop ID by calling the `/v3/shops` endpoint. You can search for multiple shops using comma-separated values, for example, `pgIH, CNXF`"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of fields that should be returned. Id is always returned. Fields should be separated by comma"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Auth-Token",
+              "value": "{{X-Auth-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the ecommerce general performance statistics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
