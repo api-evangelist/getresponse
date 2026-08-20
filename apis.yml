@@ -34,6 +34,22 @@ tags:
 - CRM
 - Transactional Email
 - SMS
+- E-Commerce
+- Web Push
+- Forms
+- Newsletters
+- Autoresponders
+- Contacts
+- Marketing
+tags_raw:
+- Email Marketing
+- Marketing Automation
+- Landing Pages
+- Webinars
+- Conversion Funnels
+- CRM
+- Transactional Email
+- SMS
 - Ecommerce
 - Web Push
 - Forms
@@ -56,6 +72,15 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Email Marketing
+  - Marketing Automation
+  - Contacts
+  - Campaigns
+  - Newsletters
+  - Autoresponders
+  - E-Commerce
+  - Transactional Email
+  tags_raw:
   - Email Marketing
   - Marketing Automation
   - Contacts
@@ -88,6 +113,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - A/B Tests
+  tags_raw:
   - A/B tests
   properties:
   - type: OpenAPI
@@ -110,6 +137,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -161,6 +190,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Cart
+  tags_raw:
   - Carts
   properties:
   - type: OpenAPI
@@ -241,6 +272,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - E-Commerce
+  tags_raw:
   - Ecommerce
   properties:
   - type: OpenAPI
@@ -373,6 +406,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Metafields
+  tags_raw:
   - Meta Fields
   properties:
   - type: OpenAPI
@@ -406,6 +441,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -439,6 +476,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -505,6 +544,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - SMS
+  tags_raw:
   - Sms
   properties:
   - type: OpenAPI
