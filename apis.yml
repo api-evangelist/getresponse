@@ -62,36 +62,16 @@ created: '2026-05-11'
 modified: '2026-08-13'
 specificationVersion: '0.23'
 apis:
-- aid: getresponse:rest-api
-  name: GetResponse API v3
-  description: The complete GetResponse API v3 — a JSON REST API of 220 operations across 141 paths and
-    42 product areas, described by a provider-published OpenAPI 3.0.0. Authentication is an X-Auth-Token
-    header carrying an API key prefixed with "api-key ", or OAuth 2.0 with a single "all" scope. Every
-    response carries X-RateLimit-* headers; errors return a custom ErrorResponse envelope discriminated
-    by a numeric code rather than by HTTP status.
+- aid: getresponse:getresponse-a-b-tests-api
+  name: GetResponse A/B tests API
+  description: A/B tests API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Email Marketing
-  - Marketing Automation
-  - Contacts
-  - Campaigns
-  - Newsletters
-  - Autoresponders
-  - E-Commerce
-  - Transactional Email
-  tags_raw:
-  - Email Marketing
-  - Marketing Automation
-  - Contacts
-  - Campaigns
-  - Newsletters
-  - Autoresponders
-  - Ecommerce
-  - Transactional Email
+  - A/B tests
   properties:
   - type: OpenAPI
-    url: openapi/_original/getresponse-open-api-original.json
+    url: openapi/getresponse-a-b-tests-api-openapi.yml
   - type: Documentation
     url: https://apidocs.getresponse.com/v3
   - type: APIReference
@@ -106,572 +86,1170 @@ apis:
     url: https://apidocs.getresponse.com/v3/errors
   - type: Postman
     url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
-- aid: getresponse:getresponse-a-b-tests
-  name: GetResponse A/B tests API
-  description: A/B tests API documentation The A/B tests area of the GetResponse API v3 — 2 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
-  humanURL: https://apireference.getresponse.com/
-  baseURL: https://api.getresponse.com/v3
-  tags:
-  - A/B Tests
-  tags_raw:
-  - A/B tests
-  properties:
-  - type: OpenAPI
-    url: openapi/getresponse-a-b-tests-openapi.yml
-- aid: getresponse:getresponse-a-b-tests-subject
+- aid: getresponse:getresponse-a-b-tests-subject-api
   name: GetResponse A/B tests - subject API
-  description: A/B tests - subject API documentation The A/B tests - subject area of the GetResponse API
-    v3 — 6 operation(s) across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: A/B tests - subject API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - A/B tests - subject
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-a-b-tests-subject-openapi.yml
-- aid: getresponse:getresponse-accounts
+    url: openapi/getresponse-a-b-tests-subject-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-accounts-api
   name: GetResponse Accounts API
-  description: Accounts API documentation The Accounts area of the GetResponse API v3 — 14 operation(s)
-    across 9 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Accounts API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Account
-  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-accounts-openapi.yml
-- aid: getresponse:getresponse-addresses
+    url: openapi/getresponse-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-addresses-api
   name: GetResponse Addresses API
-  description: Addresses API documentation The Addresses area of the GetResponse API v3 — 5 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Addresses API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Addresses
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-addresses-openapi.yml
-- aid: getresponse:getresponse-autoresponders
+    url: openapi/getresponse-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-autoresponders-api
   name: GetResponse Autoresponders API
-  description: Autoresponders API documentation The Autoresponders area of the GetResponse API v3 — 8
-    operation(s) across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Autoresponders API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Autoresponders
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-autoresponders-openapi.yml
-- aid: getresponse:getresponse-campaigns-lists
+    url: openapi/getresponse-autoresponders-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-campaigns-lists-api
   name: GetResponse Campaigns (Lists) API
-  description: 'Our API v3 uses the terminology from the previous version of GetResponse.
+  description: >-
+    Our API v3 uses the terminology from the previous version of GetResponse.
 
 
     **Campaigns and lists are the same resource under a different name.** For now, please refer to lists
     as campaigns.
 
 
-    Our API v4 will use the updated terminology. The Campaigns (Lists) area of the GetResponse API v3
-    — 13 operation(s) across 10 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.'
+    Our API v4 will use the updated terminology.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Campaigns (Lists)
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-campaigns-lists-openapi.yml
-- aid: getresponse:getresponse-carts
+    url: openapi/getresponse-campaigns-lists-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-carts-api
   name: GetResponse Carts API
-  description: Carts API documentation The Carts area of the GetResponse API v3 — 5 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Carts API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Cart
-  tags_raw:
   - Carts
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-carts-openapi.yml
-- aid: getresponse:getresponse-categories
+    url: openapi/getresponse-carts-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-categories-api
   name: GetResponse Categories API
-  description: Categories API documentation The Categories area of the GetResponse API v3 — 5 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Categories API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Categories
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-categories-openapi.yml
-- aid: getresponse:getresponse-click-tracks
+    url: openapi/getresponse-categories-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-click-tracks-api
   name: GetResponse Click Tracks API
-  description: Click tracking refers to the data collected about each link click, such as how many people
-    clicked it, how many clicks resulted in desired actions such as sales, forwards or subscriptions.
-    The Click Tracks area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split by tag from
-    the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: >-
+    Click tracking refers to the data collected about each link click, such as how many people clicked
+    it, how many clicks resulted in desired actions such as sales, forwards or subscriptions.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Click Tracks
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-click-tracks-openapi.yml
-- aid: getresponse:getresponse-contacts
+    url: openapi/getresponse-click-tracks-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-contacts-api
   name: GetResponse Contacts API
-  description: API documentation for contacts and their properties (e.g., tags, custom fields) The Contacts
-    area of the GetResponse API v3 — 11 operation(s) across 8 path(s), split by tag from the provider-published
-    OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: API documentation for contacts and their properties (e.g., tags, custom fields)
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Contacts
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-contacts-openapi.yml
-- aid: getresponse:getresponse-custom-events
+    url: openapi/getresponse-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-custom-events-api
   name: GetResponse Custom Events API
-  description: Custom Events API documentation The Custom Events area of the GetResponse API v3 — 6 operation(s)
-    across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Custom Events API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Custom Events
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-custom-events-openapi.yml
-- aid: getresponse:getresponse-custom-fields
+    url: openapi/getresponse-custom-events-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-custom-fields-api
   name: GetResponse Custom Fields API
-  description: Custom Fields API documentation The Custom Fields area of the GetResponse API v3 — 5 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Custom Fields API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Custom Fields
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-custom-fields-openapi.yml
-- aid: getresponse:getresponse-custom-reports
+    url: openapi/getresponse-custom-fields-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-custom-reports-api
   name: GetResponse Custom Reports API
-  description: Custom Reports API documentation The Custom Reports area of the GetResponse API v3 — 3
-    operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Custom Reports API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Custom Reports
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-custom-reports-openapi.yml
-- aid: getresponse:getresponse-ecommerce
+    url: openapi/getresponse-custom-reports-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-ecommerce-api
   name: GetResponse Ecommerce API
-  description: The Ecommerce area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split by
-    tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The Ecommerce API from GetResponse — 2 operation(s) for ecommerce.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - E-Commerce
-  tags_raw:
   - Ecommerce
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-ecommerce-openapi.yml
-- aid: getresponse:getresponse-file-library
+    url: openapi/getresponse-ecommerce-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-file-library-api
   name: GetResponse File Library API
-  description: File Library API documentation The File Library area of the GetResponse API v3 — 8 operation(s)
-    across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: File Library API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - File Library
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-file-library-openapi.yml
-- aid: getresponse:getresponse-form-and-popup
+    url: openapi/getresponse-file-library-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-form-and-popup-api
   name: GetResponse Form and Popup API
-  description: The Form and Popup area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split
-    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The Form and Popup API from GetResponse — 1 operation(s) for form and popup.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Form and Popup
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-form-and-popup-openapi.yml
-- aid: getresponse:getresponse-forms
-  name: GetResponse Forms API
-  description: Forms API documentation The Forms area of the GetResponse API v3 — 3 operation(s) across
-    3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
-  humanURL: https://apireference.getresponse.com/
-  baseURL: https://api.getresponse.com/v3
-  tags:
-  - Forms
-  properties:
-  - type: OpenAPI
-    url: openapi/getresponse-forms-openapi.yml
-- aid: getresponse:getresponse-forms-and-popups
+    url: openapi/getresponse-form-and-popup-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-forms-and-popups-api
   name: GetResponse Forms and Popups API
-  description: Forms and Popups API documentation The Forms and Popups area of the GetResponse API v3
-    — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Forms and Popups API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Forms and Popups
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-forms-and-popups-openapi.yml
-- aid: getresponse:getresponse-from-fields
+    url: openapi/getresponse-forms-and-popups-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-forms-api
+  name: GetResponse Forms API
+  description: Forms API documentation
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-forms-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-from-fields-api
   name: GetResponse From Fields API
-  description: From Fields API documentation The From Fields area of the GetResponse API v3 — 5 operation(s)
-    across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: From Fields API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - From Fields
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-from-fields-openapi.yml
-- aid: getresponse:getresponse-gdpr-fields
+    url: openapi/getresponse-from-fields-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-gdpr-fields-api
   name: GetResponse GDPR Fields API
-  description: The GDPR Fields area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split
-    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The GDPR Fields API from GetResponse — 2 operation(s) for gdpr fields.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - GDPR Fields
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-gdpr-fields-openapi.yml
-- aid: getresponse:getresponse-imports
+    url: openapi/getresponse-gdpr-fields-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-imports-api
   name: GetResponse Imports API
-  description: Imports API documentation The Imports area of the GetResponse API v3 — 3 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Imports API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Imports
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-imports-openapi.yml
-- aid: getresponse:getresponse-landing-page
+    url: openapi/getresponse-imports-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-landing-page-api
   name: GetResponse Landing Page API
-  description: The Landing Page area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split
-    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The Landing Page API from GetResponse — 1 operation(s) for landing page.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Landing Page
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-landing-page-openapi.yml
-- aid: getresponse:getresponse-landing-pages
+    url: openapi/getresponse-landing-page-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-landing-pages-api
   name: GetResponse Landing Pages API
-  description: The Landing Pages area of the GetResponse API v3 — 2 operation(s) across 2 path(s), split
-    by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The Landing Pages API from GetResponse — 2 operation(s) for landing pages.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Landing Pages
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-landing-pages-openapi.yml
-- aid: getresponse:getresponse-legacy-forms
+    url: openapi/getresponse-landing-pages-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-legacy-forms-api
   name: GetResponse Legacy Forms API
-  description: Legacy Forms API documentation The Legacy Forms area of the GetResponse API v3 — 2 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Legacy Forms API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Legacy Forms
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-legacy-forms-openapi.yml
-- aid: getresponse:getresponse-legacy-landing-pages
+    url: openapi/getresponse-legacy-forms-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-legacy-landing-pages-api
   name: GetResponse Legacy Landing Pages API
-  description: Legacy Landing Pages description The Legacy Landing Pages area of the GetResponse API v3
-    — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Legacy Landing Pages description
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Legacy Landing Pages
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-legacy-landing-pages-openapi.yml
-- aid: getresponse:getresponse-meta-fields
+    url: openapi/getresponse-legacy-landing-pages-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-meta-fields-api
   name: GetResponse Meta Fields API
-  description: Meta Fields API documentation The Meta Fields area of the GetResponse API v3 — 5 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Meta Fields API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Metafields
-  tags_raw:
   - Meta Fields
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-meta-fields-openapi.yml
-- aid: getresponse:getresponse-multimedia
+    url: openapi/getresponse-meta-fields-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-multimedia-api
   name: GetResponse Multimedia API
-  description: Multimedia API documentation The Multimedia area of the GetResponse API v3 — 2 operation(s)
-    across 1 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Multimedia API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Multimedia
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-multimedia-openapi.yml
-- aid: getresponse:getresponse-newsletters
+    url: openapi/getresponse-multimedia-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-newsletters-api
   name: GetResponse Newsletters API
-  description: Newsletters API documentation The Newsletters area of the GetResponse API v3 — 10 operation(s)
-    across 8 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Newsletters API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Newsletters
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-newsletters-openapi.yml
-- aid: getresponse:getresponse-orders
+    url: openapi/getresponse-newsletters-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-orders-api
   name: GetResponse Orders API
-  description: Orders API documentation The Orders area of the GetResponse API v3 — 5 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Orders API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Order
-  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-orders-openapi.yml
-- aid: getresponse:getresponse-predefined-fields
+    url: openapi/getresponse-orders-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-predefined-fields-api
   name: GetResponse Predefined Fields API
-  description: Predefined Fields API documentation The Predefined Fields area of the GetResponse API v3
-    — 5 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Predefined Fields API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Predefined Fields
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-predefined-fields-openapi.yml
-- aid: getresponse:getresponse-product-variants
+    url: openapi/getresponse-predefined-fields-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-product-variants-api
   name: GetResponse Product Variants API
-  description: Product Variants API documentation The Product Variants area of the GetResponse API v3
-    — 5 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Product Variants API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Product Variants
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-product-variants-openapi.yml
-- aid: getresponse:getresponse-products
+    url: openapi/getresponse-product-variants-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-products-api
   name: GetResponse Products API
-  description: Products API documentation The Products area of the GetResponse API v3 — 7 operation(s)
-    across 4 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Products API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - Product
-  tags_raw:
   - Products
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-products-openapi.yml
-- aid: getresponse:getresponse-rss-newsletters
+    url: openapi/getresponse-products-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-rss-newsletters-api
   name: GetResponse RSS Newsletters API
-  description: RSS Newsletters API documentation The RSS Newsletters area of the GetResponse API v3 —
-    7 operation(s) across 4 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: RSS Newsletters API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - RSS Newsletters
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-rss-newsletters-openapi.yml
-- aid: getresponse:getresponse-sms-automation-messages
-  name: GetResponse SMS Automation Messages API
-  description: SMS Automation Messages API documentation The SMS Automation Messages area of the GetResponse
-    API v3 — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
-  humanURL: https://apireference.getresponse.com/
-  baseURL: https://api.getresponse.com/v3
-  tags:
-  - SMS Automation Messages
-  properties:
-  - type: OpenAPI
-    url: openapi/getresponse-sms-automation-messages-openapi.yml
-- aid: getresponse:getresponse-sms-messages
-  name: GetResponse SMS Messages API
-  description: SMS Messages API documentation The SMS Messages area of the GetResponse API v3 — 4 operation(s)
-    across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
-  humanURL: https://apireference.getresponse.com/
-  baseURL: https://api.getresponse.com/v3
-  tags:
-  - SMS Messages
-  properties:
-  - type: OpenAPI
-    url: openapi/getresponse-sms-messages-openapi.yml
-- aid: getresponse:getresponse-search-contacts
+    url: openapi/getresponse-rss-newsletters-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-search-contacts-api
   name: GetResponse Search Contacts API
-  description: Search Contacts API documentation API documentation The Search Contacts area of the GetResponse
-    API v3 — 8 operation(s) across 5 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Search Contacts API documentation API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Search Contacts
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-search-contacts-openapi.yml
-- aid: getresponse:getresponse-shops
+    url: openapi/getresponse-search-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-shops-api
   name: GetResponse Shops API
-  description: Shops API documentation The Shops area of the GetResponse API v3 — 5 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Shops API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Shops
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-shops-openapi.yml
-- aid: getresponse:getresponse-sms
+    url: openapi/getresponse-shops-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-sms-api
   name: GetResponse Sms API
-  description: The Sms area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split by tag
-    from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The Sms API from GetResponse — 1 operation(s) for sms.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
-  - SMS
-  tags_raw:
   - Sms
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-sms-openapi.yml
-- aid: getresponse:getresponse-subscription-confirmations
+    url: openapi/getresponse-sms-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-sms-automation-messages-api
+  name: GetResponse SMS Automation Messages API
+  description: SMS Automation Messages API documentation
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - SMS Automation Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-sms-automation-messages-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-sms-messages-api
+  name: GetResponse SMS Messages API
+  description: SMS Messages API documentation
+  humanURL: https://apireference.getresponse.com/
+  baseURL: https://api.getresponse.com/v3
+  tags:
+  - SMS Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/getresponse-sms-messages-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-subscription-confirmations-api
   name: GetResponse Subscription Confirmations API
-  description: Subscription Confirmations API documentation The Subscription Confirmations area of the
-    GetResponse API v3 — 2 operation(s) across 2 path(s), split by tag from the provider-published OpenAPI
-    at https://apireference.getresponse.com/open-api.json.
+  description: Subscription Confirmations API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Subscription Confirmations
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-subscription-confirmations-openapi.yml
-- aid: getresponse:getresponse-suppressions
+    url: openapi/getresponse-subscription-confirmations-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-suppressions-api
   name: GetResponse Suppressions API
-  description: Suppressions API documentaion The Suppressions area of the GetResponse API v3 — 5 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Suppressions API documentaion
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Suppressions
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-suppressions-openapi.yml
-- aid: getresponse:getresponse-tags
+    url: openapi/getresponse-suppressions-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-tags-api
   name: GetResponse Tags API
-  description: Tags API documentation The Tags area of the GetResponse API v3 — 5 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Tags API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Tags
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-tags-openapi.yml
-- aid: getresponse:getresponse-taxes
+    url: openapi/getresponse-tags-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-taxes-api
   name: GetResponse Taxes API
-  description: Taxes API documentation The Taxes area of the GetResponse API v3 — 5 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Taxes API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Taxes
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-taxes-openapi.yml
-- aid: getresponse:getresponse-tracking
+    url: openapi/getresponse-taxes-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-tracking-api
   name: GetResponse Tracking API
-  description: Tracking API documentation The Tracking area of the GetResponse API v3 — 2 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Tracking API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Tracking
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-tracking-openapi.yml
-- aid: getresponse:getresponse-transactional-emails
+    url: openapi/getresponse-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-transactional-emails-api
   name: GetResponse Transactional Emails API
-  description: Transactional Emails API documentation The Transactional Emails area of the GetResponse
-    API v3 — 4 operation(s) across 3 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Transactional Emails API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Transactional Emails
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-transactional-emails-openapi.yml
-- aid: getresponse:getresponse-transactional-emails-templates
+    url: openapi/getresponse-transactional-emails-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-transactional-emails-templates-api
   name: GetResponse Transactional Emails Templates API
-  description: The Transactional Emails Templates area of the GetResponse API v3 — 5 operation(s) across
-    2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: >-
+    The Transactional Emails Templates API from GetResponse — 2 operation(s) for transactional emails
+    templates.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Transactional Emails Templates
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-transactional-emails-templates-openapi.yml
-- aid: getresponse:getresponse-webinars
+    url: openapi/getresponse-transactional-emails-templates-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-webinars-api
   name: GetResponse Webinars API
-  description: Webinars API documentation The Webinars area of the GetResponse API v3 — 2 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Webinars API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Webinars
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-webinars-openapi.yml
-- aid: getresponse:getresponse-website
+    url: openapi/getresponse-webinars-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-website-api
   name: GetResponse Website API
-  description: The Website area of the GetResponse API v3 — 1 operation(s) across 1 path(s), split by
-    tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: The Website API from GetResponse — 1 operation(s) for website.
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Website
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-website-openapi.yml
-- aid: getresponse:getresponse-websites
+    url: openapi/getresponse-website-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-websites-api
   name: GetResponse Websites API
-  description: Websites API documentation The Websites area of the GetResponse API v3 — 2 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Websites API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Websites
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-websites-openapi.yml
-- aid: getresponse:getresponse-workflows
+    url: openapi/getresponse-websites-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
+- aid: getresponse:getresponse-workflows-api
   name: GetResponse Workflows API
-  description: Workflows API documentation The Workflows area of the GetResponse API v3 — 3 operation(s)
-    across 2 path(s), split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json.
+  description: Workflows API documentation
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
   - Workflows
   properties:
   - type: OpenAPI
-    url: openapi/getresponse-workflows-openapi.yml
+    url: openapi/getresponse-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.getresponse.com/v3
+  - type: APIReference
+    url: https://apireference.getresponse.com/
+  - type: Authentication
+    url: https://apidocs.getresponse.com/v3/authentication
+  - type: Webhooks
+    url: https://apidocs.getresponse.com/v3/webhooks
+  - type: RateLimits
+    url: https://apidocs.getresponse.com/v3/limits
+  - type: ErrorCatalog
+    url: https://apidocs.getresponse.com/v3/errors
+  - type: Postman
+    url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
 common:
 - type: OpenAPI
   url: openapi/_original/getresponse-open-api-original.json
