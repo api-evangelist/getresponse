@@ -3,7 +3,7 @@ provider: GetResponse
 generated_by: planning/capability-mapping/scripts/classify_capabilities.py
 model: claude-opus-5
 frame:
-- Software & Technology
+- Telecommunications
 min_confidence: 0.7
 capability_model:
   source: https://github.com/vincentmakes/turbo-ea-capabilities
@@ -11,107 +11,140 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 11
+edge_count: 15
 edges:
 - tag: Autoresponders
   spec_file: getresponse-autoresponders-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
+  confidence: 0.85
+  evidence: POST /autoresponders  createAutoresponder ... AutoresponderTriggerSettings, AutoresponderSendSettingsTimeTravel,
+    getSingleAutoresponderStatistics
+  reason: Triggered automated email sequences with send scheduling and statistics — marketing automation,
+    squarely Digital Marketing Management.
+- tag: Contacts
+  spec_file: getresponse-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
   confidence: 0.8
-  evidence: 'POST /autoresponders  createAutoresponder; schemas: AutoresponderTriggerSettings, AutoresponderSendSettingsSendAtHour,
-    MessageContent'
-  reason: Creation, scheduling and statistics of triggered automated email sequences — textbook marketing
-    automation, which sits under Digital Marketing Management.
+  evidence: POST /contacts  createContact  Create a new contact; GET /contacts/{contactId}/consents  Get
+    contact's consent fields; upsertContactCustoms
+  reason: Full lifecycle CRUD over contact records with custom fields, tags, consents and activity history
+    — this is the customer/contact master data store of the marketing platform.
 - tag: Newsletters
   spec_file: getresponse-newsletters-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
   confidence: 0.8
-  evidence: POST /newsletters  createNewsletter  Create newsletter; POST /newsletters/send-draft  sendDraft;
-    GET /newsletters/{newsletterId}/statistics  The statistics of single newsletter
-  reason: Creating, sending, cancelling and measuring email newsletters against campaigns is email/digital
-    marketing execution. Sub-capability could arguably be demand generation, hence 0.8 rather than higher.
-- tag: Contacts
-  spec_file: getresponse-contacts-api-openapi.yml
-  capability_id: BC-420.10
-  capability_id_l1: BC-420
-  capability_name: Customer Data Management
-  confidence: 0.78
-  evidence: POST /contacts  createContact  Create a new contact; POST /contacts/{contactId}/custom-fields  Upsert
-    the custom fields of a contact; GET /contacts/{contactId}/consents  Get contact's consent fields
-  reason: Full CRUD plus tags, custom-field values, activity history and consent fields on contact/subscriber
-    records — maintenance of the customer/subscriber master record, i.e. Customer Data Management.
+  evidence: POST /newsletters  createNewsletter  Create newsletter; POST /newsletters/send-draft  Send
+    the newsletter draft; GET /newsletters/{newsletterId}/statistics  The statistics of single newsletter
+  reason: Creation, sending, cancellation and performance statistics of email newsletters to campaign
+    audiences — email marketing execution, i.e. digital marketing management. Some ambiguity vs. demand
+    generation campaigns.
 - tag: RSS Newsletters
   spec_file: getresponse-rss-newsletters-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
-  confidence: 0.78
-  evidence: POST /rss-newsletters  createRssNewsletter  Create RSS newsletter; GET /rss-newsletters/statistics  The
-    statistics for all RSS newsletters
-  reason: Automated RSS-driven email sends with send-settings targeting segments and campaigns, plus performance
-    statistics — email marketing automation execution.
+  confidence: 0.8
+  evidence: POST /rss-newsletters  createRssNewsletter; GET /rss-newsletters/{rssNewsletterId}/statistics  Get
+    RSS newsletter statistics by ID; schemas MessageSendSettingSelectedSegments
+  reason: Automated RSS-driven email sends targeted at selected campaigns/segments with statistics — marketing
+    automation / email marketing execution.
+- tag: Campaigns (Lists)
+  spec_file: getresponse-campaigns-lists-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: POST /campaigns  Create a campaign; GET /campaigns/statistics/subscriptions  Get the number
+    and origin of subscription statistics
+  reason: Manages email subscriber lists ('campaigns') with subscription/removal/origin statistics — email
+    list and campaign management in a marketing platform. Marketing automation/digital marketing is the
+    closest honest fit; some overlap with demand generation.
+- tag: Legacy Landing Pages
+  spec_file: getresponse-legacy-landing-pages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: GET /landing-pages  getLandingPageList  Get a list of landing pages; schemas LandingPage,
+    LandingPageVariant, CampaignReference
+  reason: Read access to marketing landing pages and their variants within a marketing campaign context
+    — web/landing-page assets are digital marketing management. Only listing/reading is offered, so confidence
+    is moderate rather than high.
+- tag: SMS Messages
+  spec_file: getresponse-sms-messages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: POST /sms  sendSms  Send an SMS message; GET /sms/sender-names  Get a list of SMS sender names;
+    schemas MessageSendSettingSelectedSegments
+  reason: Sending marketing SMS to selected campaigns/segments with sender-name management — an SMS marketing
+    channel on a marketing platform, not telecom subscriber messaging infrastructure.
 - tag: Tracking
   spec_file: getresponse-tracking-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
   confidence: 0.75
-  evidence: GET /tracking 'Get Tracking JavaScript code snippets'; GET /tracking/facebook-pixels 'Get
-    the list of "Facebook Pixels"'
-  reason: Web tracking snippets and Facebook Pixels are digital marketing instrumentation for paid media
-    and web analytics on a marketing platform.
-- tag: Legacy Landing Pages
-  spec_file: getresponse-legacy-landing-pages-api-openapi.yml
-  capability_id: BC-400.60
-  capability_id_l1: BC-400
-  capability_name: Digital Marketing Management
-  confidence: 0.72
-  evidence: GET /landing-pages  getLandingPageList  Get a list of landing pages; schemas LandingPage,
-    LandingPageVariant, CampaignReference
-  reason: Landing pages are web-based marketing assets tied to campaigns; read operations expose the landing-page
-    inventory, which sits under digital marketing (web/marketing automation) rather than any product-engineering
-    capability. Read-only surface keeps confidence moderate.
-- tag: SMS Messages
-  spec_file: getresponse-sms-messages-api-openapi.yml
-  capability_id: BC-400.60
-  capability_id_l1: BC-400
-  capability_name: Digital Marketing Management
-  confidence: 0.72
-  evidence: POST /sms  sendSms  Send an SMS message; GET /sms/sender-names; MessageSendSettingSelectedSegments
-  reason: Sending SMS marketing messages to selected campaigns/segments with managed sender names is outbound
-    digital marketing channel execution, not transactional notification plumbing.
+  evidence: GET /tracking  getTracking  Get Tracking JavaScript code snippets; GET /tracking/facebook-pixels  getFacebookPixelList
+  reason: Web tracking snippets and Facebook Pixels are paid-media/web analytics instrumentation for digital
+    marketing, which is squarely Digital Marketing Management for this vendor.
 - tag: A/B tests - subject
   spec_file: getresponse-a-b-tests-subject-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: POST /ab-tests/subject/{abTestId}/winner  Choose A/B test winner ... AbtestsSubjectStatistics
+  reason: Creation, cancellation and winner selection of email subject-line A/B tests — marketing message
+    optimisation within an email marketing platform, i.e. digital/email marketing execution.
+- tag: Workflows
+  spec_file: getresponse-workflows-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: GET /workflow getWorkflowList 'Get workflows'; schemas 'Workflow', 'WorkflowSubscriberStatistics'
+    on an 'all-in-one marketing platform for email marketing, marketing automation'
+  reason: The tag exposes CRUD/read over GetResponse marketing-automation workflows with subscriber statistics,
+    i.e. marketing automation configuration — squarely Digital Marketing Management (marketing automation).
+    Some ambiguity with lifecycle/demand-generation marketing, hence moderate confidence.
+- tag: A/B tests
+  spec_file: getresponse-a-b-tests-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
   confidence: 0.7
-  evidence: POST /ab-tests/subject  createSubjectAbTest  Create a new A/B test; POST /ab-tests/subject/{abTestId}/winner  Choose
-    A/B test winner
-  reason: Full lifecycle of email subject-line A/B tests including winner selection, with MessageContent
-    and MessageSendSetting* schemas — email campaign optimisation within digital marketing, not SaaS product
-    experimentation.
-- tag: GDPR Fields
-  spec_file: getresponse-gdpr-fields-api-openapi.yml
-  capability_id: BC-130.50
-  capability_id_l1: BC-130
-  capability_name: Privacy & Data Protection Management
-  confidence: 0.7
-  evidence: GET /gdpr-fields/{gdprFieldId} "Get GDPR Field details"; schemas GDPRFieldDetails, GDPRFieldLatestVersion
-  reason: GDPR consent fields with versioned latest-version tracking implement consent/data-protection
-    compliance for contact data; read-only surface limits confidence.
+  evidence: 'GET /splittests  getSplittestList  The list of A/B tests. ... schemas: SplittestNewsletter,
+    MessageSendSettingSelectedCampaigns'
+  reason: Read-only access to email newsletter split tests within a marketing automation platform; this
+    is email/digital marketing campaign testing. Could arguably be experimentation, but the object is
+    a marketing newsletter A/B test, so Digital Marketing Management fits best.
 - tag: Landing Pages
   spec_file: getresponse-landing-pages-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
   confidence: 0.7
-  evidence: GET /lps "Get the list of landing pages"; schemas LpsDetails, LpsListItemStatistics
-  reason: Landing pages with page details and statistics are web-based digital marketing assets managed
-    by this marketing platform.
+  evidence: GET /lps 'Get the list of landing pages'; schemas LpsPage, LpsDetailsStatistics
+  reason: Retrieval of landing pages and their statistics — management of web marketing assets, i.e. digital
+    marketing.
+- tag: SMS Automation Messages
+  spec_file: getresponse-sms-automation-messages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: GET /sms-automation  getSMSAutomationList  Get the list of automated SMS messages.
+  reason: Read-only listing of automated marketing SMS messages tied to campaigns — marketing automation
+    channel content. This is marketing messaging, not telecom messaging service operation. Read-only surface
+    limits confidence.
 - tag: Search Contacts
   spec_file: getresponse-search-contacts-api-openapi.yml
   capability_id: BC-420.20
@@ -120,6 +153,15 @@ edges:
   confidence: 0.7
   evidence: POST /search-contacts/contacts  Search contacts using conditions; schemas SearchContactsConditionsDetails,
     SubscribersTypeEnumForSegments
-  reason: Saved, condition-based contact searches that behave as reusable audience segments (segment enums,
-    persisted search definitions) — customer segmentation rather than generic search, though the surface
-    also does plain contact lookup.
+  reason: Saved, condition-based contact searches that resolve to contact sets used as segments — customer
+    segmentation. Partly a search/query utility, hence moderate confidence.
+- tag: Websites
+  spec_file: getresponse-websites-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: 'GET /websites  getWebsitesList  Get the list of websites; schemas: WebsiteDetails, WebsitePage,
+    WebsiteStatistics'
+  reason: Websites and their pages/statistics on this marketing platform are the vendor's website-builder
+    assets, i.e. web presence management within digital marketing.
