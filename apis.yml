@@ -1263,6 +1263,9 @@ apis:
   - type: Postman
     url: https://apidocs.getresponse.com/getresponse-postman-collection.zip
 common:
+- type: CapabilityMap
+  url: capabilities/getresponse-capability-edges.yml
+  name: GetResponse Business Capability Map
 - type: OpenAPI
   url: openapi/_original/getresponse-open-api-original.json
 - type: WellKnown
