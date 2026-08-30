@@ -1,0 +1,1343 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 RSS Newsletters API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The RSS Newsletters operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: RSS Newsletters
+  description: RSS Newsletters API documentation
+paths:
+  /rss-newsletters/{rssNewsletterId}:
+    parameters:
+    - $ref: '#/components/parameters/rssNewsletterId'
+    get:
+      tags:
+      - RSS Newsletters
+      summary: Get RSS newsletter by ID
+      operationId: getRssNewsletterById
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/RssNewsletterDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - RSS Newsletters
+      summary: Update RSS newsletter
+      operationId: updateRssNewsletter
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateRssNewsletter'
+      responses:
+        '200':
+          $ref: '#/components/responses/RssNewsletterDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    delete:
+      tags:
+      - RSS Newsletters
+      summary: Delete RSS newsletter
+      operationId: deleteRssNewsletter
+      responses:
+        '204':
+          description: Delete RSS newsletter.
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /rss-newsletters/{rssNewsletterId}/statistics:
+    parameters:
+    - $ref: '#/components/parameters/rssNewsletterId'
+    get:
+      tags:
+      - RSS Newsletters
+      summary: Get RSS newsletter statistics by ID
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getSingleRssNewsletterStatisticsCollection
+      parameters:
+      - name: query[groupBy]
+        in: query
+        description: Group results by time interval
+        required: false
+        schema:
+          type: string
+          enum:
+          - total
+          - hour
+          - day
+          - month
+      - name: query[createdOn][from]
+        in: query
+        description: Count data from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Count data to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/SingleMessageStatisticsList'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetRssNewsletterStatistics
+  /rss-newsletters:
+    get:
+      tags:
+      - RSS Newsletters
+      summary: Get the list of RSS newsletters
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getRssNewslettersList
+      parameters:
+      - name: query[subject]
+        in: query
+        description: Search RSS newsletters by subject
+        required: false
+        schema:
+          type: string
+      - name: query[status]
+        in: query
+        description: Search RSS newsletters by status
+        required: false
+        schema:
+          type: string
+          enum:
+          - enabled
+          - disabled
+      - name: query[createdOn][from]
+        in: query
+        description: Search RSS newsletters created from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Search RSS newsletters created to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[campaignId]
+        in: query
+        description: Search RSS newsletters by campaign ID
+        required: false
+        schema:
+          type: string
+      - name: sort[createdOn]
+        in: query
+        description: Sort by date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/RssNewsletterList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - RSS Newsletters
+      summary: Create RSS newsletter
+      operationId: createRssNewsletter
+      requestBody:
+        $ref: '#/components/requestBodies/NewRssNewsletter'
+      responses:
+        '201':
+          $ref: '#/components/responses/RssNewsletterDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /rss-newsletters/statistics:
+    get:
+      tags:
+      - RSS Newsletters
+      summary: The statistics for all RSS newsletters
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getRssNewsletterStatisticsCollection
+      parameters:
+      - name: query[groupBy]
+        in: query
+        description: Group results by time interval
+        required: false
+        schema:
+          type: string
+          enum:
+          - total
+          - hour
+          - day
+          - month
+      - name: query[rssNewsletterId]
+        in: query
+        description: The list of RSS newsletter resource IDs (string separated with ',')
+        required: false
+        schema:
+          type: string
+      - name: query[campaignId]
+        in: query
+        description: The list of campaign resource IDs (string separated with ',')
+        required: false
+        schema:
+          type: string
+      - name: query[createdOn][from]
+        in: query
+        description: Count data from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Count data to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/MessageStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetRssNewslettersStatistics
+components:
+  schemas:
+    RssNewsletterSendSettingsListing:
+      required:
+      - frequency
+      - filter
+      properties:
+        frequency:
+          description: When to send the message
+          type: string
+          example: asap
+        filter:
+          description: The filter settings for an RSS post
+          type: string
+          enum:
+          - recent
+          - engaged
+          - shared
+          - commented
+        maxArticles:
+          description: How many articles to display in a list
+          type: integer
+          format: int32
+          maximum: 30
+          minimum: 1
+        selectedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+        selectedSegments:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+        selectedSuppressions:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
+        excludedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+        excludedSegments:
+          $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+      type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          asap: '#/components/schemas/RssNewsletterListSendAsapSettings'
+          daily: '#/components/schemas/RssNewsletterListSendDailySettings'
+          weekly: '#/components/schemas/RssNewsletterListSendWeeklySettings'
+          monthly: '#/components/schemas/RssNewsletterListSendMonthlySettings'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    MessageFlagsString:
+      description: 'Comma-separated list of message flags. The possible values are: `openrate`, `clicktrack`, and `google_analytics`.'
+      type: string
+      example: clicktrack,google_analytics
+    RssNewsletterListItem:
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsString'
+      - $ref: '#/components/schemas/RssNewsletterListing'
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
+      type: array
+      items:
+        type: string
+        example: C
+    MessageSendSettingSelectedContacts:
+      description: The list of selected contacts.
+      type: array
+      items:
+        type: string
+        example: eSs
+    RssNewsletterDetails:
+      type: object
+      allOf:
+      - properties:
+          clickTracks:
+            description: The list of tracked links
+            type: array
+            items:
+              $ref: '#/components/schemas/ClickTrack'
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    RssNewsletter:
+      required:
+      - rssNewsletterId
+      - href
+      properties:
+        rssNewsletterId:
+          description: The RSS newsletter ID
+          type: string
+          readOnly: true
+          example: dGer
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/rss-newsletters/dGer
+        rssFeedUrl:
+          description: The URL for the RSS Feed
+          type: string
+          format: uri
+          example: http://blog.getresponse.com
+        subject:
+          description: The RSS message subject
+          type: string
+          maxLength: 255
+          minLength: 1
+          example: My rss to newsletters
+        name:
+          description: How your newsletters will be seen inside the application
+          type: string
+          maxLength: 255
+          minLength: 1
+          example: rsstest0
+        status:
+          description: The status of the RSS newsletter
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+        editor:
+          allOf:
+          - $ref: '#/components/schemas/MessageEditorEnum'
+        fromField:
+          description: The 'From' email address used for the message
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        replyTo:
+          description: The email that will be used as a reply-to address
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        content:
+          $ref: '#/components/schemas/MessageContent'
+        sendSettings:
+          description: How the message will be delivered to the subscriber
+          allOf:
+          - $ref: '#/components/schemas/RssNewsletterSendSettingsDetails'
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    MessageEditorEnum:
+      description: 'Indicates how the message was created: `custom` means a custom-made message, `text` means plain text content, `getresponse` means that the message was created using the GetResponse editor.'
+      type: string
+      enum:
+      - custom
+      - text
+      - getresponse
+      - legacy
+      - html2
+    FromFieldReference:
+      required:
+      - fromFieldId
+      properties:
+        fromFieldId:
+          description: The 'From' address ID
+          type: string
+          example: V
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/from-fields/V
+      type: object
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    MessageContent:
+      description: The message content.
+      properties:
+        html:
+          description: The message content in HTML
+          type: string
+          maxLength: 524288
+          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
+        plain:
+          description: The plain text equivalent of the message content
+          type: string
+          maxLength: 524288
+          example: test 12 Some test
+      type: object
+    MessageSendSettingSelectedSuppressions:
+      description: The list of suppression IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: Ss
+    RssNewsletterSendSettingsDetails:
+      required:
+      - frequency
+      - filter
+      properties:
+        frequency:
+          description: When to send the message
+          type: string
+          example: asap
+        filter:
+          description: The filter settings for an RSS post
+          type: string
+          enum:
+          - recent
+          - engaged
+          - shared
+          - commented
+        maxArticles:
+          description: How many articles to display in a list
+          type: integer
+          format: int32
+          maximum: 30
+          minimum: 1
+        selectedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+        selectedSegments:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+        selectedSuppressions:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
+        excludedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+        excludedSegments:
+          $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+        selectedContacts:
+          $ref: '#/components/schemas/MessageSendSettingSelectedContacts'
+      type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          asap: '#/components/schemas/RssNewsletterSendAsapSettings'
+          daily: '#/components/schemas/RssNewsletterSendDailySettings'
+          weekly: '#/components/schemas/RssNewsletterSendWeeklySettings'
+          monthly: '#/components/schemas/RssNewsletterSendMonthlySettings'
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eSs
+    RssNewsletterListing:
+      required:
+      - rssNewsletterId
+      - href
+      properties:
+        rssNewsletterId:
+          description: The RSS newsletter ID
+          type: string
+          readOnly: true
+          example: dGer
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/rss-newsletters/dGer
+        rssFeedUrl:
+          description: The URL for the RSS Feed
+          type: string
+          format: uri
+          example: http://blog.getresponse.com
+        subject:
+          description: The RSS message subject
+          type: string
+          maxLength: 255
+          minLength: 1
+          example: My rss to newsletters
+        name:
+          description: How your newsletters will be seen inside the application
+          type: string
+          maxLength: 255
+          minLength: 1
+          example: rsstest0
+        status:
+          description: The status of the RSS newsletter
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+        editor:
+          allOf:
+          - $ref: '#/components/schemas/MessageEditorEnum'
+        fromField:
+          description: The 'From' email address used for the message
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        replyTo:
+          description: The email that will be used as a reply-to address
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        content:
+          $ref: '#/components/schemas/MessageContent'
+        sendSettings:
+          description: How the message will be delivered to the subscriber
+          allOf:
+          - $ref: '#/components/schemas/RssNewsletterSendSettingsListing'
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eC
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    MessageFlagsArray:
+      description: The message flags.
+      type: array
+      items:
+        type: string
+        enum:
+        - clicktrack
+        - google_analytics
+    ClickTrack:
+      properties:
+        clickTrackId:
+          type: string
+          example: C
+        url:
+          description: The tracked link
+          type: string
+          format: uri
+          example: https://example.com
+        name:
+          description: The tracked link name
+          type: string
+          example: press here
+        amount:
+          description: The number of clicks on a link in a message
+          type: string
+          example: '15'
+      type: object
+    NewRssNewsletter:
+      required:
+      - rssFeedUrl
+      - subject
+      - status
+      - fromField
+      - content
+      - sendSettings
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    UpdateRssNewsletter:
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    MessageStatisticsListElement:
+      properties:
+        timeInterval:
+          description: The statistics time frame in the ISO 8601 datetime format with duration interval
+          type: string
+          pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
+          example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
+        sent:
+          type: integer
+          format: int32
+        totalOpened:
+          type: integer
+          format: int32
+        totalHumanOpened:
+          type: integer
+          format: int32
+        uniqueOpened:
+          type: integer
+          format: int32
+        uniqueHumanOpened:
+          type: integer
+          format: int32
+        totalClicked:
+          type: integer
+          format: int32
+        totalHumanClicked:
+          type: integer
+          format: int32
+        uniqueClicked:
+          type: integer
+          format: int32
+        uniqueHumanClicked:
+          type: integer
+          format: int32
+        goals:
+          type: integer
+          format: int32
+        uniqueGoals:
+          type: integer
+          format: int32
+        forwarded:
+          type: integer
+          format: int32
+        unsubscribed:
+          type: integer
+          format: int32
+        bounced:
+          type: integer
+          format: int32
+        complaints:
+          type: integer
+          format: int32
+      type: object
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    rssNewsletterId:
+      name: rssNewsletterId
+      in: path
+      description: The RSS newsletter ID
+      required: true
+      schema:
+        type: string
+      example: dGer
+  responses:
+    RssNewsletterDetails:
+      description: The RSS newsletter details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RssNewsletterDetails'
+    RssNewsletterList:
+      description: The list of RSS newsletters.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RssNewsletterListItem'
+    SingleMessageStatisticsList:
+      description: The list of autoresponder statistics split by time interval.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageStatisticsListElement'
+    MessageStatisticsList:
+      description: The list of autoresponders statistic split by time interval.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageStatisticsListElement'
+  requestBodies:
+    UpdateRssNewsletter:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateRssNewsletter'
+    NewRssNewsletter:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewRssNewsletter'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

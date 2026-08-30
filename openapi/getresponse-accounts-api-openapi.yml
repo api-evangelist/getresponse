@@ -1,0 +1,1689 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Accounts API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Accounts operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Accounts
+  description: Accounts API documentation
+paths:
+  /accounts/blocklists:
+    get:
+      tags:
+      - Accounts
+      summary: Returns account blocklist masks
+      operationId: getAccountBlocklist
+      parameters:
+      - name: query[mask]
+        in: query
+        description: Blocklist mask to search for
+        required: false
+        schema:
+          type: string
+          example: '@somedomain.com'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountBlocklist'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Accounts
+      summary: Update account blocklist
+      operationId: updateAccountBlocklist
+      parameters:
+      - name: additionalFlags
+        in: query
+        description: "The flag value `add` adds the masks provided in the request body to your blocklist. The flag value `delete` deletes the masks. The masks are replaced if there are no flag values in the request body. \n\n For better performance, use the flag value `noResponse`. It removes the response body and can be used alone or combined with other flags. If multiple flags are used, separate them by a comma, like this: `additionalFlags=noResponse` or `additionalFlags=add,noResponse`."
+        required: false
+        schema:
+          type: string
+          enum:
+          - add
+          - delete
+          - noResponse
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAccountBlocklist'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountBlocklist'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-type: update
+  /accounts:
+    get:
+      tags:
+      - Accounts
+      summary: Account information
+      operationId: getAccount
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountDetails'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Accounts
+      summary: Update account
+      operationId: updateAccount
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAccount'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountDetails'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: UpdateAccount
+  /accounts/billing:
+    get:
+      tags:
+      - Accounts
+      summary: Billing information
+      operationId: getAccountBilling
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountBillingDetails'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /accounts/timezones:
+    get:
+      tags:
+      - Accounts
+      summary: List of timezones
+      description: List of timezones in account's language context.
+      operationId: getTimezones
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountTimezoneList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /accounts/callbacks:
+    get:
+      tags:
+      - Accounts
+      summary: Get callbacks configuration
+      operationId: getCallbacks
+      responses:
+        '200':
+          $ref: '#/components/responses/Callback'
+        '404':
+          description: Callbacks are disabled for the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Accounts
+      summary: Enable or update callbacks configuration
+      operationId: updateCallbacks
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCallbacks'
+      responses:
+        '200':
+          $ref: '#/components/responses/Callback'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: UpdateCallback
+    delete:
+      tags:
+      - Accounts
+      summary: Disable callbacks
+      operationId: disableCallbacks
+      responses:
+        '204':
+          description: Empty response
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /accounts/industries:
+    get:
+      tags:
+      - Accounts
+      summary: List of Industry Tags
+      description: List of Industry Tags in account's language context.
+      operationId: getIndustries
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/IndustryList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /accounts/login-history:
+    get:
+      tags:
+      - Accounts
+      summary: History of logins
+      operationId: getAccountLoginHistory
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountLoginHistoryList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /accounts/badge:
+    get:
+      tags:
+      - Accounts
+      summary: Current status of your GetResponse badge
+      operationId: getAccountBadge
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountBadgeDetails'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Accounts
+      summary: Turn on/off the GetResponse Badge
+      operationId: updateAccountBadge
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAccountBadge'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccountBadgeDetails'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-type: update
+  /accounts/sending-limits:
+    get:
+      tags:
+      - Accounts
+      summary: Send limits
+      operationId: getSendingLimits
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/SendingLimitsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  responses:
+    AccountBlocklist:
+      description: Blocklist masks for the whole account.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Blocklist'
+    AccountBadgeDetails:
+      description: Account badge status
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBadgeDetails'
+    Callback:
+      description: Callback configuration
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Callback'
+    AccountTimezoneList:
+      description: List of time zones
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Timezone'
+    SendingLimitsList:
+      description: Send limits
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SendingLimitsListItem'
+    AccountLoginHistoryList:
+      description: Login history information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountsLoginHistoryListElement'
+    AccountDetails:
+      description: Your account information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
+    IndustryList:
+      description: Industry tags list
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/IndustryTag'
+    AccountBillingDetails:
+      description: Billing information.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBilling'
+  schemas:
+    UpdateBlocklist:
+      required:
+      - masks
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Blocklist'
+    TimezoneOffset:
+      properties:
+        offset:
+          type: string
+          pattern: /^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$/
+          example: +01:00
+      type: object
+    IndustryTagId:
+      properties:
+        industryTagId:
+          description: Industry tag ID
+          type: string
+          format: integer
+          example: '1'
+      type: object
+    UpdateCallbacks:
+      properties:
+        url:
+          description: URL to use to post notifications, required if callbacks are not yet enabled
+          type: string
+          format: uri
+          example: https://example.com/callback
+        actions:
+          $ref: '#/components/schemas/CallbackActions'
+      type: object
+    IndustryTagProperties:
+      properties:
+        name:
+          type: string
+          readOnly: true
+          example: Marketing agencies
+        description:
+          type: string
+          readOnly: true
+          example: Marketing agencies big and small, with fluent and wise agents...
+      type: object
+    AccountsLoginHistoryListElement:
+      properties:
+        loginTime:
+          description: Login time
+          type: string
+          format: date-time
+          example: 2004-02-12T15:19:21+0000
+        logoutTime:
+          description: Logout time
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2004-02-12T15:19:21+0000
+        isSuccessful:
+          description: Login was successful
+          example: 'true'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        ip:
+          description: IP address
+          type: string
+          format: ipv4
+          example: 192.0.0.1
+      type: object
+    SendingLimitsListItem:
+      properties:
+        timeFrame:
+          description: Time frame, measured in seconds
+          type: integer
+          example: 2592000
+        limit:
+          description: The number of email sends available within a given time frame
+          type: integer
+          example: 2500
+        used:
+          description: The number of email sends used within the given time frame
+          type: integer
+          example: 0
+      type: object
+    AccountBilling:
+      properties:
+        listSize:
+          description: Billing plan maximum list size
+          type: string
+          example: '2500'
+        paymentPlan:
+          description: Payment plan
+          type: string
+          enum:
+          - Free Trial
+          - Monthly
+          - 12 Months
+          - 24 Months
+          example: Monthly
+        subscriptionPrice:
+          description: Subscription price
+          type: integer
+          example: 25
+        renewalDate:
+          description: Subscription reneval date
+          type: string
+          format: date
+          example: '2017-01-01'
+        currencyCode:
+          description: Currency code compliant with ISO-4217
+          type: string
+          example: USD
+        accountBalance:
+          description: Account balance
+          type: string
+          example: '-15.00'
+        price:
+          description: Price
+          type: integer
+          example: 25
+        paymentMethod:
+          description: Payment method
+          type: string
+          enum:
+          - outside_system
+          - inside_system
+          - credit_card
+          - platnosci_pl
+          - direct_debit
+          - paypal
+          - yandex
+          - alipay
+          - alipay_mobile
+          - boleto
+          - ideal
+          - qiwi
+          - sofort
+          - webmoney
+          example: credit_card
+        creditCard:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - properties:
+              number:
+                description: Masked credit card number
+                type: string
+                example: XXXXXXXXX0123
+            type: object
+          - properties:
+              expirationDate:
+                description: Expiration date
+                type: string
+                format: date
+                example: '2014-01-01'
+            type: object
+        addons:
+          description: Addons
+          type: array
+          items:
+            properties:
+              name:
+                description: Addon name
+                type: string
+                example: Landing Page Creator
+              price:
+                description: Addon price
+                type: integer
+                example: 15
+              active:
+                description: Addon active status
+                example: 'true'
+                allOf:
+                - $ref: '#/components/schemas/StringBooleanEnum'
+            type: object
+      type: object
+    CallbackActions:
+      properties:
+        open:
+          description: Is `open` callback enabled
+          type: boolean
+        click:
+          description: Is `click` callback enabled
+          type: boolean
+        subscribe:
+          description: Is `subscribe` callback enabled
+          type: boolean
+        unsubscribe:
+          description: Is `unsubscribe` callback enabled
+          type: boolean
+        survey:
+          description: Is `survey` callback enabled
+          type: boolean
+      type: object
+    TimezoneName:
+      properties:
+        name:
+          description: Time zone name as defined by https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          type: string
+          example: Europe/Warsaw
+      type: object
+    AccountDetailsCountryCode:
+      properties:
+        countryCodeId:
+          description: Country code ID
+          type: string
+          example: '175'
+        countryCode:
+          description: Country code
+          type: string
+          example: PL
+      type: object
+    Blocklist:
+      properties:
+        masks:
+          type: array
+          items:
+            type: string
+            example: jack@somedomain.com
+      type: object
+    UpdateAccount:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Account'
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    Callback:
+      properties:
+        url:
+          description: URL to use to post notifications
+          format: uri
+        actions:
+          $ref: '#/components/schemas/CallbackActions'
+      type: object
+    TimezoneId:
+      properties:
+        timezoneId:
+          type: integer
+          format: int32
+          example: 1
+      type: object
+    Timezone:
+      required:
+      - timezoneId
+      allOf:
+      - $ref: '#/components/schemas/TimezoneId'
+      - $ref: '#/components/schemas/TimezoneName'
+      - $ref: '#/components/schemas/TimezoneOffset'
+      - $ref: '#/components/schemas/TimezoneCountry'
+    TimezoneCountry:
+      properties:
+        country:
+          type: string
+          example: Poland
+      type: object
+    Account:
+      properties:
+        accountId:
+          description: Account ID
+          type: string
+          readOnly: true
+          example: VfEy1
+        email:
+          description: Email
+          type: string
+          format: email
+          readOnly: true
+          example: john.smith@test.com
+        countryCode:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/AccountDetailsCountryCode'
+        industryTag:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/IndustryTagId'
+        timeZone:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/TimezoneName'
+          - $ref: '#/components/schemas/TimezoneOffset'
+        href:
+          description: Direct URL to resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/accounts
+        firstName:
+          description: First name
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: John
+        lastName:
+          description: Last name
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: Smith
+        companyName:
+          description: Company name
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: MyBigCompany
+        phone:
+          description: Phone number
+          type: string
+          maxLength: 32
+          minLength: 2
+          example: '+00155555555'
+        state:
+          description: State
+          type: string
+          maxLength: 40
+          minLength: 2
+          example: Oklahoma
+        city:
+          description: City
+          type: string
+          example: Alderson
+        street:
+          description: Street
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: Sunset blv.
+        zipCode:
+          description: ZIP Code
+          type: string
+          maxLength: 9
+          minLength: 2
+          example: 81-611
+        numberOfEmployees:
+          description: Numbers of employees
+          type: string
+          enum:
+          - '50'
+          - '250'
+          - '500'
+          - more
+          example: '500'
+        timeFormat:
+          description: Account time notation
+          type: string
+          enum:
+          - 12h
+          - 24h
+          example: 24h
+      type: object
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    IndustryTag:
+      required:
+      - industryTagId
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IndustryTagId'
+      - $ref: '#/components/schemas/IndustryTagProperties'
+    AccountBadgeDetails:
+      properties:
+        status:
+          description: Current badge status
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  requestBodies:
+    UpdateCallbacks:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCallbacks'
+    UpdateAccountBlocklist:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateBlocklist'
+    UpdateAccount:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAccount'
+    UpdateAccountBadge:
+      content:
+        application/json:
+          schema:
+            required:
+            - status
+            properties:
+              status:
+                $ref: '#/components/schemas/StatusEnum'
+              type:
+                description: Account badge type
+                type: string
+                default: referral
+                enum:
+                - landing_page
+                - website_builder_elegant
+                - referral
+            type: object
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

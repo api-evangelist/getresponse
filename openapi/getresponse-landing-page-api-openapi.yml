@@ -1,0 +1,267 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Landing Page API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Landing Page operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Landing Page
+paths:
+  /statistics/lps/{lpsId}/performance:
+    parameters:
+    - $ref: '#/components/parameters/lpsId'
+    get:
+      tags:
+      - Landing Page
+      summary: Get details for landing page statistics
+      operationId: getLpsGeneralPerformanceStats
+      parameters:
+      - name: query[date][from]
+        in: query
+        description: Show a single landing page statistics from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[date][to]
+        in: query
+        description: Show a single landing page statistics to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[location]
+        in: query
+        description: Landing page statistics by location
+        required: false
+        schema:
+          type: string
+      - name: query[device]
+        in: query
+        description: Landing page statistics by device
+        required: false
+        schema:
+          type: string
+          enum:
+          - desktop
+          - mobile
+      - name: query[page]
+        in: query
+        description: Landing page statistics by page UUID
+        required: false
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/LpsStats'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    lpsId:
+      name: lpsId
+      in: path
+      description: The landing page ID
+      required: true
+      schema:
+        type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+  schemas:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    LpsStats:
+      required:
+      - lpsId
+      properties:
+        lpsId:
+          description: The landing page ID
+          type: string
+          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
+        name:
+          type: string
+          example: Some example landing page
+        pageViews:
+          description: The total number of times your landing page was viewed or refreshed
+          type: integer
+          format: int64
+          example: 9
+        visits:
+          description: The number of browsing sessions initiated on your landing page
+          type: integer
+          format: int64
+          example: 5
+        uniqueVisitors:
+          description: The number of people who visited your landing page
+          type: integer
+          format: int64
+          example: 5
+        thumbnailUrl:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://us-wbe-img2.gr-cdn.com/user/X/Y.webp
+      type: object
+  responses:
+    LpsStats:
+      description: Landing page statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LpsStats'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

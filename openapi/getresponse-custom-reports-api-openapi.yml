@@ -1,0 +1,748 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Custom Reports API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Custom Reports operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Custom Reports
+  description: Custom Reports API documentation
+paths:
+  /custom-reports/{customReportId}:
+    parameters:
+    - $ref: '#/components/parameters/customReportId'
+    get:
+      tags:
+      - Custom Reports
+      summary: Get a single custom report by ID
+      description: "The endpoint allows retrieving detailed information about a custom report based on the provided `customReportId`. It returns report data, including:\n * details about the report,\n * generation statuses of the report files,\n * URLs from which the report files can be downloaded.\n\nMore information on using custom reports can be found in the Case Study section of the [API documentation](http://apidocs.getresponse.com/v3/case-study/custom-reports)."
+      operationId: getCustomReportDetails
+      parameters:
+      - name: customReportId
+        in: path
+        description: The custom report ID
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/CustomReportDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /custom-reports:
+    get:
+      tags:
+      - Custom Reports
+      summary: Get a list of custom reports
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getCustomReportList
+      parameters:
+      - name: query[name]
+        in: query
+        description: Search custom reports by name
+        required: false
+        schema:
+          type: string
+      - name: sort[name]
+        in: query
+        description: Sort custom reports by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[frequency]
+        in: query
+        description: Sort custom reports by frequency
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[generatedAt]
+        in: query
+        description: Sort custom reports by generation date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/CustomReportList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Custom Reports
+      summary: Create the custom report
+      description: 'The endpoint allows scheduling a custom report of a specific type for a given time period. Depending on the report type, you can also narrow down the data using appropriate filters.
+
+
+        <strong>Important:</strong> The reports you can generate depend on your pricing plan.
+
+
+        More information about using the endpoint, along with examples, can be found in the Case Study section of the [API documentation](http://apidocs.getresponse.com/v3/case-study/custom-reports-scheduling).'
+      operationId: createCustomReport
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomReport'
+      responses:
+        '201':
+          $ref: '#/components/responses/CustomReportDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-labels:
+      - content: Add-on required
+        class: warning
+components:
+  schemas:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    CustomReportFileStatusesEnum:
+      type: string
+      enum:
+      - pending
+      - in-progress
+      - ready
+      - error
+    CustomReport:
+      properties:
+        customReportId:
+          description: The custom report ID
+          type: string
+          readOnly: true
+          example: cRi
+        name:
+          description: The custom report name
+          type: string
+          readOnly: true
+          example: Example Report
+        href:
+          description: The direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/custom-reports/cRi
+        frequency:
+          description: The custom report frequency
+          readOnly: true
+          example: daily
+          allOf:
+          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2020-11-20T08:00:00+0000
+        generatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2020-11-20T08:00:00+0000
+      type: object
+    CustomReportTypesEnum:
+      type: string
+      enum:
+      - subscription_rejections
+      - message_stats
+      - unsubscribe_contacts_lists_report
+      - standard_subscriber_activity_report
+      - bounces
+      - account_summary_report
+      - user_activity
+      - list_summary_report
+      - isp_message_stats_report
+      - webinar_participants_report
+      - import_error_report
+      - message_clicks_report
+      - unconfirmed_contacts_stats_report
+      - transactional_email_bounce_report
+      - message_activity_report
+    CustomReportDetails:
+      properties:
+        customReportId:
+          description: The custom report ID
+          type: string
+          readOnly: true
+          example: cRi
+        name:
+          description: The custom report name
+          type: string
+          readOnly: true
+          example: Example Report
+        href:
+          description: The direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/custom-reports/cRi
+        type:
+          description: The custom report type
+          example: message_activity_report
+          allOf:
+          - $ref: '#/components/schemas/CustomReportTypesEnum'
+        scheduling:
+          description: Parameters responsible for defining the reporting period
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomReportScheduling'
+        files:
+          description: Files that have been generated for the given report
+          type: array
+          items:
+            properties:
+              customReportFileId:
+                description: The custom report file ID
+                type: string
+                readOnly: true
+                example: cRiF
+              downloadUrl:
+                description: Link to download the file. The link is regenerated each time the report details are queried and is valid for 5 minutes
+                type: string
+                format: uri
+                readOnly: true
+                example: https://url/to/file
+              status:
+                description: Status of file generation
+                readOnly: true
+                example: ready
+                allOf:
+                - $ref: '#/components/schemas/CustomReportFileStatusesEnum'
+              expiresAt:
+                description: Date until the file can be downloaded; after this time, the file will be deleted
+                type: string
+                format: date-time
+                readOnly: true
+                example: 2020-11-20T08:00:00+0000
+            type: object
+        createdAt:
+          description: Custom report creation date
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2020-11-20T08:00:00+0000
+        generatedAt:
+          description: Custom report generation date
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2020-11-20T08:00:00+0000
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          subscription_rejections: '#/components/schemas/SubscriptionRejectionsReportDetails'
+          message_stats: '#/components/schemas/MessageStatsReportDetails'
+          unsubscribe_contacts_lists_report: '#/components/schemas/UnsubscribeContactsListsReportDetails'
+          standard_subscriber_activity_report: '#/components/schemas/StandardSubscriberActivityReportDetails'
+          bounces: '#/components/schemas/BouncesReportDetails'
+          account_summary_report: '#/components/schemas/AccountSummaryReportDetails'
+          user_activity: '#/components/schemas/UserActivityReportDetails'
+          list_summary_report: '#/components/schemas/ListSummaryReportDetails'
+          isp_message_stats_report: '#/components/schemas/IspMessageStatsReportDetails'
+          webinar_participants_report: '#/components/schemas/WebinarParticipantsReportDetails'
+          import_error_report: '#/components/schemas/ImportErrorReportDetails'
+          message_clicks_report: '#/components/schemas/MessageClicksReportDetails'
+          unconfirmed_contacts_stats_report: '#/components/schemas/UnconfirmedContactsStatsReportDetails'
+          transactional_email_bounce_report: '#/components/schemas/TransactionalEmailBounceReportDetails'
+          message_activity_report: '#/components/schemas/MessageActivityReportDetails'
+      example:
+        customReportId: cRi
+        name: Example Report
+        href: https://api.getresponse.com/v3/custom-reports/cRi
+        type: message_activity_report
+        scheduling:
+          frequency: one_time
+          oneTime:
+            startDate: 2024-01-01T00:00:00+0000
+            endDate: 2024-01-30T23:59:59+0000
+          recurring: null
+        filters:
+          activityType:
+          - send
+          - open
+          messageId:
+          - cRmI1
+          - cRmI2
+        files:
+        - customReportFileId: cRiF1
+          downloadUrl: https://url/to/file1
+          status: ready
+          expiresAt: 2024-02-10T00:00:00+0000
+        createdAt: 2024-01-02T15:00:00+0000
+        generatedAt: 2024-01-02T17:00:00+0000
+    CustomReportScheduling:
+      properties:
+        frequency:
+          description: The custom report frequency
+          example: one_time
+          allOf:
+          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
+      type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          one_time: '#/components/schemas/OneTimeReportScheduling'
+          daily: '#/components/schemas/DailyReportScheduling'
+          weekly: '#/components/schemas/WeeklyReportScheduling'
+          monthly: '#/components/schemas/MonthlyReportScheduling'
+    CustomReportFrequenciesEnum:
+      type: string
+      enum:
+      - monthly
+      - weekly
+      - daily
+      - one_time
+    BaseCreateCustomReport:
+      required:
+      - name
+      - type
+      - scheduling
+      properties:
+        name:
+          description: The custom report name
+          type: string
+          maxLength: 70
+          minLength: 3
+          example: My new custom report
+        type:
+          description: The custom report type
+          type: string
+          enum:
+          - subscription_rejections
+          - message_stats
+          - unsubscribe_contacts_lists_report
+          - standard_subscriber_activity_report
+          - bounces
+          - account_summary_report
+          - user_activity
+          - list_summary_report
+          - isp_message_stats_report
+          - webinar_participants_report
+          - import_error_report
+          - message_clicks_report
+          - unconfirmed_contacts_stats_report
+          - transactional_email_bounce_report
+          - message_activity_report
+        scheduling:
+          description: Parameters responsible for defining the reporting period
+          required:
+          - frequency
+          - startDate
+          - endDate
+          properties:
+            frequency:
+              description: The custom report frequency
+              type: string
+              enum:
+              - one_time
+              example: one_time
+            startDate:
+              description: The start of the period for which the report will be generated
+              type: string
+              format: Y-m-d
+              example: '2024-01-01'
+            endDate:
+              description: The end of the period for which the report will be generated
+              type: string
+              format: Y-m-d
+              example: '2024-01-15'
+          type: object
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          subscription_rejections: '#/components/schemas/CreateSubscriptionRejectionsReport'
+          message_stats: '#/components/schemas/CreateMessageStatsReport'
+          unsubscribe_contacts_lists_report: '#/components/schemas/CreateUnsubscribeContactsListsReport'
+          standard_subscriber_activity_report: '#/components/schemas/CreateStandardSubscriberActivityReport'
+          bounces: '#/components/schemas/CreateBouncesReport'
+          account_summary_report: '#/components/schemas/CreateAccountSummaryReport'
+          user_activity: '#/components/schemas/CreateUserActivityReport'
+          list_summary_report: '#/components/schemas/CreateListSummaryReport'
+          isp_message_stats_report: '#/components/schemas/CreateISPMessageStatsReport'
+          webinar_participants_report: '#/components/schemas/CreateWebinarParticipantsReport'
+          import_error_report: '#/components/schemas/CreateImportErrorReport'
+          message_clicks_report: '#/components/schemas/CreateMessageClicksReport'
+          unconfirmed_contacts_stats_report: '#/components/schemas/CreateUnconfirmedContactsStatsReport'
+          transactional_email_bounce_report: '#/components/schemas/CreateTransactionalEmailBounceReport'
+          message_activity_report: '#/components/schemas/CreateMessageActivityReport'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    customReportId:
+      name: customReportId
+      in: path
+      description: The custom report ID
+      required: true
+      schema:
+        type: string
+      example: cRi
+  responses:
+    CustomReportDetails:
+      description: The custom report details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomReportDetails'
+    CustomReportList:
+      description: The list of custom reports
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CustomReport'
+  requestBodies:
+    CreateCustomReport:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseCreateCustomReport'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

@@ -1,0 +1,355 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Subscription Confirmations API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Subscription Confirmations operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Subscription Confirmations
+  description: Subscription Confirmations API documentation
+paths:
+  /subscription-confirmations/body/{languageCode}:
+    get:
+      tags:
+      - Subscription Confirmations
+      summary: Get collection of SUBSCRIPTION CONFIRMATIONS bodies
+      description: '
+
+        Sending **GET** request to this url, returns collection of **SUBSCRIPTION CONFIRMATIONS** bodies.
+
+
+        Language code used in url must be in ISO 639-1 Language Code Standard.
+
+
+        '
+      operationId: getSubscriptionConfirmationBodyList
+      parameters:
+      - $ref: '#/components/parameters/languageCode'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionConfirmationBodyList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /subscription-confirmations/subject/{languageCode}:
+    get:
+      tags:
+      - Subscription Confirmations
+      summary: Get collection of SUBSCRIPTION CONFIRMATIONS subjects
+      description: '
+
+        Sending **GET** request to this url, returns collection of **SUBSCRIPTION CONFIRMATIONS** subjects.
+
+
+        Language code used in url must be in ISO 639-1 Language Code Standard.
+
+
+        '
+      operationId: getSubscriptionConfirmationSubjectList
+      parameters:
+      - $ref: '#/components/parameters/languageCode'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionConfirmationSubjectList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  schemas:
+    SubscriptionConfirmationSubject:
+      properties:
+        subscriptionConfirmationSubjectId:
+          description: Subscription confirmation subject ID
+          type: string
+          example: AS3A
+        subject:
+          description: Subject
+          type: string
+          example: Action Requested - please confirm your subscription.
+        isPrivate:
+          description: Is private
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+      type: object
+    SubscriptionConfirmationBody:
+      properties:
+        subscriptionConfirmationBodyId:
+          description: Subscription confirmation subject ID
+          type: string
+          example: asS1
+        name:
+          description: Name
+          type: string
+          example: Database signup
+        contentPlain:
+          description: Plain text content equivalent of confirmation message
+          type: string
+          example: '
+
+            Hello {{CONTACT \"subscriber_first_name\"}},        \r\n               \r\n{{INTERNAL \"body\"}}\r\n
+
+            Your request to sign up to our\r\ndatabase has been received and\r\nrequires your confirmation.\r\n\r\n
+
+            EASY 1-CLICK CONFIRMATION:\r\n{{LINK \"confirm\"}}\r\n\r\nYou will be added to the database\r\n
+
+            instantly upon your confirmation.\r\n\r\n\r\nYou will be able to unsubscribe\r\nor change your details at any time.\r\n\r\n
+
+            If you have received this email in\r\nerror and did not intend to join\r\nour database, no further action is\r\n
+
+            required on your part.\r\n\r\nYou won''t receive further\r\ninformation and you won''t be\r\n
+
+            subscribed to any list until you\r\nconfirm your request above.\r\n\r\n{{INTERNAL \"signature\"}}
+
+            '
+        contentHtml:
+          description: HTML content of confirmation message
+          type: string
+          example: '[HTML_CODE]'
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+  responses:
+    SubscriptionConfirmationBodyList:
+      description: List of subscription confirmation bodies
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SubscriptionConfirmationBody'
+    SubscriptionConfirmationSubjectList:
+      description: List of subscription confirmation subjects
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SubscriptionConfirmationSubject'
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    languageCode:
+      name: languageCode
+      in: path
+      description: ISO 639-1 Language Code Standard
+      required: true
+      schema:
+        type: string
+      example: en
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

@@ -1,0 +1,1578 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Autoresponders API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Autoresponders operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Autoresponders
+  description: Autoresponders API documentation
+paths:
+  /autoresponders/{autoresponderId}:
+    parameters:
+    - $ref: '#/components/parameters/autoresponderId'
+    get:
+      tags:
+      - Autoresponders
+      summary: Get a single autoresponder by its ID
+      operationId: getAutoresponder
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/AutoresponderDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Autoresponders
+      summary: Update autoresponder
+      description: '>
+
+        **The action-based autoresponder feature has been migrated over to marketing automation. Your existing autoresponders are
+
+        now converted into workflows. You can no longer create and update action-based autoresponders using our API.**
+
+
+        This method allows you to update an autoresponder. The same rules as in creating an autoresponder apply.
+
+        '
+      operationId: updateAutoresponder
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAutoresponder'
+      responses:
+        '200':
+          $ref: '#/components/responses/AutoresponderDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    delete:
+      tags:
+      - Autoresponders
+      summary: Delete autoresponder.
+      operationId: deleteAutoresponder
+      responses:
+        '204':
+          description: Delete autoresponder
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /autoresponders/{autoresponderId}/statistics:
+    parameters:
+    - $ref: '#/components/parameters/autoresponderId'
+    get:
+      tags:
+      - Autoresponders
+      summary: The statistics for a single autoresponder
+      description: ">\nThis requst returns the statistics summary for a single given autoresponder. As in all statistics, you can change the date and time range  (hourly daily monthly or total). Keep in mind\nthat all statistics date ranges are given in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals))\n\n(https://app.getresponse.com/statistics.html?t=followup#total).\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      operationId: getSingleAutoresponderStatistics
+      parameters:
+      - name: query[groupBy]
+        in: query
+        description: Group results by time interval
+        required: false
+        schema:
+          type: string
+          enum:
+          - total
+          - hour
+          - day
+          - month
+      - name: query[createdOn][from]
+        in: query
+        description: Count data from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Count data to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/SingleMessageStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetAutoresponderStatistics
+  /autoresponders/{autoresponderId}/thumbnail:
+    parameters:
+    - $ref: '#/components/parameters/autoresponderId'
+    get:
+      tags:
+      - Autoresponders
+      summary: Get the autoresponder thumbnail
+      operationId: getAutoresponderThumbnail
+      parameters:
+      - name: size
+        in: query
+        description: The size of the autoresponder thumbnail
+        required: false
+        schema:
+          type: string
+          default: default
+          enum:
+          - default
+          - small
+      responses:
+        '200':
+          description: The autoresponder thumbnail.
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-type: get
+      x-operation-class-name: GetAutoresponderThumbnail
+  /autoresponders:
+    get:
+      tags:
+      - Autoresponders
+      summary: Get the list of autoresponders.
+      description: You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getAutoresponderList
+      parameters:
+      - name: query[subject]
+        in: query
+        description: Search autoresponder by subject
+        required: false
+        schema:
+          type: string
+      - name: query[name]
+        in: query
+        description: Search autoresponder by name
+        required: false
+        schema:
+          type: string
+      - name: query[status]
+        in: query
+        description: Search autoresponder by status
+        required: false
+        schema:
+          type: string
+          enum:
+          - enabled
+          - disabled
+      - name: query[createdOn][from]
+        in: query
+        description: Search autoresponder created from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Search autoresponder created to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[campaignId]
+        in: query
+        description: Search autoresponder by campaign ID
+        required: false
+        schema:
+          type: string
+      - name: sort[name]
+        in: query
+        description: Sort by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[subject]
+        in: query
+        description: Sort by subject
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[dayOfCycle]
+        in: query
+        description: Sort by cycle day
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[delivered]
+        in: query
+        description: Sort by delivered
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[openRate]
+        in: query
+        description: Sort by open rate
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[clickRate]
+        in: query
+        description: Sort by click rate
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[createdOn]
+        in: query
+        description: Sort by date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/AutoresponderList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Autoresponders
+      summary: Create autoresponder
+      description: '>
+
+        **The action-based autoresponder feature has been migrated over to marketing automation. Your existing autoresponders are
+
+        now converted into workflows. You can no longer create and update action-based autoresponders using our API.**
+
+
+        This request allows you to create an autoresponder. Remember to select the proper `sendSettings` - depending on `type` you need to fill corresponding setting (eg. if you selected type `delay`, then you MUST fill `delayInHours` field).
+
+        '
+      operationId: createAutoresponder
+      requestBody:
+        $ref: '#/components/requestBodies/NewAutoresponder'
+      responses:
+        '201':
+          $ref: '#/components/responses/AutoresponderDetails'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /autoresponders/statistics:
+    get:
+      tags:
+      - Autoresponders
+      summary: The statistics for all autoresponders
+      description: ">\nThis returns the statistics summary for selected autoresponders. You can select them by specifying the autoresponder or campaign IDs.\nAs in all statistics, you can change the date and time range  (hourly daily monthly or total). Keep in mind\nthat all statistics date ranges are given in standard UTC period type objects. ([See ISO 8601 standard](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals))\n\n(https://app.getresponse.com/statistics.html?t=followup#total).\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      operationId: getAutoresponderStatisticsCollection
+      parameters:
+      - name: query[groupBy]
+        in: query
+        description: Group results by time interval
+        required: false
+        schema:
+          type: string
+          enum:
+          - total
+          - hour
+          - day
+          - month
+      - name: query[autoreponderId]
+        in: query
+        description: The list of autoresponder resource IDs (string separated with '')
+        required: false
+        schema:
+          type: string
+      - name: query[campaignId]
+        in: query
+        description: The list of campaign resource IDs (string separated with '')
+        required: false
+        schema:
+          type: string
+      - name: query[createdOn][from]
+        in: query
+        description: Count data from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Count data to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/MessageStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetAutorespondersStatistics
+components:
+  schemas:
+    AutoresponderSendSettingsTimeTravel:
+      description: Should the message be sent in the user's or the subscriber's time zone
+      type: string
+      example: 'true'
+      allOf:
+      - $ref: '#/components/schemas/StringBooleanEnum'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    UpdateAutoresponder:
+      type: object
+      allOf:
+      - properties:
+          sendSettings:
+            $ref: '#/components/schemas/AutoresponderSendSettingsInput'
+      - $ref: '#/components/schemas/Autoresponder'
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
+      type: array
+      items:
+        type: string
+        example: C
+    AutoresponderSendSettingsSendAtHour:
+      description: The specific hour on which the message will be sent, in the 0-23 format
+      type: integer
+      format: int32
+      maximum: 23
+      minimum: 0
+    Autoresponder:
+      properties:
+        autoresponderId:
+          description: The autoresponder ID
+          type: string
+          readOnly: true
+          example: Q
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/autoresponders/Q
+        name:
+          description: The autoresponder name
+          type: string
+          maxLength: 128
+          minLength: 2
+          example: Message 2
+        subject:
+          description: The autoresponder message subject
+          type: string
+          maxLength: 128
+          minLength: 2
+          example: test12
+        campaignId:
+          description: The campaign ID. The system will assign the autoresponder to a default campaign if you don't provide a specific campaign ID.
+          type: string
+          example: V
+        status:
+          description: The autoresponder status
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+        fromField:
+          description: The from email address used for the message
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        replyTo:
+          description: The email that will be used as a reply-to address
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        content:
+          $ref: '#/components/schemas/MessageContent'
+        flags:
+          $ref: '#/components/schemas/MessageFlagsArray'
+        trackOpens:
+          description: Enables open tracking for the autoresponder message. When true, message opens are tracked; when false, they are not. Defaults to true when omitted.
+          example: 'true'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        triggerSettings:
+          description: 'The conditions that will trigger the autoresponder '
+          allOf:
+          - $ref: '#/components/schemas/AutoresponderTriggerSettings'
+        statistics:
+          description: The autoresponder statistics summary
+          type: object
+          readOnly: true
+          allOf:
+          - properties:
+              delivered:
+                type: number
+                format: float
+                example: '0'
+              openRate:
+                type: number
+                format: float
+                example: '0'
+              clickRate:
+                type: number
+                format: float
+                example: '0'
+            type: object
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    FromFieldReference:
+      required:
+      - fromFieldId
+      properties:
+        fromFieldId:
+          description: The 'From' address ID
+          type: string
+          example: V
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/from-fields/V
+      type: object
+    ExternalLexpad:
+      description: 'External Lexpad settings for the message, read more: [External Lexpad](https://apidocs.getresponse.com/v3/dynamic-content/external-lexpad)'
+      required:
+      - dataSourceUrl
+      properties:
+        dataSourceUrl:
+          description: URL to the endpoint that will provide data for External Lexpad
+          type: string
+          format: uri
+          maxLength: 2048
+          minLength: 1
+          example: https://example.com/external_lexpad
+        dataSourceToken:
+          description: Token that will be sent in `X-Auth-Token` header to authenticate the requests made to the endpoint
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          minLength: 0
+          example: cf4dfca78434bf927a7655c0c4d95a2a45c33b71
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    AutoresponderSendSettingsExcludedDaysOfWeek:
+      description: The days of the week to exclude from message sending (the message will be sent on the next non-excluded day after the trigger)
+      type: array
+      items:
+        type: string
+        enum:
+        - Monday
+        - Tuesday
+        - Wednesday
+        - Thursday
+        - Friday
+        - Saturday
+        - Sunday
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    NewAutoresponder:
+      required:
+      - status
+      - subject
+      - content
+      - sendSettings
+      - triggerSettings
+      type: object
+      allOf:
+      - properties:
+          sendSettings:
+            $ref: '#/components/schemas/AutoresponderSendSettingsInput'
+      - $ref: '#/components/schemas/Autoresponder'
+    AutoresponderDetails:
+      type: object
+      allOf:
+      - properties:
+          clickTracks:
+            description: The list of tracked links
+            type: array
+            items:
+              $ref: '#/components/schemas/ClickTrack'
+          campaign:
+            description: The autoresponder campaign (list)
+            allOf:
+            - properties:
+                id:
+                  description: Campaign ID
+                  type: string
+                  example: C
+                href:
+                  description: Direct hyperlink to a resource
+                  type: string
+                  format: uri
+                  readOnly: true
+                  example: https://api.getresponse.com/v3/campaigns/C
+                name:
+                  description: The campaign name
+                  type:
+                  - string
+                  - 'null'
+                  readOnly: true
+                  example: Promo campaign
+              type: object
+          editor:
+            allOf:
+            - $ref: '#/components/schemas/NewMessageEditorEnumOutput'
+          sendSettings:
+            type: object
+            allOf:
+            - properties:
+                externalLexpad:
+                  $ref: '#/components/schemas/ExternalLexpad'
+            - $ref: '#/components/schemas/AutoresponderSendSettingsOutput'
+      - $ref: '#/components/schemas/Autoresponder'
+    MessageContent:
+      description: The message content.
+      properties:
+        html:
+          description: The message content in HTML
+          type: string
+          maxLength: 524288
+          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
+        plain:
+          description: The plain text equivalent of the message content
+          type: string
+          maxLength: 524288
+          example: test 12 Some test
+      type: object
+    AutoresponderSendSettingsType:
+      description: When to send the message
+      type: string
+      enum:
+      - signup
+      - immediately
+      - delay
+      - custom
+    AutoresponderTriggerSettings:
+      description: 'The conditions that will trigger the autoresponder '
+      properties:
+        type:
+          description: The trigger type
+          type: string
+          default: onday
+          enum:
+          - onday
+          deprecated: true
+        dayOfCycle:
+          description: For onday type the day of the autoresponder cycle in the 0-9999 format
+          type: integer
+          format: int32
+          maximum: 9999
+          minimum: 0
+        autoresponder:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        newsletter:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        clickTrackId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        goal:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        custom:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        newCustomValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        action:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          deprecated: true
+        selectedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+        selectedSegments:
+          readOnly: true
+          deprecated: true
+      type: object
+    AutoresponderSendSettingsInput:
+      description: How the message will be delivered to the subscriber
+      required:
+      - type
+      properties:
+        type:
+          $ref: '#/components/schemas/AutoresponderSendSettingsType'
+        timeTravel:
+          $ref: '#/components/schemas/AutoresponderSendSettingsTimeTravel'
+        excludedDaysOfWeek:
+          $ref: '#/components/schemas/AutoresponderSendSettingsExcludedDaysOfWeek'
+        externalLexpad:
+          $ref: '#/components/schemas/ExternalLexpad'
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          signup: '#/components/schemas/AutoresponderSendSignupSettings'
+          immediately: '#/components/schemas/AutoresponderSendImmediatelySettings'
+          delay: '#/components/schemas/AutoresponderSendDelaySettings'
+          custom: '#/components/schemas/AutoresponderSendCustomSettings'
+    AutoresponderSendSettingsOutput:
+      description: How the message will be delivered to the subscriber
+      properties:
+        type:
+          $ref: '#/components/schemas/AutoresponderSendSettingsType'
+        timeTravel:
+          $ref: '#/components/schemas/AutoresponderSendSettingsTimeTravel'
+        excludedDaysOfWeek:
+          $ref: '#/components/schemas/AutoresponderSendSettingsExcludedDaysOfWeek'
+        delayInHours:
+          $ref: '#/components/schemas/AutoresponderSendSettingsDelayInHours'
+        sendAtHour:
+          $ref: '#/components/schemas/AutoresponderSendSettingsSendAtHour'
+        recurrence:
+          example: 'true'
+          deprecated: true
+      type: object
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    MessageFlagsArray:
+      description: The message flags.
+      type: array
+      items:
+        type: string
+        enum:
+        - clicktrack
+        - google_analytics
+    NewMessageEditorEnumOutput:
+      description: 'How the message was created: `editor_v3` - created by GetResponse editor, `text` means plain text content, `html` means custom HTML content, `getresponse` is a deprecated, legacy GetResponse editor.'
+      type: string
+      enum:
+      - editor_v3
+      - getresponse
+      - text
+      - html
+    ClickTrack:
+      properties:
+        clickTrackId:
+          type: string
+          example: C
+        url:
+          description: The tracked link
+          type: string
+          format: uri
+          example: https://example.com
+        name:
+          description: The tracked link name
+          type: string
+          example: press here
+        amount:
+          description: The number of clicks on a link in a message
+          type: string
+          example: '15'
+      type: object
+    AutoresponderSendSettingsDelayInHours:
+      description: How many hours to delay the message after a trigger occured, in the 0-23 format
+      type: integer
+      format: int32
+      maximum: 23
+      minimum: 0
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    AutoresponderList:
+      type: array
+      items:
+        type: object
+        allOf:
+        - properties:
+            campaign:
+              description: The autoresponder campaign (list)
+              allOf:
+              - $ref: '#/components/schemas/CampaignReference'
+            sendSettings:
+              $ref: '#/components/schemas/AutoresponderSendSettingsOutput'
+        - $ref: '#/components/schemas/Autoresponder'
+    MessageStatisticsListElement:
+      properties:
+        timeInterval:
+          description: The statistics time frame in the ISO 8601 datetime format with duration interval
+          type: string
+          pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
+          example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
+        sent:
+          type: integer
+          format: int32
+        totalOpened:
+          type: integer
+          format: int32
+        totalHumanOpened:
+          type: integer
+          format: int32
+        uniqueOpened:
+          type: integer
+          format: int32
+        uniqueHumanOpened:
+          type: integer
+          format: int32
+        totalClicked:
+          type: integer
+          format: int32
+        totalHumanClicked:
+          type: integer
+          format: int32
+        uniqueClicked:
+          type: integer
+          format: int32
+        uniqueHumanClicked:
+          type: integer
+          format: int32
+        goals:
+          type: integer
+          format: int32
+        uniqueGoals:
+          type: integer
+          format: int32
+        forwarded:
+          type: integer
+          format: int32
+        unsubscribed:
+          type: integer
+          format: int32
+        bounced:
+          type: integer
+          format: int32
+        complaints:
+          type: integer
+          format: int32
+      type: object
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    autoresponderId:
+      name: autoresponderId
+      in: path
+      description: The autoresponder ID.
+      required: true
+      schema:
+        type: string
+      example: Q
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  responses:
+    AutoresponderDetails:
+      description: The autoresponder details'
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutoresponderDetails'
+    AutoresponderList:
+      description: The list of autoresponders.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutoresponderList'
+    SingleMessageStatisticsList:
+      description: The list of autoresponder statistics split by time interval.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageStatisticsListElement'
+    MessageStatisticsList:
+      description: The list of autoresponders statistic split by time interval.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageStatisticsListElement'
+  requestBodies:
+    NewAutoresponder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewAutoresponder'
+    UpdateAutoresponder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAutoresponder'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

@@ -1,0 +1,1100 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Orders API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Orders operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Orders
+  description: Orders API documentation
+paths:
+  /shops/{shopId}/orders:
+    parameters:
+    - $ref: '#/components/parameters/shopId'
+    get:
+      tags:
+      - Orders
+      summary: Get the list of orders
+      description: "\nSending a  **GET** request to this URL returns a collection of order resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n * description\n * status\n * externalId\n * processedAt\n\nThe `description` fields can be a pattern and we'll try to match this phrase.\n\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      operationId: getOrderList
+      parameters:
+      - name: query[description]
+        in: query
+        description: Search order by description
+        required: false
+        schema:
+          type: string
+      - name: query[status]
+        in: query
+        description: Search order by status
+        required: false
+        schema:
+          type: string
+      - name: query[externalId]
+        in: query
+        description: Search order by external ID
+        required: false
+        schema:
+          type: string
+      - name: query[processedAt][from]
+        in: query
+        description: Show orders processed from this date
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: query[processedAt][to]
+        in: query
+        description: Show orders processed to this date
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: sort[createdOn]
+        in: query
+        description: Sort by date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrderList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Orders
+      summary: Create order
+      description: '
+
+        Sending a **POST** request to this URL will create a new order resource.
+
+
+        In order to create a new order, you need to send the order resource in the body of the request (remember that you need to serialize the body into a JSON string).
+
+
+        '
+      operationId: createOrder
+      parameters:
+      - name: additionalFlags
+        in: query
+        description: The additional flags parameter with the value `skipAutomation` will skip the triggering `Make a purchase` element in an automated workflow
+        required: false
+        schema:
+          type: string
+        example: skipAutomation
+        x-set:
+        - skipAutomation
+      requestBody:
+        $ref: '#/components/requestBodies/NewOrder'
+      responses:
+        '201':
+          $ref: '#/components/responses/OrderDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /shops/{shopId}/orders/{orderId}:
+    parameters:
+    - $ref: '#/components/parameters/shopId'
+    - $ref: '#/components/parameters/orderId'
+    get:
+      tags:
+      - Orders
+      summary: Get a single order by ID
+      description: '
+
+        This method returns the order according to the given `orderId`.
+
+
+        '
+      operationId: getOrderById
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrderDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Orders
+      summary: Update order
+      description: '
+
+        Update the properties of a shop''s order. You should send only those fields that need to be changed. The rest of the properties will stay the same.
+
+        However, in case of `billingAddress` and `shippingAddress`, you must send the entire representation. Individual fields can''t be updated.
+
+        If you want to update individual fields of an address, you can do so using `POST /v3/addresses/{addressId}`.
+
+
+        In case of `selectedVariants`, when the collection is updated, the old collection is completely removed. The same goes for meta fields.
+
+        Individual fields can''t be updated either. The full representations of `selectedVariants` and `metaFields` must be sent instead.
+
+
+        '
+      operationId: updateOrder
+      parameters:
+      - name: additionalFlags
+        in: query
+        description: The additional flags parameter with the value `skipAutomation` will skip the triggering `Make a purchase` element in an automated workflow
+        required: false
+        schema:
+          type: string
+        example: skipAutomation
+        x-set:
+        - skipAutomation
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateOrder'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrderDetails'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    delete:
+      tags:
+      - Orders
+      summary: Delete order
+      description: ''
+      operationId: deleteOrder
+      responses:
+        '204':
+          description: Delete order
+          headers:
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  schemas:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    NewSelectedProductVariant:
+      required:
+      - variantId
+      - price
+      - quantity
+      properties:
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc
+        variantId:
+          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
+          type: string
+          example: p
+        price:
+          description: The product variant price
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 840
+        priceTax:
+          description: The product variant price tax
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 428
+        quantity:
+          description: The product variant quantity
+          type: integer
+          format: int32
+          minimum: 1
+          example: '2'
+        taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewTax'
+      type: object
+    NewMetaField:
+      required:
+      - name
+      - value
+      - valueType
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+    OrderSelectedProductVariant:
+      required:
+      - variantId
+      - price
+      - quantity
+      type: object
+      allOf:
+      - properties:
+          categories:
+            type: array
+            items:
+              $ref: '#/components/schemas/BaseCategory'
+      - $ref: '#/components/schemas/NewSelectedProductVariant'
+    OrderResponse:
+      type: object
+      allOf:
+      - properties:
+          selectedVariants:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrderSelectedProductVariant'
+      - $ref: '#/components/schemas/Order'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    Address:
+      type: object
+      allOf:
+      - properties:
+          addressId:
+            type: string
+            readOnly: true
+            example: k9
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/addresses/k9
+          countryCode:
+            description: The country code (ISO 3166-1 alpha-3)
+            type: string
+            maxLength: 3
+            minLength: 3
+            example: POL
+          countryName:
+            description: The country name, based on `countryCode`
+            type: string
+            readOnly: true
+            example: Poland
+          name:
+            type: string
+            maxLength: 128
+            minLength: 3
+            example: some_shipping_address
+          firstName:
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: John
+          lastName:
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: Doe
+          address1:
+            description: Address line 1
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: Arkonska 6
+          address2:
+            description: Address line 2
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: ''
+          city:
+            type: string
+            maxLength: 128
+            minLength: 0
+            example: Gdansk
+          zip:
+            description: The ZIP/postal code, free text
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: 80-387
+          province:
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: pomorskie
+          provinceCode:
+            description: The province code, free text
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: ''
+          phone:
+            description: The phone number, free text
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: '1122334455'
+          company:
+            description: The company name, free text
+            type: string
+            maxLength: 128
+            minLength: 0
+            example: GetResponse
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    BaseMetaField:
+      properties:
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
+        metaFieldId:
+          description: The meta field ID
+          type: string
+          readOnly: true
+          example: NoF
+        name:
+          description: The meta field name
+          type: string
+          maxLength: 63
+          minLength: 3
+          example: Shoe size
+        value:
+          description: The meta field value
+          type: string
+          maxLength: 65000
+          minLength: 0
+          example: '11'
+        valueType:
+          description: The value type enumerable
+          type: string
+          enum:
+          - string
+          - integer
+          example: integer
+        description:
+          description: The meta field description
+          type: string
+          maxLength: 255
+          minLength: 0
+          example: Description of this meta field
+      type: object
+    NewTax:
+      required:
+      - name
+      - rate
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    NewOrder:
+      required:
+      - contactId
+      - totalPrice
+      - currency
+      - selectedVariants
+      type: object
+      allOf:
+      - properties:
+          selectedVariants:
+            type: array
+            items:
+              $ref: '#/components/schemas/NewSelectedProductVariant'
+      - $ref: '#/components/schemas/Order'
+    BaseTax:
+      properties:
+        taxId:
+          description: The tax ID
+          type: string
+          readOnly: true
+          example: Sk
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
+        name:
+          description: The tax name
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: VAT
+        rate:
+          description: The rate value
+          type: number
+          format: double
+          maximum: 99.9
+          minimum: 0
+          example: 23
+      type: object
+    BaseCategory:
+      properties:
+        categoryId:
+          description: The category ID
+          type: string
+          readOnly: true
+          example: atQ
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/categories/atQ
+        name:
+          description: The name of the category
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: Headwear
+        parentId:
+          description: The parent category ID
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: amh
+        isDefault:
+          description: This is a default category
+          type: boolean
+          example: true
+        url:
+          description: The external URL to the category
+          type: string
+          format: uri
+          maxLength: 2048
+          example: https://somedomain.com/category/446
+        externalId:
+          description: The external ID is the identifying string or number of the category given by another software
+          type: string
+          maxLength: 255
+          example: ext3343
+      type: object
+    Order:
+      properties:
+        orderId:
+          description: The order ID
+          type: string
+          readOnly: true
+          example: fOh
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/orders/fOh
+        contactId:
+          description: Create a contact by using `POST /v3/contacts`. Or, if the contact already exists, using `GET /v3/contacts`
+          type: string
+          example: k8u
+        orderUrl:
+          description: The external URL for an order
+          type: string
+          format: uri
+          maxLength: 2048
+          example: https://somedomain.com/orders/order446
+        externalId:
+          description: The external ID is the identifying string or number of the order given by another software
+          type: string
+          maxLength: 255
+          example: DH71239
+        totalPrice:
+          description: The total price of an order
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 716
+        totalPriceTax:
+          description: The total price tax of an order
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 358.67
+        currency:
+          description: The order currency code (ISO 4217)
+          type: string
+          example: PLN
+        status:
+          description: The status value
+          type: string
+          maxLength: 64
+          example: NEW
+        cartId:
+          description: Create a cart by using `POST /v3/shops/{shopId}/carts`
+          type: string
+          example: QBNgBR
+        description:
+          description: The order description
+          type: string
+          example: More information about order.
+        shippingPrice:
+          description: The shipping price for an order
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 23
+        shippingAddress:
+          description: The shipping address for an order
+          allOf:
+          - $ref: '#/components/schemas/NewAddress'
+        billingStatus:
+          description: The billing status of an order
+          type: string
+          example: PENDING
+        billingAddress:
+          description: The billing address for an order
+          allOf:
+          - $ref: '#/components/schemas/NewAddress'
+        processedAt:
+          description: The exact time an order was made
+          type: string
+          format: date-time
+        metaFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewMetaField'
+      type: object
+    NewAddress:
+      required:
+      - name
+      - countryCode
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Address'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    UpdateOrder:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Order'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  responses:
+    OrderDetails:
+      description: The order details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderResponse'
+    OrderList:
+      description: The list of orders
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Order'
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    orderId:
+      name: orderId
+      in: path
+      description: The order ID
+      required: true
+      schema:
+        type: string
+      example: fOh
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+  requestBodies:
+    UpdateOrder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateOrder'
+    NewOrder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewOrder'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

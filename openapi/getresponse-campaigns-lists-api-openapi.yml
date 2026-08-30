@@ -1,0 +1,2099 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 Campaigns (Lists) Campaigns (Lists) API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The Campaigns (Lists) operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: Campaigns (Lists)
+  description: 'Our API v3 uses the terminology from the previous version of GetResponse.
+
+
+    **Campaigns and lists are the same resource under a different name.** For now, please refer to lists as campaigns.
+
+
+    Our API v4 will use the updated terminology.'
+paths:
+  /campaigns/{campaignId}/blocklists:
+    parameters:
+    - $ref: '#/components/parameters/campaignId'
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Returns campaign blocklist masks
+      operationId: getCampaignBlocklist
+      parameters:
+      - name: query[mask]
+        in: query
+        description: Blocklist mask to search for
+        required: false
+        schema:
+          type: string
+          example: '@somedomain.com'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignBlocklist'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Campaigns (Lists)
+      summary: Updates campaign blocklist masks
+      operationId: updateCampaignBlocklist
+      parameters:
+      - name: additionalFlags
+        in: query
+        description: "The flag value `add` adds the masks provided in the request body to your blocklist. The flag value `delete` deletes the masks. The masks are replaced if there are no flag values in the request body. \n\n For better performance, use the flag value `noResponse`. It removes the response body and can be used alone or combined with other flags. If multiple flags are used,  separate them by a comma, like this: `additionalFlags=noResponse` or `additionalFlags=add,noResponse`."
+        required: false
+        schema:
+          type: string
+          enum:
+          - add
+          - delete
+          - noResponse
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCampaignBlocklist'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignBlocklist'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-type: update
+  /campaigns/{campaignId}:
+    parameters:
+    - $ref: '#/components/parameters/campaignId'
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get a single campaign by the campaign ID
+      description: Retrieve detailed information about a single campaign (contact list) by its unique campaignId. The response includes additional campaign settings such as postal address, subscription notification and confirmation settings, opt-in type, and profile information.
+      operationId: getCampaign
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/Campaign'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Campaigns (Lists)
+      summary: Update a campaign
+      operationId: updateCampaign
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCampaign'
+      responses:
+        '200':
+          $ref: '#/components/responses/Campaign'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /campaigns:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get a list of campaigns
+      description: Returns a list of campaigns (contact lists). You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getCampaignList
+      parameters:
+      - name: query[name]
+        in: query
+        description: Retrieve campaigns (contact lists) filtered by name
+        required: false
+        schema:
+          type: string
+          example: campaign_name
+      - name: query[isDefault]
+        in: query
+        description: Retrieve campaigns (contact lists) depending on whether they are marked as default (`isDefault` = `true`)
+        required: false
+        schema:
+          type: boolean
+          example: true
+      - name: sort[name]
+        in: query
+        description: Sort by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[createdOn]
+        in: query
+        description: Sort campaigns (contact lists) by creation date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+    post:
+      tags:
+      - Campaigns (Lists)
+      summary: Create a campaign
+      description: This endpoint allows you to create a campaign (contact list). You can create up to 1000 campaigns (contact lists).
+      operationId: createCampaign
+      requestBody:
+        $ref: '#/components/requestBodies/NewCampaign'
+      responses:
+        '201':
+          $ref: '#/components/responses/Campaign'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 409
+                    code: 1008
+                    codeDescription: There is another resource with the same value of unique property
+                    message: Property value is already taken
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1008
+                    context:
+                      value: test-value
+                    uuid: b89a0d53-67f6-4269-b207-223b42b6bfbd
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /campaigns/statistics/origins:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get subscriber origin statistics
+      description: The results are indexed with the campaign ID.
+      operationId: getCampaignStatisticsOrigins
+      parameters:
+      - $ref: '#/components/parameters/CampaignStatisticsIdQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsGroupByQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateFromQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateToQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignOriginsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsOrigins
+  /campaigns/statistics/locations:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get subscriber location statistics
+      description: The results are indexed with the location name (PL, EN, etc.).
+      operationId: getCampaignStatisticsLocations
+      parameters:
+      - $ref: '#/components/parameters/CampaignStatisticsIdQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsGroupByQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateFromQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateToQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignLocationsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsLocations
+  /campaigns/statistics/list-size:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get campaign size statistics
+      description: Returns the number of the total added and removed subscribers, grouped by default or by time period.
+      operationId: getCampaignStatisticsListSize
+      parameters:
+      - $ref: '#/components/parameters/CampaignStatisticsIdQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsGroupByQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateFromQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateToQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignListSizesStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsListSize
+  /campaigns/statistics/subscriptions:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get the number and origin of subscription statistics
+      description: Returns the number and origin of subscriptions, grouped by a specified campaigns for each day on which any changes were made. Dates in the YYYY-MM-DD format are used as keys in the response.
+      operationId: getCampaignStatisticsSubscriptions
+      parameters:
+      - $ref: '#/components/parameters/CampaignStatisticsIdQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsGroupByQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateFromQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateToQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/SubscriptionsByDatesStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsSubscriptions
+  /campaigns/statistics/removals:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get removal statistics
+      description: Returns the number and reason for removed contacts. Dates in the YYYY-MM-DD format are used as keys in the response.
+      operationId: getCampaignStatisticsRemovals
+      parameters:
+      - $ref: '#/components/parameters/CampaignStatisticsIdQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsGroupByQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateFromQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateToQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/RemovalsByDatesStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsRemovals
+  /campaigns/statistics/balance:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get balance statistics
+      description: Returns the balance of subscriptions. Dates in the YYYY-MM-DD format are used as keys in the response.
+      operationId: getCampaignStatisticsBalance
+      parameters:
+      - $ref: '#/components/parameters/CampaignStatisticsIdQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsGroupByQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateFromQuery'
+      - $ref: '#/components/parameters/CampaignStatisticsDateToQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/BalanceByDatesStatisticsList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsBalance
+  /campaigns/statistics/summary:
+    get:
+      tags:
+      - Campaigns (Lists)
+      summary: Get the statistics summary for selected campaigns
+      description: The results are indexed with the campaign ID.
+      operationId: getCampaignStatisticsSummary
+      parameters:
+      - name: query[campaignId]
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/CampaignStatisticsIdQuery'
+      responses:
+        '200':
+          $ref: '#/components/responses/CampaignSummaryList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+      x-operation-class-name: GetCampaignStatisticsSummary
+components:
+  parameters:
+    CampaignStatisticsGroupByQuery:
+      name: query[groupBy]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - hour
+        - day
+        - month
+        - total
+        example: month
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    CampaignStatisticsIdQuery:
+      name: query[campaignId]
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/CampaignStatisticsIdQuery'
+    CampaignStatisticsDateToQuery:
+      name: query[createdOn][to]
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/DateOrDateTime'
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    CampaignStatisticsDateFromQuery:
+      name: query[createdOn][from]
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/DateOrDateTime'
+    campaignId:
+      name: campaignId
+      in: path
+      description: 'Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`.'
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
+  schemas:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    UpdateBlocklist:
+      required:
+      - masks
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Blocklist'
+    CampaignRemovalsStatisticsList:
+      type: object
+      example:
+        '2014-12-05':
+          user: 5
+        '2015-01-22':
+          user: 12
+          bounce: 2
+      additionalProperties:
+        $ref: '#/components/schemas/CampaignRemovalsStatisticsItem'
+    CampaignStatisticsIdQuery:
+      type: string
+      example: 3Va2e
+    CampaignSummaryItem:
+      description: The properties of the result are indexed with the location name (PL, EN, etc.).
+      type: object
+      example:
+        o5lx:
+          totalSubscribers: '4'
+          totalNewsletters: '129'
+          totalTriggers: '0'
+          totalLandingPages: '1'
+          totalWebforms: '3'
+        CC9F:
+          totalSubscribers: '0'
+          totalNewsletters: '0'
+          totalTriggers: '0'
+          totalLandingPages: '5'
+          totalWebforms: '0'
+        V6OeR:
+          totalSubscribers: '0'
+          totalNewsletters: '0'
+          totalTriggers: '0'
+          totalLandingPages: '0'
+          totalWebforms: '0'
+      additionalProperties:
+        properties:
+          totalSubscribers:
+            description: The total number of subscribers
+            type: string
+            format: number
+            example: '0'
+          totalNewsletters:
+            description: The total number of newsletters
+            type: string
+            format: number
+            example: '0'
+          totalTriggers:
+            description: The total number of triggers
+            type: string
+            format: number
+            example: '0'
+          totalLandingPages:
+            description: The total number of landing pages
+            type: string
+            format: number
+            example: '0'
+          totalWebforms:
+            description: The total number of webforms
+            type: string
+            format: number
+            example: '0'
+        type: object
+    UpdateCampaign:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Campaign'
+    CampaignRemovalsStatisticsItem:
+      type: object
+      anyOf:
+      - properties:
+          api:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          automation:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          blacklisted:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          bounce:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          cleaner:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          compliant:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          support:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          unsubscribe:
+            type: integer
+            example: 1
+        type: object
+      - properties:
+          user:
+            type: integer
+            example: 1
+        type: object
+    CampaignBalanceStatisticsList:
+      type: object
+      example:
+        '2014-12-05':
+          removals:
+            user: 5
+          subscriptions:
+            import: 0
+            email: 0
+            www: 0
+            panel: 0
+            leads: 0
+            sale: 0
+            api: 7
+            forward: 0
+            survey: 0
+            mobile: 0
+            copy: 0
+            landing_page: 0
+            webinar: 4
+            premium_newsletter: 1
+            course: 1
+            summary: 13
+        '2015-01-21':
+          removals:
+            user: 10
+      additionalProperties:
+        description: Dates in YYYY-MM-DD format are used as keys
+        anyOf:
+        - properties:
+            removals:
+              type: object
+              allOf:
+              - $ref: '#/components/schemas/CampaignRemovalsStatisticsItem'
+          type: object
+        - properties:
+            subscriptions:
+              type: object
+              allOf:
+              - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItem'
+          type: object
+    CampaignLocationsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignLocationItem'
+    RemovalsByDatesStatisticsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignRemovalsStatisticsList'
+    CampaignSubscriptionStatisticsItemByCampaign:
+      description: The properties of the result are indexed with the campaign ID.
+      type: object
+      example:
+        V:
+          import: 10
+          email: 11
+          www: 10
+          panel: 14
+          leads: 3
+          sale: 3
+          api: 1
+          forward: 15
+          survey: 6
+          mobile: 12
+          copy: 7
+          landing_page: 4
+          webinar: 3
+          premium_newsletter: 1
+          course: 1
+          website_builder_elegant: 3
+          chat: 3
+          summary: 101
+        p:
+          import: 9
+          email: 7
+          www: 9
+          panel: 5
+          leads: 3
+          sale: 3
+          api: 8
+          forward: 10
+          survey: 8
+          mobile: 10
+          copy: 10
+          landing_page: 7
+          webinar: 4
+          premium_newsletter: 1
+          course: 1
+          website_builder_elegant: 3
+          chat: 4
+          summary: 95
+      additionalProperties:
+        description: The properties of the result are indexed with the campaign ID
+        allOf:
+        - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItem'
+    CampaignSubscriptionStatisticsList:
+      description: Dates in the YYYY-MM-DD format are used as keys.
+      type: object
+      example:
+        '2014-12-15':
+          V:
+            import: 10
+            email: 11
+            www: 10
+            panel: 14
+            leads: 3
+            sale: 3
+            api: 1
+            forward: 15
+            survey: 6
+            mobile: 12
+            copy: 7
+            landing_page: 4
+            webinar: 4
+            premium_newsletter: 1
+            course: 1
+            website_builder_elegant: 1
+            chat: 2
+            summary: 105
+          p:
+            import: 9
+            email: 7
+            www: 9
+            panel: 5
+            leads: 3
+            sale: 3
+            api: 8
+            forward: 10
+            survey: 8
+            mobile: 10
+            copy: 10
+            landing_page: 7
+            webinar: 4
+            premium_newsletter: 1
+            course: 1
+            website_builder_elegant: 1
+            chat: 2
+            summary: 98
+      additionalProperties:
+        description: Dates in YYYY-MM-DD format are used as keys
+        type: object
+        allOf:
+        - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItemByCampaign'
+    CampaignPostal:
+      properties:
+        addPostalToMessages:
+          description: Should the postal address be included in all message footers for this campaign (mandatory for Canada and the US)
+          example: 'true'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        city:
+          description: The city, free-text
+          type: string
+          example: London
+        companyName:
+          description: The company name, free-text
+          type: string
+          example: Company Ltd.
+        country:
+          description: The country name, free-text
+          type: string
+          example: Great Britain
+        design:
+          description: 'How the postal address will display in messages. The available fields include: [[name]], [[address]], [[city]], [[state]] [[zip]], [[country]]'
+          type: string
+          example: '[[name]] from [[city]] in [[country]]'
+        state:
+          description: The state, free-text
+          type: string
+          example: Shire
+        street:
+          description: The street, free-text
+          type: string
+          example: Bilbo Baggins Av
+        zipCode:
+          description: The ZIP code
+          type: string
+          example: 81-611
+      type: object
+    FromFieldReference:
+      required:
+      - fromFieldId
+      properties:
+        fromFieldId:
+          description: The 'From' address ID
+          type: string
+          example: V
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/from-fields/V
+      type: object
+    Blocklist:
+      properties:
+        masks:
+          type: array
+          items:
+            type: string
+            example: jack@somedomain.com
+      type: object
+    SubscriptionsByDatesStatisticsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignSubscriptionStatisticsList'
+    CampaignLocationItem:
+      type: object
+      example:
+        others:
+          amount: '6'
+          continentCode: ''
+          countryCode: ''
+        PL:
+          amount: '45'
+          continentCode: EU
+          countryCode: PL
+      additionalProperties:
+        description: The results are indexed with the location name (PL, EN, etc.)
+        properties:
+          amount:
+            description: The amount of subscribers from a given location
+            type: string
+            format: number
+            example: '0'
+          continentalCode:
+            description: The region code
+            type: string
+            example: EU
+          countryCode:
+            description: The country code
+            type: string
+            example: PL
+        type: object
+    CampaignOptinTypes:
+      properties:
+        email:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          - double
+          example: single
+        api:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          - double
+          example: single
+        import:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          example: single
+        webform:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          - double
+          example: single
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    CampaignOriginsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignSubscriptionStatisticsItemByCampaign'
+    BalanceByDatesStatisticsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignBalanceStatisticsList'
+    CampaignAdditionalProperties:
+      properties:
+        postal:
+          $ref: '#/components/schemas/CampaignPostal'
+        confirmation:
+          $ref: '#/components/schemas/CampaignConfirmation'
+        optinTypes:
+          $ref: '#/components/schemas/CampaignOptinTypes'
+        subscriptionNotifications:
+          $ref: '#/components/schemas/CampaignSubscriptionNotifications'
+        profile:
+          $ref: '#/components/schemas/CampaignProfile'
+      type: object
+    Campaign:
+      required:
+      - name
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseCampaign'
+      - $ref: '#/components/schemas/CampaignAdditionalProperties'
+    CampaignConfirmation:
+      properties:
+        fromField:
+          $ref: '#/components/schemas/FromFieldReference'
+        redirectType:
+          description: 'What will happen after email confirmation. The values allowed include: hosted (the subscriber will stay on the default GetResponse website), customUrl (the subscriber will be redirected to a custom URL provided by the user).'
+          type: string
+          enum:
+          - hosted
+          - customUrl
+          example: hosted
+        mimeType:
+          description: The MIME type for the confirmation message
+          type: string
+          enum:
+          - text/html
+          - text/plain
+          - combo
+          example: text/plain
+        redirectUrl:
+          description: Required if the redirectType is customUrl. The URL a subscriber will be redirected to if the redirectType is set to customUrl.
+          type: string
+          format: uri
+          example: http://example.com
+        replyTo:
+          $ref: '#/components/schemas/FromFieldReference'
+        subscriptionConfirmationBodyId:
+          description: The subscription confirmation body ID
+          type: string
+          example: asS1
+        subscriptionConfirmationSubjectId:
+          description: Subscription confirmation subject ID
+          type: string
+          example: TEww
+      type: object
+    CampaignSubscriptionNotifications:
+      properties:
+        status:
+          description: 'Are notifications enabled. Possible values include: enabled, disabled.'
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/FromFieldReference'
+      type: object
+    CampaignSubscriptionStatisticsItem:
+      properties:
+        import:
+          type: integer
+          example: 0
+        email:
+          type: integer
+          example: 0
+        www:
+          type: integer
+          example: 0
+        panel:
+          type: integer
+          example: 0
+        leads:
+          type: integer
+          example: 0
+        sale:
+          type: integer
+          example: 0
+        api:
+          type: integer
+          example: 0
+        forward:
+          type: integer
+          example: 0
+          deprecated: true
+        survey:
+          type: integer
+          example: 0
+        mobile:
+          type: integer
+          example: 0
+        copy:
+          type: integer
+          example: 0
+        landing_page:
+          type: integer
+          example: 0
+        webinar:
+          type: integer
+          example: 0
+        premium_newsletter:
+          type: integer
+          example: 0
+        course:
+          type: integer
+          example: 0
+        website_buider_elegant:
+          type: integer
+          example: 0
+        chat:
+          type: integer
+          example: 0
+        summary:
+          type: integer
+          example: 0
+      type: object
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    CampaignSummaryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignSummaryItem'
+    CampaignListSizesStatisticsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignListSizesStatisticsElement'
+    CampaignProfile:
+      properties:
+        description:
+          description: The campaign description
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: campaign description
+        industryTagId:
+          description: The industry tag ID
+          type: string
+          format: integer
+          example: '1'
+        logo:
+          description: The logo URL
+          type: string
+          format: uri
+          example: http://logos.com/imageupdated.jpg
+        logoLinkUrl:
+          description: The logo link URL
+          type: string
+          format: uri
+          example: http://somePageLogoLinkUpdated.com
+        title:
+          description: The profile title
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: title
+      type: object
+    NewCampaign:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Campaign'
+    CampaignListSizesStatisticsElement:
+      properties:
+        totalSubscribers:
+          description: The total amount of subscribers for a given datetime and grouping
+          type: integer
+          format: int64
+        addedSubscribers:
+          description: The amount of subscribers added since the previous statistics frame
+          type: integer
+          format: int64
+        removedSubscribers:
+          description: The amount of subscribers removed since the previous statistics frame
+          type: integer
+          format: int64
+        createdOn:
+          description: The statistics frame timestamp. The value depends on the groupBy parameter. For the hour, use datetime in the format YYYY-mm-dd HH:mm:ss; for the day, use date in the format YYYY-mm-dd; for the month, use a string in the format YYYY-mm; and for the total, use the string total.
+          type: string
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    BaseCampaign:
+      properties:
+        campaignId:
+          description: Unique identifier of the campaign (contact list)
+          type: string
+          readOnly: true
+          example: V3J
+        name:
+          description: 'The campaign (list) name.
+
+
+            * You can use each list name just once in your account.
+
+
+            * The name must be between 3-64 characters.
+
+
+            * All alphabets supported by GetResponse, including right-to-left ones, are allowed.
+
+
+            * You can use upper and lower case letters, numbers, spaces and special characters apart from the ones listed below.
+
+
+            * You can’t use emojis and the following special characters: `/`, `\`, `@`, and `[` or `]`.'
+          type: string
+          maxLength: 64
+          minLength: 3
+          example: my_campaign
+        techName:
+          description: Tech name is a unique internal ID of a list used for [FTP imports](https://www.getresponse.com/help/how-to-import-files-via-ftp.html) (available in GetResponse MAX accounts only)
+          type: string
+          readOnly: true
+          example: my_campaign
+        languageCode:
+          description: 'The campaign language code according to ISO 639-1, plus: zt - Chinese (Traditional), fs - Afghan Persian (Dari), md - Moldavian'
+          type: string
+          example: EN
+        isDefault:
+          description: Is the campaign default
+          example: 'true'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        createdOn:
+          description: The date of creation
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2014-02-12T15:19:21+0000
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/V3J
+      type: object
+    CampaignListElement:
+      type: object
+      allOf:
+      - properties:
+          description:
+            description: It's the same as the campaign name, kept for compatibility reasons
+            type: string
+            readOnly: true
+            example: my_campaign
+      - $ref: '#/components/schemas/BaseCampaign'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  requestBodies:
+    UpdateCampaignBlocklist:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateBlocklist'
+    NewCampaign:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCampaign'
+    UpdateCampaign:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCampaign'
+  responses:
+    Campaign:
+      description: The campaign data.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Campaign'
+    BalanceByDatesStatisticsList:
+      description: The subscription statistics, shown by date.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BalanceByDatesStatisticsList'
+    SubscriptionsByDatesStatisticsList:
+      description: Subscription statistics by date
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionsByDatesStatisticsList'
+    CampaignList:
+      description: The list of campaigns.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CampaignListElement'
+    RemovalsByDatesStatisticsList:
+      description: Subscription statistics by date
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RemovalsByDatesStatisticsList'
+    CampaignListSizesStatisticsList:
+      description: The campaign data.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignListSizesStatisticsList'
+    CampaignSummaryList:
+      description: The summary list.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignSummaryList'
+    CampaignBlocklist:
+      description: Blocklist masks for the campaign.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Blocklist'
+    CampaignOriginsList:
+      description: The list of origins.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignOriginsList'
+    CampaignLocationsList:
+      description: The list of locations.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignLocationsList'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access

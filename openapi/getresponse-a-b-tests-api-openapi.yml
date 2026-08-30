@@ -1,0 +1,678 @@
+openapi: 3.2.0
+info:
+  title: GetResponse APIv3 A/B tests API
+  version: 3.2026-07-28T07:58:55+00:00
+  description: The A/B tests operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  contact:
+    name: API Support - DevZone
+    url: https://app.getresponse.com/feedback.html?devzone=yes
+    email: getresponse-devzone@cs.getresponse.com
+servers:
+- url: https://api.getresponse.com/v3
+  description: GetResponse
+- url: https://api3.getresponse360.com/v3
+  description: GetResponse MAX US
+- url: https://api3.getresponse360.pl/v3
+  description: GetResponse MAX PL
+tags:
+- name: A/B tests
+  description: A/B tests API documentation
+paths:
+  /splittests/{splittestId}:
+    parameters:
+    - $ref: '#/components/parameters/splittestId'
+    get:
+      tags:
+      - A/B tests
+      summary: Get a single A/B test.
+      description: Get a single A/B test by ID.
+      operationId: getSplittest
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/Splittest'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 404
+                    code: 1013
+                    codeDescription: The requested resource was not found
+                    message: Resource not found
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1013
+                    context:
+                      contactId: pVyRW
+                    uuid: 87b90a96-5ee5-4ca4-8180-ac00adcf62c7
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+  /splittests:
+    get:
+      tags:
+      - A/B tests
+      summary: The list of A/B tests.
+      description: The list of A/B tests. You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.
+      operationId: getSplittestList
+      parameters:
+      - name: query[name]
+        in: query
+        description: Search A/B tests by name
+        required: false
+        schema:
+          type: string
+      - name: query[type]
+        in: query
+        description: Search A/B tests by type
+        required: false
+        schema:
+          type: string
+      - name: query[status]
+        in: query
+        description: Search A/B tests by status
+        required: false
+        schema:
+          type: string
+          default: active
+          enum:
+          - active
+          - inactive
+      - name: query[createdOn][from]
+        in: query
+        description: Search A/B tests created from this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: query[createdOn][to]
+        in: query
+        description: Search A/B tests created to this date
+        required: false
+        schema:
+          $ref: '#/components/schemas/DateOrDateTime'
+      - name: sort[name]
+        in: query
+        description: Sort by name
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - name: sort[createdOn]
+        in: query
+        description: Sort by creation date
+        required: false
+        schema:
+          $ref: '#/components/schemas/SortOrderEnum'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/SplittestList'
+        '400':
+          description: Request validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 400
+                    code: 1000
+                    codeDescription: General error of validation process, more details should be in context section
+                    message: Validation error, see context section for more information
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1000
+                    context:
+                      validationType: searchFilter[query]
+                      fieldName: name
+                      originalName: lorem-ipsum
+                      errorDescription: Not allowed search field
+                    uuid: 77dabfd1-1fa7-4f9f-8d3f-487b4403e3aa
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 401
+                    code: 1014
+                    codeDescription: Problem during authentication process, check headers!
+                    message: Unable to authenticate request. Check credentials or authentication method details
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1014
+                    context:
+                      authenticationType: auth_token
+                    uuid: 62417847-4f12-4c25-9b3a-0b619a187efe
+        '429':
+          description: The throttling limit has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    httpStatus: 429
+                    code: 1015
+                    codeDescription: Too many request to API, quota reached, please wait till next quota window
+                    message: You have reached your requests limit for this time window, please wait...
+                    moreInfo: https://apidocs.getresponse.com/en/v3/errors/1015
+                    context:
+                      currentLimit: 30000
+                      timeToReset: 100 seconds
+                    uuid: 510c6726-7f65-46b7-a798-ca403133924f
+      security:
+      - api-key: []
+      - oauth2:
+        - all
+components:
+  schemas:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
+      type: array
+      items:
+        type: string
+        example: C
+    FromFieldReference:
+      required:
+      - fromFieldId
+      properties:
+        fromFieldId:
+          description: The 'From' address ID
+          type: string
+          example: V
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/from-fields/V
+      type: object
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    MessageSendSettingSelectedSuppressions:
+      description: The list of suppression IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: Ss
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eSs
+    SplittestNewsletter:
+      properties:
+        newsletterId:
+          description: The newsletter ID
+          type: string
+          example: Z6e
+        href:
+          description: The direct newsletter URL
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/newsletters/B2fvv
+        name:
+          description: The newsletter name
+          type: string
+          example: Newsletter name
+        subject:
+          description: The newsletter subject
+          type: string
+          example: Example subject
+        fromField:
+          description: The \"From\" address for the newsletter
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        status:
+          description: The status of the newsletter
+          type: string
+          enum:
+          - sampled
+          - chosen
+          - rejected
+        sendOn:
+          description: The date when the newsletter was sent
+          type: string
+          format: date-time
+          example: 2015-06-25T20:05:10+0000
+        samplingTargets:
+          description: The newsletter sample targets
+          type: string
+          format: int32
+          example: '2'
+        samplingDelivered:
+          description: The newsletter sample delivery
+          type: string
+          format: int32
+          example: '2'
+        scoreOpens:
+          description: The newsletter open rate
+          type: string
+          format: int32
+          example: '2'
+        scoreClicks:
+          description: The newsletter click rate
+          type: string
+          format: int32
+          example: '2'
+      type: object
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eC
+    Splittest:
+      properties:
+        splittestId:
+          description: A/B test ID
+          type: string
+          example: A3r
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/splittests/A3r
+        name:
+          description: A/B test name
+          type: string
+          example: A/B test
+        campaign:
+          description: A/B test campaign
+          allOf:
+          - $ref: '#/components/schemas/CampaignReference'
+        status:
+          description: A/B test status
+          type: string
+          enum:
+          - active
+          - inactive
+        winningCriteria:
+          description: A/B test winning criteria
+          type:
+          - string
+          - 'null'
+          enum:
+          - open
+          - click
+        winningTarget:
+          description: A/B test wining target
+          type: string
+          format: int32
+          example: '10'
+        stage:
+          description: A/B test stage
+          type: string
+          enum:
+          - queued
+          - schedule_sampling
+          - evaluate_sampling
+          - choose_winning
+          - schedule_winning
+          - send_winning
+          - canceled_queued
+          - canceled_sampling
+          - canceled_winning
+          - incomplete
+          - finished
+        type:
+          description: A/B test type
+          type: string
+          enum:
+          - content
+          - subject
+          - day
+          - hour
+          - from_field
+        samplingPercentage:
+          description: A/B test sample percentage
+          type:
+          - string
+          - 'null'
+          format: int32
+          example: '18'
+        samplingTime:
+          description: A/B test sampling time in seconds
+          type:
+          - string
+          - 'null'
+          format: int32
+          example: '86400'
+        chooseWinning:
+          description: The method of choosing the winning A/B test
+          type:
+          - string
+          - 'null'
+          enum:
+          - automatic
+          - manual
+        winningScoreOpens:
+          description: The open rate of the winning A/B test
+          type: string
+          format: int32
+          example: '5'
+        winningScoreClicks:
+          description: The click rate of the winning A/B test
+          type: string
+          format: int32
+          example: '3'
+        winningDelivered:
+          description: The delivery rate of the winning A/B test
+          type: string
+          format: int32
+          example: '12'
+        winningScheduleOn:
+          description: The date for wchich the winning A/B test was scheduled
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2015-06-25T20:05:10+0000
+        nextStepOn:
+          description: The date of the next step in the A/B test
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2015-07-25T20:05:10+0000
+        evaluationSkippedOn:
+          description: The date when the A/B test was skipped
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2015-07-25T20:05:10+0000
+        canceledOn:
+          description: The date when the A/B test was canceled
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2015-07-25T20:05:10+0000
+        createdOn:
+          description: The date when the A/B test was created
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2015-07-25T20:05:10+0000
+        newsletters:
+          description: The newsletters that are associated with the A/B test
+          type: array
+          items:
+            $ref: '#/components/schemas/SplittestNewsletter'
+        sendSettings:
+          description: The send settings for the A/B test
+          properties:
+            selectedCampaigns:
+              $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+            selectedSegments:
+              $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+            selectedSupressions:
+              $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
+            excludedCampaigns:
+              $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+            excludedSegments:
+              $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+          type: object
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    splittestId:
+      name: splittestId
+      in: path
+      description: The send settings for the A/B test
+      required: true
+      schema:
+        type: string
+      example: 9I
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  responses:
+    Splittest:
+      description: A/B test details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Splittest'
+    SplittestList:
+      description: The list of A/B tests.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Splittest'
+  securitySchemes:
+    api-key:
+      type: apiKey
+      description: Header value must be prefixed with api-key
+      name: X-Auth-Token
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          scopes:
+            all: all data access
+        authorizationCode:
+          authorizationUrl: https://app.getresponse.com/oauth2_authorize.html
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
+        clientCredentials:
+          tokenUrl: https://api.getresponse.com/v3/token
+          scopes:
+            all: all data access
