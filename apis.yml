@@ -578,6 +578,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Import
+  tags_raw:
   - Imports
   properties:
   - type: OpenAPI
@@ -602,6 +604,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Landing Pages
+  tags_raw:
   - Landing Page
   properties:
   - type: OpenAPI
@@ -1090,6 +1094,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Tax
+  tags_raw:
   - Taxes
   properties:
   - type: OpenAPI
@@ -1212,6 +1218,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - Websites
+  tags_raw:
   - Website
   properties:
   - type: OpenAPI
