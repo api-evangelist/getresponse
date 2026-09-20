@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 15
+edge_count: 16
 edges:
 - tag: Autoresponders
   spec_file: getresponse-autoresponders-api-openapi.yml
@@ -126,6 +126,16 @@ edges:
   reason: Read-only access to email newsletter split tests within a marketing automation platform; this
     is email/digital marketing campaign testing. Could arguably be experimentation, but the object is
     a marketing newsletter A/B test, so Digital Marketing Management fits best.
+- tag: GDPR Fields
+  spec_file: getresponse-gdpr-fields-api-openapi.yml
+  capability_id: BC-130.50
+  capability_id_l1: BC-130
+  capability_name: Privacy & Data Protection Management
+  confidence: 0.7
+  evidence: GET /gdpr-fields/{gdprFieldId} "Get GDPR Field details"; schemas GDPRFieldDetails, GDPRFieldLatestVersion
+  reason: GDPR consent fields with versioned latest-version tracking implement consent/data-protection
+    compliance for contact data; read-only surface limits confidence.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: Landing Pages
   spec_file: getresponse-landing-pages-api-openapi.yml
   capability_id: BC-400.60
