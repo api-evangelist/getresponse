@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Custom Events API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Custom Events operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -540,148 +545,53 @@ paths:
         - all
       x-operation-class-name: TriggerCustomEvent
 components:
-  schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    TriggerCustomEvent:
-      required:
-      - name
-      - contactId
-      properties:
-        name:
-          description: The name of custom event. Custom event with this name must already exist
-          type: string
-          maxLength: 64
-          minLength: 3
-          pattern: ^[a-z0-9_]{3,64}$
-          example: lesson_finished
-        contactId:
-          description: The contact ID
-          type: string
-          example: lTgH5
-        attributes:
-          description: The attributes for the trigger
-          type: array
-          items:
-            $ref: '#/components/schemas/TriggerCustomEventAttribute'
-      type: object
-    UpdateCustomEvent:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CustomEvent'
-    CustomEventAttributeDetails:
-      required:
-      - customEventAttributeId
-      type: object
-      allOf:
-      - properties:
-          customEventAttributeId:
-            type: string
-            readOnly: true
-            example: gt7
-      - $ref: '#/components/schemas/CustomEventAttribute'
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    CustomEvent:
-      required:
-      - name
-      - attributes
-      properties:
-        name:
-          description: Unique name of custom event
-          type: string
-          pattern: ^[a-z0-9_]{3,64}$
-          example: sample_custom_event
-        attributes:
-          description: Optional collection of attributes
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomEventAttributeDetails'
-      type: object
-    TriggerCustomEventAttribute:
-      required:
-      - name
-      - value
-      properties:
-        name:
-          description: The name of the attribute. It must be already defined for the custom event
-          type: string
-          maxLength: 64
-          minLength: 3
-          example: lesson_name
-        value:
-          $ref: '#/components/schemas/TriggerCustomEventAttributeValue'
-      type: object
-    NewCustomEvent:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CustomEvent'
-    CustomEventDetails:
-      required:
-      - customEventId
-      - createdOn
-      type: object
-      allOf:
-      - properties:
-          customEventId:
-            description: The custom event ID
-            type: string
-            readOnly: true
-            example: hy7
-          createdOn:
-            description: Date of creation custom event definition
-            type: string
-            format: date-time
-            readOnly: true
-            example: 2019-08-19T11:32:34+0000
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: url
-            readOnly: true
-            example: https://api.getresponse.com/v3/custom-events/vBd5
-      - $ref: '#/components/schemas/CustomEvent'
-    TriggerCustomEventAttributeValue:
-      description: The value of the attribute. Value type depends on the attribute definition
-      oneOf:
-      - type: string
-        maxLength: 255
-        minLength: 1
-        example: lesson_3
-      - $ref: '#/components/schemas/StringBooleanEnum'
-      - type: boolean
-      - description: 'Date in extended ISO 8601 datetime format: *2019-01-01T08:00:00+00*'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
         type: string
-        format: date-time
-        example: 2019-01-01T08:00:00+0000
-      - type: integer
-        format: int64
-        example: 1500
-    CustomEventAttribute:
-      required:
-      - name
-      - type
-      properties:
-        name:
-          description: Unique name of attribute
-          type: string
-          pattern: ^[a-z0-9_]{3,64}$
-          example: sample_attribute
-        type:
-          description: Type of attribute
-          enum:
-          - string
-          - number
-          - datetime
-          - boolean
-          example: string
-      type: object
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+  requestBodies:
+    NewCustomEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCustomEvent'
+    TriggerCustomEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TriggerCustomEvent'
+    UpdateCustomEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCustomEvent'
+  schemas:
     ErrorResponse:
       required:
       - httpStatus
@@ -715,36 +625,147 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
+    CustomEvent:
+      required:
+      - name
+      - attributes
+      properties:
+        name:
+          description: Unique name of custom event
+          type: string
+          pattern: ^[a-z0-9_]{3,64}$
+          example: sample_custom_event
+        attributes:
+          description: Optional collection of attributes
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomEventAttributeDetails'
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    TriggerCustomEventAttribute:
+      required:
+      - name
+      - value
+      properties:
+        name:
+          description: The name of the attribute. It must be already defined for the custom event
+          type: string
+          maxLength: 64
+          minLength: 3
+          example: lesson_name
+        value:
+          $ref: '#/components/schemas/TriggerCustomEventAttributeValue'
+      type: object
+    TriggerCustomEventAttributeValue:
+      description: The value of the attribute. Value type depends on the attribute definition
+      oneOf:
+      - type: string
+        maxLength: 255
+        minLength: 1
+        example: lesson_3
+      - $ref: '#/components/schemas/StringBooleanEnum'
+      - type: boolean
+      - description: 'Date in extended ISO 8601 datetime format: *2019-01-01T08:00:00+00*'
         type: string
+        format: date-time
+        example: 2019-01-01T08:00:00+0000
+      - type: integer
+        format: int64
+        example: 1500
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    CustomEventAttribute:
+      required:
+      - name
+      - type
+      properties:
+        name:
+          description: Unique name of attribute
+          type: string
+          pattern: ^[a-z0-9_]{3,64}$
+          example: sample_attribute
+        type:
+          description: Type of attribute
+          enum:
+          - string
+          - number
+          - datetime
+          - boolean
+          example: string
+      type: object
+    NewCustomEvent:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CustomEvent'
+    TriggerCustomEvent:
+      required:
+      - name
+      - contactId
+      properties:
+        name:
+          description: The name of custom event. Custom event with this name must already exist
+          type: string
+          maxLength: 64
+          minLength: 3
+          pattern: ^[a-z0-9_]{3,64}$
+          example: lesson_finished
+        contactId:
+          description: The contact ID
+          type: string
+          example: lTgH5
+        attributes:
+          description: The attributes for the trigger
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerCustomEventAttribute'
+      type: object
+    UpdateCustomEvent:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CustomEvent'
+    CustomEventDetails:
+      required:
+      - customEventId
+      - createdOn
+      type: object
+      allOf:
+      - properties:
+          customEventId:
+            description: The custom event ID
+            type: string
+            readOnly: true
+            example: hy7
+          createdOn:
+            description: Date of creation custom event definition
+            type: string
+            format: date-time
+            readOnly: true
+            example: 2019-08-19T11:32:34+0000
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: url
+            readOnly: true
+            example: https://api.getresponse.com/v3/custom-events/vBd5
+      - $ref: '#/components/schemas/CustomEvent'
+    CustomEventAttributeDetails:
+      required:
+      - customEventAttributeId
+      type: object
+      allOf:
+      - properties:
+          customEventAttributeId:
+            type: string
+            readOnly: true
+            example: gt7
+      - $ref: '#/components/schemas/CustomEventAttribute'
   parameters:
     PerPage:
       name: perPage
@@ -757,13 +778,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -774,6 +788,13 @@ components:
         format: int32
         default: 1
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     customEventId:
       name: customEventId
       in: path
@@ -817,22 +838,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/CustomEventDetails'
-  requestBodies:
-    NewCustomEvent:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewCustomEvent'
-    UpdateCustomEvent:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCustomEvent'
-    TriggerCustomEvent:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TriggerCustomEvent'
   securitySchemes:
     api-key:
       type: apiKey
@@ -855,3 +860,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

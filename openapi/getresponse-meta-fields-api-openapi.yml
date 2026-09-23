@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Meta Fields API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Meta Fields operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -25,7 +30,22 @@ paths:
       tags:
       - Meta Fields
       summary: Get the shop meta fields
-      description: "\nSending a **GET** request to this URL returns a collection of meta field resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n\n * name\n * value\n * description\n * createdOn\n\n\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      description: 'Sending a **GET** request to this URL returns a collection of meta field resources that belong to the given shop.
+
+
+        You can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:
+
+
+        * name
+
+        * value
+
+        * description
+
+        * createdOn
+
+
+        You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.'
       operationId: getMetaFields
       parameters:
       - name: query[name]
@@ -150,14 +170,10 @@ paths:
       tags:
       - Meta Fields
       summary: Create meta field
-      description: '
-
-        Sending a **POST** request to this URL will create a new meta field resource.
+      description: 'Sending a **POST** request to this URL will create a new meta field resource.
 
 
-        In order to create a new meta field, you need to send a meta field resource in the body of the request (remember that you need to serialize the body into a JSON string)
-
-        '
+        In order to create a new meta field, you need to send a meta field resource in the body of the request (remember that you need to serialize the body into a JSON string)'
       operationId: createMetaField
       requestBody:
         $ref: '#/components/requestBodies/NewMetaField'
@@ -248,11 +264,7 @@ paths:
       tags:
       - Meta Fields
       summary: Get the meta field by ID
-      description: '
-
-        This method returns meta field with a given `metaFieldId` in the context of a given `shopId`
-
-        '
+      description: This method returns meta field with a given `metaFieldId` in the context of a given `shopId`
       operationId: getMetaField
       parameters:
       - $ref: '#/components/parameters/Fields'
@@ -339,11 +351,7 @@ paths:
       tags:
       - Meta Fields
       summary: Update meta field
-      description: '
-
-        Update the properties of a shop''s meta field. You should send only those fields that need to be changed. The rest of the properties will stay the same.
-
-        '
+      description: Update the properties of a shop's meta field. You should send only those fields that need to be changed. The rest of the properties will stay the same.
       operationId: updateMetaField
       requestBody:
         $ref: '#/components/requestBodies/UpdateMetaField'
@@ -519,47 +527,90 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    MetaFieldDetails:
-      description: The meta field details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+  requestBodies:
+    NewMetaField:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MetaField'
-    MetaFieldList:
-      description: The list of meta fields
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
+            $ref: '#/components/schemas/NewMetaField'
+    UpdateMetaField:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MetaField'
+            $ref: '#/components/schemas/UpdateMetaField'
   schemas:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
     SortOrderEnum:
       type: string
       enum:
       - ASC
       - DESC
+    UpdateMetaField:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MetaField'
     NewMetaField:
       required:
       - name
@@ -568,6 +619,14 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseMetaField'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
     CreateAndUpdate:
       properties:
         createdOn:
@@ -581,6 +640,11 @@ components:
           format: date-time
           readOnly: true
       type: object
+    MetaField:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+      - $ref: '#/components/schemas/CreateAndUpdate'
     BaseMetaField:
       properties:
         href:
@@ -620,86 +684,41 @@ components:
           minLength: 0
           example: Description of this meta field
       type: object
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    MetaField:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    UpdateMetaField:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/MetaField'
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+  responses:
+    MetaFieldDetails:
+      description: The meta field details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MetaField'
+    MetaFieldList:
+      description: The list of meta fields
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetaField'
   parameters:
     PerPage:
       name: perPage
@@ -712,13 +731,14 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
+    metaFieldId:
+      name: metaFieldId
+      in: path
+      description: The metafield ID
+      required: true
       schema:
         type: string
+      example: hgF
     Page:
       name: page
       in: query
@@ -729,6 +749,13 @@ components:
         format: int32
         default: 1
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     shopId:
       name: shopId
       in: path
@@ -737,25 +764,6 @@ components:
       schema:
         type: string
       example: pf3
-    metaFieldId:
-      name: metaFieldId
-      in: path
-      description: The metafield ID
-      required: true
-      schema:
-        type: string
-      example: hgF
-  requestBodies:
-    UpdateMetaField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateMetaField'
-    NewMetaField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewMetaField'
   securitySchemes:
     api-key:
       type: apiKey
@@ -778,3 +786,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Custom Reports API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Custom Reports operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -25,7 +30,16 @@ paths:
       tags:
       - Custom Reports
       summary: Get a single custom report by ID
-      description: "The endpoint allows retrieving detailed information about a custom report based on the provided `customReportId`. It returns report data, including:\n * details about the report,\n * generation statuses of the report files,\n * URLs from which the report files can be downloaded.\n\nMore information on using custom reports can be found in the Case Study section of the [API documentation](http://apidocs.getresponse.com/v3/case-study/custom-reports)."
+      description: 'The endpoint allows retrieving detailed information about a custom report based on the provided `customReportId`. It returns report data, including:
+
+        * details about the report,
+
+        * generation statuses of the report files,
+
+        * URLs from which the report files can be downloaded.
+
+
+        More information on using custom reports can be found in the Case Study section of the API documentation.'
       operationId: getCustomReportDetails
       parameters:
       - name: customReportId
@@ -218,10 +232,10 @@ paths:
       description: 'The endpoint allows scheduling a custom report of a specific type for a given time period. Depending on the report type, you can also narrow down the data using appropriate filters.
 
 
-        <strong>Important:</strong> The reports you can generate depend on your pricing plan.
+        Important: The reports you can generate depend on your pricing plan.
 
 
-        More information about using the endpoint, along with examples, can be found in the Case Study section of the [API documentation](http://apidocs.getresponse.com/v3/case-study/custom-reports-scheduling).'
+        More information about using the endpoint, along with examples, can be found in the Case Study section of the API documentation.'
       operationId: createCustomReport
       requestBody:
         $ref: '#/components/requestBodies/CreateCustomReport'
@@ -308,12 +322,88 @@ paths:
       - content: Add-on required
         class: warning
 components:
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    CustomReportTypesEnum:
       type: string
       enum:
-      - ASC
-      - DESC
+      - subscription_rejections
+      - message_stats
+      - unsubscribe_contacts_lists_report
+      - standard_subscriber_activity_report
+      - bounces
+      - account_summary_report
+      - user_activity
+      - list_summary_report
+      - isp_message_stats_report
+      - webinar_participants_report
+      - import_error_report
+      - message_clicks_report
+      - unconfirmed_contacts_stats_report
+      - transactional_email_bounce_report
+      - message_activity_report
     CustomReportFileStatusesEnum:
       type: string
       enum:
@@ -356,24 +446,92 @@ components:
           readOnly: true
           example: 2020-11-20T08:00:00+0000
       type: object
-    CustomReportTypesEnum:
+    SortOrderEnum:
       type: string
       enum:
-      - subscription_rejections
-      - message_stats
-      - unsubscribe_contacts_lists_report
-      - standard_subscriber_activity_report
-      - bounces
-      - account_summary_report
-      - user_activity
-      - list_summary_report
-      - isp_message_stats_report
-      - webinar_participants_report
-      - import_error_report
-      - message_clicks_report
-      - unconfirmed_contacts_stats_report
-      - transactional_email_bounce_report
-      - message_activity_report
+      - ASC
+      - DESC
+    CustomReportFrequenciesEnum:
+      type: string
+      enum:
+      - monthly
+      - weekly
+      - daily
+      - one_time
+    BaseCreateCustomReport:
+      required:
+      - name
+      - type
+      - scheduling
+      properties:
+        name:
+          description: The custom report name
+          type: string
+          maxLength: 70
+          minLength: 3
+          example: My new custom report
+        type:
+          description: The custom report type
+          type: string
+          enum:
+          - subscription_rejections
+          - message_stats
+          - unsubscribe_contacts_lists_report
+          - standard_subscriber_activity_report
+          - bounces
+          - account_summary_report
+          - user_activity
+          - list_summary_report
+          - isp_message_stats_report
+          - webinar_participants_report
+          - import_error_report
+          - message_clicks_report
+          - unconfirmed_contacts_stats_report
+          - transactional_email_bounce_report
+          - message_activity_report
+        scheduling:
+          description: Parameters responsible for defining the reporting period
+          required:
+          - frequency
+          - startDate
+          - endDate
+          properties:
+            frequency:
+              description: The custom report frequency
+              type: string
+              enum:
+              - one_time
+              example: one_time
+            startDate:
+              description: The start of the period for which the report will be generated
+              type: string
+              format: Y-m-d
+              example: '2024-01-01'
+            endDate:
+              description: The end of the period for which the report will be generated
+              type: string
+              format: Y-m-d
+              example: '2024-01-15'
+          type: object
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          subscription_rejections: '#/components/schemas/CreateSubscriptionRejectionsReport'
+          message_stats: '#/components/schemas/CreateMessageStatsReport'
+          unsubscribe_contacts_lists_report: '#/components/schemas/CreateUnsubscribeContactsListsReport'
+          standard_subscriber_activity_report: '#/components/schemas/CreateStandardSubscriberActivityReport'
+          bounces: '#/components/schemas/CreateBouncesReport'
+          account_summary_report: '#/components/schemas/CreateAccountSummaryReport'
+          user_activity: '#/components/schemas/CreateUserActivityReport'
+          list_summary_report: '#/components/schemas/CreateListSummaryReport'
+          isp_message_stats_report: '#/components/schemas/CreateISPMessageStatsReport'
+          webinar_participants_report: '#/components/schemas/CreateWebinarParticipantsReport'
+          import_error_report: '#/components/schemas/CreateImportErrorReport'
+          message_clicks_report: '#/components/schemas/CreateMessageClicksReport'
+          unconfirmed_contacts_stats_report: '#/components/schemas/CreateUnconfirmedContactsStatsReport'
+          transactional_email_bounce_report: '#/components/schemas/CreateTransactionalEmailBounceReport'
+          message_activity_report: '#/components/schemas/CreateMessageActivityReport'
     CustomReportDetails:
       properties:
         customReportId:
@@ -502,150 +660,12 @@ components:
           daily: '#/components/schemas/DailyReportScheduling'
           weekly: '#/components/schemas/WeeklyReportScheduling'
           monthly: '#/components/schemas/MonthlyReportScheduling'
-    CustomReportFrequenciesEnum:
-      type: string
-      enum:
-      - monthly
-      - weekly
-      - daily
-      - one_time
-    BaseCreateCustomReport:
-      required:
-      - name
-      - type
-      - scheduling
-      properties:
-        name:
-          description: The custom report name
-          type: string
-          maxLength: 70
-          minLength: 3
-          example: My new custom report
-        type:
-          description: The custom report type
-          type: string
-          enum:
-          - subscription_rejections
-          - message_stats
-          - unsubscribe_contacts_lists_report
-          - standard_subscriber_activity_report
-          - bounces
-          - account_summary_report
-          - user_activity
-          - list_summary_report
-          - isp_message_stats_report
-          - webinar_participants_report
-          - import_error_report
-          - message_clicks_report
-          - unconfirmed_contacts_stats_report
-          - transactional_email_bounce_report
-          - message_activity_report
-        scheduling:
-          description: Parameters responsible for defining the reporting period
-          required:
-          - frequency
-          - startDate
-          - endDate
-          properties:
-            frequency:
-              description: The custom report frequency
-              type: string
-              enum:
-              - one_time
-              example: one_time
-            startDate:
-              description: The start of the period for which the report will be generated
-              type: string
-              format: Y-m-d
-              example: '2024-01-01'
-            endDate:
-              description: The end of the period for which the report will be generated
-              type: string
-              format: Y-m-d
-              example: '2024-01-15'
-          type: object
-      type: object
-      discriminator:
-        propertyName: type
-        mapping:
-          subscription_rejections: '#/components/schemas/CreateSubscriptionRejectionsReport'
-          message_stats: '#/components/schemas/CreateMessageStatsReport'
-          unsubscribe_contacts_lists_report: '#/components/schemas/CreateUnsubscribeContactsListsReport'
-          standard_subscriber_activity_report: '#/components/schemas/CreateStandardSubscriberActivityReport'
-          bounces: '#/components/schemas/CreateBouncesReport'
-          account_summary_report: '#/components/schemas/CreateAccountSummaryReport'
-          user_activity: '#/components/schemas/CreateUserActivityReport'
-          list_summary_report: '#/components/schemas/CreateListSummaryReport'
-          isp_message_stats_report: '#/components/schemas/CreateISPMessageStatsReport'
-          webinar_participants_report: '#/components/schemas/CreateWebinarParticipantsReport'
-          import_error_report: '#/components/schemas/CreateImportErrorReport'
-          message_clicks_report: '#/components/schemas/CreateMessageClicksReport'
-          unconfirmed_contacts_stats_report: '#/components/schemas/CreateUnconfirmedContactsStatsReport'
-          transactional_email_bounce_report: '#/components/schemas/CreateTransactionalEmailBounceReport'
-          message_activity_report: '#/components/schemas/CreateMessageActivityReport'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+  requestBodies:
+    CreateCustomReport:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseCreateCustomReport'
   parameters:
     PerPage:
       name: perPage
@@ -718,12 +738,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/CustomReport'
-  requestBodies:
-    CreateCustomReport:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseCreateCustomReport'
   securitySchemes:
     api-key:
       type: apiKey
@@ -746,3 +760,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

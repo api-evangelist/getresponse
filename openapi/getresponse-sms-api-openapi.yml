@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Sms API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Sms operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -15,14 +20,14 @@ servers:
 - url: https://api3.getresponse360.pl/v3
   description: GetResponse MAX PL
 tags:
-- name: Sms
+- name: SMS
 paths:
   /statistics/sms/{smsId}:
     parameters:
     - $ref: '#/components/parameters/smsId'
     get:
       tags:
-      - Sms
+      - SMS
       summary: Get details for the SMS message statistics
       operationId: getSmsStats
       parameters:
@@ -109,71 +114,7 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  parameters:
-    smsId:
-      name: smsId
-      in: path
-      description: The SMS message ID
-      required: true
-      schema:
-        type: string
-      example: N
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
     SmsStats:
       required:
       - smsId
@@ -271,6 +212,70 @@ components:
                   type: object
             type: object
       type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  parameters:
+    smsId:
+      name: smsId
+      in: path
+      description: The SMS message ID
+      required: true
+      schema:
+        type: string
+      example: N
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   responses:
     SmsStats:
       description: SMS statistics
@@ -307,3 +312,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

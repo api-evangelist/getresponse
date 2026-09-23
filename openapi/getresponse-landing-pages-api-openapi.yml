@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Landing Pages API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Landing Pages operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -245,12 +250,72 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    LpsList:
+      description: The list of tags
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Lps'
+    LpsDetails:
+      description: The landing page details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LpsDetails'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     Lps:
       type: object
       allOf:
@@ -261,57 +326,39 @@ components:
             - $ref: '#/components/schemas/LpsListItemStatistics'
         type: object
       - $ref: '#/components/schemas/LpsListItem'
-    LpsPage:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
         uuid:
-          description: The ID of a page associated with the landing page (i.e., 404 page and thank you page)
+          description: UUID of the error response
           type: string
-          readOnly: true
-          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
-        name:
-          description: The name of a page associated with the landing page (i.e., 404 page and thank you page)
-          type: string
-          example: Home
-        status:
-          description: The status of a page associated with the landing page (i.e., 404 page or thank you page)
-          type: string
-          enum:
-          - active
-          - inactive
-        url:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: /terms-of-service
-        redirectUrl:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: ''
-        createdAt:
-          description: The date (in GMT) a page associated with the landing page (i.e., 404 page or thank you page) was created
-          type: string
-          format: date-time
-          example: '2023-03-14T14:42:57'
       type: object
-    LpsDetails:
-      type: object
-      allOf:
-      - properties:
-          pages:
-            type: array
-            items:
-              $ref: '#/components/schemas/LpsPage'
-        type: object
-      - $ref: '#/components/schemas/LpsListItem'
-      - $ref: '#/components/schemas/LpsDetailsStatistics'
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
     LpsListItemStatistics:
       properties:
         visits:
@@ -330,6 +377,45 @@ components:
           format: int64
           example: 52
       type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    LpsDetailsStatistics:
+      properties:
+        pageViews:
+          description: The total number of times your landing page was viewed or refreshed
+          type: integer
+          format: int64
+          example: 9
+        visits:
+          description: The number of browsing sessions initiated on your landing page
+          type: integer
+          format: int64
+          example: 5
+        uniqueVisitors:
+          description: The number of people who visited your landing page
+          type: integer
+          format: int64
+          example: 5
+      type: object
+    LpsDetails:
+      type: object
+      allOf:
+      - properties:
+          pages:
+            type: array
+            items:
+              $ref: '#/components/schemas/LpsPage'
+        type: object
+      - $ref: '#/components/schemas/LpsListItem'
+      - $ref: '#/components/schemas/LpsDetailsStatistics'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     LpsListItem:
       properties:
         lpsId:
@@ -382,88 +468,50 @@ components:
           format: date-time
           example: '2023-03-14T14:42:57'
       type: object
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+    LpsPage:
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
         uuid:
-          description: UUID of the error response
+          description: The ID of a page associated with the landing page (i.e., 404 page and thank you page)
           type: string
+          readOnly: true
+          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
+        name:
+          description: The name of a page associated with the landing page (i.e., 404 page and thank you page)
+          type: string
+          example: Home
+        status:
+          description: The status of a page associated with the landing page (i.e., 404 page or thank you page)
+          type: string
+          enum:
+          - active
+          - inactive
+        url:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: /terms-of-service
+        redirectUrl:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: ''
+        createdAt:
+          description: The date (in GMT) a page associated with the landing page (i.e., 404 page or thank you page) was created
+          type: string
+          format: date-time
+          example: '2023-03-14T14:42:57'
       type: object
-    LpsDetailsStatistics:
-      properties:
-        pageViews:
-          description: The total number of times your landing page was viewed or refreshed
-          type: integer
-          format: int64
-          example: 9
-        visits:
-          description: The number of browsing sessions initiated on your landing page
-          type: integer
-          format: int64
-          example: 5
-        uniqueVisitors:
-          description: The number of people who visited your landing page
-          type: integer
-          format: int64
-          example: 5
-      type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+  parameters:
+    lpsId:
+      name: lpsId
+      in: path
+      description: The landing page ID
+      required: true
       schema:
         type: string
-  parameters:
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
     PerPage:
       name: perPage
       in: query
@@ -475,13 +523,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -492,49 +533,13 @@ components:
         format: int32
         default: 1
         minimum: 1
-    lpsId:
-      name: lpsId
-      in: path
-      description: The landing page ID
-      required: true
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
-  responses:
-    LpsList:
-      description: The list of tags
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Lps'
-    LpsDetails:
-      description: The landing page details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LpsDetails'
   securitySchemes:
     api-key:
       type: apiKey
@@ -557,3 +562,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

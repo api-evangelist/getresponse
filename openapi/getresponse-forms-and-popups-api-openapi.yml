@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Forms and Popups API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Forms and Popups operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -259,92 +264,6 @@ paths:
         - all
 components:
   schemas:
-    PopupDetails:
-      properties:
-        popupId:
-          description: The form or popup ID
-          type: string
-          readOnly: true
-          example: ce84fabc-1349-4992-a2d7-0c44c5534128
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/popups/ce84fabc-1349-4992-a2d7-0c44c5534128
-        name:
-          description: The form or popup name
-          type: string
-          example: My popup name
-        status:
-          description: The form or popup status
-          type: string
-          enum:
-          - published
-          - unpublished
-          readOnly: true
-        type:
-          description: The form or popup type
-          type: string
-          enum:
-          - popup
-          - inline
-          readOnly: true
-        thumbnailUrl:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://us-wbe-img2.gr-cdn.com/user/X/Y.webp
-        createdAt:
-          description: The date (in GMT) the form or popup was created. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-01T10:35:00`.
-          type: string
-          format: date-time
-          example: '2024-01-01T10:35:00'
-        updatedAt:
-          description: The date (in GMT) the form or popup was updated. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-10T10:00:00`.
-          type: string
-          format: date-time
-          example: '2024-01-10T10:00:00'
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
     PopupListItem:
       properties:
         popupId:
@@ -414,6 +333,122 @@ components:
           format: int64
           example: 52
       type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    PopupDetails:
+      properties:
+        popupId:
+          description: The form or popup ID
+          type: string
+          readOnly: true
+          example: ce84fabc-1349-4992-a2d7-0c44c5534128
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/popups/ce84fabc-1349-4992-a2d7-0c44c5534128
+        name:
+          description: The form or popup name
+          type: string
+          example: My popup name
+        status:
+          description: The form or popup status
+          type: string
+          enum:
+          - published
+          - unpublished
+          readOnly: true
+        type:
+          description: The form or popup type
+          type: string
+          enum:
+          - popup
+          - inline
+          readOnly: true
+        thumbnailUrl:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://us-wbe-img2.gr-cdn.com/user/X/Y.webp
+        createdAt:
+          description: The date (in GMT) the form or popup was created. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-01T10:35:00`.
+          type: string
+          format: date-time
+          example: '2024-01-01T10:35:00'
+        updatedAt:
+          description: The date (in GMT) the form or popup was updated. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-10T10:00:00`.
+          type: string
+          format: date-time
+          example: '2024-01-10T10:00:00'
+      type: object
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
   responses:
     PopupsList:
       description: The list of forms and popups
@@ -449,55 +484,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/PopupDetails'
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
   parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -516,6 +503,24 @@ components:
       schema:
         type: string
       example: ce84fabc-1349-4992-a2d7-0c44c5534128
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   securitySchemes:
     api-key:
       type: apiKey
@@ -538,3 +543,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 RSS Newsletters API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The RSS Newsletters operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -709,87 +714,6 @@ paths:
       x-operation-class-name: GetRssNewslettersStatistics
 components:
   schemas:
-    RssNewsletterSendSettingsListing:
-      required:
-      - frequency
-      - filter
-      properties:
-        frequency:
-          description: When to send the message
-          type: string
-          example: asap
-        filter:
-          description: The filter settings for an RSS post
-          type: string
-          enum:
-          - recent
-          - engaged
-          - shared
-          - commented
-        maxArticles:
-          description: How many articles to display in a list
-          type: integer
-          format: int32
-          maximum: 30
-          minimum: 1
-        selectedCampaigns:
-          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
-        selectedSegments:
-          $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
-        selectedSuppressions:
-          $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
-        excludedCampaigns:
-          $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
-        excludedSegments:
-          $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
-      type: object
-      discriminator:
-        propertyName: frequency
-        mapping:
-          asap: '#/components/schemas/RssNewsletterListSendAsapSettings'
-          daily: '#/components/schemas/RssNewsletterListSendDailySettings'
-          weekly: '#/components/schemas/RssNewsletterListSendWeeklySettings'
-          monthly: '#/components/schemas/RssNewsletterListSendMonthlySettings'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    MessageFlagsString:
-      description: 'Comma-separated list of message flags. The possible values are: `openrate`, `clicktrack`, and `google_analytics`.'
-      type: string
-      example: clicktrack,google_analytics
-    RssNewsletterListItem:
-      type: object
-      allOf:
-      - properties:
-          flags:
-            $ref: '#/components/schemas/MessageFlagsString'
-      - $ref: '#/components/schemas/RssNewsletterListing'
-    MessageSendSettingSelectedCampaigns:
-      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
-      type: array
-      items:
-        type: string
-        example: C
-    MessageSendSettingSelectedContacts:
-      description: The list of selected contacts.
-      type: array
-      items:
-        type: string
-        example: eSs
-    RssNewsletterDetails:
-      type: object
-      allOf:
-      - properties:
-          clickTracks:
-            description: The list of tracked links
-            type: array
-            items:
-              $ref: '#/components/schemas/ClickTrack'
-          flags:
-            $ref: '#/components/schemas/MessageFlagsArray'
-      - $ref: '#/components/schemas/RssNewsletter'
     RssNewsletter:
       required:
       - rssNewsletterId
@@ -851,6 +775,88 @@ components:
           format: date-time
           readOnly: true
       type: object
+    NewRssNewsletter:
+      required:
+      - rssFeedUrl
+      - subject
+      - status
+      - fromField
+      - content
+      - sendSettings
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    MessageSendSettingSelectedContacts:
+      description: The list of selected contacts.
+      type: array
+      items:
+        type: string
+        example: eSs
+    UpdateRssNewsletter:
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eSs
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
+    MessageFlagsString:
+      description: 'Comma-separated list of message flags. The possible values are: `openrate`, `clicktrack`, and `google_analytics`.'
+      type: string
+      example: clicktrack,google_analytics
+    MessageSendSettingSelectedSuppressions:
+      description: The list of suppression IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: Ss
     MessageEditorEnum:
       description: 'Indicates how the message was created: `custom` means a custom-made message, `text` means plain text content, `getresponse` means that the message was created using the GetResponse editor.'
       type: string
@@ -860,6 +866,11 @@ components:
       - getresponse
       - legacy
       - html2
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     FromFieldReference:
       required:
       - fromFieldId
@@ -875,34 +886,157 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/from-fields/V
       type: object
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    MessageContent:
-      description: The message content.
-      properties:
-        html:
-          description: The message content in HTML
-          type: string
-          maxLength: 524288
-          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
-        plain:
-          description: The plain text equivalent of the message content
-          type: string
-          maxLength: 524288
-          example: test 12 Some test
+    RssNewsletterDetails:
       type: object
-    MessageSendSettingSelectedSuppressions:
-      description: The list of suppression IDs to exclude subscribers.
+      allOf:
+      - properties:
+          clickTracks:
+            description: The list of tracked links
+            type: array
+            items:
+              $ref: '#/components/schemas/ClickTrack'
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    RssNewsletterListItem:
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsString'
+      - $ref: '#/components/schemas/RssNewsletterListing'
+    MessageFlagsArray:
+      description: The message flags.
       type: array
       items:
         type: string
-        example: Ss
+        enum:
+        - clicktrack
+        - google_analytics
+    MessageStatisticsListElement:
+      properties:
+        timeInterval:
+          description: The statistics time frame in the ISO 8601 datetime format with duration interval
+          type: string
+          pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
+          example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
+        sent:
+          type: integer
+          format: int32
+        totalOpened:
+          type: integer
+          format: int32
+        totalHumanOpened:
+          type: integer
+          format: int32
+        uniqueOpened:
+          type: integer
+          format: int32
+        uniqueHumanOpened:
+          type: integer
+          format: int32
+        totalClicked:
+          type: integer
+          format: int32
+        totalHumanClicked:
+          type: integer
+          format: int32
+        uniqueClicked:
+          type: integer
+          format: int32
+        uniqueHumanClicked:
+          type: integer
+          format: int32
+        goals:
+          type: integer
+          format: int32
+        uniqueGoals:
+          type: integer
+          format: int32
+        forwarded:
+          type: integer
+          format: int32
+        unsubscribed:
+          type: integer
+          format: int32
+        bounced:
+          type: integer
+          format: int32
+        complaints:
+          type: integer
+          format: int32
+      type: object
+    RssNewsletterSendSettingsListing:
+      required:
+      - frequency
+      - filter
+      properties:
+        frequency:
+          description: When to send the message
+          type: string
+          example: asap
+        filter:
+          description: The filter settings for an RSS post
+          type: string
+          enum:
+          - recent
+          - engaged
+          - shared
+          - commented
+        maxArticles:
+          description: How many articles to display in a list
+          type: integer
+          format: int32
+          maximum: 30
+          minimum: 1
+        selectedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+        selectedSegments:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+        selectedSuppressions:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
+        excludedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+        excludedSegments:
+          $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+      type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          asap: '#/components/schemas/RssNewsletterListSendAsapSettings'
+          daily: '#/components/schemas/RssNewsletterListSendDailySettings'
+          weekly: '#/components/schemas/RssNewsletterListSendWeeklySettings'
+          monthly: '#/components/schemas/RssNewsletterListSendMonthlySettings'
+    ClickTrack:
+      properties:
+        clickTrackId:
+          type: string
+          example: C
+        url:
+          description: The tracked link
+          type: string
+          format: uri
+          example: https://example.com
+        name:
+          description: The tracked link name
+          type: string
+          example: press here
+        amount:
+          description: The number of clicks on a link in a message
+          type: string
+          example: '15'
+      type: object
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eC
     RssNewsletterSendSettingsDetails:
       required:
       - frequency
@@ -946,18 +1080,14 @@ components:
           daily: '#/components/schemas/RssNewsletterSendDailySettings'
           weekly: '#/components/schemas/RssNewsletterSendWeeklySettings'
           monthly: '#/components/schemas/RssNewsletterSendMonthlySettings'
-    MessageSendSettingSelectedSegments:
-      description: The list of segment IDs to choose subscribers from.
-      type: array
-      items:
-        type: string
-        example: Se
-    MessageSendSettingExcludedSegments:
-      description: The list of segment IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eSs
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
     RssNewsletterListing:
       required:
       - rssNewsletterId
@@ -1019,172 +1149,27 @@ components:
           format: date-time
           readOnly: true
       type: object
-    MessageSendSettingExcludedCampaigns:
-      description: The list of campaign IDs to exclude subscribers.
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
       type: array
       items:
         type: string
-        example: eC
-    StatusEnum:
-      type: string
-      enum:
-      - enabled
-      - disabled
-    MessageFlagsArray:
-      description: The message flags.
-      type: array
-      items:
-        type: string
-        enum:
-        - clicktrack
-        - google_analytics
-    ClickTrack:
+        example: C
+    MessageContent:
+      description: The message content.
       properties:
-        clickTrackId:
+        html:
+          description: The message content in HTML
           type: string
-          example: C
-        url:
-          description: The tracked link
+          maxLength: 524288
+          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
+        plain:
+          description: The plain text equivalent of the message content
           type: string
-          format: uri
-          example: https://example.com
-        name:
-          description: The tracked link name
-          type: string
-          example: press here
-        amount:
-          description: The number of clicks on a link in a message
-          type: string
-          example: '15'
-      type: object
-    NewRssNewsletter:
-      required:
-      - rssFeedUrl
-      - subject
-      - status
-      - fromField
-      - content
-      - sendSettings
-      type: object
-      allOf:
-      - properties:
-          flags:
-            $ref: '#/components/schemas/MessageFlagsArray'
-      - $ref: '#/components/schemas/RssNewsletter'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    UpdateRssNewsletter:
-      type: object
-      allOf:
-      - properties:
-          flags:
-            $ref: '#/components/schemas/MessageFlagsArray'
-      - $ref: '#/components/schemas/RssNewsletter'
-    MessageStatisticsListElement:
-      properties:
-        timeInterval:
-          description: The statistics time frame in the ISO 8601 datetime format with duration interval
-          type: string
-          pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
-          example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
-        sent:
-          type: integer
-          format: int32
-        totalOpened:
-          type: integer
-          format: int32
-        totalHumanOpened:
-          type: integer
-          format: int32
-        uniqueOpened:
-          type: integer
-          format: int32
-        uniqueHumanOpened:
-          type: integer
-          format: int32
-        totalClicked:
-          type: integer
-          format: int32
-        totalHumanClicked:
-          type: integer
-          format: int32
-        uniqueClicked:
-          type: integer
-          format: int32
-        uniqueHumanClicked:
-          type: integer
-          format: int32
-        goals:
-          type: integer
-          format: int32
-        uniqueGoals:
-          type: integer
-          format: int32
-        forwarded:
-          type: integer
-          format: int32
-        unsubscribed:
-          type: integer
-          format: int32
-        bounced:
-          type: integer
-          format: int32
-        complaints:
-          type: integer
-          format: int32
+          maxLength: 524288
+          example: test 12 Some test
       type: object
   headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -1194,6 +1179,26 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   parameters:
     PerPage:
       name: perPage
@@ -1206,6 +1211,14 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
+    rssNewsletterId:
+      name: rssNewsletterId
+      in: path
+      description: The RSS newsletter ID
+      required: true
+      schema:
+        type: string
+      example: dGer
     Page:
       name: page
       in: query
@@ -1223,49 +1236,7 @@ components:
       required: false
       schema:
         type: string
-    rssNewsletterId:
-      name: rssNewsletterId
-      in: path
-      description: The RSS newsletter ID
-      required: true
-      schema:
-        type: string
-      example: dGer
   responses:
-    RssNewsletterDetails:
-      description: The RSS newsletter details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RssNewsletterDetails'
-    RssNewsletterList:
-      description: The list of RSS newsletters.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/RssNewsletterListItem'
     SingleMessageStatisticsList:
       description: The list of autoresponder statistics split by time interval.
       headers:
@@ -1287,6 +1258,19 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/MessageStatisticsListElement'
+    RssNewsletterDetails:
+      description: The RSS newsletter details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RssNewsletterDetails'
     MessageStatisticsList:
       description: The list of autoresponders statistic split by time interval.
       headers:
@@ -1308,17 +1292,38 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/MessageStatisticsListElement'
-  requestBodies:
-    UpdateRssNewsletter:
+    RssNewsletterList:
+      description: The list of RSS newsletters.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpdateRssNewsletter'
+            type: array
+            items:
+              $ref: '#/components/schemas/RssNewsletterListItem'
+  requestBodies:
     NewRssNewsletter:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewRssNewsletter'
+    UpdateRssNewsletter:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateRssNewsletter'
   securitySchemes:
     api-key:
       type: apiKey
@@ -1341,3 +1346,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

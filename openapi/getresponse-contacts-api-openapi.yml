@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Contacts API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Contacts operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -496,7 +501,7 @@ paths:
       tags:
       - Contacts
       summary: Update contact details
-      description: Skip the fields you don't want to update. If tags and custom fields are provided, they'll be **replaced** with the values sent in this request.  If the `campaignId` changes, the contact will be moved from the original campaign (list) to the new campaign (list). Their activity history and statistics will also be moved.
+      description: Skip the fields you don't want to update. If tags and custom fields are provided, they'll be **replaced** with the values sent in this request. If the `campaignId` changes, the contact will be moved from the original campaign (list) to the new campaign (list). Their activity history and statistics will also be moved.
       operationId: updateContact
       requestBody:
         $ref: '#/components/requestBodies/UpdateContact'
@@ -978,7 +983,13 @@ paths:
       tags:
       - Contacts
       summary: Create multiple contacts at once
-      description: "This endpoint lets you create multiple contacts in one request.\n\n**Note** \n\nThis endpoint is subject to special limits and throttling. You can make 80 calls per time frame (10 minutes) and only 1 call per second. The allowed batch size is 1000 contacts. For more information, check our [API Docs](https://apidocs.getresponse.com/v3/case-study/adding-batch-contacts)."
+      description: 'This endpoint lets you create multiple contacts in one request.
+
+
+        **Note**
+
+
+        This endpoint is subject to special limits and throttling. You can make 80 calls per time frame (10 minutes) and only 1 call per second. The allowed batch size is 1000 contacts. For more information, check our API Docs.'
       operationId: createBatchContacts
       requestBody:
         content:
@@ -1213,7 +1224,217 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    ContactActivityClickTrack:
+      properties:
+        id:
+          description: The click tracking ID
+          type: string
+          example: 62WrE
+        name:
+          description: The name of the clicked link
+          type: string
+          example: Go to shop
+        url:
+          description: The URL of the clicked link
+          type: string
+          format: uri
+          example: https://my-shop.example.com/
+      type: object
+    ContactGeolocation:
+      properties:
+        latitude:
+          type:
+          - string
+          - 'null'
+          example: '54.35'
+        longitude:
+          type:
+          - string
+          - 'null'
+          example: '18.6667'
+        continentCode:
+          type:
+          - string
+          - 'null'
+          enum:
+          - OC
+          - AN
+          - SA
+          - NA
+          - AS
+          - EU
+          - AF
+          example: EU
+        countryCode:
+          description: The country code, compliant with ISO 3166-1 alpha-2
+          type:
+          - string
+          - 'null'
+          example: PL
+        region:
+          type:
+          - string
+          - 'null'
+          example: '82'
+        postalCode:
+          type:
+          - string
+          - 'null'
+          example: 80-387
+        dmaCode:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+          example: Gdansk
+      type: object
+    ContactConsent:
+      properties:
+        consentId:
+          description: The unique identifier of the consent field.
+          type: string
+          readOnly: true
+          example: 8J3k
+        name:
+          description: The name of the consent field.
+          type: string
+          example: Marketing Consent
+        content:
+          description: The actual text content of the consent field.
+          type: string
+          example: I agree to receive marketing emails and SMS messages.
+        isGranted:
+          description: Information whether the consent field is currently granted (true) or not (false).
+          type: boolean
+          example: true
+        history:
+          description: The history of changes to the consent field text.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactConsentHistoryItem'
+      type: object
+    NewContactTags:
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactTag'
+      type: object
+    UpsertContactTags:
+      required:
+      - tags
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NewContactTags'
+    NewContactCustomFieldValues:
+      properties:
+        customFieldValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactCustomFieldValue'
+      type: object
+    ContactCustomFieldValue:
+      required:
+      - customFieldId
+      - name
+      - type
+      - value
+      - values
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          example: 4klkN
+        name:
+          type: string
+          example: age
+        value:
+          type: array
+          items:
+            type: string
+            example: 18-35
+        values:
+          type: array
+          items:
+            type: string
+            example: 18-35
+        type:
+          type: string
+          example: single_select
+        fieldType:
+          type: string
+          example: single_select
+        valueType:
+          type: string
+          example: string
+      type: object
     SortOrderEnum:
       type: string
       enum:
@@ -1241,136 +1462,6 @@ components:
           readOnly: true
           example: Promo campaign
       type: object
-    ContactActivityResource:
-      properties:
-        resourceId:
-          type:
-          - string
-          - 'null'
-          example: oY2n
-        resourceType:
-          type: string
-          enum:
-          - newsletters
-          - splittests
-          - autoresponders
-          - rss-newsletters
-          - sms
-          example: newsletters
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          example: https://api.getresponse.com/v3/newsletters/oY2n
-      type: object
-    NewContactCustomFieldValues:
-      properties:
-        customFieldValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewContactCustomFieldValue'
-      type: object
-    ContactCustomFieldList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContactCustomField'
-    UpsertContactCustomFields:
-      required:
-      - customFieldValues
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NewContactCustomFieldValues'
-    ContactActivityClickTrack:
-      properties:
-        id:
-          description: The click tracking ID
-          type: string
-          example: 62WrE
-        name:
-          description: The name of the clicked link
-          type: string
-          example: Go to shop
-        url:
-          description: The URL of the clicked link
-          type: string
-          format: uri
-          example: https://my-shop.example.com/
-      type: object
-    NewContact:
-      required:
-      - email
-      - campaign
-      type: object
-      allOf:
-      - properties:
-          ipAddress:
-            description: The contact's IP address. IPv4 and IPv6 formats are accepted.
-            example: 1.2.3.4
-            oneOf:
-            - type: string
-              format: ipv4
-            - type: string
-              format: ipv6
-        type: object
-      - $ref: '#/components/schemas/Contact'
-      - $ref: '#/components/schemas/NewContactTags'
-      - $ref: '#/components/schemas/NewContactCustomFieldValues'
-    NewContactCustomFieldValue:
-      required:
-      - customFieldId
-      - value
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          example: kL6Nh
-        value:
-          type: array
-          items:
-            type: string
-            example: 18-35
-      type: object
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    NewContactTag:
-      required:
-      - tagId
-      properties:
-        tagId:
-          type: string
-          example: m7E2
-      type: object
-    ContactListElement:
-      allOf:
-      - properties:
-          note:
-            type:
-            - string
-            - 'null'
-            maxLength: 255
-            minLength: 0
-          ipAddress:
-            description: The contact's IP address. IPv4 and IPv6 formats are accepted.
-            example: 1.2.3.4
-            oneOf:
-            - type: string
-              format: ipv4
-            - type: string
-              format: ipv6
-        type: object
-      - $ref: '#/components/schemas/Contact'
-    UpsertContactTags:
-      required:
-      - tags
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NewContactTags'
     UpdateContact:
       type: object
       allOf:
@@ -1487,155 +1578,25 @@ components:
         type: object
       - $ref: '#/components/schemas/NewContactTags'
       - $ref: '#/components/schemas/NewContactCustomFieldValues'
-    NewContactTags:
-      properties:
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewContactTag'
-      type: object
-    ContactConsentHistoryItem:
-      properties:
-        content:
-          description: The text content of the consent field.
-          type: string
-          example: I agree to receive marketing emails.
-        wasGranted:
-          description: Information whether the consent field was granted.
-          type: boolean
-          example: true
-        declaredAt:
-          description: The date and time when the consent field status was declared by the contact (ISO 8601).
-          type: string
-          format: date-time
-          example: 2024-07-20T06:24:14+0000
-        createdAt:
-          description: The date and time when this consent field version was created (ISO 8601).
-          type: string
-          format: date-time
-          example: 2024-07-20T06:24:14+0000
-      type: object
-    ContactGeolocation:
-      properties:
-        latitude:
-          type:
-          - string
-          - 'null'
-          example: '54.35'
-        longitude:
-          type:
-          - string
-          - 'null'
-          example: '18.6667'
-        continentCode:
-          type:
-          - string
-          - 'null'
-          enum:
-          - OC
-          - AN
-          - SA
-          - NA
-          - AS
-          - EU
-          - AF
-          example: EU
-        countryCode:
-          description: The country code, compliant with ISO 3166-1 alpha-2
-          type:
-          - string
-          - 'null'
-          example: PL
-        region:
-          type:
-          - string
-          - 'null'
-          example: '82'
-        postalCode:
-          type:
-          - string
-          - 'null'
-          example: 80-387
-        dmaCode:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-          example: Gdansk
-      type: object
-    ContactCustomFieldValue:
+    NewContact:
       required:
-      - customFieldId
-      - name
-      - type
-      - value
-      - values
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          example: 4klkN
-        name:
-          type: string
-          example: age
-        value:
-          type: array
-          items:
-            type: string
-            example: 18-35
-        values:
-          type: array
-          items:
-            type: string
-            example: 18-35
-        type:
-          type: string
-          example: single_select
-        fieldType:
-          type: string
-          example: single_select
-        valueType:
-          type: string
-          example: string
+      - email
+      - campaign
       type: object
-    ContactActivity:
-      properties:
-        activity:
-          description: The type of activity
-          type: string
-          enum:
-          - send
-          - open
-          - click
-          example: click
-        subject:
-          type: string
-          example: Shop offer update!
-        createdOn:
-          description: The activity date
-          type: string
-          format: date-time
-        previewUrl:
-          description: This is only available for the `send` activity. It includes a link to the message preview
-          type:
-          - string
-          - 'null'
-          format: uri
-          example: https://www.grnewsletters.com/archive/campaign_name55f6b0ff01/Test-2135303.html
-        resource:
-          $ref: '#/components/schemas/ContactActivityResource'
-        clickTrack:
-          description: This is only available for the `click` activity. It includes the clicked link data
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/ContactActivityClickTrack'
-      type: object
-      readOnly: true
+      allOf:
+      - properties:
+          ipAddress:
+            description: The contact's IP address. IPv4 and IPv6 formats are accepted.
+            example: 1.2.3.4
+            oneOf:
+            - type: string
+              format: ipv4
+            - type: string
+              format: ipv6
+        type: object
+      - $ref: '#/components/schemas/Contact'
+      - $ref: '#/components/schemas/NewContactTags'
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
     ContactCustomField:
       properties:
         customFieldId:
@@ -1647,72 +1608,20 @@ components:
             type: string
             example: 18-35
       type: object
-    ContactDetails:
-      type: object
-      allOf:
-      - properties:
-          geolocation:
-            $ref: '#/components/schemas/ContactGeolocation'
-          tags:
-            description: The list of contact tags, limited to 500 tags.
-            type: array
-            items:
-              $ref: '#/components/schemas/ContactTag'
-          customFieldValues:
-            type: array
-            items:
-              $ref: '#/components/schemas/ContactCustomFieldValue'
-        type: object
-      - $ref: '#/components/schemas/ContactListElement'
-    ContactTag:
-      properties:
-        tagId:
-          type: string
-          example: hR
-        name:
-          type: string
-          example: super_promo
-        href:
-          type: string
-          format: uri
-          example: https://api.getresponse.com/v3/tags/hR
-        color:
-          type: string
-          example: ''
-          deprecated: true
-      type: object
-    ErrorResponse:
+    NewContactCustomFieldValue:
       required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+      - customFieldId
+      - value
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
+        customFieldId:
+          description: Custom field ID
           type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+          example: kL6Nh
+        value:
+          type: array
+          items:
+            type: string
+            example: 18-35
       type: object
     Contact:
       required:
@@ -1804,61 +1713,184 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/contacts/pV3r
       type: object
-    ContactConsent:
+    ContactActivity:
       properties:
-        consentId:
-          description: The unique identifier of the consent field.
+        activity:
+          description: The type of activity
           type: string
-          readOnly: true
-          example: 8J3k
-        name:
-          description: The name of the consent field.
+          enum:
+          - send
+          - open
+          - click
+          example: click
+        subject:
           type: string
-          example: Marketing Consent
+          example: Shop offer update!
+        createdOn:
+          description: The activity date
+          type: string
+          format: date-time
+        previewUrl:
+          description: This is only available for the `send` activity. It includes a link to the message preview
+          type:
+          - string
+          - 'null'
+          format: uri
+          example: https://www.grnewsletters.com/archive/campaign_name55f6b0ff01/Test-2135303.html
+        resource:
+          $ref: '#/components/schemas/ContactActivityResource'
+        clickTrack:
+          description: This is only available for the `click` activity. It includes the clicked link data
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/ContactActivityClickTrack'
+      type: object
+      readOnly: true
+    ContactListElement:
+      allOf:
+      - properties:
+          note:
+            type:
+            - string
+            - 'null'
+            maxLength: 255
+            minLength: 0
+          ipAddress:
+            description: The contact's IP address. IPv4 and IPv6 formats are accepted.
+            example: 1.2.3.4
+            oneOf:
+            - type: string
+              format: ipv4
+            - type: string
+              format: ipv6
+        type: object
+      - $ref: '#/components/schemas/Contact'
+    ContactDetails:
+      type: object
+      allOf:
+      - properties:
+          geolocation:
+            $ref: '#/components/schemas/ContactGeolocation'
+          tags:
+            description: The list of contact tags, limited to 500 tags.
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactTag'
+          customFieldValues:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactCustomFieldValue'
+        type: object
+      - $ref: '#/components/schemas/ContactListElement'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    UpsertContactCustomFields:
+      required:
+      - customFieldValues
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
+    NewContactTag:
+      required:
+      - tagId
+      properties:
+        tagId:
+          type: string
+          example: m7E2
+      type: object
+    ContactCustomFieldList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactCustomField'
+    ContactConsentHistoryItem:
+      properties:
         content:
-          description: The actual text content of the consent field.
+          description: The text content of the consent field.
           type: string
-          example: I agree to receive marketing emails and SMS messages.
-        isGranted:
-          description: Information whether the consent field is currently granted (true) or not (false).
+          example: I agree to receive marketing emails.
+        wasGranted:
+          description: Information whether the consent field was granted.
           type: boolean
           example: true
-        history:
-          description: The history of changes to the consent field text.
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactConsentHistoryItem'
+        declaredAt:
+          description: The date and time when the consent field status was declared by the contact (ISO 8601).
+          type: string
+          format: date-time
+          example: 2024-07-20T06:24:14+0000
+        createdAt:
+          description: The date and time when this consent field version was created (ISO 8601).
+          type: string
+          format: date-time
+          example: 2024-07-20T06:24:14+0000
       type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+    ContactActivityResource:
+      properties:
+        resourceId:
+          type:
+          - string
+          - 'null'
+          example: oY2n
+        resourceType:
+          type: string
+          enum:
+          - newsletters
+          - splittests
+          - autoresponders
+          - rss-newsletters
+          - sms
+          example: newsletters
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/newsletters/oY2n
+      type: object
+    ContactTag:
+      properties:
+        tagId:
+          type: string
+          example: hR
+        name:
+          type: string
+          example: super_promo
+        href:
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/tags/hR
+        color:
+          type: string
+          example: ''
+          deprecated: true
+      type: object
+  requestBodies:
+    UpsertContactTags:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertContactTags'
+    UpsertContactCustomFields:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertContactCustomFields'
+    UpdateContact:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateContact'
+    NewContact:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewContact'
   parameters:
     PerPage:
       name: perPage
@@ -1888,14 +1920,6 @@ components:
       required: false
       schema:
         type: string
-    campaignId:
-      name: campaignId
-      in: path
-      description: 'Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`.'
-      required: true
-      schema:
-        type: string
-      example: 3Va2e
     contactId:
       name: contactId
       in: path
@@ -1904,9 +1928,38 @@ components:
       schema:
         type: string
       example: pV3r
+    campaignId:
+      name: campaignId
+      in: path
+      description: 'Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`.'
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
   responses:
-    ContactCustomFieldList:
-      description: The list of custom fields
+    ContactActivityList:
+      description: The list of contact activities.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactActivity'
+    ContactDetails:
+      description: The contact details.
       headers:
         X-RateLimit-Limit:
           $ref: '#/components/headers/RateLimitLimit'
@@ -1917,7 +1970,22 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ContactCustomFieldList'
+            $ref: '#/components/schemas/ContactDetails'
+    ContactConsentList:
+      description: A collection of contact consent fields with their full history.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ContactConsent'
     UpsertContactTags:
       description: ' The list of contact tags.'
       headers:
@@ -1953,27 +2021,6 @@ components:
                   readOnly: true
                   example: 2024-07-20T06:24:14+0000
               type: object
-    ContactActivityList:
-      description: The list of contact activities.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/ContactActivity'
     ContactList:
       description: The list of contacts.
       headers:
@@ -1995,8 +2042,8 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ContactListElement'
-    ContactConsentList:
-      description: A collection of contact consent fields with their full history.
+    ContactCustomFieldList:
+      description: The list of custom fields
       headers:
         X-RateLimit-Limit:
           $ref: '#/components/headers/RateLimitLimit'
@@ -2007,43 +2054,7 @@ components:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/ContactConsent'
-    ContactDetails:
-      description: The contact details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ContactDetails'
-  requestBodies:
-    UpdateContact:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateContact'
-    NewContact:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewContact'
-    UpsertContactTags:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpsertContactTags'
-    UpsertContactCustomFields:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpsertContactCustomFields'
+            $ref: '#/components/schemas/ContactCustomFieldList'
   securitySchemes:
     api-key:
       type: apiKey
@@ -2066,3 +2077,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Legacy Landing Pages API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Legacy Landing Pages operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -253,97 +258,37 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    CampaignReference:
-      required:
-      - campaignId
-      properties:
-        campaignId:
-          description: Campaign ID
-          type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
-      type: object
-    LandingPage:
-      type: object
-      allOf:
-      - properties:
-          metaDescription:
-            description: The landing page meta description property
-            type: string
-            example: Some meta description
-          metaNoindex:
-            description: To entirely prevent your page content from being listed in the Google web index, even if other sites link to it use a noindex meta tag
-            type: string
-            enum:
-            - 'yes'
-            - 'no'
-          dayOfCycle:
-            description: Contacts subscribed via the landing page will be added to the autoresponder cycle. `Null` if contacts shouldn't be added to the cycle.
-            type:
-            - integer
-            - 'null'
-            format: int32
-            maximum: 9999
-            minimum: 0
-            example: 2
-          optin:
-            description: The opt-in type (double or single)
-            type: string
-            enum:
-            - single
-            - double
-          favicoUrl:
-            description: The favicon URL. Can be `null` if a favicon isn't present
-            type:
-            - string
-            - 'null'
-            format: uri
-            example: https://my-landing-page.mohahaha.com/favico.ico
-          thankYouPageType:
-            description: What should happen after a contact subscribes
-            type: string
-            enum:
-            - stay_on_page
-            - default
-            - custom_url
-          thankYouPageUrl:
-            description: The `thank-you` page URL. Can be empty if a custom thank-you page isn't being used
-            type: string
-            format: uri
-            example: https://my-landing-page.mohahaha.com/thank_you.html
-          url:
-            description: The landing page URL
-            type: string
-            format: uri
-            example: https://my-landing-page.mohahaha.com
-          variants:
-            type: array
-            items:
-              $ref: '#/components/schemas/LandingPageVariant'
-      - $ref: '#/components/schemas/BaseLandingPage'
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
     BaseLandingPage:
       properties:
         landingPageId:
@@ -408,46 +353,6 @@ components:
           format: date-time
           readOnly: true
       type: object
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    LandingPageVariant:
-      properties:
-        variantId:
-          description: The landing page variant ID.
-          type: string
-          example: PKxn
-        variant:
-          description: The variant index.
-          type: string
-          format: integer
-          example: '0'
-        winner:
-          type: boolean
-          example: true
-        visitors:
-          type: string
-          format: integer
-          example: '12'
-        uniqueVisitors:
-          type: string
-          format: integer
-          example: '2'
-        subscribed:
-          type: string
-          format: integer
-          example: '2'
-      type: object
-    StatusEnum:
-      type: string
-      enum:
-      - enabled
-      - disabled
     ErrorResponse:
       required:
       - httpStatus
@@ -481,36 +386,136 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    LandingPageVariant:
+      properties:
+        variantId:
+          description: The landing page variant ID.
+          type: string
+          example: PKxn
+        variant:
+          description: The variant index.
+          type: string
+          format: integer
+          example: '0'
+        winner:
+          type: boolean
+          example: true
+        visitors:
+          type: string
+          format: integer
+          example: '12'
+        uniqueVisitors:
+          type: string
+          format: integer
+          example: '2'
+        subscribed:
+          type: string
+          format: integer
+          example: '2'
+      type: object
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    LandingPage:
+      type: object
+      allOf:
+      - properties:
+          metaDescription:
+            description: The landing page meta description property
+            type: string
+            example: Some meta description
+          metaNoindex:
+            description: To entirely prevent your page content from being listed in the Google web index, even if other sites link to it use a noindex meta tag
+            type: string
+            enum:
+            - 'yes'
+            - 'no'
+          dayOfCycle:
+            description: Contacts subscribed via the landing page will be added to the autoresponder cycle. `Null` if contacts shouldn't be added to the cycle.
+            type:
+            - integer
+            - 'null'
+            format: int32
+            maximum: 9999
+            minimum: 0
+            example: 2
+          optin:
+            description: The opt-in type (double or single)
+            type: string
+            enum:
+            - single
+            - double
+          favicoUrl:
+            description: The favicon URL. Can be `null` if a favicon isn't present
+            type:
+            - string
+            - 'null'
+            format: uri
+            example: https://my-landing-page.mohahaha.com/favico.ico
+          thankYouPageType:
+            description: What should happen after a contact subscribes
+            type: string
+            enum:
+            - stay_on_page
+            - default
+            - custom_url
+          thankYouPageUrl:
+            description: The `thank-you` page URL. Can be empty if a custom thank-you page isn't being used
+            type: string
+            format: uri
+            example: https://my-landing-page.mohahaha.com/thank_you.html
+          url:
+            description: The landing page URL
+            type: string
+            format: uri
+            example: https://my-landing-page.mohahaha.com
+          variants:
+            type: array
+            items:
+              $ref: '#/components/schemas/LandingPageVariant'
+      - $ref: '#/components/schemas/BaseLandingPage'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
   parameters:
     PerPage:
       name: perPage
@@ -523,14 +528,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    landingPageId:
-      name: landingPageId
-      in: path
-      description: The landing page ID.
-      required: true
-      schema:
-        type: string
-      example: avYn
     Page:
       name: page
       in: query
@@ -548,7 +545,30 @@ components:
       required: false
       schema:
         type: string
+    landingPageId:
+      name: landingPageId
+      in: path
+      description: The landing page ID.
+      required: true
+      schema:
+        type: string
+      example: avYn
   responses:
+    LandingPageDetails:
+      description: The landing pages details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/LandingPage'
     LandingPageList:
       description: The list of landing pages.
       headers:
@@ -570,21 +590,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/BaseLandingPage'
-    LandingPageDetails:
-      description: The landing pages details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/LandingPage'
   securitySchemes:
     api-key:
       type: apiKey
@@ -607,3 +612,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

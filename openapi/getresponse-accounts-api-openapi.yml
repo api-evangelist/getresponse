@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Accounts API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Accounts operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -1028,186 +1033,87 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    AccountBlocklist:
-      description: Blocklist masks for the whole account.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Blocklist'
-    AccountBadgeDetails:
-      description: Account badge status
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccountBadgeDetails'
-    Callback:
-      description: Callback configuration
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Callback'
-    AccountTimezoneList:
-      description: List of time zones
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Timezone'
-    SendingLimitsList:
-      description: Send limits
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/SendingLimitsListItem'
-    AccountLoginHistoryList:
-      description: Login history information
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AccountsLoginHistoryListElement'
-    AccountDetails:
-      description: Your account information
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Account'
-    IndustryList:
-      description: Industry tags list
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/IndustryTag'
-    AccountBillingDetails:
-      description: Billing information.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccountBilling'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    UpdateBlocklist:
+    ErrorResponse:
       required:
-      - masks
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Blocklist'
-    TimezoneOffset:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        offset:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
           type: string
-          pattern: /^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$/
-          example: +01:00
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
-    IndustryTagId:
+    AccountDetailsCountryCode:
       properties:
-        industryTagId:
-          description: Industry tag ID
+        countryCodeId:
+          description: Country code ID
           type: string
-          format: integer
-          example: '1'
+          example: '175'
+        countryCode:
+          description: Country code
+          type: string
+          example: PL
       type: object
-    UpdateCallbacks:
+    TimezoneId:
       properties:
-        url:
-          description: URL to use to post notifications, required if callbacks are not yet enabled
-          type: string
-          format: uri
-          example: https://example.com/callback
-        actions:
-          $ref: '#/components/schemas/CallbackActions'
-      type: object
-    IndustryTagProperties:
-      properties:
-        name:
-          type: string
-          readOnly: true
-          example: Marketing agencies
-        description:
-          type: string
-          readOnly: true
-          example: Marketing agencies big and small, with fluent and wise agents...
+        timezoneId:
+          type: integer
+          format: int32
+          example: 1
       type: object
     AccountsLoginHistoryListElement:
       properties:
@@ -1234,114 +1140,36 @@ components:
           format: ipv4
           example: 192.0.0.1
       type: object
-    SendingLimitsListItem:
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    TimezoneOffset:
       properties:
-        timeFrame:
-          description: Time frame, measured in seconds
-          type: integer
-          example: 2592000
-        limit:
-          description: The number of email sends available within a given time frame
-          type: integer
-          example: 2500
-        used:
-          description: The number of email sends used within the given time frame
-          type: integer
-          example: 0
+        offset:
+          type: string
+          pattern: /^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$/
+          example: +01:00
       type: object
-    AccountBilling:
+    UpdateBlocklist:
+      required:
+      - masks
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Blocklist'
+    IndustryTagId:
       properties:
-        listSize:
-          description: Billing plan maximum list size
+        industryTagId:
+          description: Industry tag ID
           type: string
-          example: '2500'
-        paymentPlan:
-          description: Payment plan
-          type: string
-          enum:
-          - Free Trial
-          - Monthly
-          - 12 Months
-          - 24 Months
-          example: Monthly
-        subscriptionPrice:
-          description: Subscription price
-          type: integer
-          example: 25
-        renewalDate:
-          description: Subscription reneval date
-          type: string
-          format: date
-          example: '2017-01-01'
-        currencyCode:
-          description: Currency code compliant with ISO-4217
-          type: string
-          example: USD
-        accountBalance:
-          description: Account balance
-          type: string
-          example: '-15.00'
-        price:
-          description: Price
-          type: integer
-          example: 25
-        paymentMethod:
-          description: Payment method
-          type: string
-          enum:
-          - outside_system
-          - inside_system
-          - credit_card
-          - platnosci_pl
-          - direct_debit
-          - paypal
-          - yandex
-          - alipay
-          - alipay_mobile
-          - boleto
-          - ideal
-          - qiwi
-          - sofort
-          - webmoney
-          example: credit_card
-        creditCard:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - properties:
-              number:
-                description: Masked credit card number
-                type: string
-                example: XXXXXXXXX0123
-            type: object
-          - properties:
-              expirationDate:
-                description: Expiration date
-                type: string
-                format: date
-                example: '2014-01-01'
-            type: object
-        addons:
-          description: Addons
-          type: array
-          items:
-            properties:
-              name:
-                description: Addon name
-                type: string
-                example: Landing Page Creator
-              price:
-                description: Addon price
-                type: integer
-                example: 15
-              active:
-                description: Addon active status
-                example: 'true'
-                allOf:
-                - $ref: '#/components/schemas/StringBooleanEnum'
-            type: object
+          format: integer
+          example: '1'
       type: object
+    UpdateAccount:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Account'
     CallbackActions:
       properties:
         open:
@@ -1360,23 +1188,50 @@ components:
           description: Is `survey` callback enabled
           type: boolean
       type: object
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    AccountBadgeDetails:
+      properties:
+        status:
+          description: Current badge status
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+      type: object
+    UpdateCallbacks:
+      properties:
+        url:
+          description: URL to use to post notifications, required if callbacks are not yet enabled
+          type: string
+          format: uri
+          example: https://example.com/callback
+        actions:
+          $ref: '#/components/schemas/CallbackActions'
+      type: object
+    Callback:
+      properties:
+        url:
+          description: URL to use to post notifications
+          format: uri
+        actions:
+          $ref: '#/components/schemas/CallbackActions'
+      type: object
+    IndustryTag:
+      required:
+      - industryTagId
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IndustryTagId'
+      - $ref: '#/components/schemas/IndustryTagProperties'
     TimezoneName:
       properties:
         name:
           description: Time zone name as defined by https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           type: string
           example: Europe/Warsaw
-      type: object
-    AccountDetailsCountryCode:
-      properties:
-        countryCodeId:
-          description: Country code ID
-          type: string
-          example: '175'
-        countryCode:
-          description: Country code
-          type: string
-          example: PL
       type: object
     Blocklist:
       properties:
@@ -1386,30 +1241,6 @@ components:
             type: string
             example: jack@somedomain.com
       type: object
-    UpdateAccount:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Account'
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    Callback:
-      properties:
-        url:
-          description: URL to use to post notifications
-          format: uri
-        actions:
-          $ref: '#/components/schemas/CallbackActions'
-      type: object
-    TimezoneId:
-      properties:
-        timezoneId:
-          type: integer
-          format: int32
-          example: 1
-      type: object
     Timezone:
       required:
       - timezoneId
@@ -1418,12 +1249,6 @@ components:
       - $ref: '#/components/schemas/TimezoneName'
       - $ref: '#/components/schemas/TimezoneOffset'
       - $ref: '#/components/schemas/TimezoneCountry'
-    TimezoneCountry:
-      properties:
-        country:
-          type: string
-          example: Poland
-      type: object
     Account:
       properties:
         accountId:
@@ -1519,89 +1344,269 @@ components:
           - 24h
           example: 24h
       type: object
-    StatusEnum:
-      type: string
-      enum:
-      - enabled
-      - disabled
-    IndustryTag:
-      required:
-      - industryTagId
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/IndustryTagId'
-      - $ref: '#/components/schemas/IndustryTagProperties'
-    AccountBadgeDetails:
+    IndustryTagProperties:
       properties:
-        status:
-          description: Current badge status
-          example: enabled
+        name:
+          type: string
+          readOnly: true
+          example: Marketing agencies
+        description:
+          type: string
+          readOnly: true
+          example: Marketing agencies big and small, with fluent and wise agents...
+      type: object
+    TimezoneCountry:
+      properties:
+        country:
+          type: string
+          example: Poland
+      type: object
+    AccountBilling:
+      properties:
+        listSize:
+          description: Billing plan maximum list size
+          type: string
+          example: '2500'
+        paymentPlan:
+          description: Payment plan
+          type: string
+          enum:
+          - Free Trial
+          - Monthly
+          - 12 Months
+          - 24 Months
+          example: Monthly
+        subscriptionPrice:
+          description: Subscription price
+          type: integer
+          example: 25
+        renewalDate:
+          description: Subscription reneval date
+          type: string
+          format: date
+          example: '2017-01-01'
+        currencyCode:
+          description: Currency code compliant with ISO-4217
+          type: string
+          example: USD
+        accountBalance:
+          description: Account balance
+          type: string
+          example: '-15.00'
+        price:
+          description: Price
+          type: integer
+          example: 25
+        paymentMethod:
+          description: Payment method
+          type: string
+          enum:
+          - outside_system
+          - inside_system
+          - credit_card
+          - platnosci_pl
+          - direct_debit
+          - paypal
+          - yandex
+          - alipay
+          - alipay_mobile
+          - boleto
+          - ideal
+          - qiwi
+          - sofort
+          - webmoney
+          example: credit_card
+        creditCard:
+          type:
+          - object
+          - 'null'
           allOf:
-          - $ref: '#/components/schemas/StatusEnum'
+          - properties:
+              number:
+                description: Masked credit card number
+                type: string
+                example: XXXXXXXXX0123
+            type: object
+          - properties:
+              expirationDate:
+                description: Expiration date
+                type: string
+                format: date
+                example: '2014-01-01'
+            type: object
+        addons:
+          description: Addons
+          type: array
+          items:
+            properties:
+              name:
+                description: Addon name
+                type: string
+                example: Landing Page Creator
+              price:
+                description: Addon price
+                type: integer
+                example: 15
+              active:
+                description: Addon active status
+                example: 'true'
+                allOf:
+                - $ref: '#/components/schemas/StringBooleanEnum'
+            type: object
       type: object
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+    SendingLimitsListItem:
       properties:
-        httpStatus:
-          description: HTTP response code
+        timeFrame:
+          description: Time frame, measured in seconds
           type: integer
-          format: int32
-        code:
-          description: API error code
+          example: 2592000
+        limit:
+          description: The number of email sends available within a given time frame
           type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+          example: 2500
+        used:
+          description: The number of email sends used within the given time frame
+          type: integer
+          example: 0
       type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+  responses:
+    IndustryList:
+      description: Industry tags list
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/IndustryTag'
+    AccountBadgeDetails:
+      description: Account badge status
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBadgeDetails'
+    SendingLimitsList:
+      description: Send limits
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SendingLimitsListItem'
+    AccountTimezoneList:
+      description: List of time zones
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Timezone'
+    Callback:
+      description: Callback configuration
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Callback'
+    AccountBillingDetails:
+      description: Billing information.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBilling'
+    AccountDetails:
+      description: Your account information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
+    AccountBlocklist:
+      description: Blocklist masks for the whole account.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Blocklist'
+    AccountLoginHistoryList:
+      description: Login history information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountsLoginHistoryListElement'
   parameters:
     PerPage:
       name: perPage
@@ -1687,3 +1692,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

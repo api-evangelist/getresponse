@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Carts API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Carts operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -25,7 +30,18 @@ paths:
       tags:
       - Carts
       summary: Get shop carts
-      description: "\nSending a **GET** request to this URL returns a collection of cart resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n\n * externalId\n * createdOn\n\n\n\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      description: 'Sending a **GET** request to this URL returns a collection of cart resources that belong to the given shop.
+
+
+        You can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:
+
+
+        * externalId
+
+        * createdOn
+
+
+        You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.'
       operationId: getCarts
       parameters:
       - name: query[createdOn][from]
@@ -121,15 +137,10 @@ paths:
       tags:
       - Carts
       summary: Create cart
-      description: '
-
-        Sending a **POST** request to this URL will create a new cart resource.
+      description: 'Sending a **POST** request to this URL will create a new cart resource.
 
 
-        In order to create a new cart, you need to send the cart resource in the body of the request (remember that you need to serialize the body into a JSON string)
-
-
-        '
+        In order to create a new cart, you need to send the cart resource in the body of the request (remember that you need to serialize the body into a JSON string)'
       operationId: createCart
       requestBody:
         $ref: '#/components/requestBodies/NewCart'
@@ -220,12 +231,7 @@ paths:
       tags:
       - Carts
       summary: Get cart by ID
-      description: '
-
-        This method returns cart with the given `cartId` in the context of a given `shopId`
-
-
-        '
+      description: This method returns cart with the given `cartId` in the context of a given `shopId`
       operationId: getCart
       parameters:
       - $ref: '#/components/parameters/Fields'
@@ -312,15 +318,10 @@ paths:
       tags:
       - Carts
       summary: Update cart
-      description: '
-
-        Update properties of the shop cart. You should send only those fields that need to be changed. The rest of the properties will stay the same.
+      description: 'Update properties of the shop cart. You should send only those fields that need to be changed. The rest of the properties will stay the same.
 
 
-        In case of selectedVariants, when the collection is updated, the old one is completely removed.
-
-
-        '
+        In case of selectedVariants, when the collection is updated, the old one is completely removed.'
       operationId: updateCart
       requestBody:
         $ref: '#/components/requestBodies/UpdateCart'
@@ -496,71 +497,37 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    NewCartSelectedProductVariant:
-      required:
-      - variantId
-      - quantity
-      - price
-      - priceTax
-      properties:
-        variantId:
-          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
-          type: string
-          example: VTB
-        quantity:
-          description: The quantity
-          type: integer
-          format: int64
-          minimum: 1
-          example: 3
-        price:
-          description: The price, tax excluded
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 57
-        priceTax:
-          description: The price, tax included
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 68
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/products/9I/variants/VTB
-      type: object
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
     Cart:
       type: object
       allOf:
@@ -614,15 +581,6 @@ components:
             format: url
             example: http://example.com/cart/nQ
       - $ref: '#/components/schemas/CreateAndUpdate'
-    NewCart:
-      required:
-      - contactId
-      - totalPrice
-      - currency
-      - selectedVariants
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Cart'
     ErrorResponse:
       required:
       - httpStatus
@@ -660,37 +618,99 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/Cart'
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    NewCart:
+      required:
+      - contactId
+      - totalPrice
+      - currency
+      - selectedVariants
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Cart'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    NewCartSelectedProductVariant:
+      required:
+      - variantId
+      - quantity
+      - price
+      - priceTax
+      properties:
+        variantId:
+          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
+          type: string
+          example: VTB
+        quantity:
+          description: The quantity
+          type: integer
+          format: int64
+          minimum: 1
+          example: 3
+        price:
+          description: The price, tax excluded
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 57
+        priceTax:
+          description: The price, tax included
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 68
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/products/9I/variants/VTB
+      type: object
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+  requestBodies:
+    NewCart:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCart'
+    UpdateCart:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCart'
+  parameters:
+    cartId:
+      name: cartId
+      in: path
+      description: The cart ID
+      required: true
       schema:
         type: string
-  parameters:
+      example: V
     PerPage:
       name: perPage
       in: query
@@ -702,13 +722,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -719,14 +732,13 @@ components:
         format: int32
         default: 1
         minimum: 1
-    cartId:
-      name: cartId
-      in: path
-      description: The cart ID
-      required: true
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
-      example: V
     shopId:
       name: shopId
       in: path
@@ -735,31 +747,7 @@ components:
       schema:
         type: string
       example: pf3
-  requestBodies:
-    UpdateCart:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCart'
-    NewCart:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewCart'
   responses:
-    CartDetails:
-      description: The cart details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Cart'
     CartList:
       description: The list of carts
       headers:
@@ -781,6 +769,19 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Cart'
+    CartDetails:
+      description: The cart details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Cart'
   securitySchemes:
     api-key:
       type: apiKey
@@ -803,3 +804,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

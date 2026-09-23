@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Predefined Fields API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Predefined Fields operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -465,7 +470,96 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    PredefinedField:
+      properties:
+        predefinedFieldId:
+          type: string
+          readOnly: true
+          example: 6neM
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/predefined-fields/6neM
+        name:
+          type: string
+          maxLength: 32
+          minLength: 1
+          pattern: ^[A-Za-z0-9_]{1,32}$
+          example: my_predefined_field_123
+        value:
+          type: string
+          maxLength: 350
+          minLength: 1
+          example: my value
+        campaign:
+          $ref: '#/components/schemas/CampaignReference'
+      type: object
     SortOrderEnum:
       type: string
       enum:
@@ -504,32 +598,6 @@ components:
           pattern: ^[A-Za-z_]{1,350}$
           example: my_new_value
       type: object
-    PredefinedField:
-      properties:
-        predefinedFieldId:
-          type: string
-          readOnly: true
-          example: 6neM
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/predefined-fields/6neM
-        name:
-          type: string
-          maxLength: 32
-          minLength: 1
-          pattern: ^[A-Za-z0-9_]{1,32}$
-          example: my_predefined_field_123
-        value:
-          type: string
-          maxLength: 350
-          minLength: 1
-          example: my value
-        campaign:
-          $ref: '#/components/schemas/CampaignReference'
-      type: object
     NewPredefinedField:
       required:
       - name
@@ -538,69 +606,6 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/PredefinedField'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
   parameters:
     PerPage:
       name: perPage
@@ -623,13 +628,6 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     predefinedFieldId:
       name: predefinedFieldId
       in: path
@@ -638,6 +636,24 @@ components:
       schema:
         type: string
       example: 6neM
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  requestBodies:
+    NewPredefinedField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPredefinedField'
+    UpdatePredefinedField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePredefinedField'
   responses:
     PredefinedFieldDetails:
       description: The predefined field details.
@@ -673,17 +689,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/PredefinedField'
-  requestBodies:
-    UpdatePredefinedField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdatePredefinedField'
-    NewPredefinedField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPredefinedField'
   securitySchemes:
     api-key:
       type: apiKey
@@ -706,3 +711,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

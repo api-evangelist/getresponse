@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 A/B tests - subject API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The A/B tests - subject operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -627,57 +632,78 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    AbtestsSubjectGetDetails:
+      description: A/B test details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AbtestsSubjectDetails'
+    AbtestsSubjectGetList:
+      description: The list of A/B tests
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AbtestsSubjectListItem'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    CampaignReference:
-      required:
-      - campaignId
-      properties:
-        campaignId:
-          description: Campaign ID
-          type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
-      type: object
-    MessageSendSettingSelectedCampaigns:
-      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
       type: array
       items:
         type: string
-        example: C
-    AbtestsSubjectStatistics:
-      properties:
-        delivered:
-          description: The total number of delivered messages
-          type: integer
-          example: 10
-        openRate:
-          description: Percentage of messages that were opened
-          type: number
-          format: double
-          example: 20.52
-        clickRate:
-          description: Percentage of messages links that were clicked
-          type: number
-          format: double
-          example: 5.12
-      type: object
+        example: eSs
     AbtestsSubjectListItem:
       type: object
       allOf:
@@ -795,6 +821,121 @@ components:
             example: https://api.getresponse.com/v3/ab-tests/subject/A3r
         type: object
       - $ref: '#/components/schemas/AbtestsSubject'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
+    AbtestsSubject:
+      properties:
+        abTestId:
+          description: A/B test ID
+          type: string
+          readOnly: true
+          example: A3r
+        name:
+          description: A/B test name
+          type: string
+          maxLength: 100
+          minLength: 1
+          example: A/B test
+        campaign:
+          description: List linked to A/B test
+          properties:
+            campaignId:
+              description: Campaign ID
+              type: string
+              example: C
+            href:
+              description: Direct hyperlink to a resource
+              type: string
+              format: uri
+              readOnly: true
+              example: https://api.getresponse.com/v3/campaigns/C
+          type: object
+        fromField:
+          description: Newsletter's From" address"
+          properties:
+            fromFieldId:
+              description: The 'From' address ID
+              type: string
+              example: V
+            href:
+              description: Direct hyperlink to a resource
+              type: string
+              format: uri
+              readOnly: true
+              example: https://api.getresponse.com/v3/from-fields/V
+          type: object
+        replyTo:
+          description: Newsletter's reply-to address
+          properties:
+            fromFieldId:
+              description: The 'From' address ID
+              type: string
+              example: V
+            href:
+              description: Direct hyperlink to a resource
+              type: string
+              format: uri
+              readOnly: true
+              example: https://api.getresponse.com/v3/from-fields/V
+          type: object
+      type: object
+    MessageSendSettingSelectedSuppressions:
+      description: The list of suppression IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: Ss
+    ChooseWinnerAbtestsSubject:
+      required:
+      - variantId
+      properties:
+        variantId:
+          description: The message variant ID. A variant identifier from https://apireference.getresponse.com/#operation/getAbtestsSubjectById.
+          type: string
+          example: VpKJdr
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     FromFieldReference:
       required:
       - fromFieldId
@@ -810,6 +951,51 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/from-fields/V
       type: object
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    AbtestsSubjectStatistics:
+      properties:
+        delivered:
+          description: The total number of delivered messages
+          type: integer
+          example: 10
+        openRate:
+          description: Percentage of messages that were opened
+          type: number
+          format: double
+          example: 20.52
+        clickRate:
+          description: Percentage of messages links that were clicked
+          type: number
+          format: double
+          example: 5.12
+      type: object
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eC
     NewAbtestsSubject:
       type: object
       allOf:
@@ -941,82 +1127,6 @@ components:
           content:
             $ref: '#/components/schemas/MessageContent'
         type: object
-    MessageContent:
-      description: The message content.
-      properties:
-        html:
-          description: The message content in HTML
-          type: string
-          maxLength: 524288
-          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
-        plain:
-          description: The plain text equivalent of the message content
-          type: string
-          maxLength: 524288
-          example: test 12 Some test
-      type: object
-    MessageSendSettingSelectedSuppressions:
-      description: The list of suppression IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: Ss
-    AbtestsSubject:
-      properties:
-        abTestId:
-          description: A/B test ID
-          type: string
-          readOnly: true
-          example: A3r
-        name:
-          description: A/B test name
-          type: string
-          maxLength: 100
-          minLength: 1
-          example: A/B test
-        campaign:
-          description: List linked to A/B test
-          properties:
-            campaignId:
-              description: Campaign ID
-              type: string
-              example: C
-            href:
-              description: Direct hyperlink to a resource
-              type: string
-              format: uri
-              readOnly: true
-              example: https://api.getresponse.com/v3/campaigns/C
-          type: object
-        fromField:
-          description: Newsletter's From" address"
-          properties:
-            fromFieldId:
-              description: The 'From' address ID
-              type: string
-              example: V
-            href:
-              description: Direct hyperlink to a resource
-              type: string
-              format: uri
-              readOnly: true
-              example: https://api.getresponse.com/v3/from-fields/V
-          type: object
-        replyTo:
-          description: Newsletter's reply-to address
-          properties:
-            fromFieldId:
-              description: The 'From' address ID
-              type: string
-              example: V
-            href:
-              description: Direct hyperlink to a resource
-              type: string
-              format: uri
-              readOnly: true
-              example: https://api.getresponse.com/v3/from-fields/V
-          type: object
-      type: object
     AbtestsSubjectDetails:
       type: object
       allOf:
@@ -1105,97 +1215,35 @@ components:
             $ref: '#/components/schemas/MessageContent'
         type: object
       - $ref: '#/components/schemas/AbtestsSubjectListItem'
-    MessageSendSettingSelectedSegments:
-      description: The list of segment IDs to choose subscribers from.
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
       type: array
       items:
         type: string
-        example: Se
-    MessageSendSettingExcludedSegments:
-      description: The list of segment IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eSs
-    MessageSendSettingExcludedCampaigns:
-      description: The list of campaign IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eC
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+        example: C
+    MessageContent:
+      description: The message content.
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
+        html:
+          description: The message content in HTML
           type: string
-        message:
-          description: Error message
+          maxLength: 524288
+          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
+        plain:
+          description: The plain text equivalent of the message content
           type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+          maxLength: 524288
+          example: test 12 Some test
       type: object
-    ChooseWinnerAbtestsSubject:
-      required:
-      - variantId
-      properties:
-        variantId:
-          description: The message variant ID. A variant identifier from https://apireference.getresponse.com/#operation/getAbtestsSubjectById.
-          type: string
-          example: VpKJdr
-      type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
   parameters:
+    abTestId:
+      name: abTestId
+      in: path
+      description: A/B test ID
+      required: true
+      schema:
+        type: string
+      example: xyz
     PerPage:
       name: perPage
       in: query
@@ -1207,14 +1255,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    abTestId:
-      name: abTestId
-      in: path
-      description: A/B test ID
-      required: true
-      schema:
-        type: string
-      example: xyz
     Page:
       name: page
       in: query
@@ -1243,41 +1283,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewAbtestsSubject'
-  responses:
-    AbtestsSubjectGetDetails:
-      description: A/B test details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AbtestsSubjectDetails'
-    AbtestsSubjectGetList:
-      description: The list of A/B tests
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AbtestsSubjectListItem'
   securitySchemes:
     api-key:
       type: apiKey
@@ -1300,3 +1305,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

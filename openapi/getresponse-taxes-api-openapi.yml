@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Taxes API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Taxes operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -25,7 +30,16 @@ paths:
       tags:
       - Taxes
       summary: Get a list of taxes
-      description: "\nSending **GET** request to this URL returns a collection of tax resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below, in the request params section). You can basically search by:\n * name\n * createdOn\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      description: 'Sending **GET** request to this URL returns a collection of tax resources that belong to the given shop.
+
+
+        You can narrow down the list of resources by passing proper query parameters (the list of which you can find below, in the request params section). You can basically search by:
+
+        * name
+
+        * createdOn
+
+        You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.'
       operationId: getTaxList
       parameters:
       - name: query[name]
@@ -121,14 +135,10 @@ paths:
       tags:
       - Taxes
       summary: Create tax
-      description: '
-
-        Sending a **POST** request to this URL will create a new tax resource.
+      description: 'Sending a **POST** request to this URL will create a new tax resource.
 
 
-        In order to create a new tax, you need to send a tax resource in the body of the request (remember that you need to serialize the body into a JSON string)
-
-        '
+        In order to create a new tax, you need to send a tax resource in the body of the request (remember that you need to serialize the body into a JSON string)'
       operationId: createTax
       requestBody:
         $ref: '#/components/requestBodies/NewTax'
@@ -203,11 +213,7 @@ paths:
       tags:
       - Taxes
       summary: Get a single tax by ID
-      description: '
-
-        This method returns tax with a given `taxId` in the context of a given `shopId`
-
-        '
+      description: This method returns tax with a given `taxId` in the context of a given `shopId`
       operationId: getTaxById
       parameters:
       - $ref: '#/components/parameters/Fields'
@@ -295,11 +301,7 @@ paths:
       tags:
       - Taxes
       summary: Update tax
-      description: '
-
-        Update the properties of the shop tax. You should only send the fields that need to be changed. The rest of the properties will stay the same.
-
-        '
+      description: Update the properties of the shop tax. You should only send the fields that need to be changed. The rest of the properties will stay the same.
       operationId: updateTax
       requestBody:
         $ref: '#/components/requestBodies/UpdateTax'
@@ -460,111 +462,37 @@ paths:
         - all
       x-operation-class-name: DeleteTax
 components:
-  responses:
-    TaxDetails:
-      description: The tax details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Tax'
-    TaxList:
-      description: The list of taxes
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Tax'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    UpdateTax:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    Tax:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    BaseTax:
-      properties:
-        taxId:
-          description: The tax ID
-          type: string
-          readOnly: true
-          example: Sk
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
-        name:
-          description: The tax name
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: VAT
-        rate:
-          description: The rate value
-          type: number
-          format: double
-          maximum: 99.9
-          minimum: 0
-          example: 23
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -598,36 +526,86 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+    BaseTax:
+      properties:
+        taxId:
+          description: The tax ID
+          type: string
+          readOnly: true
+          example: Sk
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
+        name:
+          description: The tax name
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: VAT
+        rate:
+          description: The rate value
+          type: number
+          format: double
+          maximum: 99.9
+          minimum: 0
+          example: 23
+      type: object
+    NewTax:
+      required:
+      - name
+      - rate
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    UpdateTax:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    Tax:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+  requestBodies:
+    UpdateTax:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTax'
+    NewTax:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewTax'
   parameters:
     PerPage:
       name: perPage
@@ -673,17 +651,41 @@ components:
       schema:
         type: string
       example: Sk
-  requestBodies:
-    NewTax:
+  responses:
+    TaxDetails:
+      description: The tax details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/NewTax'
-    UpdateTax:
+            $ref: '#/components/schemas/Tax'
+    TaxList:
+      description: The list of taxes
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpdateTax'
+            type: array
+            items:
+              $ref: '#/components/schemas/Tax'
   securitySchemes:
     api-key:
       type: apiKey
@@ -706,3 +708,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

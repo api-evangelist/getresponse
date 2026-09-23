@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Products API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Products operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -24,8 +29,34 @@ paths:
     get:
       tags:
       - Products
-      summary: Get a product list.
-      description: "\nSending a **GET** request to this URL returns a collection of product resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n * name\n * vendor\n * category\n * categoryId\n * externalId\n * variantName\n * metaFieldNames\n * metaFieldValues\n * createdOn\n\nThe `metaFieldNames` and `metaFieldValues` fields can be a list of values separated by a comma [,].\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      summary: Get a product list
+      description: 'Sending a **GET** request to this URL returns a collection of product resources that belong to the given shop.
+
+
+        You can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:
+
+        * name
+
+        * vendor
+
+        * category
+
+        * categoryId
+
+        * externalId
+
+        * variantName
+
+        * metaFieldNames
+
+        * metaFieldValues
+
+        * createdOn
+
+
+        The `metaFieldNames` and `metaFieldValues` fields can be a list of values separated by a comma [,].
+
+        You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.'
       operationId: getProductList
       parameters:
       - name: query[name]
@@ -186,9 +217,7 @@ paths:
       tags:
       - Products
       summary: Create product
-      description: '
-
-        Sending a **POST** request to this URL will create a new product resource.
+      description: 'Sending a **POST** request to this URL will create a new product resource.
 
 
         In order to create a new product, you need to send the product resource in the body of the request (remember that you need to serialize the body into a JSON string)
@@ -199,10 +228,7 @@ paths:
 
         Please note that categories aren''t required, but if a product has at least one category, then one of those categories must be marked as default.
 
-        This can be set by field `isDefault`. If  none of the elements contains isDefault=true, then the system picks the first one from the collection by default.
-
-
-        '
+        This can be set by field `isDefault`. If none of the elements contains isDefault=true, then the system picks the first one from the collection by default.'
       operationId: createProduct
       requestBody:
         $ref: '#/components/requestBodies/NewProduct'
@@ -293,12 +319,7 @@ paths:
       tags:
       - Products
       summary: Get a single product by ID
-      description: '
-
-        This method returns product according to the given `productId` in the context of a given `shopId`.
-
-
-        '
+      description: This method returns product according to the given `productId` in the context of a given `shopId`.
       operationId: getProductById
       parameters:
       - $ref: '#/components/parameters/Fields'
@@ -385,7 +406,18 @@ paths:
       tags:
       - Products
       summary: Update product
-      description: "\nUpdate the properties of a shop's product. You should only send those fields that need to be changed. The remaining properties will stay the same.\nHowever, when updating variants, categories, and meta fields, you need to send entire collections. Individual fields can't be updated.\nIf you want to update particular fields, you can do so using their specific endpoints, i.e.:\n\n * categories - `POST /v3/shops/{shopId}/categories/{categoryId}`\n * variants - POST `/v3/shops/{shopId}/products/{productId}/variants/{variantId}`\n * metaFields - `POST /v3/shops/{shopId}/meta-fields/{metaFieldId}`\n\n\n"
+      description: 'Update the properties of a shop''s product. You should only send those fields that need to be changed. The remaining properties will stay the same.
+
+        However, when updating variants, categories, and meta fields, you need to send entire collections. Individual fields can''t be updated.
+
+        If you want to update particular fields, you can do so using their specific endpoints, i.e.:
+
+
+        * categories - `POST /v3/shops/{shopId}/categories/{categoryId}`
+
+        * variants - POST `/v3/shops/{shopId}/products/{productId}/variants/{variantId}`
+
+        * metaFields - `POST /v3/shops/{shopId}/meta-fields/{metaFieldId}`'
       operationId: updateProduct
       requestBody:
         $ref: '#/components/requestBodies/UpdateProduct'
@@ -568,15 +600,10 @@ paths:
       tags:
       - Products
       summary: Upsert product categories
-      description: '
-
-        This method makes it possible to assign product categories, and to set a default product category. This method doesn''t remove or unassign product categories. It returns a list of product categories.
+      description: 'This method makes it possible to assign product categories, and to set a default product category. This method doesn''t remove or unassign product categories. It returns a list of product categories.
 
 
-        Please note that if you assign only one category to a given product, that category is marked as default. If you try to remove the default mark, your change won''t be executed.
-
-
-        '
+        Please note that if you assign only one category to a given product, that category is marked as default. If you try to remove the default mark, your change won''t be executed.'
       operationId: upsertProductCategories
       requestBody:
         $ref: '#/components/requestBodies/UpsertProductCategory'
@@ -668,12 +695,7 @@ paths:
       tags:
       - Products
       summary: Upsert product meta fields
-      description: '
-
-        This method makes it possible to assign meta fields. It doesn''t remove or unassign meta fields. It returns a list of product meta fields.
-
-
-        '
+      description: This method makes it possible to assign meta fields. It doesn't remove or unassign meta fields. It returns a list of product meta fields.
       operationId: upsertMetaFields
       requestBody:
         $ref: '#/components/requestBodies/UpsertMetaField'
@@ -758,48 +780,127 @@ paths:
         - all
       x-type: upsert
 components:
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    NewMetaField:
-      required:
-      - name
-      - value
-      - valueType
+    Product:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-    CreateAndUpdate:
+      - properties:
+          productId:
+            description: The product ID
+            type: string
+            readOnly: true
+            example: 9I
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/shops/pf3/products/9I
+          name:
+            description: The product name
+            type: string
+            maxLength: 255
+            minLength: 2
+            example: Monster Cap
+          type:
+            description: The product type
+            type: string
+            maxLength: 64
+            minLength: 2
+            example: Headwear
+          url:
+            description: The external URL for the product
+            type: string
+            format: uri
+            maxLength: 2048
+            example: https://somedomain.com/products/456
+          vendor:
+            description: The product vendor
+            type: string
+            maxLength: 64
+            minLength: 2
+            example: GetResponse
+          externalId:
+            description: The external ID is the identifying string or number of the product given by another software
+            type: string
+            maxLength: 255
+            example: '123456'
+          categories:
+            type: array
+            items:
+              $ref: '#/components/schemas/NewProductCategory'
+          variants:
+            type: array
+            items:
+              $ref: '#/components/schemas/NewProductVariant'
+          metaFields:
+            type: array
+            items:
+              $ref: '#/components/schemas/NewMetaField'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        createdOn:
-          description: The creation date
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
           type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
+        message:
+          description: Error message
           type: string
-          format: date-time
-          readOnly: true
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
-    NewProductVariant:
-      required:
-      - name
-      - price
-      - priceTax
-      - sku
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseProductVariant'
-    NewProductCategory:
-      required:
-      - name
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseCategory'
     NewProductVariantImage:
       required:
       - src
@@ -827,55 +928,44 @@ components:
           format: int32
           example: '1'
       type: object
-    BaseMetaField:
+    BaseTax:
       properties:
+        taxId:
+          description: The tax ID
+          type: string
+          readOnly: true
+          example: Sk
         href:
           description: Direct hyperlink to a resource
           type: string
           format: uri
           readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
-        metaFieldId:
-          description: The meta field ID
-          type: string
-          readOnly: true
-          example: NoF
+          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
         name:
-          description: The meta field name
-          type: string
-          maxLength: 63
-          minLength: 3
-          example: Shoe size
-        value:
-          description: The meta field value
-          type: string
-          maxLength: 65000
-          minLength: 0
-          example: '11'
-        valueType:
-          description: The value type enumerable
-          type: string
-          enum:
-          - string
-          - integer
-          example: integer
-        description:
-          description: The meta field description
+          description: The tax name
           type: string
           maxLength: 255
-          minLength: 0
-          example: Description of this meta field
+          minLength: 2
+          example: VAT
+        rate:
+          description: The rate value
+          type: number
+          format: double
+          maximum: 99.9
+          minimum: 0
+          example: 23
       type: object
-    UpsertProductCategory:
-      description: This method makes it possible to assign product categories, and to set a default product category. It doesn't remove or unassign product categories.
+    UpdateProduct:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Product'
+    NewTax:
       required:
-      - categories
-      properties:
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpsertSingleProductCategory'
+      - name
+      - rate
       type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
     BaseProductVariant:
       properties:
         variantId:
@@ -971,144 +1061,11 @@ components:
           items:
             $ref: '#/components/schemas/NewTax'
       type: object
-    Product:
-      type: object
-      allOf:
-      - properties:
-          productId:
-            description: The product ID
-            type: string
-            readOnly: true
-            example: 9I
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api.getresponse.com/v3/shops/pf3/products/9I
-          name:
-            description: The product name
-            type: string
-            maxLength: 255
-            minLength: 2
-            example: Monster Cap
-          type:
-            description: The product type
-            type: string
-            maxLength: 64
-            minLength: 2
-            example: Headwear
-          url:
-            description: The external URL for the product
-            type: string
-            format: uri
-            maxLength: 2048
-            example: https://somedomain.com/products/456
-          vendor:
-            description: The product vendor
-            type: string
-            maxLength: 64
-            minLength: 2
-            example: GetResponse
-          externalId:
-            description: The external ID is the identifying string or number of the product given by another software
-            type: string
-            maxLength: 255
-            example: '123456'
-          categories:
-            type: array
-            items:
-              $ref: '#/components/schemas/NewProductCategory'
-          variants:
-            type: array
-            items:
-              $ref: '#/components/schemas/NewProductVariant'
-          metaFields:
-            type: array
-            items:
-              $ref: '#/components/schemas/NewMetaField'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    UpsertSingleProductCategory:
-      required:
-      - categoryId
-      properties:
-        categoryId:
-          description: The category ID
-          type: string
-          example: atQ
-        isDefault:
-          description: This is a default category
-          type: boolean
-          example: true
-      type: object
-    MetaField:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    UpdateProduct:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Product'
-    NewProduct:
-      required:
-      - name
-      - variants
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Product'
-    UpsertMetaField:
-      description: This method assigns metafields. It doesn't unassign or delete them.
-      required:
-      - metaFields
-      properties:
-        metaFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpsertSingleMetaField'
-      type: object
-    BaseTax:
-      properties:
-        taxId:
-          description: The tax ID
-          type: string
-          readOnly: true
-          example: Sk
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
-        name:
-          description: The tax name
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: VAT
-        rate:
-          description: The rate value
-          type: number
-          format: double
-          maximum: 99.9
-          minimum: 0
-          example: 23
-      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     BaseCategory:
       properties:
         categoryId:
@@ -1150,38 +1107,34 @@ components:
           maxLength: 255
           example: ext3343
       type: object
-    ErrorResponse:
+    UpsertProductCategory:
+      description: This method makes it possible to assign product categories, and to set a default product category. It doesn't remove or unassign product categories.
       required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+      - categories
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpsertSingleProductCategory'
+      type: object
+    NewProductCategory:
+      required:
+      - name
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseCategory'
+    UpsertSingleProductCategory:
+      required:
+      - categoryId
+      properties:
+        categoryId:
+          description: The category ID
           type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+          example: atQ
+        isDefault:
+          description: This is a default category
+          type: boolean
+          example: true
       type: object
     UpsertSingleMetaField:
       required:
@@ -1192,58 +1145,106 @@ components:
           type: string
           example: NoF
       type: object
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
+    NewMetaField:
+      required:
+      - name
+      - value
+      - valueType
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+    NewProductVariant:
+      required:
+      - name
+      - price
+      - priceTax
+      - sku
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseProductVariant'
+    NewProduct:
+      required:
+      - name
+      - variants
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Product'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    UpsertMetaField:
+      description: This method assigns metafields. It doesn't unassign or delete them.
+      required:
+      - metaFields
+      properties:
+        metaFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpsertSingleMetaField'
+      type: object
+    MetaField:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    BaseMetaField:
+      properties:
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
+        metaFieldId:
+          description: The meta field ID
+          type: string
+          readOnly: true
+          example: NoF
+        name:
+          description: The meta field name
+          type: string
+          maxLength: 63
+          minLength: 3
+          example: Shoe size
+        value:
+          description: The meta field value
+          type: string
+          maxLength: 65000
+          minLength: 0
+          example: '11'
+        valueType:
+          description: The value type enumerable
+          type: string
+          enum:
+          - string
+          - integer
+          example: integer
+        description:
+          description: The meta field description
+          type: string
+          maxLength: 255
+          minLength: 0
+          example: Description of this meta field
+      type: object
   responses:
-    MetaFieldList:
-      description: The list of meta fields
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MetaField'
     SimpleProductCategoryList:
       description: The list of product categories
       headers:
@@ -1280,6 +1281,27 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Product'
+    MetaFieldList:
+      description: The list of meta fields
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetaField'
     ProductDetails:
       description: The product details
       headers:
@@ -1322,14 +1344,6 @@ components:
       required: false
       schema:
         type: string
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
     productId:
       name: productId
       in: path
@@ -1338,12 +1352,20 @@ components:
       schema:
         type: string
       example: 9I
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
   requestBodies:
-    UpsertProductCategory:
+    UpsertMetaField:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpsertProductCategory'
+            $ref: '#/components/schemas/UpsertMetaField'
     UpdateProduct:
       content:
         application/json:
@@ -1354,11 +1376,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewProduct'
-    UpsertMetaField:
+    UpsertProductCategory:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpsertMetaField'
+            $ref: '#/components/schemas/UpsertProductCategory'
   securitySchemes:
     api-key:
       type: apiKey
@@ -1381,3 +1403,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports

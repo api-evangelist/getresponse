@@ -1,12 +1,17 @@
 openapi: 3.2.0
 info:
   title: GetResponse APIv3 Orders API
-  version: 3.2026-07-28T07:58:55+00:00
-  description: The Orders operations of the GetResponse APIv3, split by tag from the provider-published OpenAPI at https://apireference.getresponse.com/open-api.json
+  description: '# Limits and throttling
+
+
+    GetResponse API calls are subject to throttling to ensure a high level of service for all users.'
   contact:
     name: API Support - DevZone
     url: https://app.getresponse.com/feedback.html?devzone=yes
     email: getresponse-devzone@cs.getresponse.com
+  version: 3.2026-07-28T07:58:55+00:00
+  x-logo:
+    url: https://us-ws.gr-cdn.com/images/global/getresponse.png
 servers:
 - url: https://api.getresponse.com/v3
   description: GetResponse
@@ -25,7 +30,24 @@ paths:
       tags:
       - Orders
       summary: Get the list of orders
-      description: "\nSending a  **GET** request to this URL returns a collection of order resources that belong to the given shop.\n\nYou can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:\n * description\n * status\n * externalId\n * processedAt\n\nThe `description` fields can be a pattern and we'll try to match this phrase.\n\n You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by."
+      description: 'Sending a **GET** request to this URL returns a collection of order resources that belong to the given shop.
+
+
+        You can narrow down the list of resources by passing proper query parameters (the list of which you can find below in the request params section). You can basically search by:
+
+        * description
+
+        * status
+
+        * externalId
+
+        * processedAt
+
+
+        The `description` fields can be a pattern and we''ll try to match this phrase.
+
+
+        You can filter the resource using criteria specified as `query[*]`. You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as `sort[*]`. You can specify multiple fields to sort by.'
       operationId: getOrderList
       parameters:
       - name: query[description]
@@ -135,15 +157,10 @@ paths:
       tags:
       - Orders
       summary: Create order
-      description: '
-
-        Sending a **POST** request to this URL will create a new order resource.
+      description: 'Sending a **POST** request to this URL will create a new order resource.
 
 
-        In order to create a new order, you need to send the order resource in the body of the request (remember that you need to serialize the body into a JSON string).
-
-
-        '
+        In order to create a new order, you need to send the order resource in the body of the request (remember that you need to serialize the body into a JSON string).'
       operationId: createOrder
       parameters:
       - name: additionalFlags
@@ -244,12 +261,7 @@ paths:
       tags:
       - Orders
       summary: Get a single order by ID
-      description: '
-
-        This method returns the order according to the given `orderId`.
-
-
-        '
+      description: This method returns the order according to the given `orderId`.
       operationId: getOrderById
       parameters:
       - $ref: '#/components/parameters/Fields'
@@ -336,9 +348,7 @@ paths:
       tags:
       - Orders
       summary: Update order
-      description: '
-
-        Update the properties of a shop''s order. You should send only those fields that need to be changed. The rest of the properties will stay the same.
+      description: 'Update the properties of a shop''s order. You should send only those fields that need to be changed. The rest of the properties will stay the same.
 
         However, in case of `billingAddress` and `shippingAddress`, you must send the entire representation. Individual fields can''t be updated.
 
@@ -347,10 +357,7 @@ paths:
 
         In case of `selectedVariants`, when the collection is updated, the old collection is completely removed. The same goes for meta fields.
 
-        Individual fields can''t be updated either. The full representations of `selectedVariants` and `metaFields` must be sent instead.
-
-
-        '
+        Individual fields can''t be updated either. The full representations of `selectedVariants` and `metaFields` must be sent instead.'
       operationId: updateOrder
       parameters:
       - name: additionalFlags
@@ -519,243 +526,105 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    OrderList:
+      description: The list of orders
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Order'
+    OrderDetails:
+      description: The order details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderResponse'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    NewSelectedProductVariant:
+    ErrorResponse:
       required:
-      - variantId
-      - price
-      - quantity
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc
-        variantId:
-          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
-          type: string
-          example: p
-        price:
-          description: The product variant price
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 840
-        priceTax:
-          description: The product variant price tax
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 428
-        quantity:
-          description: The product variant quantity
+        httpStatus:
+          description: HTTP response code
           type: integer
           format: int32
-          minimum: 1
-          example: '2'
-        taxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewTax'
-      type: object
-    NewMetaField:
-      required:
-      - name
-      - value
-      - valueType
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-    OrderSelectedProductVariant:
-      required:
-      - variantId
-      - price
-      - quantity
-      type: object
-      allOf:
-      - properties:
-          categories:
-            type: array
-            items:
-              $ref: '#/components/schemas/BaseCategory'
-      - $ref: '#/components/schemas/NewSelectedProductVariant'
-    OrderResponse:
-      type: object
-      allOf:
-      - properties:
-          selectedVariants:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrderSelectedProductVariant'
-      - $ref: '#/components/schemas/Order'
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
           type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
+        message:
+          description: Error message
           type: string
-          format: date-time
-          readOnly: true
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
-    Address:
-      type: object
-      allOf:
-      - properties:
-          addressId:
-            type: string
-            readOnly: true
-            example: k9
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api.getresponse.com/v3/addresses/k9
-          countryCode:
-            description: The country code (ISO 3166-1 alpha-3)
-            type: string
-            maxLength: 3
-            minLength: 3
-            example: POL
-          countryName:
-            description: The country name, based on `countryCode`
-            type: string
-            readOnly: true
-            example: Poland
-          name:
-            type: string
-            maxLength: 128
-            minLength: 3
-            example: some_shipping_address
-          firstName:
-            type: string
-            maxLength: 64
-            minLength: 0
-            example: John
-          lastName:
-            type: string
-            maxLength: 64
-            minLength: 0
-            example: Doe
-          address1:
-            description: Address line 1
-            type: string
-            maxLength: 255
-            minLength: 0
-            example: Arkonska 6
-          address2:
-            description: Address line 2
-            type: string
-            maxLength: 255
-            minLength: 0
-            example: ''
-          city:
-            type: string
-            maxLength: 128
-            minLength: 0
-            example: Gdansk
-          zip:
-            description: The ZIP/postal code, free text
-            type: string
-            maxLength: 64
-            minLength: 0
-            example: 80-387
-          province:
-            type: string
-            maxLength: 255
-            minLength: 0
-            example: pomorskie
-          provinceCode:
-            description: The province code, free text
-            type: string
-            maxLength: 64
-            minLength: 0
-            example: ''
-          phone:
-            description: The phone number, free text
-            type: string
-            maxLength: 255
-            minLength: 0
-            example: '1122334455'
-          company:
-            description: The company name, free text
-            type: string
-            maxLength: 128
-            minLength: 0
-            example: GetResponse
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    BaseMetaField:
-      properties:
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
-        metaFieldId:
-          description: The meta field ID
-          type: string
-          readOnly: true
-          example: NoF
-        name:
-          description: The meta field name
-          type: string
-          maxLength: 63
-          minLength: 3
-          example: Shoe size
-        value:
-          description: The meta field value
-          type: string
-          maxLength: 65000
-          minLength: 0
-          example: '11'
-        valueType:
-          description: The value type enumerable
-          type: string
-          enum:
-          - string
-          - integer
-          example: integer
-        description:
-          description: The meta field description
-          type: string
-          maxLength: 255
-          minLength: 0
-          example: Description of this meta field
-      type: object
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    NewOrder:
-      required:
-      - contactId
-      - totalPrice
-      - currency
-      - selectedVariants
-      type: object
-      allOf:
-      - properties:
-          selectedVariants:
-            type: array
-            items:
-              $ref: '#/components/schemas/NewSelectedProductVariant'
-      - $ref: '#/components/schemas/Order'
     BaseTax:
       properties:
         taxId:
@@ -783,6 +652,22 @@ components:
           minimum: 0
           example: 23
       type: object
+    UpdateOrder:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Order'
+    NewTax:
+      required:
+      - name
+      - rate
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     BaseCategory:
       properties:
         categoryId:
@@ -824,6 +709,69 @@ components:
           maxLength: 255
           example: ext3343
       type: object
+    NewSelectedProductVariant:
+      required:
+      - variantId
+      - price
+      - quantity
+      properties:
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc
+        variantId:
+          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
+          type: string
+          example: p
+        price:
+          description: The product variant price
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 840
+        priceTax:
+          description: The product variant price tax
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 428
+        quantity:
+          description: The product variant quantity
+          type: integer
+          format: int32
+          minimum: 1
+          example: '2'
+        taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewTax'
+      type: object
+    NewOrder:
+      required:
+      - contactId
+      - totalPrice
+      - currency
+      - selectedVariants
+      type: object
+      allOf:
+      - properties:
+          selectedVariants:
+            type: array
+            items:
+              $ref: '#/components/schemas/NewSelectedProductVariant'
+      - $ref: '#/components/schemas/Order'
+    NewMetaField:
+      required:
+      - name
+      - value
+      - valueType
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
     Order:
       properties:
         orderId:
@@ -911,6 +859,115 @@ components:
           items:
             $ref: '#/components/schemas/NewMetaField'
       type: object
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    OrderResponse:
+      type: object
+      allOf:
+      - properties:
+          selectedVariants:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrderSelectedProductVariant'
+      - $ref: '#/components/schemas/Order'
+    Address:
+      type: object
+      allOf:
+      - properties:
+          addressId:
+            type: string
+            readOnly: true
+            example: k9
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/addresses/k9
+          countryCode:
+            description: The country code (ISO 3166-1 alpha-3)
+            type: string
+            maxLength: 3
+            minLength: 3
+            example: POL
+          countryName:
+            description: The country name, based on `countryCode`
+            type: string
+            readOnly: true
+            example: Poland
+          name:
+            type: string
+            maxLength: 128
+            minLength: 3
+            example: some_shipping_address
+          firstName:
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: John
+          lastName:
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: Doe
+          address1:
+            description: Address line 1
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: Arkonska 6
+          address2:
+            description: Address line 2
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: ''
+          city:
+            type: string
+            maxLength: 128
+            minLength: 0
+            example: Gdansk
+          zip:
+            description: The ZIP/postal code, free text
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: 80-387
+          province:
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: pomorskie
+          provinceCode:
+            description: The province code, free text
+            type: string
+            maxLength: 64
+            minLength: 0
+            example: ''
+          phone:
+            description: The phone number, free text
+            type: string
+            maxLength: 255
+            minLength: 0
+            example: '1122334455'
+          company:
+            description: The company name, free text
+            type: string
+            maxLength: 128
+            minLength: 0
+            example: GetResponse
+      - $ref: '#/components/schemas/CreateAndUpdate'
     NewAddress:
       required:
       - name
@@ -918,108 +975,69 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/Address'
-    ErrorResponse:
+    OrderSelectedProductVariant:
       required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    UpdateOrder:
+      - variantId
+      - price
+      - quantity
       type: object
       allOf:
-      - $ref: '#/components/schemas/Order'
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-  responses:
-    OrderDetails:
-      description: The order details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrderResponse'
-    OrderList:
-      description: The list of orders
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
+      - properties:
+          categories:
             type: array
             items:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/BaseCategory'
+      - $ref: '#/components/schemas/NewSelectedProductVariant'
+    BaseMetaField:
+      properties:
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
+        metaFieldId:
+          description: The meta field ID
+          type: string
+          readOnly: true
+          example: NoF
+        name:
+          description: The meta field name
+          type: string
+          maxLength: 63
+          minLength: 3
+          example: Shoe size
+        value:
+          description: The meta field value
+          type: string
+          maxLength: 65000
+          minLength: 0
+          example: '11'
+        valueType:
+          description: The value type enumerable
+          type: string
+          enum:
+          - string
+          - integer
+          example: integer
+        description:
+          description: The meta field description
+          type: string
+          maxLength: 255
+          minLength: 0
+          example: Description of this meta field
+      type: object
+  requestBodies:
+    UpdateOrder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateOrder'
+    NewOrder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewOrder'
   parameters:
     PerPage:
       name: perPage
@@ -1032,21 +1050,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    orderId:
-      name: orderId
-      in: path
-      description: The order ID
-      required: true
-      schema:
-        type: string
-      example: fOh
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -1057,6 +1060,21 @@ components:
         format: int32
         default: 1
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    orderId:
+      name: orderId
+      in: path
+      description: The order ID
+      required: true
+      schema:
+        type: string
+      example: fOh
     shopId:
       name: shopId
       in: path
@@ -1065,17 +1083,6 @@ components:
       schema:
         type: string
       example: pf3
-  requestBodies:
-    UpdateOrder:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateOrder'
-    NewOrder:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewOrder'
   securitySchemes:
     api-key:
       type: apiKey
@@ -1098,3 +1105,86 @@ components:
           tokenUrl: https://api.getresponse.com/v3/token
           scopes:
             all: all data access
+externalDocs:
+  description: Find out more about API
+  url: https://apidocs.getresponse.com
+x-tagGroups:
+- name: User
+  tags:
+  - Accounts
+  - Multimedia
+  - File Library
+- name: Contacts
+  tags:
+  - Campaigns (Lists)
+  - Contacts
+  - Custom Fields
+  - Search Contacts
+  - Subscription Confirmations
+  - Predefined Fields
+  - Suppressions
+  - Imports
+- name: Email Marketing
+  tags:
+  - Newsletters
+  - Autoresponders
+  - RSS Newsletters
+  - Legacy Landing Pages
+  - From Fields
+  - A/B tests
+  - A/B tests - subject
+  - Click Tracks
+- name: Tags
+  tags:
+  - Tags
+- name: GDPR Fields
+  tags:
+  - GDPR Fields
+- name: Forms and surveys
+  tags:
+  - Legacy Forms
+  - Forms
+- name: Automation
+  tags:
+  - Workflows
+  - Custom Events
+  - Tracking
+- name: Ecommerce
+  tags:
+  - Addresses
+  - Carts
+  - Categories
+  - Meta Fields
+  - Orders
+  - Products
+  - Product Variants
+  - Shops
+  - Taxes
+- name: Transactional Emails
+  tags:
+  - Transactional Emails
+  - Transactional Emails Templates
+- name: SMS
+  tags:
+  - SMS Messages
+  - SMS Automation Messages
+- name: Statistics
+  tags:
+  - Ecommerce
+  - Sms
+  - Website
+  - Landing Page
+  - Form and Popup
+- name: Webinars
+  tags:
+  - Webinars
+- name: Websites
+  tags:
+  - Websites
+  - Landing Pages
+- name: Forms and Popups
+  tags:
+  - Forms and Popups
+- name: Custom Reports
+  tags:
+  - Custom Reports
