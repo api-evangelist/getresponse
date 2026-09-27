@@ -252,6 +252,21 @@ paths:
         - all
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -261,27 +276,94 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+  parameters:
+    websiteId:
+      name: websiteId
+      in: path
+      description: The website ID
+      required: true
+      schema:
+        type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
   schemas:
+    WebsitePage:
+      properties:
+        uuid:
+          description: The website page ID
+          type: string
+          readOnly: true
+          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
+        name:
+          description: The website page name
+          type: string
+          example: Home
+        status:
+          description: The website page status
+          type: string
+          enum:
+          - active
+          - inactive
+        url:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: /terms-of-service
+        redirectUrl:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: ''
+        createdAt:
+          description: The date (in GMT) the website page was created
+          type: string
+          format: date-time
+          example: '2023-03-14T14:42:57'
+      type: object
+    WebsiteDetails:
+      type: object
+      allOf:
+      - properties:
+          pages:
+            type: array
+            items:
+              $ref: '#/components/schemas/WebsitePage'
+        type: object
+      - $ref: '#/components/schemas/Website'
     ErrorResponse:
       required:
       - httpStatus
@@ -337,41 +419,6 @@ components:
           type: integer
           format: int64
           example: 5
-      type: object
-    WebsitePage:
-      properties:
-        uuid:
-          description: The website page ID
-          type: string
-          readOnly: true
-          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
-        name:
-          description: The website page name
-          type: string
-          example: Home
-        status:
-          description: The website page status
-          type: string
-          enum:
-          - active
-          - inactive
-        url:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: /terms-of-service
-        redirectUrl:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: ''
-        createdAt:
-          description: The date (in GMT) the website page was created
-          type: string
-          format: date-time
-          example: '2023-03-14T14:42:57'
       type: object
     SortOrderEnum:
       type: string
@@ -434,53 +481,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/WebsiteStatistics'
       type: object
-    WebsiteDetails:
-      type: object
-      allOf:
-      - properties:
-          pages:
-            type: array
-            items:
-              $ref: '#/components/schemas/WebsitePage'
-        type: object
-      - $ref: '#/components/schemas/Website'
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    websiteId:
-      name: websiteId
-      in: path
-      description: The website ID
-      required: true
-      schema:
-        type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   responses:
     WebsiteDetails:
       description: The website details

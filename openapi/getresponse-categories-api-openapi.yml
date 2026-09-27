@@ -519,6 +519,21 @@ paths:
         - all
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -528,132 +543,19 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-  schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    Category:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseCategory'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    BaseCategory:
-      properties:
-        categoryId:
-          description: The category ID
-          type: string
-          readOnly: true
-          example: atQ
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/categories/atQ
-        name:
-          description: The name of the category
-          type: string
-          maxLength: 64
-          minLength: 2
-          example: Headwear
-        parentId:
-          description: The parent category ID
-          type: string
-          maxLength: 64
-          minLength: 2
-          example: amh
-        isDefault:
-          description: This is a default category
-          type: boolean
-          example: true
-        url:
-          description: The external URL to the category
-          type: string
-          format: uri
-          maxLength: 2048
-          example: https://somedomain.com/category/446
-        externalId:
-          description: The external ID is the identifying string or number of the category given by another software
-          type: string
-          maxLength: 255
-          example: ext3343
-      type: object
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    NewCategory:
-      required:
-      - name
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseCategory'
-      - $ref: '#/components/schemas/CreateAndUpdate'
   parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     PerPage:
       name: perPage
       in: query
@@ -665,14 +567,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    categoryId:
-      name: categoryId
-      in: path
-      description: The category ID
-      required: true
-      schema:
-        type: string
-      example: C3s
     Page:
       name: page
       in: query
@@ -683,13 +577,14 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
+    categoryId:
+      name: categoryId
+      in: path
+      description: The category ID
+      required: true
       schema:
         type: string
+      example: C3s
     shopId:
       name: shopId
       in: path
@@ -733,17 +628,122 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Category'
+  schemas:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    NewCategory:
+      required:
+      - name
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseCategory'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    BaseCategory:
+      properties:
+        categoryId:
+          description: The category ID
+          type: string
+          readOnly: true
+          example: atQ
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/categories/atQ
+        name:
+          description: The name of the category
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: Headwear
+        parentId:
+          description: The parent category ID
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: amh
+        isDefault:
+          description: This is a default category
+          type: boolean
+          example: true
+        url:
+          description: The external URL to the category
+          type: string
+          format: uri
+          maxLength: 2048
+          example: https://somedomain.com/category/446
+        externalId:
+          description: The external ID is the identifying string or number of the category given by another software
+          type: string
+          maxLength: 255
+          example: ext3343
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    Category:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseCategory'
+      - $ref: '#/components/schemas/CreateAndUpdate'
   requestBodies:
-    UpdateCategory:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Category'
     NewCategory:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewCategory'
+    UpdateCategory:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Category'
   securitySchemes:
     api-key:
       type: apiKey

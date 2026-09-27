@@ -204,49 +204,6 @@ paths:
         - all
 components:
   schemas:
-    GeneralPerformanceStats:
-      properties:
-        currency:
-          description: Statistics currency
-          type: string
-          example: USD
-        order:
-          description: Order statistics
-          type: object
-          allOf:
-          - properties:
-              orders:
-                description: Number of orders
-                type: integer
-                example: 5
-              ordersTrend:
-                description: Order trend
-                type: number
-                example: 1.23
-              avgOrderRevenue:
-                description: Average order value
-                type: number
-                example: 1.23
-              avgOrderRevenueTrend:
-                description: Average order value trend
-                type: number
-                example: 1.23
-            type: object
-        revenue:
-          description: Revenue statistics
-          type: object
-          allOf:
-          - properties:
-              revenue:
-                description: Revenue from orders
-                type: number
-                example: 1.23
-              revenueTrend:
-                description: Revenue trend
-                type: number
-                example: 1.23
-            type: object
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -305,33 +262,49 @@ components:
                 example: 5
             type: object
       type: object
-  responses:
     GeneralPerformanceStats:
-      description: General performance statistics
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GeneralPerformanceStats'
-    RevenueStats:
-      description: Revenue statistics
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RevenueStatistics'
+      properties:
+        currency:
+          description: Statistics currency
+          type: string
+          example: USD
+        order:
+          description: Order statistics
+          type: object
+          allOf:
+          - properties:
+              orders:
+                description: Number of orders
+                type: integer
+                example: 5
+              ordersTrend:
+                description: Order trend
+                type: number
+                example: 1.23
+              avgOrderRevenue:
+                description: Average order value
+                type: number
+                example: 1.23
+              avgOrderRevenueTrend:
+                description: Average order value trend
+                type: number
+                example: 1.23
+            type: object
+        revenue:
+          description: Revenue statistics
+          type: object
+          allOf:
+          - properties:
+              revenue:
+                description: Revenue from orders
+                type: number
+                example: 1.23
+              revenueTrend:
+                description: Revenue trend
+                type: number
+                example: 1.23
+            type: object
+      type: object
   headers:
     RateLimitLimit:
       description: The total number of requests available per time frame
@@ -347,6 +320,33 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
+  responses:
+    RevenueStats:
+      description: Revenue statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RevenueStatistics'
+    GeneralPerformanceStats:
+      description: General performance statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GeneralPerformanceStats'
   parameters:
     Fields:
       name: fields

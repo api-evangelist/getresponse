@@ -220,41 +220,6 @@ paths:
         - all
 components:
   schemas:
-    LegacyForm:
-      properties:
-        webformId:
-          description: The webform (Legacy Form) ID
-          type: string
-          example: NPKx
-        name:
-          type: string
-          example: Webform 2010/7/5
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          example: https://api.getresponse.com/v3/webforms/NPKx
-        scriptUrl:
-          description: The URL of the script that displays the Legacy Form
-          type: string
-          format: uri
-          example: https://app.getresponse.com/view_webform.js?u=VfEy1&wid=11774901
-        status:
-          $ref: '#/components/schemas/StatusEnum'
-        modifiedOn:
-          description: The modification date
-          type: string
-          format: date-time
-        statistics:
-          $ref: '#/components/schemas/LegacyFormStatistics'
-        campaign:
-          $ref: '#/components/schemas/CampaignReference'
-      type: object
-    StatusEnum:
-      type: string
-      enum:
-      - enabled
-      - disabled
     ErrorResponse:
       required:
       - httpStatus
@@ -288,6 +253,36 @@ components:
           description: UUID of the error response
           type: string
       type: object
+    LegacyForm:
+      properties:
+        webformId:
+          description: The webform (Legacy Form) ID
+          type: string
+          example: NPKx
+        name:
+          type: string
+          example: Webform 2010/7/5
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          example: https://api.getresponse.com/v3/webforms/NPKx
+        scriptUrl:
+          description: The URL of the script that displays the Legacy Form
+          type: string
+          format: uri
+          example: https://app.getresponse.com/view_webform.js?u=VfEy1&wid=11774901
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        modifiedOn:
+          description: The modification date
+          type: string
+          format: date-time
+        statistics:
+          $ref: '#/components/schemas/LegacyFormStatistics'
+        campaign:
+          $ref: '#/components/schemas/CampaignReference'
+      type: object
     LegacyFormStatistics:
       properties:
         opened:
@@ -301,11 +296,6 @@ components:
           format: int64
           example: 100
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     CampaignReference:
       required:
       - campaignId
@@ -328,6 +318,83 @@ components:
           readOnly: true
           example: Promo campaign
       type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+  parameters:
+    webformId:
+      name: webformId
+      in: path
+      description: The webform (Legacy Form) ID
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
   responses:
     LegacyFormList:
       description: The list of Legacy Forms.
@@ -363,73 +430,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/LegacyForm'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    webformId:
-      name: webformId
-      in: path
-      description: The webform (Legacy Form) ID
-      required: true
-      schema:
-        type: string
-      example: 3Va2e
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   securitySchemes:
     api-key:
       type: apiKey

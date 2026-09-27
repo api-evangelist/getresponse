@@ -467,6 +467,21 @@ paths:
         - all
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -476,27 +491,50 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
   schemas:
+    NewShop:
+      required:
+      - name
+      - locale
+      - currency
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Shop'
+    Shop:
+      type: object
+      allOf:
+      - properties:
+          shopId:
+            description: The shop ID
+            type: string
+            readOnly: true
+            example: pf3
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/shops/pf3
+          name:
+            description: The shop name
+            type: string
+            maxLength: 124
+            minLength: 4
+            example: Monster market
+          locale:
+            description: The language locale (ISO 639-1)
+            type: string
+            example: PL
+          currency:
+            description: The currency code (ISO 4217)
+            type: string
+            example: PLN
+      - $ref: '#/components/schemas/CreateAndUpdate'
     UpdateShop:
       type: object
       allOf:
@@ -534,11 +572,6 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     CreateAndUpdate:
       properties:
         createdOn:
@@ -552,36 +585,11 @@ components:
           format: date-time
           readOnly: true
       type: object
-    Shop:
-      type: object
-      allOf:
-      - properties:
-          shopId:
-            description: The shop ID
-            type: string
-            readOnly: true
-            example: pf3
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api.getresponse.com/v3/shops/pf3
-          name:
-            description: The shop name
-            type: string
-            maxLength: 124
-            minLength: 4
-            example: Monster market
-          locale:
-            description: The language locale (ISO 639-1)
-            type: string
-            example: PL
-          currency:
-            description: The currency code (ISO 4217)
-            type: string
-            example: PLN
-      - $ref: '#/components/schemas/CreateAndUpdate'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     ShopDetails:
       type: object
       allOf:
@@ -624,15 +632,14 @@ components:
             type: string
             example: PLN
       - $ref: '#/components/schemas/CreateAndUpdate'
-    NewShop:
-      required:
-      - name
-      - locale
-      - currency
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Shop'
   parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     PerPage:
       name: perPage
       in: query
@@ -654,13 +661,6 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     shopId:
       name: shopId
       in: path
@@ -670,19 +670,6 @@ components:
         type: string
       example: pf3
   responses:
-    ShopDetails:
-      description: The shop details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ShopDetails'
     ShopList:
       description: The list of shops
       headers:
@@ -732,17 +719,30 @@ components:
                     type: string
                     example: PLN
               - $ref: '#/components/schemas/CreateAndUpdate'
-  requestBodies:
-    UpdateShop:
+    ShopDetails:
+      description: The shop details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpdateShop'
+            $ref: '#/components/schemas/ShopDetails'
+  requestBodies:
     NewShop:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewShop'
+    UpdateShop:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateShop'
   securitySchemes:
     api-key:
       type: apiKey

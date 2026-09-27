@@ -477,6 +477,21 @@ paths:
         class: warning
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -486,26 +501,48 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    transactionalEmailTemplateId:
+      name: transactionalEmailTemplateId
+      in: path
+      description: Transactional emails template identifier
+      required: true
+      schema:
+        type: string
+      example: abc
   schemas:
     ErrorResponse:
       required:
@@ -539,6 +576,18 @@ components:
         uuid:
           description: UUID of the error response
           type: string
+      type: object
+    TransactionalEmailTemplateContent:
+      description: The template content. At least one field is required
+      properties:
+        plain:
+          description: The plain text equivalent of template content
+          type: string
+          example: Your order has been confirmed. Thank you for shopping with us!
+        html:
+          description: The template content in HTML
+          type: string
+          example: <h1>Your order has been confirmed</h1><strong>Thank you for shopping with us!</strong>
       type: object
     SortOrderEnum:
       type: string
@@ -589,18 +638,6 @@ components:
             - html
             - wysiwyg
       type: object
-    TransactionalEmailTemplateContent:
-      description: The template content. At least one field is required
-      properties:
-        plain:
-          description: The plain text equivalent of template content
-          type: string
-          example: Your order has been confirmed. Thank you for shopping with us!
-        html:
-          description: The template content in HTML
-          type: string
-          example: <h1>Your order has been confirmed</h1><strong>Thank you for shopping with us!</strong>
-      type: object
     TransactionalEmailsTemplateDetails:
       type: object
       allOf:
@@ -609,44 +646,38 @@ components:
             $ref: '#/components/schemas/TransactionalEmailTemplateContent'
         type: object
       - $ref: '#/components/schemas/TransactionalEmailsTemplateListElement'
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    transactionalEmailTemplateId:
-      name: transactionalEmailTemplateId
-      in: path
-      description: Transactional emails template identifier
-      required: true
-      schema:
-        type: string
-      example: abc
+  requestBodies:
+    CreateTransactionalEmailTemplate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTransactionalEmailTemplate'
+    updateTransactionalEmailsTemplate:
+      content:
+        application/json:
+          schema:
+            properties:
+              subject:
+                description: The template subject
+                type: string
+                example: Order Confirmation - Example Shop
+              content:
+                $ref: '#/components/schemas/TransactionalEmailTemplateContent'
+            type: object
   responses:
+    TransactionalEmailsTemplateDetails:
+      description: Transactional emails template details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionalEmailsTemplateDetails'
     TransactionalEmailsTemplateList:
       description: Transactional email templates listing
       headers:
@@ -668,37 +699,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/TransactionalEmailsTemplateListElement'
-    TransactionalEmailsTemplateDetails:
-      description: Transactional emails template details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TransactionalEmailsTemplateDetails'
-  requestBodies:
-    CreateTransactionalEmailTemplate:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTransactionalEmailTemplate'
-    updateTransactionalEmailsTemplate:
-      content:
-        application/json:
-          schema:
-            properties:
-              subject:
-                description: The template subject
-                type: string
-                example: Order Confirmation - Example Shop
-              content:
-                $ref: '#/components/schemas/TransactionalEmailTemplateContent'
-            type: object
   securitySchemes:
     api-key:
       type: apiKey

@@ -809,7 +809,78 @@ paths:
         - all
       x-operation-class-name: GetContactsBySearchContactsConditions
 components:
+  responses:
+    SearchContactsDetails:
+      description: Search contact details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchContactsDetails'
+    BaseSearchContactsList:
+      description: The saved search contact.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/BaseSearchContactsDetails'
+    SearchedContactsList:
+      description: The contact list.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SearchedContactDetails'
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -819,135 +890,33 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
+  requestBodies:
+    UpdateSearchContacts:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateSearchContacts'
+    UpsertContactCustomFields:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertContactCustomFields'
+    NewSearchContacts:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewSearchContacts'
+    SearchContactsConditionsDetails:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchContactsBySearchForm'
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    SearchContactsDetails:
-      description: Search contact details.
-      required:
-      - searchContactId
-      - name
-      - createdOn
-      - href
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
-      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
-      - $ref: '#/components/schemas/BaseSearchContacts'
-    NewContactCustomFieldValues:
-      properties:
-        customFieldValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewContactCustomFieldValue'
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    CampaignReference:
-      required:
-      - campaignId
-      properties:
-        campaignId:
-          description: Campaign ID
-          type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
-      type: object
-    SubscribersTypeEnumForSegments:
-      properties:
-        subscribersType:
-          description: Only one subscription status
-          type: array
-          items:
-            type: string
-            enum:
-            - subscribed
-            example:
-            - subscribed
-          default:
-          - subscribed
-      type: object
-    SubscribersTypeEnumForSearching:
-      properties:
-        subscribersType:
-          description: Only one subscription status
-          type: array
-          items:
-            type: string
-            enum:
-            - subscribed
-            - undelivered
-            - removed
-            - unconfirmed
-            example:
-            - subscribed
-      type: object
     ConditionType:
       required:
       - conditionType
@@ -1023,46 +992,6 @@ components:
           sms_link_not_clicked: '#/components/schemas/SmsLinkNotClickedCondition'
           ecommerce_abandoned_cart: '#/components/schemas/ECommerceAbandonedCartCondition'
           custom_event: '#/components/schemas/CustomEventCondition'
-    NewContactCustomFieldValue:
-      required:
-      - customFieldId
-      - value
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          example: kL6Nh
-        value:
-          type: array
-          items:
-            type: string
-            example: 18-35
-      type: object
-    BaseSearchContacts:
-      description: The short description of a saved search.
-      properties:
-        searchContactId:
-          description: The unique search-contact identifier
-          type: string
-          readOnly: true
-          example: pV3r
-        name:
-          description: The unique name of search-contact
-          type: string
-          example: custom test filter
-        createdOn:
-          description: The UTC date time format ISO 8601, e.g. 2018-04-10T10:02:57+0000
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2018-04-10T10:02:57+0000
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://app.getresponse.com/v3/search-contacts/pV3r
-      type: object
     NewSearchContacts:
       description: New search contacts.
       required:
@@ -1074,140 +1003,39 @@ components:
       - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
       - $ref: '#/components/schemas/SearchContactsConditionsDetails'
       - $ref: '#/components/schemas/BaseSearchContacts'
-    UpdateSearchContacts:
-      description: New search contacts.
+    ErrorResponse:
       required:
-      - name
-      - sectionLogicOperator
-      - section
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
-      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
-      - $ref: '#/components/schemas/BaseSearchContacts'
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    UpsertContactCustomFields:
-      required:
-      - customFieldValues
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NewContactCustomFieldValues'
-    SearchContactsConditionsDetails:
-      required:
-      - sectionLogicOperator
-      - section
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        sectionLogicOperator:
-          description: Match 'any' (`or` value) or 'all' (`and` value) of the following conditions
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
           type: string
-          enum:
-          - or
-          - and
-          example: or
-        section:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchContactSection'
-      type: object
-      example:
-        subscribersType:
-        - subscribed
-        sectionLogicOperator: or
-        section:
-        - campaignIdsList:
-          - tamqY
-          logicOperator: or
-          subscriberCycle:
-          - receiving_autoresponder
-          - not_receiving_autoresponder
-          subscriptionDate: all_time
-          conditions:
-          - conditionType: crm
-            pipelineScope: PSVq
-            stageScope: all
-    SearchContactSection:
-      required:
-      - campaignIdsList
-      - logicOperator
-      - subscriberCycle
-      - subscriptionDate
-      properties:
-        campaignIdsList:
-          description: An array of campaign identifiers
-          type: array
-          items:
-            type: string
-            example: tamqY
-          example:
-          - tamqY
-          - tuKd3
-        logicOperator:
+        message:
+          description: Error message
           type: string
-          enum:
-          - and
-          - or
-        subscriberCycle:
-          description: Defining whether or not a subscriber is in an autoresponder cycle
-          type: array
-          items:
-            type: string
-            enum:
-            - receiving_autoresponder
-            - not_receiving_autoresponder
-          example:
-          - receiving_autoresponder
-          - not_receiving_autoresponder
-        conditions:
-          description: One of the search contact conditions
-          type: array
-          items:
-            $ref: '#/components/schemas/ConditionType'
-        subscriptionDate:
-          description: Matches the matching period
+        moreInfo:
+          description: URL to error description in the API Docs
           type: string
-          enum:
-          - all_time
-          - today
-          - yesterday
-          - last_7_days
-          - last_30_days
-          - this_week
-          - last_week
-          - this_month
-          - last_month
-          - last_2_months
-          - custom
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
-      discriminator:
-        propertyName: subscriptionDate
-        mapping:
-          all_time: '#/components/schemas/SectionAllTimeSubscriptionDate'
-          today: '#/components/schemas/SectionTodaySubscriptionDate'
-          yesterday: '#/components/schemas/SectionYesterdaySubscriptionDate'
-          last_7_days: '#/components/schemas/SectionLast7DaysSubscriptionDate'
-          last_30_days: '#/components/schemas/SectionLast30DaysSubscriptionDate'
-          this_week: '#/components/schemas/SectionThisWeekSubscriptionDate'
-          last_week: '#/components/schemas/SectionLastWeekSubscriptionDate'
-          this_month: '#/components/schemas/SectionThisMonthSubscriptionDate'
-          last_month: '#/components/schemas/SectionLastMonthSubscriptionDate'
-          last_2_months: '#/components/schemas/SectionLast2MonthsSubscriptionDate'
-          custom: '#/components/schemas/SectionCustomSubscriptionDate'
-    SearchContactsBySearchForm:
-      required:
-      - subscribersType
-      - sectionLogicOperator
-      - section
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SubscribersTypeEnumForSearching'
-      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
     SearchedContactDetails:
       properties:
         contactId:
@@ -1289,13 +1117,277 @@ components:
           example: 2024-02-12T11:00:00+0000
       type: object
       readOnly: true
+    NewContactCustomFieldValue:
+      required:
+      - customFieldId
+      - value
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          example: kL6Nh
+        value:
+          type: array
+          items:
+            type: string
+            example: 18-35
+      type: object
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    SubscribersTypeEnumForSearching:
+      properties:
+        subscribersType:
+          description: Only one subscription status
+          type: array
+          items:
+            type: string
+            enum:
+            - subscribed
+            - undelivered
+            - removed
+            - unconfirmed
+            example:
+            - subscribed
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    UpdateSearchContacts:
+      description: New search contacts.
+      required:
+      - name
+      - sectionLogicOperator
+      - section
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
+      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
+      - $ref: '#/components/schemas/BaseSearchContacts'
+    SearchContactsDetails:
+      description: Search contact details.
+      required:
+      - searchContactId
+      - name
+      - createdOn
+      - href
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
+      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
+      - $ref: '#/components/schemas/BaseSearchContacts'
+    UpsertContactCustomFields:
+      required:
+      - customFieldValues
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
+    SubscribersTypeEnumForSegments:
+      properties:
+        subscribersType:
+          description: Only one subscription status
+          type: array
+          items:
+            type: string
+            enum:
+            - subscribed
+            example:
+            - subscribed
+          default:
+          - subscribed
+      type: object
     BaseSearchContactsDetails:
       required:
       - searchContactId
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseSearchContacts'
+    BaseSearchContacts:
+      description: The short description of a saved search.
+      properties:
+        searchContactId:
+          description: The unique search-contact identifier
+          type: string
+          readOnly: true
+          example: pV3r
+        name:
+          description: The unique name of search-contact
+          type: string
+          example: custom test filter
+        createdOn:
+          description: The UTC date time format ISO 8601, e.g. 2018-04-10T10:02:57+0000
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2018-04-10T10:02:57+0000
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://app.getresponse.com/v3/search-contacts/pV3r
+      type: object
+    SearchContactsConditionsDetails:
+      required:
+      - sectionLogicOperator
+      - section
+      properties:
+        sectionLogicOperator:
+          description: Match 'any' (`or` value) or 'all' (`and` value) of the following conditions
+          type: string
+          enum:
+          - or
+          - and
+          example: or
+        section:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchContactSection'
+      type: object
+      example:
+        subscribersType:
+        - subscribed
+        sectionLogicOperator: or
+        section:
+        - campaignIdsList:
+          - tamqY
+          logicOperator: or
+          subscriberCycle:
+          - receiving_autoresponder
+          - not_receiving_autoresponder
+          subscriptionDate: all_time
+          conditions:
+          - conditionType: crm
+            pipelineScope: PSVq
+            stageScope: all
+    NewContactCustomFieldValues:
+      properties:
+        customFieldValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactCustomFieldValue'
+      type: object
+    SearchContactSection:
+      required:
+      - campaignIdsList
+      - logicOperator
+      - subscriberCycle
+      - subscriptionDate
+      properties:
+        campaignIdsList:
+          description: An array of campaign identifiers
+          type: array
+          items:
+            type: string
+            example: tamqY
+          example:
+          - tamqY
+          - tuKd3
+        logicOperator:
+          type: string
+          enum:
+          - and
+          - or
+        subscriberCycle:
+          description: Defining whether or not a subscriber is in an autoresponder cycle
+          type: array
+          items:
+            type: string
+            enum:
+            - receiving_autoresponder
+            - not_receiving_autoresponder
+          example:
+          - receiving_autoresponder
+          - not_receiving_autoresponder
+        conditions:
+          description: One of the search contact conditions
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionType'
+        subscriptionDate:
+          description: Matches the matching period
+          type: string
+          enum:
+          - all_time
+          - today
+          - yesterday
+          - last_7_days
+          - last_30_days
+          - this_week
+          - last_week
+          - this_month
+          - last_month
+          - last_2_months
+          - custom
+      type: object
+      discriminator:
+        propertyName: subscriptionDate
+        mapping:
+          all_time: '#/components/schemas/SectionAllTimeSubscriptionDate'
+          today: '#/components/schemas/SectionTodaySubscriptionDate'
+          yesterday: '#/components/schemas/SectionYesterdaySubscriptionDate'
+          last_7_days: '#/components/schemas/SectionLast7DaysSubscriptionDate'
+          last_30_days: '#/components/schemas/SectionLast30DaysSubscriptionDate'
+          this_week: '#/components/schemas/SectionThisWeekSubscriptionDate'
+          last_week: '#/components/schemas/SectionLastWeekSubscriptionDate'
+          this_month: '#/components/schemas/SectionThisMonthSubscriptionDate'
+          last_month: '#/components/schemas/SectionLastMonthSubscriptionDate'
+          last_2_months: '#/components/schemas/SectionLast2MonthsSubscriptionDate'
+          custom: '#/components/schemas/SectionCustomSubscriptionDate'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    SearchContactsBySearchForm:
+      required:
+      - subscribersType
+      - sectionLogicOperator
+      - section
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubscribersTypeEnumForSearching'
+      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
   parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    searchContactId:
+      name: searchContactId
+      in: path
+      description: The saved search contact identifier
+      required: true
+      schema:
+        type: string
+      example: pV3r
     PerPage:
       name: perPage
       in: query
@@ -1317,98 +1409,6 @@ components:
         format: int32
         default: 1
         minimum: 1
-    searchContactId:
-      name: searchContactId
-      in: path
-      description: The saved search contact identifier
-      required: true
-      schema:
-        type: string
-      example: pV3r
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-  responses:
-    BaseSearchContactsList:
-      description: The saved search contact.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/BaseSearchContactsDetails'
-    SearchedContactsList:
-      description: The contact list.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/SearchedContactDetails'
-    SearchContactsDetails:
-      description: Search contact details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SearchContactsDetails'
-  requestBodies:
-    SearchContactsConditionsDetails:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SearchContactsBySearchForm'
-    UpsertContactCustomFields:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpsertContactCustomFields'
-    UpdateSearchContacts:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateSearchContacts'
-    NewSearchContacts:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewSearchContacts'
   securitySchemes:
     api-key:
       type: apiKey

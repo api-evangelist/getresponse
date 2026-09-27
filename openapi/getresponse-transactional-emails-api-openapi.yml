@@ -403,6 +403,21 @@ paths:
         class: warning
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -412,90 +427,48 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-  responses:
-    TransactionalEmailDetails:
-      description: Transactional email details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TransactionalEmailDetails'
-    TransactionalEmail:
-      description: Transactional email.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TransactionalEmail'
-    TransactionalEmailStatistics:
-      description: The overall statistics of transactional emails
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/TransactionalEmailStatistics'
-    TransactionalEmailList:
-      description: The list of transactional emails
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/TransactionalEmailListElement'
   schemas:
+    TransactionalEmailDetails:
+      required:
+      - transactionalEmailId
+      - fromField
+      - subject
+      - recipients
+      type: object
+      allOf:
+      - properties:
+          fromField:
+            description: The 'From' address ID to be used as the message sender
+            allOf:
+            - $ref: '#/components/schemas/FromFieldReference'
+          replyTo:
+            description: The 'From' address ID to be used as the Reply-to
+            allOf:
+            - $ref: '#/components/schemas/FromFieldReference'
+          subject:
+            type: string
+            maxLength: 512
+            minLength: 1
+            example: Order Confirmation - Example Shop
+          tag:
+            description: The tag ID used for statistical data collection
+            allOf:
+            - $ref: '#/components/schemas/TransactionalEmailTag'
+          recipients:
+            allOf:
+            - $ref: '#/components/schemas/TransactionalEmailRecipientsDetails'
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api3.getresponse360.com/v3/transactional-emails/tRe4i
+      - $ref: '#/components/schemas/TransactionalEmail'
     ErrorResponse:
       required:
       - httpStatus
@@ -529,6 +502,18 @@ components:
           description: UUID of the error response
           type: string
       type: object
+    TransactionalEmail:
+      properties:
+        transactionalEmailId:
+          type: string
+          readOnly: true
+          example: tRe4i
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
     TransactionalEmailRecipientSentOnStatus:
       properties:
         sentOn:
@@ -539,27 +524,26 @@ components:
           readOnly: true
           example: 2019-06-02T09:30:43+0200
       type: object
-    TransactionalEmailRecipients:
-      description: A field containing the message recipients. You can enter up to 8 recipients.
+    TransactionalEmailRecipientTo:
       required:
-      - to
-      properties:
-        to:
-          $ref: '#/components/schemas/TransactionalEmailRecipientTo'
-        cc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipient'
-        bcc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipient'
+      - email
       type: object
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
+      allOf:
+      - properties:
+          validSince:
+            description: The first time this address appeared in your system
+            type: string
+            format: date-time
+            example: 2018-05-02T09:30:43+0200
+      - $ref: '#/components/schemas/TransactionalEmailRecipient'
+    NewTransactionalEmailTag:
+      required:
+      - tagId
+      properties:
+        tagId:
+          type: string
+          example: vBd5
+      type: object
     TransactionalEmailRecipientStatuses:
       type: object
       allOf:
@@ -593,7 +577,15 @@ components:
             readOnly: true
             example: null
       - $ref: '#/components/schemas/TransactionalEmailRecipientSentOnStatus'
-    NewTransactionalEmailTag:
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    TransactionalEmailTag:
       required:
       - tagId
       properties:
@@ -601,56 +593,22 @@ components:
           type: string
           example: vBd5
       type: object
-    TransactionalEmailRecipient:
+    TransactionalEmailRecipients:
+      description: A field containing the message recipients. You can enter up to 8 recipients.
       required:
-      - email
+      - to
       properties:
-        email:
-          type: string
-          format: email
-          example: john.doe@example.com
-        name:
-          type: string
-          maxLength: 128
-          minLength: 1
-          example: John Doe
-        status:
-          type: string
-          enum:
-          - unknown
-          - sent
-          - rejected
-          - opened
-          - bounced
-          - reported_spam
-          readOnly: true
+        to:
+          $ref: '#/components/schemas/TransactionalEmailRecipientTo'
+        cc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipient'
+        bcc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipient'
       type: object
-    FromFieldReference:
-      required:
-      - fromFieldId
-      properties:
-        fromFieldId:
-          description: The 'From' address ID
-          type: string
-          example: V
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/from-fields/V
-      type: object
-    TransactionalEmailRecipientDetails:
-      type: object
-      allOf:
-      - properties:
-          statuses:
-            $ref: '#/components/schemas/TransactionalEmailRecipientStatuses'
-          clickedLinks:
-            type: array
-            items:
-              $ref: '#/components/schemas/TransactionalEmailRecipientClickedLink'
-      - $ref: '#/components/schemas/TransactionalEmailRecipient'
     TransactionalEmailStatistics:
       properties:
         timeFrame:
@@ -674,14 +632,78 @@ components:
           type: integer
           format: int64
       type: object
-    TransactionalEmailTag:
-      required:
-      - tagId
-      properties:
-        tagId:
-          type: string
-          example: vBd5
+    TransactionalEmailRecipientDetails:
       type: object
+      allOf:
+      - properties:
+          statuses:
+            $ref: '#/components/schemas/TransactionalEmailRecipientStatuses'
+          clickedLinks:
+            type: array
+            items:
+              $ref: '#/components/schemas/TransactionalEmailRecipientClickedLink'
+      - $ref: '#/components/schemas/TransactionalEmailRecipient'
+    TransactionalEmailRecipientsDetails:
+      required:
+      - to
+      properties:
+        to:
+          $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
+        cc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
+        bcc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
+      type: object
+    TransactionalEmailRecipientClickedLink:
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+          example: https://example.com
+        clickedOn:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2019-06-02T09:31:20+0200
+      type: object
+    CreateTransactionalEmail:
+      required:
+      - fromField
+      - recipients
+      - contentType
+      properties:
+        fromField:
+          description: The 'From' address ID to be used as the message sender
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        replyTo:
+          description: The 'From' address ID to be used as the Reply-to
+          allOf:
+          - $ref: '#/components/schemas/FromFieldReference'
+        tag:
+          description: The tag ID used for statistical data collection
+          allOf:
+          - $ref: '#/components/schemas/NewTransactionalEmailTag'
+        recipients:
+          $ref: '#/components/schemas/TransactionalEmailRecipients'
+        contentType:
+          description: The message content type
+          type: string
+          default: direct
+          enum:
+          - direct
+          - template
+      type: object
+      discriminator:
+        propertyName: contentType
+        mapping:
+          direct: '#/components/schemas/DirectContent'
+          template: '#/components/schemas/TemplateContent'
     TransactionalEmailListElement:
       required:
       - transactionalEmailId
@@ -722,131 +744,60 @@ components:
           readOnly: true
           example: https://api3.getresponse360.com/v3/transactional-emails/tRe4i
       type: object
-    TransactionalEmailRecipientTo:
+    FromFieldReference:
       required:
-      - email
-      type: object
-      allOf:
-      - properties:
-          validSince:
-            description: The first time this address appeared in your system
-            type: string
-            format: date-time
-            example: 2018-05-02T09:30:43+0200
-      - $ref: '#/components/schemas/TransactionalEmailRecipient'
-    TransactionalEmailDetails:
-      required:
-      - transactionalEmailId
-      - fromField
-      - subject
-      - recipients
-      type: object
-      allOf:
-      - properties:
-          fromField:
-            description: The 'From' address ID to be used as the message sender
-            allOf:
-            - $ref: '#/components/schemas/FromFieldReference'
-          replyTo:
-            description: The 'From' address ID to be used as the Reply-to
-            allOf:
-            - $ref: '#/components/schemas/FromFieldReference'
-          subject:
-            type: string
-            maxLength: 512
-            minLength: 1
-            example: Order Confirmation - Example Shop
-          tag:
-            description: The tag ID used for statistical data collection
-            allOf:
-            - $ref: '#/components/schemas/TransactionalEmailTag'
-          recipients:
-            allOf:
-            - $ref: '#/components/schemas/TransactionalEmailRecipientsDetails'
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api3.getresponse360.com/v3/transactional-emails/tRe4i
-      - $ref: '#/components/schemas/TransactionalEmail'
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    CreateTransactionalEmail:
-      required:
-      - fromField
-      - recipients
-      - contentType
+      - fromFieldId
       properties:
-        fromField:
-          description: The 'From' address ID to be used as the message sender
-          allOf:
-          - $ref: '#/components/schemas/FromFieldReference'
-        replyTo:
-          description: The 'From' address ID to be used as the Reply-to
-          allOf:
-          - $ref: '#/components/schemas/FromFieldReference'
-        tag:
-          description: The tag ID used for statistical data collection
-          allOf:
-          - $ref: '#/components/schemas/NewTransactionalEmailTag'
-        recipients:
-          $ref: '#/components/schemas/TransactionalEmailRecipients'
-        contentType:
-          description: The message content type
+        fromFieldId:
+          description: The 'From' address ID
           type: string
-          default: direct
-          enum:
-          - direct
-          - template
-      type: object
-      discriminator:
-        propertyName: contentType
-        mapping:
-          direct: '#/components/schemas/DirectContent'
-          template: '#/components/schemas/TemplateContent'
-    TransactionalEmailRecipientsDetails:
-      required:
-      - to
-      properties:
-        to:
-          $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
-        cc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
-        bcc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
-      type: object
-    TransactionalEmailRecipientClickedLink:
-      properties:
-        url:
+          example: V
+        href:
+          description: Direct hyperlink to a resource
           type: string
           format: uri
           readOnly: true
-          example: https://example.com
-        clickedOn:
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2019-06-02T09:31:20+0200
+          example: https://api.getresponse.com/v3/from-fields/V
       type: object
-    TransactionalEmail:
+    TransactionalEmailRecipient:
+      required:
+      - email
       properties:
-        transactionalEmailId:
+        email:
           type: string
+          format: email
+          example: john.doe@example.com
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+          example: John Doe
+        status:
+          type: string
+          enum:
+          - unknown
+          - sent
+          - rejected
+          - opened
+          - bounced
+          - reported_spam
           readOnly: true
-          example: tRe4i
       type: object
   parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    transactionalEmailId:
+      name: transactionalEmailId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: tRe4i
     PerPage:
       name: perPage
       in: query
@@ -868,20 +819,69 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    transactionalEmailId:
-      name: transactionalEmailId
-      in: path
-      required: true
-      schema:
-        type: string
-      example: tRe4i
+  responses:
+    TransactionalEmailDetails:
+      description: Transactional email details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionalEmailDetails'
+    TransactionalEmailStatistics:
+      description: The overall statistics of transactional emails
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TransactionalEmailStatistics'
+    TransactionalEmail:
+      description: Transactional email.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionalEmail'
+    TransactionalEmailList:
+      description: The list of transactional emails
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TransactionalEmailListElement'
   requestBodies:
     CreateTransactionalEmail:
       content:

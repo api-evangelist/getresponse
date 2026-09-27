@@ -256,65 +256,6 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   schemas:
     ErrorResponse:
       required:
@@ -349,11 +290,6 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     SmsAutomationListItem:
       required:
       - smsId
@@ -414,28 +350,6 @@ components:
           description: Information is the automated SMS message contains links
           type: boolean
           readOnly: true
-      type: object
-    CampaignReference:
-      required:
-      - campaignId
-      properties:
-        campaignId:
-          description: Campaign ID
-          type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
       type: object
     SmsAutomationDetails:
       type: object
@@ -498,6 +412,63 @@ components:
             - 'null'
             example: Hello, world!
       - $ref: '#/components/schemas/SmsAutomationListItem'
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
   responses:
     SmsAutomationList:
       description: The list of the automated SMS messages
@@ -531,6 +502,35 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SmsAutomationDetails'
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
   securitySchemes:
     api-key:
       type: apiKey

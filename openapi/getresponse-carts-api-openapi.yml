@@ -497,37 +497,109 @@ paths:
       - oauth2:
         - all
 components:
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
   schemas:
+    NewCartSelectedProductVariant:
+      required:
+      - variantId
+      - quantity
+      - price
+      - priceTax
+      properties:
+        variantId:
+          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
+          type: string
+          example: VTB
+        quantity:
+          description: The quantity
+          type: integer
+          format: int64
+          minimum: 1
+          example: 3
+        price:
+          description: The price, tax excluded
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 57
+        priceTax:
+          description: The price, tax included
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 68
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/products/9I/variants/VTB
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    UpdateCart:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Cart'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    NewCart:
+      required:
+      - contactId
+      - totalPrice
+      - currency
+      - selectedVariants
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Cart'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     Cart:
       type: object
       allOf:
@@ -581,57 +653,6 @@ components:
             format: url
             example: http://example.com/cart/nQ
       - $ref: '#/components/schemas/CreateAndUpdate'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    UpdateCart:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Cart'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    NewCart:
-      required:
-      - contactId
-      - totalPrice
-      - currency
-      - selectedVariants
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Cart'
     DateOrDateTime:
       oneOf:
       - type: string
@@ -640,113 +661,36 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-    NewCartSelectedProductVariant:
-      required:
-      - variantId
-      - quantity
-      - price
-      - priceTax
-      properties:
-        variantId:
-          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
-          type: string
-          example: VTB
-        quantity:
-          description: The quantity
-          type: integer
-          format: int64
-          minimum: 1
-          example: 3
-        price:
-          description: The price, tax excluded
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 57
-        priceTax:
-          description: The price, tax included
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 68
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/products/9I/variants/VTB
-      type: object
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-  requestBodies:
-    NewCart:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewCart'
-    UpdateCart:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCart'
-  parameters:
-    cartId:
-      name: cartId
-      in: path
-      description: The cart ID
-      required: true
-      schema:
-        type: string
-      example: V
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
+  headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
+    TotalCount:
+      description: The total number of resources found for the specified conditions
       schema:
         type: integer
         format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
+    CurrentPage:
+      description: The current page number
       schema:
-        type: string
-      example: pf3
+        type: integer
+        format: int32
   responses:
     CartList:
       description: The list of carts
@@ -782,6 +726,62 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Cart'
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    cartId:
+      name: cartId
+      in: path
+      description: The cart ID
+      required: true
+      schema:
+        type: string
+      example: V
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+  requestBodies:
+    UpdateCart:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCart'
+    NewCart:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCart'
   securitySchemes:
     api-key:
       type: apiKey

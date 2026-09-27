@@ -126,21 +126,6 @@ paths:
       - oauth2:
         - all
 components:
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
   schemas:
     ErrorResponse:
       required:
@@ -204,6 +189,37 @@ components:
           format: int64
           example: 2
       type: object
+  parameters:
+    popupId:
+      name: popupId
+      in: path
+      description: The form or popup ID
+      required: true
+      schema:
+        type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   responses:
     PopupGeneralPerformance:
       description: Form or popup statistics
@@ -218,22 +234,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/PopupGeneralPerformanceStats'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    popupId:
-      name: popupId
-      in: path
-      description: The form or popup ID
-      required: true
-      schema:
-        type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
   securitySchemes:
     api-key:
       type: apiKey

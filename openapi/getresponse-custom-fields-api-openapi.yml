@@ -445,42 +445,22 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    CustomFieldDetails:
-      description: The custom field details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CustomFieldResponse'
-    CustomFieldList:
-      description: The list of custom fields
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/CustomField'
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -490,27 +470,21 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
   schemas:
+    CustomFieldFormatEnum:
+      type: string
+      enum:
+      - text
+      - textarea
+      - radio
+      - checkbox
+      - single_select
+      - multi_select
     ErrorResponse:
       required:
       - httpStatus
@@ -549,6 +523,59 @@ components:
       enum:
       - 'true'
       - 'false'
+    CustomFieldResponse:
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          readOnly: true
+          example: pas
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/custom-fields/pas
+        name:
+          description: The name of the custom field
+          type: string
+          example: office_phone_number
+        type:
+          example: phone
+          allOf:
+          - $ref: '#/components/schemas/CustomFieldTypeEnum'
+        valueType:
+          description: Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined
+          type: string
+          readOnly: true
+          example: radio
+        format:
+          example: text
+          allOf:
+          - $ref: '#/components/schemas/CustomFieldFormatEnum'
+        fieldType:
+          description: Returns the same as `format`
+          type: string
+          readOnly: true
+          example: text
+          deprecated: true
+        hidden:
+          description: Whether the custom field is visible to contacts
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        values:
+          description: The list of assigned default values, starting from zero depending on the custom field format. (Please see description).
+          type: array
+          items:
+            type: string
+            example: '+48600100200'
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     UpdateCustomField:
       required:
       - hidden
@@ -566,20 +593,16 @@ components:
             type: string
             example: '+48600100200'
       type: object
-    CustomFieldFormatEnum:
-      type: string
-      enum:
-      - text
-      - textarea
-      - radio
-      - checkbox
-      - single_select
-      - multi_select
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
+    NewCustomField:
+      required:
+      - name
+      - type
+      - format
+      - hidden
+      - values
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CustomField'
     CustomField:
       properties:
         customFieldId:
@@ -656,76 +679,22 @@ components:
       - gender
       - ip
       - url
-    NewCustomField:
-      required:
-      - name
-      - type
-      - format
-      - hidden
-      - values
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CustomField'
-    CustomFieldResponse:
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          readOnly: true
-          example: pas
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/custom-fields/pas
-        name:
-          description: The name of the custom field
-          type: string
-          example: office_phone_number
-        type:
-          example: phone
-          allOf:
-          - $ref: '#/components/schemas/CustomFieldTypeEnum'
-        valueType:
-          description: Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined
-          type: string
-          readOnly: true
-          example: radio
-        format:
-          example: text
-          allOf:
-          - $ref: '#/components/schemas/CustomFieldFormatEnum'
-        fieldType:
-          description: Returns the same as `format`
-          type: string
-          readOnly: true
-          example: text
-          deprecated: true
-        hidden:
-          description: Whether the custom field is visible to contacts
-          example: 'false'
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-        values:
-          description: The list of assigned default values, starting from zero depending on the custom field format. (Please see description).
-          type: array
-          items:
-            type: string
-            example: '+48600100200'
-      type: object
-  requestBodies:
-    NewCustomField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewCustomField'
-    UpdateCustomField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCustomField'
   parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    customFieldId:
+      name: customFieldId
+      in: path
+      description: 'Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`.'
+      required: true
+      schema:
+        type: string
+      example: pas
     PerPage:
       name: perPage
       in: query
@@ -737,14 +706,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    customFieldId:
-      name: customFieldId
-      in: path
-      description: 'Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`.'
-      required: true
-      schema:
-        type: string
-      example: pas
     Page:
       name: page
       in: query
@@ -755,13 +716,52 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
+  responses:
+    CustomFieldList:
+      description: The list of custom fields
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CustomField'
+    CustomFieldDetails:
+      description: The custom field details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomFieldResponse'
+  requestBodies:
+    NewCustomField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCustomField'
+    UpdateCustomField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCustomField'
   securitySchemes:
     api-key:
       type: apiKey

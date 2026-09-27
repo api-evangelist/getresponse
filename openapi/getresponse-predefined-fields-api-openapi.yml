@@ -471,6 +471,21 @@ paths:
         - all
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -480,27 +495,92 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    predefinedFieldId:
+      name: predefinedFieldId
+      in: path
+      description: The predefined field identifier
+      required: true
+      schema:
+        type: string
+      example: 6neM
+  responses:
+    PredefinedFieldsList:
+      description: The list of predefined fields.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/PredefinedField'
+    PredefinedFieldDetails:
+      description: The predefined field details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PredefinedField'
   schemas:
+    NewPredefinedField:
+      required:
+      - name
+      - value
+      - campaign
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PredefinedField'
     ErrorResponse:
       required:
       - httpStatus
@@ -560,11 +640,17 @@ components:
         campaign:
           $ref: '#/components/schemas/CampaignReference'
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
+    UpdatePredefinedField:
+      required:
+      - value
+      properties:
+        value:
+          type: string
+          maxLength: 350
+          minLength: 1
+          pattern: ^[A-Za-z_]{1,350}$
+          example: my_new_value
+      type: object
     CampaignReference:
       required:
       - campaignId
@@ -587,62 +673,11 @@ components:
           readOnly: true
           example: Promo campaign
       type: object
-    UpdatePredefinedField:
-      required:
-      - value
-      properties:
-        value:
-          type: string
-          maxLength: 350
-          minLength: 1
-          pattern: ^[A-Za-z_]{1,350}$
-          example: my_new_value
-      type: object
-    NewPredefinedField:
-      required:
-      - name
-      - value
-      - campaign
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/PredefinedField'
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    predefinedFieldId:
-      name: predefinedFieldId
-      in: path
-      description: The predefined field identifier
-      required: true
-      schema:
-        type: string
-      example: 6neM
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
   requestBodies:
     NewPredefinedField:
       content:
@@ -654,41 +689,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UpdatePredefinedField'
-  responses:
-    PredefinedFieldDetails:
-      description: The predefined field details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PredefinedField'
-    PredefinedFieldsList:
-      description: The list of predefined fields.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/PredefinedField'
   securitySchemes:
     api-key:
       type: apiKey

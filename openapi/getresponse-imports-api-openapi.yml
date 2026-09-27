@@ -339,7 +339,57 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    ImportDetails:
+      description: The import details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Import'
+    ImportList:
+      description: The list of imports.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Import'
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -349,49 +399,49 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    importId:
+      name: importId
+      in: path
+      description: The import ID
+      required: true
+      schema:
+        type: string
+      example: o6gE
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
   schemas:
-    NewImport:
-      required:
-      - campaignId
-      - contacts
-      - fieldMapping
-      properties:
-        campaignId:
-          description: The ID of the destination campaign (list)
-          type: string
-          example: z5c
-        fieldMapping:
-          description: Mapping definition for such contact properties as email address, name, or custom fields. It's the equivalent of column headers in a CSV file used to import contacts in a GetResponse account. The `email` value is required. For custom fields, provide only custom fields name in the mapping. Include their values in the corresponding field in the contact array
-          type: array
-          items:
-            type: string
-            example: email
-        contacts:
-          description: Container for a contact definition. Include the values defined in the `fieldMapping` array
-          type: array
-          items:
-            $ref: '#/components/schemas/NewImportContact'
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -425,11 +475,6 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    NewImportContact:
-      type: array
-      items:
-        type: string
-        example: example@somedomain.com
     ImportErrorStatistics:
       properties:
         syntaxErrors:
@@ -469,6 +514,28 @@ components:
           readOnly: true
           example: 1
       type: object
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
     SortOrderEnum:
       type: string
       enum:
@@ -506,28 +573,33 @@ components:
           readOnly: true
           example: 10
       type: object
-    CampaignReference:
+    NewImport:
       required:
       - campaignId
+      - contacts
+      - fieldMapping
       properties:
         campaignId:
-          description: Campaign ID
+          description: The ID of the destination campaign (list)
           type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
+          example: z5c
+        fieldMapping:
+          description: Mapping definition for such contact properties as email address, name, or custom fields. It's the equivalent of column headers in a CSV file used to import contacts in a GetResponse account. The `email` value is required. For custom fields, provide only custom fields name in the mapping. Include their values in the corresponding field in the contact array
+          type: array
+          items:
+            type: string
+            example: email
+        contacts:
+          description: Container for a contact definition. Include the values defined in the `fieldMapping` array
+          type: array
+          items:
+            $ref: '#/components/schemas/NewImportContact'
       type: object
+    NewImportContact:
+      type: array
+      items:
+        type: string
+        example: example@somedomain.com
     Import:
       properties:
         importId:
@@ -578,84 +650,12 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    importId:
-      name: importId
-      in: path
-      description: The import ID
-      required: true
-      schema:
-        type: string
-      example: o6gE
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   requestBodies:
     NewImport:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewImport'
-  responses:
-    ImportDetails:
-      description: The import details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Import'
-    ImportList:
-      description: The list of imports.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Import'
   securitySchemes:
     api-key:
       type: apiKey

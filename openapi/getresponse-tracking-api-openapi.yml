@@ -123,32 +123,6 @@ paths:
         - all
 components:
   schemas:
-    Tracking:
-      properties:
-        grid:
-          type: string
-          readOnly: true
-          example: 2fEBK5kj4ReCxUvd
-        snippet:
-          type: string
-          readOnly: true
-          example: <script type="text/javascript" src="script_url_will_be_here" async></script>
-        snippetV2:
-          type: string
-          readOnly: true
-          example: <script type="text/javascript">function () {}</script>
-      type: object
-    FacebookPixel:
-      properties:
-        name:
-          type: string
-          readOnly: true
-          example: integration-pixel
-        pixelId:
-          type: string
-          readOnly: true
-          example: '123'
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -181,6 +155,32 @@ components:
         uuid:
           description: UUID of the error response
           type: string
+      type: object
+    Tracking:
+      properties:
+        grid:
+          type: string
+          readOnly: true
+          example: 2fEBK5kj4ReCxUvd
+        snippet:
+          type: string
+          readOnly: true
+          example: <script type="text/javascript" src="script_url_will_be_here" async></script>
+        snippetV2:
+          type: string
+          readOnly: true
+          example: <script type="text/javascript">function () {}</script>
+      type: object
+    FacebookPixel:
+      properties:
+        name:
+          type: string
+          readOnly: true
+          example: integration-pixel
+        pixelId:
+          type: string
+          readOnly: true
+          example: '123'
       type: object
   headers:
     RateLimitLimit:

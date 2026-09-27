@@ -250,42 +250,22 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    LpsList:
-      description: The list of tags
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Lps'
-    LpsDetails:
-      description: The landing page details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LpsDetails'
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -295,127 +275,12 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     CurrentPage:
       description: The current page number
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
   schemas:
-    Lps:
-      type: object
-      allOf:
-      - properties:
-          statistics:
-            description: The landing page statistics
-            allOf:
-            - $ref: '#/components/schemas/LpsListItemStatistics'
-        type: object
-      - $ref: '#/components/schemas/LpsListItem'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    LpsListItemStatistics:
-      properties:
-        visits:
-          description: The number of browsing sessions initiated on your landing page
-          type: integer
-          format: int64
-          example: 9
-        leads:
-          description: Number of leads
-          type: integer
-          format: int64
-          example: 5
-        subscriptionRate:
-          description: The number of leads divided by the number of visitors, shown as a percentage
-          type: integer
-          format: int64
-          example: 52
-      type: object
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    LpsDetailsStatistics:
-      properties:
-        pageViews:
-          description: The total number of times your landing page was viewed or refreshed
-          type: integer
-          format: int64
-          example: 9
-        visits:
-          description: The number of browsing sessions initiated on your landing page
-          type: integer
-          format: int64
-          example: 5
-        uniqueVisitors:
-          description: The number of people who visited your landing page
-          type: integer
-          format: int64
-          example: 5
-      type: object
-    LpsDetails:
-      type: object
-      allOf:
-      - properties:
-          pages:
-            type: array
-            items:
-              $ref: '#/components/schemas/LpsPage'
-        type: object
-      - $ref: '#/components/schemas/LpsListItem'
-      - $ref: '#/components/schemas/LpsDetailsStatistics'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     LpsListItem:
       properties:
         lpsId:
@@ -468,6 +333,88 @@ components:
           format: date-time
           example: '2023-03-14T14:42:57'
       type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    LpsDetails:
+      type: object
+      allOf:
+      - properties:
+          pages:
+            type: array
+            items:
+              $ref: '#/components/schemas/LpsPage'
+        type: object
+      - $ref: '#/components/schemas/LpsListItem'
+      - $ref: '#/components/schemas/LpsDetailsStatistics'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    Lps:
+      type: object
+      allOf:
+      - properties:
+          statistics:
+            description: The landing page statistics
+            allOf:
+            - $ref: '#/components/schemas/LpsListItemStatistics'
+        type: object
+      - $ref: '#/components/schemas/LpsListItem'
+    LpsListItemStatistics:
+      properties:
+        visits:
+          description: The number of browsing sessions initiated on your landing page
+          type: integer
+          format: int64
+          example: 9
+        leads:
+          description: Number of leads
+          type: integer
+          format: int64
+          example: 5
+        subscriptionRate:
+          description: The number of leads divided by the number of visitors, shown as a percentage
+          type: integer
+          format: int64
+          example: 52
+      type: object
     LpsPage:
       properties:
         uuid:
@@ -503,15 +450,32 @@ components:
           format: date-time
           example: '2023-03-14T14:42:57'
       type: object
+    LpsDetailsStatistics:
+      properties:
+        pageViews:
+          description: The total number of times your landing page was viewed or refreshed
+          type: integer
+          format: int64
+          example: 9
+        visits:
+          description: The number of browsing sessions initiated on your landing page
+          type: integer
+          format: int64
+          example: 5
+        uniqueVisitors:
+          description: The number of people who visited your landing page
+          type: integer
+          format: int64
+          example: 5
+      type: object
   parameters:
-    lpsId:
-      name: lpsId
-      in: path
-      description: The landing page ID
-      required: true
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
     PerPage:
       name: perPage
       in: query
@@ -533,13 +497,49 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
+    lpsId:
+      name: lpsId
+      in: path
+      description: The landing page ID
+      required: true
       schema:
         type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
+  responses:
+    LpsDetails:
+      description: The landing page details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LpsDetails'
+    LpsList:
+      description: The list of tags
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Lps'
   securitySchemes:
     api-key:
       type: apiKey

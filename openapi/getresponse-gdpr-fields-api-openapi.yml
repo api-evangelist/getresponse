@@ -196,19 +196,98 @@ paths:
       - oauth2:
         - all
 components:
+  schemas:
+    GDPRFieldLatestVersion:
+      properties:
+        gdprFieldVersionId:
+          type: string
+          readOnly: true
+          example: yRI
+        content:
+          description: The content of the GDPR field
+          type: string
+          readOnly: true
+          example: '1st version of Consent #1'
+        createdOn:
+          type: string
+          format: date-time
+          example: 2018-08-02T11:12:00+0000
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    GDPRField:
+      properties:
+        gdprFieldId:
+          type: string
+          readOnly: true
+          example: MtY
+        name:
+          description: The name of the GDPR field
+          type: string
+          example: 'Consent #1'
+        createdOn:
+          type: string
+          format: date-time
+          example: 2018-08-01T09:18:00+0000
+        href:
+          description: The direct hyperlink to the resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/gdpr-fields/MtY
+      type: object
+    GDPRFieldDetails:
+      type: object
+      allOf:
+      - properties:
+          latestVersion:
+            $ref: '#/components/schemas/GDPRFieldLatestVersion'
+        type: object
+      - $ref: '#/components/schemas/GDPRField'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
   headers:
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
         type: integer
         format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
@@ -216,8 +295,13 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
       schema:
         type: integer
         format: int32
@@ -261,91 +345,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GDPRFieldDetails'
-  schemas:
-    GDPRField:
-      properties:
-        gdprFieldId:
-          type: string
-          readOnly: true
-          example: MtY
-        name:
-          description: The name of the GDPR field
-          type: string
-          example: 'Consent #1'
-        createdOn:
-          type: string
-          format: date-time
-          example: 2018-08-01T09:18:00+0000
-        href:
-          description: The direct hyperlink to the resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/gdpr-fields/MtY
-      type: object
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    GDPRFieldDetails:
-      type: object
-      allOf:
-      - properties:
-          latestVersion:
-            $ref: '#/components/schemas/GDPRFieldLatestVersion'
-        type: object
-      - $ref: '#/components/schemas/GDPRField'
-    GDPRFieldLatestVersion:
-      properties:
-        gdprFieldVersionId:
-          type: string
-          readOnly: true
-          example: yRI
-        content:
-          description: The content of the GDPR field
-          type: string
-          readOnly: true
-          example: '1st version of Consent #1'
-        createdOn:
-          type: string
-          format: date-time
-          example: 2018-08-02T11:12:00+0000
-      type: object
   parameters:
+    gdprFieldId:
+      name: gdprFieldId
+      in: path
+      description: The GDPR field ID
+      required: true
+      schema:
+        type: string
+      example: MtY
     Page:
       name: page
       in: query
@@ -356,6 +364,13 @@ components:
         format: int32
         default: 1
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     PerPage:
       name: perPage
       in: query
@@ -367,21 +382,6 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-    gdprFieldId:
-      name: gdprFieldId
-      in: path
-      description: The GDPR field ID
-      required: true
-      schema:
-        type: string
-      example: MtY
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   securitySchemes:
     api-key:
       type: apiKey
