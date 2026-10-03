@@ -476,44 +476,7 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     PerPage:
       name: perPage
       in: query
@@ -535,6 +498,13 @@ components:
         format: int32
         default: 1
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     transactionalEmailTemplateId:
       name: transactionalEmailTemplateId
       in: path
@@ -589,11 +559,6 @@ components:
           type: string
           example: <h1>Your order has been confirmed</h1><strong>Thank you for shopping with us!</strong>
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     CreateTransactionalEmailTemplate:
       required:
       - subject
@@ -605,6 +570,19 @@ components:
         content:
           $ref: '#/components/schemas/TransactionalEmailTemplateContent'
       type: object
+    TransactionalEmailsTemplateDetails:
+      type: object
+      allOf:
+      - properties:
+          content:
+            $ref: '#/components/schemas/TransactionalEmailTemplateContent'
+        type: object
+      - $ref: '#/components/schemas/TransactionalEmailsTemplateListElement'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     TransactionalEmailsTemplateListElement:
       properties:
         templateId:
@@ -638,20 +616,37 @@ components:
             - html
             - wysiwyg
       type: object
-    TransactionalEmailsTemplateDetails:
-      type: object
-      allOf:
-      - properties:
-          content:
-            $ref: '#/components/schemas/TransactionalEmailTemplateContent'
-        type: object
-      - $ref: '#/components/schemas/TransactionalEmailsTemplateListElement'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
   requestBodies:
-    CreateTransactionalEmailTemplate:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTransactionalEmailTemplate'
     updateTransactionalEmailsTemplate:
       content:
         application/json:
@@ -664,6 +659,11 @@ components:
               content:
                 $ref: '#/components/schemas/TransactionalEmailTemplateContent'
             type: object
+    CreateTransactionalEmailTemplate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTransactionalEmailTemplate'
   responses:
     TransactionalEmailsTemplateDetails:
       description: Transactional emails template details

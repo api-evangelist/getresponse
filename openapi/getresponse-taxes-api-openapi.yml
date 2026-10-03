@@ -462,44 +462,7 @@ paths:
         - all
       x-operation-class-name: DeleteTax
 components:
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     PerPage:
       name: perPage
       in: query
@@ -537,6 +500,13 @@ components:
       schema:
         type: string
       example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   responses:
     TaxDetails:
       description: The tax details
@@ -573,6 +543,14 @@ components:
             items:
               $ref: '#/components/schemas/Tax'
   schemas:
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
     ErrorResponse:
       required:
       - httpStatus
@@ -606,29 +584,17 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    Tax:
+    UpdateTax:
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseTax'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
+    NewTax:
+      required:
+      - name
+      - rate
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
     BaseTax:
       properties:
         taxId:
@@ -656,25 +622,29 @@ components:
           minimum: 0
           example: 23
       type: object
-    NewTax:
-      required:
-      - name
-      - rate
+    Tax:
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseTax'
-    UpdateTax:
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
       type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
   requestBodies:
     UpdateTax:
       content:
@@ -686,6 +656,36 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewTax'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     api-key:
       type: apiKey

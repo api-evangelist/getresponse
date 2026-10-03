@@ -445,46 +445,49 @@ paths:
       - oauth2:
         - all
 components:
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
       schema:
         type: integer
         format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+        default: 1
+        minimum: 1
+    customFieldId:
+      name: customFieldId
+      in: path
+      description: 'Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`.'
+      required: true
       schema:
         type: string
-    CurrentPage:
-      description: The current page number
+      example: pas
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
-        type: integer
-        format: int32
+        type: string
   schemas:
-    CustomFieldFormatEnum:
+    StringBooleanEnum:
       type: string
       enum:
-      - text
-      - textarea
-      - radio
-      - checkbox
-      - single_select
-      - multi_select
+      - 'true'
+      - 'false'
     ErrorResponse:
       required:
       - httpStatus
@@ -518,91 +521,19 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    StringBooleanEnum:
+    CustomFieldTypeEnum:
       type: string
       enum:
-      - 'true'
-      - 'false'
-    CustomFieldResponse:
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          readOnly: true
-          example: pas
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/custom-fields/pas
-        name:
-          description: The name of the custom field
-          type: string
-          example: office_phone_number
-        type:
-          example: phone
-          allOf:
-          - $ref: '#/components/schemas/CustomFieldTypeEnum'
-        valueType:
-          description: Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined
-          type: string
-          readOnly: true
-          example: radio
-        format:
-          example: text
-          allOf:
-          - $ref: '#/components/schemas/CustomFieldFormatEnum'
-        fieldType:
-          description: Returns the same as `format`
-          type: string
-          readOnly: true
-          example: text
-          deprecated: true
-        hidden:
-          description: Whether the custom field is visible to contacts
-          example: 'false'
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-        values:
-          description: The list of assigned default values, starting from zero depending on the custom field format. (Please see description).
-          type: array
-          items:
-            type: string
-            example: '+48600100200'
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    UpdateCustomField:
-      required:
-      - hidden
-      - values
-      properties:
-        hidden:
-          description: Whether the custom field is visible to contacts
-          example: 'false'
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-        values:
-          description: The list of assigned values (zero or more - depending on the custom field type. Please see description)
-          type: array
-          items:
-            type: string
-            example: '+48600100200'
-      type: object
-    NewCustomField:
-      required:
-      - name
-      - type
-      - format
-      - hidden
-      - values
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CustomField'
+      - string
+      - number
+      - date
+      - datetime
+      - country
+      - currency
+      - phone
+      - gender
+      - ip
+      - url
     CustomField:
       properties:
         customFieldId:
@@ -666,56 +597,106 @@ components:
             type: string
             example: '+48600100200'
       type: object
-    CustomFieldTypeEnum:
+    CustomFieldResponse:
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          readOnly: true
+          example: pas
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/custom-fields/pas
+        name:
+          description: The name of the custom field
+          type: string
+          example: office_phone_number
+        type:
+          example: phone
+          allOf:
+          - $ref: '#/components/schemas/CustomFieldTypeEnum'
+        valueType:
+          description: Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined
+          type: string
+          readOnly: true
+          example: radio
+        format:
+          example: text
+          allOf:
+          - $ref: '#/components/schemas/CustomFieldFormatEnum'
+        fieldType:
+          description: Returns the same as `format`
+          type: string
+          readOnly: true
+          example: text
+          deprecated: true
+        hidden:
+          description: Whether the custom field is visible to contacts
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        values:
+          description: The list of assigned default values, starting from zero depending on the custom field format. (Please see description).
+          type: array
+          items:
+            type: string
+            example: '+48600100200'
+      type: object
+    CustomFieldFormatEnum:
       type: string
       enum:
-      - string
-      - number
-      - date
-      - datetime
-      - country
-      - currency
-      - phone
-      - gender
-      - ip
-      - url
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    customFieldId:
-      name: customFieldId
-      in: path
-      description: 'Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`.'
-      required: true
-      schema:
-        type: string
-      example: pas
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
+      - text
+      - textarea
+      - radio
+      - checkbox
+      - single_select
+      - multi_select
+    NewCustomField:
+      required:
+      - name
+      - type
+      - format
+      - hidden
+      - values
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CustomField'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    UpdateCustomField:
+      required:
+      - hidden
+      - values
+      properties:
+        hidden:
+          description: Whether the custom field is visible to contacts
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        values:
+          description: The list of assigned values (zero or more - depending on the custom field type. Please see description)
+          type: array
+          items:
+            type: string
+            example: '+48600100200'
+      type: object
+  requestBodies:
+    UpdateCustomField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCustomField'
+    NewCustomField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCustomField'
   responses:
     CustomFieldList:
       description: The list of custom fields
@@ -751,17 +732,36 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CustomFieldResponse'
-  requestBodies:
-    NewCustomField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewCustomField'
-    UpdateCustomField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCustomField'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     api-key:
       type: apiKey

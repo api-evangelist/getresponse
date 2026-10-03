@@ -733,26 +733,91 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    Folder:
+      description: The folder details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Folder'
+    FileList:
+      description: The list of files
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/File'
+    File:
+      description: The file details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/File'
+    FoldersList:
+      description: The list of folders
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Folder'
+    Quota:
+      description: Storage space information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Quota'
   schemas:
-    FileProperty:
-      required:
-      - name
-      - value
-      properties:
-        name:
-          type: string
-          enum:
-          - width
-          - height
-          readOnly: true
-          example: width
-        value:
-          readOnly: true
-          oneOf:
-          - type: integer
-            example: 1980
-          - type: string
-      type: object
     BaseFile:
       properties:
         name:
@@ -786,6 +851,15 @@ components:
           format: int64
           example: 1024
       type: object
+    FileGroup:
+      description: The file group
+      type: string
+      enum:
+      - audio
+      - video
+      - photo
+      - document
+      example: photo
     ErrorResponse:
       required:
       - httpStatus
@@ -818,17 +892,6 @@ components:
         uuid:
           description: UUID of the error response
           type: string
-      type: object
-    NewFolder:
-      required:
-      - name
-      properties:
-        name:
-          description: The folder name
-          type: string
-          maxLength: 128
-          minLength: 1
-          example: sample folder
       type: object
     StringBooleanEnum:
       type: string
@@ -889,11 +952,65 @@ components:
             readOnly: true
             example: https://api.getresponse.com/v3/file-library/files/6pS
       - $ref: '#/components/schemas/BaseFile'
+    NewFolder:
+      required:
+      - name
+      properties:
+        name:
+          description: The folder name
+          type: string
+          maxLength: 128
+          minLength: 1
+          example: sample folder
+      type: object
+    NewFile:
+      required:
+      - name
+      - extension
+      - content
+      - folder
+      type: object
+      allOf:
+      - properties:
+          content:
+            description: The base64 encoded file content
+            type: string
+            format: byte
+            example: dGVzdCBjb250ZW50
+      - $ref: '#/components/schemas/BaseFile'
     SortOrderEnum:
       type: string
       enum:
       - ASC
       - DESC
+    FileProperty:
+      required:
+      - name
+      - value
+      properties:
+        name:
+          type: string
+          enum:
+          - width
+          - height
+          readOnly: true
+          example: width
+        value:
+          readOnly: true
+          oneOf:
+          - type: integer
+            example: 1980
+          - type: string
+      type: object
+    FolderShort:
+      required:
+      - folderId
+      properties:
+        folderId:
+          description: The folder ID
+          type: string
+          example: 4a9f
+      type: object
     Folder:
       required:
       - folderId
@@ -921,96 +1038,7 @@ components:
           readOnly: true
           example: 2019-10-14T17:17:13+0000
       type: object
-    FolderShort:
-      required:
-      - folderId
-      properties:
-        folderId:
-          description: The folder ID
-          type: string
-          example: 4a9f
-      type: object
-    NewFile:
-      required:
-      - name
-      - extension
-      - content
-      - folder
-      type: object
-      allOf:
-      - properties:
-          content:
-            description: The base64 encoded file content
-            type: string
-            format: byte
-            example: dGVzdCBjb250ZW50
-      - $ref: '#/components/schemas/BaseFile'
-    FileGroup:
-      description: The file group
-      type: string
-      enum:
-      - audio
-      - video
-      - photo
-      - document
-      example: photo
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  requestBodies:
-    NewFile:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewFile'
-    NewFolder:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewFolder'
   parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    fileId:
-      name: fileId
-      in: path
-      description: The file ID
-      required: true
-      schema:
-        type: string
-      example: 6Yh
     PerPage:
       name: perPage
       in: query
@@ -1040,90 +1068,62 @@ components:
         format: int32
         default: 1
         minimum: 1
-  responses:
-    Quota:
-      description: Storage space information
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    fileId:
+      name: fileId
+      in: path
+      description: The file ID
+      required: true
+      schema:
+        type: string
+      example: 6Yh
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+  requestBodies:
+    NewFile:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Quota'
-    Folder:
-      description: The folder details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
+            $ref: '#/components/schemas/NewFile'
+    NewFolder:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Folder'
-    File:
-      description: The file details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/File'
-    FoldersList:
-      description: The list of folders
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Folder'
-    FileList:
-      description: The list of files
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/File'
+            $ref: '#/components/schemas/NewFolder'
   securitySchemes:
     api-key:
       type: apiKey

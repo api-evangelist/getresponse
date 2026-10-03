@@ -632,122 +632,85 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    AbtestsSubjectGetList:
+      description: The list of A/B tests
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AbtestsSubjectListItem'
+    AbtestsSubjectGetDetails:
+      description: A/B test details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AbtestsSubjectDetails'
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    abTestId:
+      name: abTestId
+      in: path
+      description: A/B test ID
+      required: true
+      schema:
+        type: string
+      example: xyz
   schemas:
-    AbtestsSubjectStatistics:
-      properties:
-        delivered:
-          description: The total number of delivered messages
-          type: integer
-          example: 10
-        openRate:
-          description: Percentage of messages that were opened
-          type: number
-          format: double
-          example: 20.52
-        clickRate:
-          description: Percentage of messages links that were clicked
-          type: number
-          format: double
-          example: 5.12
-      type: object
-    AbtestsSubject:
-      properties:
-        abTestId:
-          description: A/B test ID
-          type: string
-          readOnly: true
-          example: A3r
-        name:
-          description: A/B test name
-          type: string
-          maxLength: 100
-          minLength: 1
-          example: A/B test
-        campaign:
-          description: List linked to A/B test
-          properties:
-            campaignId:
-              description: Campaign ID
-              type: string
-              example: C
-            href:
-              description: Direct hyperlink to a resource
-              type: string
-              format: uri
-              readOnly: true
-              example: https://api.getresponse.com/v3/campaigns/C
-          type: object
-        fromField:
-          description: Newsletter's From" address"
-          properties:
-            fromFieldId:
-              description: The 'From' address ID
-              type: string
-              example: V
-            href:
-              description: Direct hyperlink to a resource
-              type: string
-              format: uri
-              readOnly: true
-              example: https://api.getresponse.com/v3/from-fields/V
-          type: object
-        replyTo:
-          description: Newsletter's reply-to address
-          properties:
-            fromFieldId:
-              description: The 'From' address ID
-              type: string
-              example: V
-            href:
-              description: Direct hyperlink to a resource
-              type: string
-              format: uri
-              readOnly: true
-              example: https://api.getresponse.com/v3/from-fields/V
-          type: object
-      type: object
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    ChooseWinnerAbtestsSubject:
-      required:
-      - variantId
-      properties:
-        variantId:
-          description: The message variant ID. A variant identifier from https://apireference.getresponse.com/#operation/getAbtestsSubjectById.
-          type: string
-          example: VpKJdr
-      type: object
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
     CampaignReference:
       required:
       - campaignId
@@ -770,275 +733,6 @@ components:
           readOnly: true
           example: Promo campaign
       type: object
-    AbtestsSubjectListItem:
-      type: object
-      allOf:
-      - properties:
-          status:
-            description: Newsletter status
-            type: string
-            enum:
-            - active
-            - inactive
-            - deleted
-            readOnly: true
-          stage:
-            description: A/B test stage
-            type: string
-            enum:
-            - preparing
-            - testing
-            - finished
-            - sending_winner
-            - cancelled
-            - draft
-            - completed
-            readOnly: true
-          deliverySettings:
-            description: The A/B test delivery settings
-            properties:
-              sendOn:
-                description: Date the newsletter was sent on
-                properties:
-                  date:
-                    description: Date the newsletter was sent on
-                    type:
-                    - string
-                    - 'null'
-                    format: date-time
-                    example: 2015-07-25T20:05:10+0000
-                  timeZone:
-                    description: Time zone in which the newsletter was sent
-                    properties:
-                      timeZoneId:
-                        description: ID of the time zone the newsletter was sent in
-                        type: integer
-                      timeZoneName:
-                        description: Name of the time zone the newsletter was sent in
-                        type:
-                        - integer
-                        - 'null'
-                      timeZoneOffset:
-                        description: Time zone, or UTC, offset for when the newsletter was sent
-                        type:
-                        - integer
-                        - 'null'
-                    type: object
-                type: object
-              winnerMode:
-                description: A/B test winner selection mode
-                type: string
-                enum:
-                - automatic
-                - manual
-              winningCriteria:
-                description: A/B test winning criteria
-                type: string
-                enum:
-                - open
-                - click
-              samplingPercentage:
-                description: Size of the test (sampling) group, expressed as a percentage. Setting 100% with the `automatic` winnerMode will result in splitting the entire package between the variants, with no additional messages sent to the winner.
-                type: integer
-                format: int32
-                maximum: 100
-                minimum: 1
-              samplingTime:
-                description: A/B testing phase duration. The time after which the remaining recipients will be sent the winning message
-                type:
-                - string
-                - 'null'
-                format: ISO-8601 duration
-                example: '86400'
-            type: object
-          flags:
-            type: array
-            items:
-              description: Tracking options enabled for the newsletter
-              type: string
-              enum:
-              - clicktrack
-              - subscription_reminder
-              - openrate
-              - google_analytics
-              - manual_list
-              - custom_footer
-              - ecommerce_tracking
-              readOnly: true
-          createdOn:
-            description: Date the A/B test was created on
-            type:
-            - string
-            - 'null'
-            format: date-time
-            example: 2015-07-25T20:05:10+0000
-          updatedOn:
-            description: Date A/B test was updated on
-            type:
-            - string
-            - 'null'
-            format: date-time
-            example: 2015-07-25T20:05:10+0000
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api.getresponse.com/v3/ab-tests/subject/A3r
-        type: object
-      - $ref: '#/components/schemas/AbtestsSubject'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    MessageSendSettingExcludedCampaigns:
-      description: The list of campaign IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eC
-    MessageSendSettingExcludedSegments:
-      description: The list of segment IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eSs
-    MessageSendSettingSelectedSegments:
-      description: The list of segment IDs to choose subscribers from.
-      type: array
-      items:
-        type: string
-        example: Se
-    AbtestsSubjectDetails:
-      type: object
-      allOf:
-      - properties:
-          winnerSendingStart:
-            description: Date the winning message was sent on
-            type:
-            - string
-            - 'null'
-            format: date-time
-            example: 2015-07-25T20:05:10+0000
-          statistics:
-            description: The statistics of A/B test
-            properties:
-              total:
-                description: Aggregated statistics for all messages (winner and variants) sent both during and after the evaluation period
-                type: object
-                allOf:
-                - $ref: '#/components/schemas/AbtestsSubjectStatistics'
-              winner:
-                description: Statistics for the winner, collected both during and after the evaluation period
-                type: object
-                allOf:
-                - $ref: '#/components/schemas/AbtestsSubjectStatistics'
-            type: object
-            readOnly: true
-          variants:
-            type: array
-            items:
-              properties:
-                variantId:
-                  description: The message variant ID. A variant identifier from https://apireference.getresponse.com/#operation/getAbtestsSubjectById.
-                  type: string
-                  readOnly: true
-                  example: VpKJdr
-                index:
-                  description: Variant's index field (A, B, C...)
-                  type: string
-                  readOnly: true
-                  example: A
-                subject:
-                  description: Variant's subject
-                  type: string
-                  maximum: 150
-                  minimum: 1
-                  example: variant
-                isWinner:
-                  description: Winning variant
-                  type: boolean
-                  readOnly: true
-                  example: true
-                statistics:
-                  description: Statistics of a variant collected during evaluation period
-                  type: object
-                  readOnly: true
-                  allOf:
-                  - $ref: '#/components/schemas/AbtestsSubjectStatistics'
-              type: object
-          sendSettings:
-            description: The send settings for the A/B test
-            properties:
-              selectedCampaigns:
-                $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
-              selectedSegments:
-                $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
-              selectedSupressions:
-                $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
-              excludedCampaigns:
-                $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
-              excludedSegments:
-                $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
-            type: object
-          editor:
-            description: The message editor used for the A/B test
-            type:
-            - string
-            - 'null'
-            enum:
-            - html2
-            - custom
-            - text
-            - editor_v3
-            - getresponse
-            - legacy
-          content:
-            $ref: '#/components/schemas/MessageContent'
-        type: object
-      - $ref: '#/components/schemas/AbtestsSubjectListItem'
-    MessageContent:
-      description: The message content.
-      properties:
-        html:
-          description: The message content in HTML
-          type: string
-          maxLength: 524288
-          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
-        plain:
-          description: The plain text equivalent of the message content
-          type: string
-          maxLength: 524288
-          example: test 12 Some test
-      type: object
-    FromFieldReference:
-      required:
-      - fromFieldId
-      properties:
-        fromFieldId:
-          description: The 'From' address ID
-          type: string
-          example: V
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/from-fields/V
-      type: object
-    MessageSendSettingSelectedCampaigns:
-      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
-      type: array
-      items:
-        type: string
-        example: C
-    MessageSendSettingSelectedSuppressions:
-      description: The list of suppression IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: Ss
     NewAbtestsSubject:
       type: object
       allOf:
@@ -1170,14 +864,387 @@ components:
           content:
             $ref: '#/components/schemas/MessageContent'
         type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    MessageContent:
+      description: The message content.
+      properties:
+        html:
+          description: The message content in HTML
+          type: string
+          maxLength: 524288
+          example: <h1>test 12</h1><p>Some test <a href="http://example.com">http://example.com</a></p>
+        plain:
+          description: The plain text equivalent of the message content
+          type: string
+          maxLength: 524288
+          example: test 12 Some test
+      type: object
+    AbtestsSubjectListItem:
+      type: object
+      allOf:
+      - properties:
+          status:
+            description: Newsletter status
+            type: string
+            enum:
+            - active
+            - inactive
+            - deleted
+            readOnly: true
+          stage:
+            description: A/B test stage
+            type: string
+            enum:
+            - preparing
+            - testing
+            - finished
+            - sending_winner
+            - cancelled
+            - draft
+            - completed
+            readOnly: true
+          deliverySettings:
+            description: The A/B test delivery settings
+            properties:
+              sendOn:
+                description: Date the newsletter was sent on
+                properties:
+                  date:
+                    description: Date the newsletter was sent on
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                    example: 2015-07-25T20:05:10+0000
+                  timeZone:
+                    description: Time zone in which the newsletter was sent
+                    properties:
+                      timeZoneId:
+                        description: ID of the time zone the newsletter was sent in
+                        type: integer
+                      timeZoneName:
+                        description: Name of the time zone the newsletter was sent in
+                        type:
+                        - integer
+                        - 'null'
+                      timeZoneOffset:
+                        description: Time zone, or UTC, offset for when the newsletter was sent
+                        type:
+                        - integer
+                        - 'null'
+                    type: object
+                type: object
+              winnerMode:
+                description: A/B test winner selection mode
+                type: string
+                enum:
+                - automatic
+                - manual
+              winningCriteria:
+                description: A/B test winning criteria
+                type: string
+                enum:
+                - open
+                - click
+              samplingPercentage:
+                description: Size of the test (sampling) group, expressed as a percentage. Setting 100% with the `automatic` winnerMode will result in splitting the entire package between the variants, with no additional messages sent to the winner.
+                type: integer
+                format: int32
+                maximum: 100
+                minimum: 1
+              samplingTime:
+                description: A/B testing phase duration. The time after which the remaining recipients will be sent the winning message
+                type:
+                - string
+                - 'null'
+                format: ISO-8601 duration
+                example: '86400'
+            type: object
+          flags:
+            type: array
+            items:
+              description: Tracking options enabled for the newsletter
+              type: string
+              enum:
+              - clicktrack
+              - subscription_reminder
+              - openrate
+              - google_analytics
+              - manual_list
+              - custom_footer
+              - ecommerce_tracking
+              readOnly: true
+          createdOn:
+            description: Date the A/B test was created on
+            type:
+            - string
+            - 'null'
+            format: date-time
+            example: 2015-07-25T20:05:10+0000
+          updatedOn:
+            description: Date A/B test was updated on
+            type:
+            - string
+            - 'null'
+            format: date-time
+            example: 2015-07-25T20:05:10+0000
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/ab-tests/subject/A3r
+        type: object
+      - $ref: '#/components/schemas/AbtestsSubject'
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eC
+    MessageSendSettingSelectedSuppressions:
+      description: The list of suppression IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: Ss
+    ChooseWinnerAbtestsSubject:
+      required:
+      - variantId
+      properties:
+        variantId:
+          description: The message variant ID. A variant identifier from https://apireference.getresponse.com/#operation/getAbtestsSubjectById.
+          type: string
+          example: VpKJdr
+      type: object
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
+      type: array
+      items:
+        type: string
+        example: C
+    AbtestsSubjectDetails:
+      type: object
+      allOf:
+      - properties:
+          winnerSendingStart:
+            description: Date the winning message was sent on
+            type:
+            - string
+            - 'null'
+            format: date-time
+            example: 2015-07-25T20:05:10+0000
+          statistics:
+            description: The statistics of A/B test
+            properties:
+              total:
+                description: Aggregated statistics for all messages (winner and variants) sent both during and after the evaluation period
+                type: object
+                allOf:
+                - $ref: '#/components/schemas/AbtestsSubjectStatistics'
+              winner:
+                description: Statistics for the winner, collected both during and after the evaluation period
+                type: object
+                allOf:
+                - $ref: '#/components/schemas/AbtestsSubjectStatistics'
+            type: object
+            readOnly: true
+          variants:
+            type: array
+            items:
+              properties:
+                variantId:
+                  description: The message variant ID. A variant identifier from https://apireference.getresponse.com/#operation/getAbtestsSubjectById.
+                  type: string
+                  readOnly: true
+                  example: VpKJdr
+                index:
+                  description: Variant's index field (A, B, C...)
+                  type: string
+                  readOnly: true
+                  example: A
+                subject:
+                  description: Variant's subject
+                  type: string
+                  maximum: 150
+                  minimum: 1
+                  example: variant
+                isWinner:
+                  description: Winning variant
+                  type: boolean
+                  readOnly: true
+                  example: true
+                statistics:
+                  description: Statistics of a variant collected during evaluation period
+                  type: object
+                  readOnly: true
+                  allOf:
+                  - $ref: '#/components/schemas/AbtestsSubjectStatistics'
+              type: object
+          sendSettings:
+            description: The send settings for the A/B test
+            properties:
+              selectedCampaigns:
+                $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+              selectedSegments:
+                $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+              selectedSupressions:
+                $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
+              excludedCampaigns:
+                $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+              excludedSegments:
+                $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+            type: object
+          editor:
+            description: The message editor used for the A/B test
+            type:
+            - string
+            - 'null'
+            enum:
+            - html2
+            - custom
+            - text
+            - editor_v3
+            - getresponse
+            - legacy
+          content:
+            $ref: '#/components/schemas/MessageContent'
+        type: object
+      - $ref: '#/components/schemas/AbtestsSubjectListItem'
+    AbtestsSubjectStatistics:
+      properties:
+        delivered:
+          description: The total number of delivered messages
+          type: integer
+          example: 10
+        openRate:
+          description: Percentage of messages that were opened
+          type: number
+          format: double
+          example: 20.52
+        clickRate:
+          description: Percentage of messages links that were clicked
+          type: number
+          format: double
+          example: 5.12
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    FromFieldReference:
+      required:
+      - fromFieldId
+      properties:
+        fromFieldId:
+          description: The 'From' address ID
+          type: string
+          example: V
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/from-fields/V
+      type: object
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eSs
+    AbtestsSubject:
+      properties:
+        abTestId:
+          description: A/B test ID
+          type: string
+          readOnly: true
+          example: A3r
+        name:
+          description: A/B test name
+          type: string
+          maxLength: 100
+          minLength: 1
+          example: A/B test
+        campaign:
+          description: List linked to A/B test
+          properties:
+            campaignId:
+              description: Campaign ID
+              type: string
+              example: C
+            href:
+              description: Direct hyperlink to a resource
+              type: string
+              format: uri
+              readOnly: true
+              example: https://api.getresponse.com/v3/campaigns/C
+          type: object
+        fromField:
+          description: Newsletter's From" address"
+          properties:
+            fromFieldId:
+              description: The 'From' address ID
+              type: string
+              example: V
+            href:
+              description: Direct hyperlink to a resource
+              type: string
+              format: uri
+              readOnly: true
+              example: https://api.getresponse.com/v3/from-fields/V
+          type: object
+        replyTo:
+          description: Newsletter's reply-to address
+          properties:
+            fromFieldId:
+              description: The 'From' address ID
+              type: string
+              example: V
+            href:
+              description: Direct hyperlink to a resource
+              type: string
+              format: uri
+              readOnly: true
+              example: https://api.getresponse.com/v3/from-fields/V
+          type: object
+      type: object
   headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+    RateLimitLimit:
+      description: The total number of requests available per time frame
       schema:
         type: integer
         format: int32
@@ -1186,8 +1253,13 @@ components:
       schema:
         type: integer
         format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
@@ -1195,8 +1267,8 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    CurrentPage:
-      description: The current page number
+    TotalCount:
+      description: The total number of resources found for the specified conditions
       schema:
         type: integer
         format: int32
@@ -1211,78 +1283,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewAbtestsSubject'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    abTestId:
-      name: abTestId
-      in: path
-      description: A/B test ID
-      required: true
-      schema:
-        type: string
-      example: xyz
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-  responses:
-    AbtestsSubjectGetList:
-      description: The list of A/B tests
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AbtestsSubjectListItem'
-    AbtestsSubjectGetDetails:
-      description: A/B test details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AbtestsSubjectDetails'
   securitySchemes:
     api-key:
       type: apiKey

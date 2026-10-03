@@ -518,44 +518,7 @@ paths:
       - oauth2:
         - all
 components:
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     PerPage:
       name: perPage
       in: query
@@ -577,14 +540,6 @@ components:
         format: int32
         default: 1
         minimum: 1
-    categoryId:
-      name: categoryId
-      in: path
-      description: The category ID
-      required: true
-      schema:
-        type: string
-      example: C3s
     shopId:
       name: shopId
       in: path
@@ -593,41 +548,21 @@ components:
       schema:
         type: string
       example: pf3
-  responses:
-    CategoryList:
-      description: The list of categories
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Category'
-    CategoryDetails:
-      description: The category details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Category'
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    categoryId:
+      name: categoryId
+      in: path
+      description: The category ID
+      required: true
+      schema:
+        type: string
+      example: C3s
   schemas:
     ErrorResponse:
       required:
@@ -682,6 +617,16 @@ components:
           format: date-time
           readOnly: true
       type: object
+    Category:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseCategory'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     BaseCategory:
       properties:
         categoryId:
@@ -723,16 +668,36 @@ components:
           maxLength: 255
           example: ext3343
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    Category:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseCategory'
-      - $ref: '#/components/schemas/CreateAndUpdate'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
   requestBodies:
     NewCategory:
       content:
@@ -740,6 +705,41 @@ components:
           schema:
             $ref: '#/components/schemas/NewCategory'
     UpdateCategory:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Category'
+  responses:
+    CategoryList:
+      description: The list of categories
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Category'
+    CategoryDetails:
+      description: The category details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
       content:
         application/json:
           schema:

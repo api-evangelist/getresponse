@@ -275,7 +275,68 @@ paths:
         - all
       x-operation-class-name: GetWorkflows
 components:
+  requestBodies:
+    UpdateWorkflow:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateWorkflow'
+  parameters:
+    workflowId:
+      name: workflowId
+      in: path
+      description: The workflow ID
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
   schemas:
+    WorkflowSubscriberStatistics:
+      required:
+      - completedCount
+      - inProgressCount
+      properties:
+        completedCount:
+          description: The number of subscribers that completed the workflow
+          type: integer
+          format: int64
+          readOnly: true
+          example: 4
+        inProgressCount:
+          description: The number of subscribers that are in progress in the workflow
+          type: integer
+          format: int64
+          readOnly: true
+          example: 3
+      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -308,24 +369,6 @@ components:
         uuid:
           description: UUID of the error response
           type: string
-      type: object
-    WorkflowSubscriberStatistics:
-      required:
-      - completedCount
-      - inProgressCount
-      properties:
-        completedCount:
-          description: The number of subscribers that completed the workflow
-          type: integer
-          format: int64
-          readOnly: true
-          example: 4
-        inProgressCount:
-          description: The number of subscribers that are in progress in the workflow
-          type: integer
-          format: int64
-          readOnly: true
-          example: 3
       type: object
     Workflow:
       required:
@@ -374,20 +417,15 @@ components:
           example: active
       type: object
   headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     RateLimitReset:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     CurrentPage:
       description: The current page number
       schema:
@@ -398,25 +436,17 @@ components:
       schema:
         type: integer
         format: int32
-    TotalPages:
-      description: The total number of pages
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
   responses:
-    Workflow:
-      description: The workflow
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Workflow'
     WorkflowList:
       description: The list of workflows
       headers:
@@ -438,49 +468,19 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Workflow'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    workflowId:
-      name: workflowId
-      in: path
-      description: The workflow ID
-      required: true
-      schema:
-        type: string
-      example: 3Va2e
-  requestBodies:
-    UpdateWorkflow:
+    Workflow:
+      description: The workflow
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpdateWorkflow'
+            $ref: '#/components/schemas/Workflow'
   securitySchemes:
     api-key:
       type: apiKey

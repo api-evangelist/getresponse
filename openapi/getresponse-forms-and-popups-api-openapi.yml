@@ -264,39 +264,6 @@ paths:
         - all
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
     PopupListItem:
       properties:
         popupId:
@@ -343,6 +310,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/PopupListItemStatistics'
       type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     PopupDetails:
       properties:
         popupId:
@@ -391,11 +363,39 @@ components:
           format: date-time
           example: '2024-01-10T10:00:00'
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
     PopupListItemStatistics:
       properties:
         views:
@@ -419,37 +419,25 @@ components:
           format: int64
           example: 52
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-  parameters:
     popupId:
       name: popupId
       in: path
@@ -468,24 +456,36 @@ components:
         format: int32
         default: 1
         minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
+  headers:
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
+    TotalPages:
+      description: The total number of pages
       schema:
         type: integer
         format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
   responses:
     PopupsList:
       description: The list of forms and popups

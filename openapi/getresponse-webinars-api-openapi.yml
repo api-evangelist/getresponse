@@ -237,7 +237,115 @@ paths:
       - oauth2:
         - all
 components:
+  parameters:
+    webinarId:
+      name: webinarId
+      in: path
+      description: The webinar ID
+      required: true
+      schema:
+        type: string
+      example: yK6d
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
   schemas:
+    WebinarStatistics:
+      required:
+      - registrants
+      - visitors
+      - attendees
+      properties:
+        registrants:
+          type: integer
+          format: int64
+          example: 15
+        visitors:
+          type: integer
+          format: int64
+          example: 10
+        attendees:
+          type: integer
+          format: int64
+          example: 5
+      type: object
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -322,6 +430,11 @@ components:
         statistics:
           $ref: '#/components/schemas/WebinarStatistics'
       type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     WebinarNewsletter:
       required:
       - newsletterId
@@ -335,52 +448,6 @@ components:
           description: Direct hyperlink to a resource
           type: string
           example: https://api.getresponse.com/v3/newsletters/NuE4
-      type: object
-    CampaignReference:
-      required:
-      - campaignId
-      properties:
-        campaignId:
-          description: Campaign ID
-          type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    WebinarStatistics:
-      required:
-      - registrants
-      - visitors
-      - attendees
-      properties:
-        registrants:
-          type: integer
-          format: int64
-          example: 15
-        visitors:
-          type: integer
-          format: int64
-          example: 10
-        attendees:
-          type: integer
-          format: int64
-          example: 5
       type: object
   responses:
     WebinarDetails:
@@ -417,73 +484,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Webinar'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    webinarId:
-      name: webinarId
-      in: path
-      description: The webinar ID
-      required: true
-      schema:
-        type: string
-      example: yK6d
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
   securitySchemes:
     api-key:
       type: apiKey

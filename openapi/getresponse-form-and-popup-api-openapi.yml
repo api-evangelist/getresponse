@@ -126,7 +126,67 @@ paths:
       - oauth2:
         - all
 components:
+  parameters:
+    popupId:
+      name: popupId
+      in: path
+      description: The form or popup ID
+      required: true
+      schema:
+        type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  headers:
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
   schemas:
+    PopupGeneralPerformanceStats:
+      required:
+      - popupId
+      properties:
+        popupId:
+          description: The form or popup ID
+          type: string
+          example: 7189c47e-e45f-4c45-a882-08649c48ff96
+        views:
+          description: The total number of times your popup was viewed by website visitors
+          type: integer
+          format: int64
+          example: 9
+        clicks:
+          description: The number of clicks
+          type: integer
+          format: int64
+          example: 2
+        ctr:
+          description: The number of clicks divided by the number of views, shown as a percentage
+          type: integer
+          format: int64
+          example: 5
+        leads:
+          description: The number of leads
+          type: integer
+          format: int64
+          example: 2
+      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -160,66 +220,6 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    PopupGeneralPerformanceStats:
-      required:
-      - popupId
-      properties:
-        popupId:
-          description: The form or popup ID
-          type: string
-          example: 7189c47e-e45f-4c45-a882-08649c48ff96
-        views:
-          description: The total number of times your popup was viewed by website visitors
-          type: integer
-          format: int64
-          example: 9
-        clicks:
-          description: The number of clicks
-          type: integer
-          format: int64
-          example: 2
-        ctr:
-          description: The number of clicks divided by the number of views, shown as a percentage
-          type: integer
-          format: int64
-          example: 5
-        leads:
-          description: The number of leads
-          type: integer
-          format: int64
-          example: 2
-      type: object
-  parameters:
-    popupId:
-      name: popupId
-      in: path
-      description: The form or popup ID
-      required: true
-      schema:
-        type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
   responses:
     PopupGeneralPerformance:
       description: Form or popup statistics

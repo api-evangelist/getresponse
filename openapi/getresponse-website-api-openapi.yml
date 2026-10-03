@@ -128,40 +128,22 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
     WebsiteStats:
       required:
       - websiteId
@@ -200,19 +182,53 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+  parameters:
+    websiteId:
+      name: websiteId
+      in: path
+      description: The website ID
+      required: true
       schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+        type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
   responses:
@@ -229,22 +245,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebsiteStats'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    websiteId:
-      name: websiteId
-      in: path
-      description: The website ID
-      required: true
-      schema:
-        type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
   securitySchemes:
     api-key:
       type: apiKey

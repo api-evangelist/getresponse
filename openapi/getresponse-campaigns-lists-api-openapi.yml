@@ -1128,266 +1128,219 @@ paths:
         - all
       x-operation-class-name: GetCampaignStatisticsSummary
 components:
-  responses:
-    RemovalsByDatesStatisticsList:
-      description: Subscription statistics by date
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RemovalsByDatesStatisticsList'
-    CampaignSummaryList:
-      description: The summary list.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CampaignSummaryList'
-    CampaignBlocklist:
-      description: Blocklist masks for the campaign.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Blocklist'
-    CampaignLocationsList:
-      description: The list of locations.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CampaignLocationsList'
-    Campaign:
-      description: The campaign data.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Campaign'
-    CampaignList:
-      description: The list of campaigns.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/CampaignListElement'
-    CampaignOriginsList:
-      description: The list of origins.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CampaignOriginsList'
-    BalanceByDatesStatisticsList:
-      description: The subscription statistics, shown by date.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BalanceByDatesStatisticsList'
-    SubscriptionsByDatesStatisticsList:
-      description: Subscription statistics by date
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SubscriptionsByDatesStatisticsList'
-    CampaignListSizesStatisticsList:
-      description: The campaign data.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CampaignListSizesStatisticsList'
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    CampaignStatisticsIdQuery:
-      name: query[campaignId]
-      in: query
-      required: true
-      schema:
-        $ref: '#/components/schemas/CampaignStatisticsIdQuery'
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    CampaignStatisticsDateFromQuery:
-      name: query[createdOn][from]
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/DateOrDateTime'
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    CampaignStatisticsGroupByQuery:
-      name: query[groupBy]
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - hour
-        - day
-        - month
-        - total
-        example: month
-    CampaignStatisticsDateToQuery:
-      name: query[createdOn][to]
-      in: query
-      required: false
-      schema:
-        $ref: '#/components/schemas/DateOrDateTime'
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    campaignId:
-      name: campaignId
-      in: path
-      description: 'Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`.'
-      required: true
-      schema:
-        type: string
-      example: 3Va2e
   schemas:
-    CampaignAdditionalProperties:
+    CampaignConfirmation:
       properties:
-        postal:
-          $ref: '#/components/schemas/CampaignPostal'
-        confirmation:
-          $ref: '#/components/schemas/CampaignConfirmation'
-        optinTypes:
-          $ref: '#/components/schemas/CampaignOptinTypes'
-        subscriptionNotifications:
-          $ref: '#/components/schemas/CampaignSubscriptionNotifications'
-        profile:
-          $ref: '#/components/schemas/CampaignProfile'
+        fromField:
+          $ref: '#/components/schemas/FromFieldReference'
+        redirectType:
+          description: 'What will happen after email confirmation. The values allowed include: hosted (the subscriber will stay on the default GetResponse website), customUrl (the subscriber will be redirected to a custom URL provided by the user).'
+          type: string
+          enum:
+          - hosted
+          - customUrl
+          example: hosted
+        mimeType:
+          description: The MIME type for the confirmation message
+          type: string
+          enum:
+          - text/html
+          - text/plain
+          - combo
+          example: text/plain
+        redirectUrl:
+          description: Required if the redirectType is customUrl. The URL a subscriber will be redirected to if the redirectType is set to customUrl.
+          type: string
+          format: uri
+          example: http://example.com
+        replyTo:
+          $ref: '#/components/schemas/FromFieldReference'
+        subscriptionConfirmationBodyId:
+          description: The subscription confirmation body ID
+          type: string
+          example: asS1
+        subscriptionConfirmationSubjectId:
+          description: Subscription confirmation subject ID
+          type: string
+          example: TEww
       type: object
-    CampaignListElement:
+    CampaignSubscriptionStatisticsItemByCampaign:
+      description: The properties of the result are indexed with the campaign ID.
       type: object
-      allOf:
-      - properties:
-          description:
-            description: It's the same as the campaign name, kept for compatibility reasons
+      example:
+        V:
+          import: 10
+          email: 11
+          www: 10
+          panel: 14
+          leads: 3
+          sale: 3
+          api: 1
+          forward: 15
+          survey: 6
+          mobile: 12
+          copy: 7
+          landing_page: 4
+          webinar: 3
+          premium_newsletter: 1
+          course: 1
+          website_builder_elegant: 3
+          chat: 3
+          summary: 101
+        p:
+          import: 9
+          email: 7
+          www: 9
+          panel: 5
+          leads: 3
+          sale: 3
+          api: 8
+          forward: 10
+          survey: 8
+          mobile: 10
+          copy: 10
+          landing_page: 7
+          webinar: 4
+          premium_newsletter: 1
+          course: 1
+          website_builder_elegant: 3
+          chat: 4
+          summary: 95
+      additionalProperties:
+        description: The properties of the result are indexed with the campaign ID
+        allOf:
+        - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItem'
+    Blocklist:
+      properties:
+        masks:
+          type: array
+          items:
             type: string
-            readOnly: true
-            example: my_campaign
-      - $ref: '#/components/schemas/BaseCampaign'
+            example: jack@somedomain.com
+      type: object
+    CampaignLocationItem:
+      type: object
+      example:
+        others:
+          amount: '6'
+          continentCode: ''
+          countryCode: ''
+        PL:
+          amount: '45'
+          continentCode: EU
+          countryCode: PL
+      additionalProperties:
+        description: The results are indexed with the location name (PL, EN, etc.)
+        properties:
+          amount:
+            description: The amount of subscribers from a given location
+            type: string
+            format: number
+            example: '0'
+          continentalCode:
+            description: The region code
+            type: string
+            example: EU
+          countryCode:
+            description: The country code
+            type: string
+            example: PL
+        type: object
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    CampaignRemovalsStatisticsList:
+      type: object
+      example:
+        '2014-12-05':
+          user: 5
+        '2015-01-22':
+          user: 12
+          bounce: 2
+      additionalProperties:
+        $ref: '#/components/schemas/CampaignRemovalsStatisticsItem'
+    CampaignProfile:
+      properties:
+        description:
+          description: The campaign description
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: campaign description
+        industryTagId:
+          description: The industry tag ID
+          type: string
+          format: integer
+          example: '1'
+        logo:
+          description: The logo URL
+          type: string
+          format: uri
+          example: http://logos.com/imageupdated.jpg
+        logoLinkUrl:
+          description: The logo link URL
+          type: string
+          format: uri
+          example: http://somePageLogoLinkUpdated.com
+        title:
+          description: The profile title
+          type: string
+          maxLength: 64
+          minLength: 2
+          example: title
+      type: object
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    CampaignListSizesStatisticsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignListSizesStatisticsElement'
     BaseCampaign:
       properties:
         campaignId:
@@ -1443,19 +1396,6 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/campaigns/V3J
       type: object
-    Blocklist:
-      properties:
-        masks:
-          type: array
-          items:
-            type: string
-            example: jack@somedomain.com
-      type: object
-    StatusEnum:
-      type: string
-      enum:
-      - enabled
-      - disabled
     CampaignSummaryItem:
       description: The properties of the result are indexed with the location name (PL, EN, etc.).
       type: object
@@ -1506,93 +1446,144 @@ components:
             format: number
             example: '0'
         type: object
-    BalanceByDatesStatisticsList:
+    UpdateCampaign:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Campaign'
+    CampaignSubscriptionNotifications:
+      properties:
+        status:
+          description: 'Are notifications enabled. Possible values include: enabled, disabled.'
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/FromFieldReference'
+      type: object
+    CampaignListElement:
+      type: object
+      allOf:
+      - properties:
+          description:
+            description: It's the same as the campaign name, kept for compatibility reasons
+            type: string
+            readOnly: true
+            example: my_campaign
+      - $ref: '#/components/schemas/BaseCampaign'
+    RemovalsByDatesStatisticsList:
       type: array
       items:
-        $ref: '#/components/schemas/CampaignBalanceStatisticsList'
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+        $ref: '#/components/schemas/CampaignRemovalsStatisticsList'
+    CampaignAdditionalProperties:
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+        postal:
+          $ref: '#/components/schemas/CampaignPostal'
+        confirmation:
+          $ref: '#/components/schemas/CampaignConfirmation'
+        optinTypes:
+          $ref: '#/components/schemas/CampaignOptinTypes'
+        subscriptionNotifications:
+          $ref: '#/components/schemas/CampaignSubscriptionNotifications'
+        profile:
+          $ref: '#/components/schemas/CampaignProfile'
       type: object
-    CampaignBalanceStatisticsList:
+    CampaignStatisticsIdQuery:
+      type: string
+      example: 3Va2e
+    CampaignSubscriptionStatisticsList:
+      description: Dates in the YYYY-MM-DD format are used as keys.
       type: object
       example:
-        '2014-12-05':
-          removals:
-            user: 5
-          subscriptions:
-            import: 0
-            email: 0
-            www: 0
-            panel: 0
-            leads: 0
-            sale: 0
-            api: 7
-            forward: 0
-            survey: 0
-            mobile: 0
-            copy: 0
-            landing_page: 0
+        '2014-12-15':
+          V:
+            import: 10
+            email: 11
+            www: 10
+            panel: 14
+            leads: 3
+            sale: 3
+            api: 1
+            forward: 15
+            survey: 6
+            mobile: 12
+            copy: 7
+            landing_page: 4
             webinar: 4
             premium_newsletter: 1
             course: 1
-            summary: 13
-        '2015-01-21':
-          removals:
-            user: 10
+            website_builder_elegant: 1
+            chat: 2
+            summary: 105
+          p:
+            import: 9
+            email: 7
+            www: 9
+            panel: 5
+            leads: 3
+            sale: 3
+            api: 8
+            forward: 10
+            survey: 8
+            mobile: 10
+            copy: 10
+            landing_page: 7
+            webinar: 4
+            premium_newsletter: 1
+            course: 1
+            website_builder_elegant: 1
+            chat: 2
+            summary: 98
       additionalProperties:
         description: Dates in YYYY-MM-DD format are used as keys
-        anyOf:
-        - properties:
-            removals:
-              type: object
-              allOf:
-              - $ref: '#/components/schemas/CampaignRemovalsStatisticsItem'
-          type: object
-        - properties:
-            subscriptions:
-              type: object
-              allOf:
-              - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItem'
-          type: object
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    SubscriptionsByDatesStatisticsList:
+        type: object
+        allOf:
+        - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItemByCampaign'
+    CampaignSummaryList:
       type: array
       items:
-        $ref: '#/components/schemas/CampaignSubscriptionStatisticsList'
+        $ref: '#/components/schemas/CampaignSummaryItem'
+    UpdateBlocklist:
+      required:
+      - masks
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Blocklist'
+    NewCampaign:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Campaign'
+    CampaignOptinTypes:
+      properties:
+        email:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          - double
+          example: single
+        api:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          - double
+          example: single
+        import:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          example: single
+        webform:
+          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
+          type: string
+          enum:
+          - single
+          - double
+          example: single
+      type: object
     CampaignPostal:
       properties:
         addPostalToMessages:
@@ -1629,109 +1620,11 @@ components:
           type: string
           example: 81-611
       type: object
-    CampaignSubscriptionNotifications:
-      properties:
-        status:
-          description: 'Are notifications enabled. Possible values include: enabled, disabled.'
-          example: enabled
-          allOf:
-          - $ref: '#/components/schemas/StatusEnum'
-        recipients:
-          type: array
-          items:
-            $ref: '#/components/schemas/FromFieldReference'
-      type: object
-    CampaignOptinTypes:
-      properties:
-        email:
-          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
-          type: string
-          enum:
-          - single
-          - double
-          example: single
-        api:
-          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
-          type: string
-          enum:
-          - single
-          - double
-          example: single
-        import:
-          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
-          type: string
-          enum:
-          - single
-          example: single
-        webform:
-          description: 'Single opt-in: confirmed opt-in disabled. Double opt-in: confirmed opt-in enabled. You can find more information [here](https://www.getresponse.com/resources/glossary/confirmed-opt-in.html)'
-          type: string
-          enum:
-          - single
-          - double
-          example: single
-      type: object
     SortOrderEnum:
       type: string
       enum:
       - ASC
       - DESC
-    CampaignProfile:
-      properties:
-        description:
-          description: The campaign description
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: campaign description
-        industryTagId:
-          description: The industry tag ID
-          type: string
-          format: integer
-          example: '1'
-        logo:
-          description: The logo URL
-          type: string
-          format: uri
-          example: http://logos.com/imageupdated.jpg
-        logoLinkUrl:
-          description: The logo link URL
-          type: string
-          format: uri
-          example: http://somePageLogoLinkUpdated.com
-        title:
-          description: The profile title
-          type: string
-          maxLength: 64
-          minLength: 2
-          example: title
-      type: object
-    CampaignListSizesStatisticsElement:
-      properties:
-        totalSubscribers:
-          description: The total amount of subscribers for a given datetime and grouping
-          type: integer
-          format: int64
-        addedSubscribers:
-          description: The amount of subscribers added since the previous statistics frame
-          type: integer
-          format: int64
-        removedSubscribers:
-          description: The amount of subscribers removed since the previous statistics frame
-          type: integer
-          format: int64
-        createdOn:
-          description: The statistics frame timestamp. The value depends on the groupBy parameter. For the hour, use datetime in the format YYYY-mm-dd HH:mm:ss; for the day, use date in the format YYYY-mm-dd; for the month, use a string in the format YYYY-mm; and for the total, use the string total.
-          type: string
-      type: object
-    CampaignSummaryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CampaignSummaryItem'
-    RemovalsByDatesStatisticsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CampaignRemovalsStatisticsList'
     CampaignSubscriptionStatisticsItem:
       properties:
         import:
@@ -1790,52 +1683,6 @@ components:
           type: integer
           example: 0
       type: object
-    Campaign:
-      required:
-      - name
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseCampaign'
-      - $ref: '#/components/schemas/CampaignAdditionalProperties'
-    CampaignConfirmation:
-      properties:
-        fromField:
-          $ref: '#/components/schemas/FromFieldReference'
-        redirectType:
-          description: 'What will happen after email confirmation. The values allowed include: hosted (the subscriber will stay on the default GetResponse website), customUrl (the subscriber will be redirected to a custom URL provided by the user).'
-          type: string
-          enum:
-          - hosted
-          - customUrl
-          example: hosted
-        mimeType:
-          description: The MIME type for the confirmation message
-          type: string
-          enum:
-          - text/html
-          - text/plain
-          - combo
-          example: text/plain
-        redirectUrl:
-          description: Required if the redirectType is customUrl. The URL a subscriber will be redirected to if the redirectType is set to customUrl.
-          type: string
-          format: uri
-          example: http://example.com
-        replyTo:
-          $ref: '#/components/schemas/FromFieldReference'
-        subscriptionConfirmationBodyId:
-          description: The subscription confirmation body ID
-          type: string
-          example: asS1
-        subscriptionConfirmationSubjectId:
-          description: Subscription confirmation subject ID
-          type: string
-          example: TEww
-      type: object
-    CampaignOriginsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CampaignSubscriptionStatisticsItemByCampaign'
     FromFieldReference:
       required:
       - fromFieldId
@@ -1851,141 +1698,55 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/from-fields/V
       type: object
-    CampaignStatisticsIdQuery:
-      type: string
-      example: 3Va2e
-    CampaignSubscriptionStatisticsItemByCampaign:
-      description: The properties of the result are indexed with the campaign ID.
+    CampaignBalanceStatisticsList:
       type: object
       example:
-        V:
-          import: 10
-          email: 11
-          www: 10
-          panel: 14
-          leads: 3
-          sale: 3
-          api: 1
-          forward: 15
-          survey: 6
-          mobile: 12
-          copy: 7
-          landing_page: 4
-          webinar: 3
-          premium_newsletter: 1
-          course: 1
-          website_builder_elegant: 3
-          chat: 3
-          summary: 101
-        p:
-          import: 9
-          email: 7
-          www: 9
-          panel: 5
-          leads: 3
-          sale: 3
-          api: 8
-          forward: 10
-          survey: 8
-          mobile: 10
-          copy: 10
-          landing_page: 7
-          webinar: 4
-          premium_newsletter: 1
-          course: 1
-          website_builder_elegant: 3
-          chat: 4
-          summary: 95
-      additionalProperties:
-        description: The properties of the result are indexed with the campaign ID
-        allOf:
-        - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItem'
-    CampaignSubscriptionStatisticsList:
-      description: Dates in the YYYY-MM-DD format are used as keys.
-      type: object
-      example:
-        '2014-12-15':
-          V:
-            import: 10
-            email: 11
-            www: 10
-            panel: 14
-            leads: 3
-            sale: 3
-            api: 1
-            forward: 15
-            survey: 6
-            mobile: 12
-            copy: 7
-            landing_page: 4
+        '2014-12-05':
+          removals:
+            user: 5
+          subscriptions:
+            import: 0
+            email: 0
+            www: 0
+            panel: 0
+            leads: 0
+            sale: 0
+            api: 7
+            forward: 0
+            survey: 0
+            mobile: 0
+            copy: 0
+            landing_page: 0
             webinar: 4
             premium_newsletter: 1
             course: 1
-            website_builder_elegant: 1
-            chat: 2
-            summary: 105
-          p:
-            import: 9
-            email: 7
-            www: 9
-            panel: 5
-            leads: 3
-            sale: 3
-            api: 8
-            forward: 10
-            survey: 8
-            mobile: 10
-            copy: 10
-            landing_page: 7
-            webinar: 4
-            premium_newsletter: 1
-            course: 1
-            website_builder_elegant: 1
-            chat: 2
-            summary: 98
+            summary: 13
+        '2015-01-21':
+          removals:
+            user: 10
       additionalProperties:
         description: Dates in YYYY-MM-DD format are used as keys
-        type: object
-        allOf:
-        - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItemByCampaign'
-    CampaignListSizesStatisticsList:
+        anyOf:
+        - properties:
+            removals:
+              type: object
+              allOf:
+              - $ref: '#/components/schemas/CampaignRemovalsStatisticsItem'
+          type: object
+        - properties:
+            subscriptions:
+              type: object
+              allOf:
+              - $ref: '#/components/schemas/CampaignSubscriptionStatisticsItem'
+          type: object
+    SubscriptionsByDatesStatisticsList:
       type: array
       items:
-        $ref: '#/components/schemas/CampaignListSizesStatisticsElement'
-    UpdateBlocklist:
-      required:
-      - masks
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Blocklist'
-    CampaignLocationItem:
-      type: object
-      example:
-        others:
-          amount: '6'
-          continentCode: ''
-          countryCode: ''
-        PL:
-          amount: '45'
-          continentCode: EU
-          countryCode: PL
-      additionalProperties:
-        description: The results are indexed with the location name (PL, EN, etc.)
-        properties:
-          amount:
-            description: The amount of subscribers from a given location
-            type: string
-            format: number
-            example: '0'
-          continentalCode:
-            description: The region code
-            type: string
-            example: EU
-          countryCode:
-            description: The country code
-            type: string
-            example: PL
-        type: object
+        $ref: '#/components/schemas/CampaignSubscriptionStatisticsList'
+    BalanceByDatesStatisticsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignBalanceStatisticsList'
     CampaignRemovalsStatisticsItem:
       type: object
       anyOf:
@@ -2034,37 +1795,281 @@ components:
             type: integer
             example: 1
         type: object
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
-    CampaignRemovalsStatisticsList:
-      type: object
-      example:
-        '2014-12-05':
-          user: 5
-        '2015-01-22':
-          user: 12
-          bounce: 2
-      additionalProperties:
-        $ref: '#/components/schemas/CampaignRemovalsStatisticsItem'
     CampaignLocationsList:
       type: array
       items:
         $ref: '#/components/schemas/CampaignLocationItem'
-    UpdateCampaign:
+    CampaignListSizesStatisticsElement:
+      properties:
+        totalSubscribers:
+          description: The total amount of subscribers for a given datetime and grouping
+          type: integer
+          format: int64
+        addedSubscribers:
+          description: The amount of subscribers added since the previous statistics frame
+          type: integer
+          format: int64
+        removedSubscribers:
+          description: The amount of subscribers removed since the previous statistics frame
+          type: integer
+          format: int64
+        createdOn:
+          description: The statistics frame timestamp. The value depends on the groupBy parameter. For the hour, use datetime in the format YYYY-mm-dd HH:mm:ss; for the day, use date in the format YYYY-mm-dd; for the month, use a string in the format YYYY-mm; and for the total, use the string total.
+          type: string
+      type: object
+    Campaign:
+      required:
+      - name
       type: object
       allOf:
-      - $ref: '#/components/schemas/Campaign'
-    NewCampaign:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Campaign'
+      - $ref: '#/components/schemas/BaseCampaign'
+      - $ref: '#/components/schemas/CampaignAdditionalProperties'
+    CampaignOriginsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CampaignSubscriptionStatisticsItemByCampaign'
+  responses:
+    Campaign:
+      description: The campaign data.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Campaign'
+    CampaignList:
+      description: The list of campaigns.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CampaignListElement'
+    CampaignBlocklist:
+      description: Blocklist masks for the campaign.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Blocklist'
+    SubscriptionsByDatesStatisticsList:
+      description: Subscription statistics by date
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionsByDatesStatisticsList'
+    RemovalsByDatesStatisticsList:
+      description: Subscription statistics by date
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RemovalsByDatesStatisticsList'
+    CampaignLocationsList:
+      description: The list of locations.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignLocationsList'
+    BalanceByDatesStatisticsList:
+      description: The subscription statistics, shown by date.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BalanceByDatesStatisticsList'
+    CampaignListSizesStatisticsList:
+      description: The campaign data.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignListSizesStatisticsList'
+    CampaignSummaryList:
+      description: The summary list.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignSummaryList'
+    CampaignOriginsList:
+      description: The list of origins.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CampaignOriginsList'
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    CampaignStatisticsIdQuery:
+      name: query[campaignId]
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/CampaignStatisticsIdQuery'
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    CampaignStatisticsGroupByQuery:
+      name: query[groupBy]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - hour
+        - day
+        - month
+        - total
+        example: month
+    campaignId:
+      name: campaignId
+      in: path
+      description: 'Unique identifier of the campaign (contact list). You can retrieve this ID from the [list of campaigns](https://apireference.getresponse.com/#operation/getCampaignList) field: `campaignId`.'
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
+    CampaignStatisticsDateFromQuery:
+      name: query[createdOn][from]
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/DateOrDateTime'
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    CampaignStatisticsDateToQuery:
+      name: query[createdOn][to]
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/DateOrDateTime'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   requestBodies:
+    UpdateCampaignBlocklist:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateBlocklist'
     UpdateCampaign:
       content:
         application/json:
@@ -2075,11 +2080,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewCampaign'
-    UpdateCampaignBlocklist:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateBlocklist'
   securitySchemes:
     api-key:
       type: apiKey

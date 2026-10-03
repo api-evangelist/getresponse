@@ -560,45 +560,45 @@ paths:
       - oauth2:
         - all
 components:
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
       schema:
         type: integer
         format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+        default: 1
+        minimum: 1
+    addressId:
+      name: addressId
+      in: path
+      description: The address ID
+      required: true
       schema:
         type: string
-    CurrentPage:
-      description: The current page number
+      example: k9
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
-        type: integer
-        format: int32
+        type: string
   schemas:
     UpdateAddress:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Address'
-    NewAddress:
-      required:
-      - name
-      - countryCode
       type: object
       allOf:
       - $ref: '#/components/schemas/Address'
@@ -635,24 +635,6 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     Address:
       type: object
       allOf:
@@ -740,31 +722,32 @@ components:
             minLength: 0
             example: GetResponse
       - $ref: '#/components/schemas/CreateAndUpdate'
-  requestBodies:
-    UpdateAddress:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateAddress'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
     NewAddress:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewAddress'
+      required:
+      - name
+      - countryCode
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Address'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
   responses:
-    AddressDetails:
-      description: The address details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Address'
     AddressList:
       description: The list of addresses.
       headers:
@@ -786,43 +769,60 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Address'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    addressId:
-      name: addressId
-      in: path
-      description: The address ID
-      required: true
-      schema:
-        type: string
-      example: k9
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
+    AddressDetails:
+      description: The address details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Address'
+  requestBodies:
+    UpdateAddress:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAddress'
+    NewAddress:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewAddress'
+  headers:
+    TotalPages:
+      description: The total number of pages
       schema:
         type: integer
         format: int32
-        default: 1
-        minimum: 1
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     api-key:
       type: apiKey

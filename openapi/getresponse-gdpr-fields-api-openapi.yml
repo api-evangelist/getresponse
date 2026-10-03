@@ -196,7 +196,50 @@ paths:
       - oauth2:
         - all
 components:
+  responses:
+    GDPRFieldDetails:
+      description: The details of the GDPR field
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GDPRFieldDetails'
+    GDPRFieldList:
+      description: The list of GDPR fields
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/GDPRField'
   schemas:
+    GDPRFieldDetails:
+      type: object
+      allOf:
+      - properties:
+          latestVersion:
+            $ref: '#/components/schemas/GDPRFieldLatestVersion'
+        type: object
+      - $ref: '#/components/schemas/GDPRField'
     GDPRFieldLatestVersion:
       properties:
         gdprFieldVersionId:
@@ -246,6 +289,11 @@ components:
           description: UUID of the error response
           type: string
       type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     GDPRField:
       properties:
         gdprFieldId:
@@ -267,27 +315,9 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/gdpr-fields/MtY
       type: object
-    GDPRFieldDetails:
-      type: object
-      allOf:
-      - properties:
-          latestVersion:
-            $ref: '#/components/schemas/GDPRFieldLatestVersion'
-        type: object
-      - $ref: '#/components/schemas/GDPRField'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
   headers:
     RateLimitLimit:
       description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
@@ -295,6 +325,11 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     CurrentPage:
       description: The current page number
       schema:
@@ -305,72 +340,12 @@ components:
       schema:
         type: integer
         format: int32
-    TotalPages:
-      description: The total number of pages
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
-  responses:
-    GDPRFieldList:
-      description: The list of GDPR fields
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/GDPRField'
-    GDPRFieldDetails:
-      description: The details of the GDPR field
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GDPRFieldDetails'
   parameters:
-    gdprFieldId:
-      name: gdprFieldId
-      in: path
-      description: The GDPR field ID
-      required: true
-      schema:
-        type: string
-      example: MtY
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     PerPage:
       name: perPage
       in: query
@@ -381,6 +356,31 @@ components:
         format: int32
         default: 100
         maximum: 1000
+        minimum: 1
+    gdprFieldId:
+      name: gdprFieldId
+      in: path
+      description: The GDPR field ID
+      required: true
+      schema:
+        type: string
+      example: MtY
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
         minimum: 1
   securitySchemes:
     api-key:

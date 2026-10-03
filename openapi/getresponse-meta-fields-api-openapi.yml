@@ -527,90 +527,19 @@ paths:
       - oauth2:
         - all
 components:
-  headers:
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    metaFieldId:
-      name: metaFieldId
-      in: path
-      description: The metafield ID
-      required: true
-      schema:
-        type: string
-      example: hgF
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
   schemas:
-    NewMetaField:
-      required:
-      - name
-      - value
-      - valueType
+    UpdateMetaField:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
+      - $ref: '#/components/schemas/MetaField'
+    DateOrDateTime:
+      oneOf:
+      - type: string
+        format: date
+        example: '2018-04-15'
+      - type: string
+        format: date-time
+        example: 2018-01-15T13:30:42+0000
     ErrorResponse:
       required:
       - httpStatus
@@ -644,10 +573,6 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    UpdateMetaField:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/MetaField'
     CreateAndUpdate:
       properties:
         createdOn:
@@ -661,6 +586,24 @@ components:
           format: date-time
           readOnly: true
       type: object
+    MetaField:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    NewMetaField:
+      required:
+      - name
+      - value
+      - valueType
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
     BaseMetaField:
       properties:
         href:
@@ -700,24 +643,81 @@ components:
           minLength: 0
           example: Description of this meta field
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    MetaField:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    DateOrDateTime:
-      oneOf:
-      - type: string
-        format: date
-        example: '2018-04-15'
-      - type: string
-        format: date-time
-        example: 2018-01-15T13:30:42+0000
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    metaFieldId:
+      name: metaFieldId
+      in: path
+      description: The metafield ID
+      required: true
+      schema:
+        type: string
+      example: hgF
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
   requestBodies:
     NewMetaField:
       content:
@@ -730,19 +730,6 @@ components:
           schema:
             $ref: '#/components/schemas/UpdateMetaField'
   responses:
-    MetaFieldDetails:
-      description: The meta field details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MetaField'
     MetaFieldList:
       description: The list of meta fields
       headers:
@@ -764,6 +751,19 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/MetaField'
+    MetaFieldDetails:
+      description: The meta field details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MetaField'
   securitySchemes:
     api-key:
       type: apiKey

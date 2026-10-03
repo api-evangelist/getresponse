@@ -122,6 +122,52 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+  responses:
+    Tracking:
+      description: The Tracking Snippets
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Tracking'
+    FacebookPixelList:
+      description: '"Facebook Pixel" details'
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/FacebookPixel'
   schemas:
     ErrorResponse:
       required:
@@ -156,6 +202,17 @@ components:
           description: UUID of the error response
           type: string
       type: object
+    FacebookPixel:
+      properties:
+        name:
+          type: string
+          readOnly: true
+          example: integration-pixel
+        pixelId:
+          type: string
+          readOnly: true
+          example: '123'
+      type: object
     Tracking:
       properties:
         grid:
@@ -171,63 +228,6 @@ components:
           readOnly: true
           example: <script type="text/javascript">function () {}</script>
       type: object
-    FacebookPixel:
-      properties:
-        name:
-          type: string
-          readOnly: true
-          example: integration-pixel
-        pixelId:
-          type: string
-          readOnly: true
-          example: '123'
-      type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-  responses:
-    FacebookPixelList:
-      description: '"Facebook Pixel" details'
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/FacebookPixel'
-    Tracking:
-      description: The Tracking Snippets
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Tracking'
   securitySchemes:
     api-key:
       type: apiKey
