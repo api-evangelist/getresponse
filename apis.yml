@@ -37,6 +37,9 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/getresponse.png
+x-docs-platform: vitepress
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
 - Email Marketing
 - Marketing Automation
@@ -998,6 +1001,8 @@ apis:
   humanURL: https://apireference.getresponse.com/
   baseURL: https://api.getresponse.com/v3
   tags:
+  - sms-messages
+  tags_raw:
   - SMS Messages
   properties:
   - type: OpenAPI
