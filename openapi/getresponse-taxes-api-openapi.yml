@@ -462,86 +462,6 @@ paths:
         - all
       x-operation-class-name: DeleteTax
 components:
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    taxId:
-      name: taxId
-      in: path
-      description: The tax ID
-      required: true
-      schema:
-        type: string
-      example: Sk
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-  responses:
-    TaxDetails:
-      description: The tax details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Tax'
-    TaxList:
-      description: The list of taxes
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Tax'
   schemas:
     DateOrDateTime:
       oneOf:
@@ -551,6 +471,67 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
+    UpdateTax:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    Tax:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    BaseTax:
+      properties:
+        taxId:
+          description: The tax ID
+          type: string
+          readOnly: true
+          example: Sk
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
+        name:
+          description: The tax name
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: VAT
+        rate:
+          description: The rate value
+          type: number
+          format: double
+          maximum: 99.9
+          minimum: 0
+          example: 23
+      type: object
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    NewTax:
+      required:
+      - name
+      - rate
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
     ErrorResponse:
       required:
       - httpStatus
@@ -584,79 +565,26 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    UpdateTax:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-    BaseTax:
-      properties:
-        taxId:
-          description: The tax ID
-          type: string
-          readOnly: true
-          example: Sk
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
-        name:
-          description: The tax name
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: VAT
-        rate:
-          description: The rate value
-          type: number
-          format: double
-          maximum: 99.9
-          minimum: 0
-          example: 23
-      type: object
-    Tax:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-  requestBodies:
-    UpdateTax:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateTax'
-    NewTax:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewTax'
   headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
     TotalPages:
       description: The total number of pages
       schema:
@@ -667,25 +595,97 @@ components:
       schema:
         type: integer
         format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+  parameters:
+    taxId:
+      name: taxId
+      in: path
+      description: The tax ID
+      required: true
       schema:
         type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+      example: Sk
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
       schema:
         type: integer
         format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+  requestBodies:
+    NewTax:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewTax'
+    UpdateTax:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTax'
+  responses:
+    TaxList:
+      description: The list of taxes
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Tax'
+    TaxDetails:
+      description: The tax details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Tax'
   securitySchemes:
     api-key:
       type: apiKey

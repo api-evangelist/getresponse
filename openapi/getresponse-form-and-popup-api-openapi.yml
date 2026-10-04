@@ -142,21 +142,6 @@ components:
       required: false
       schema:
         type: string
-  headers:
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
   schemas:
     PopupGeneralPerformanceStats:
       required:
@@ -220,6 +205,21 @@ components:
           description: UUID of the error response
           type: string
       type: object
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
   responses:
     PopupGeneralPerformance:
       description: Form or popup statistics

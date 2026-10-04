@@ -275,49 +275,6 @@ paths:
         - all
       x-operation-class-name: GetWorkflows
 components:
-  requestBodies:
-    UpdateWorkflow:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateWorkflow'
-  parameters:
-    workflowId:
-      name: workflowId
-      in: path
-      description: The workflow ID
-      required: true
-      schema:
-        type: string
-      example: 3Va2e
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
   schemas:
     WorkflowSubscriberStatistics:
       required:
@@ -337,38 +294,18 @@ components:
           readOnly: true
           example: 3
       type: object
-    ErrorResponse:
+    UpdateWorkflow:
       required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+      - status
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
+        status:
+          description: An 'incomplete' status means that the workflow is a 'draft' in the web panel
           type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+          enum:
+          - active
+          - inactive
+          - incomplete
+          example: active
       type: object
     Workflow:
       required:
@@ -403,36 +340,79 @@ components:
         subscriberStatistics:
           $ref: '#/components/schemas/WorkflowSubscriberStatistics'
       type: object
-    UpdateWorkflow:
+    ErrorResponse:
       required:
-      - status
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        status:
-          description: An 'incomplete' status means that the workflow is a 'draft' in the web panel
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
           type: string
-          enum:
-          - active
-          - inactive
-          - incomplete
-          example: active
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
-  headers:
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    workflowId:
+      name: workflowId
+      in: path
+      description: The workflow ID
+      required: true
+      schema:
+        type: string
+      example: 3Va2e
+  headers:
     TotalPages:
       description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
       schema:
         type: integer
         format: int32
@@ -441,12 +421,45 @@ components:
       schema:
         type: integer
         format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
     RateLimitRemaining:
       description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+  requestBodies:
+    UpdateWorkflow:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateWorkflow'
   responses:
+    Workflow:
+      description: The workflow
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Workflow'
     WorkflowList:
       description: The list of workflows
       headers:
@@ -468,19 +481,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Workflow'
-    Workflow:
-      description: The workflow
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Workflow'
   securitySchemes:
     api-key:
       type: apiKey

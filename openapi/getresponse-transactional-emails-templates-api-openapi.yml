@@ -476,77 +476,25 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    transactionalEmailTemplateId:
-      name: transactionalEmailTemplateId
-      in: path
-      description: Transactional emails template identifier
-      required: true
-      schema:
-        type: string
-      example: abc
+  requestBodies:
+    updateTransactionalEmailsTemplate:
+      content:
+        application/json:
+          schema:
+            properties:
+              subject:
+                description: The template subject
+                type: string
+                example: Order Confirmation - Example Shop
+              content:
+                $ref: '#/components/schemas/TransactionalEmailTemplateContent'
+            type: object
+    CreateTransactionalEmailTemplate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTransactionalEmailTemplate'
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
     TransactionalEmailTemplateContent:
       description: The template content. At least one field is required
       properties:
@@ -559,30 +507,6 @@ components:
           type: string
           example: <h1>Your order has been confirmed</h1><strong>Thank you for shopping with us!</strong>
       type: object
-    CreateTransactionalEmailTemplate:
-      required:
-      - subject
-      properties:
-        subject:
-          description: The template subject
-          type: string
-          example: Order Confirmation - Example Shop
-        content:
-          $ref: '#/components/schemas/TransactionalEmailTemplateContent'
-      type: object
-    TransactionalEmailsTemplateDetails:
-      type: object
-      allOf:
-      - properties:
-          content:
-            $ref: '#/components/schemas/TransactionalEmailTemplateContent'
-        type: object
-      - $ref: '#/components/schemas/TransactionalEmailsTemplateListElement'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     TransactionalEmailsTemplateListElement:
       properties:
         templateId:
@@ -616,7 +540,83 @@ components:
             - html
             - wysiwyg
       type: object
+    CreateTransactionalEmailTemplate:
+      required:
+      - subject
+      properties:
+        subject:
+          description: The template subject
+          type: string
+          example: Order Confirmation - Example Shop
+        content:
+          $ref: '#/components/schemas/TransactionalEmailTemplateContent'
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    TransactionalEmailsTemplateDetails:
+      type: object
+      allOf:
+      - properties:
+          content:
+            $ref: '#/components/schemas/TransactionalEmailTemplateContent'
+        type: object
+      - $ref: '#/components/schemas/TransactionalEmailsTemplateListElement'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
   headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
     TotalPages:
       description: The total number of pages
       schema:
@@ -627,43 +627,43 @@ components:
       schema:
         type: integer
         format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+  parameters:
+    transactionalEmailTemplateId:
+      name: transactionalEmailTemplateId
+      in: path
+      description: Transactional emails template identifier
+      required: true
       schema:
         type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+      example: abc
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
       schema:
         type: integer
         format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
-  requestBodies:
-    updateTransactionalEmailsTemplate:
-      content:
-        application/json:
-          schema:
-            properties:
-              subject:
-                description: The template subject
-                type: string
-                example: Order Confirmation - Example Shop
-              content:
-                $ref: '#/components/schemas/TransactionalEmailTemplateContent'
-            type: object
-    CreateTransactionalEmailTemplate:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTransactionalEmailTemplate'
+        default: 100
+        maximum: 1000
+        minimum: 1
   responses:
     TransactionalEmailsTemplateDetails:
       description: Transactional emails template details

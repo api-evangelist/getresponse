@@ -114,35 +114,37 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  responses:
-    SmsStats:
-      description: SMS statistics
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SmsStats'
   headers:
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
         type: integer
         format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
     RateLimitRemaining:
       description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    smsId:
+      name: smsId
+      in: path
+      description: The SMS message ID
+      required: true
+      schema:
+        type: string
+      example: N
   schemas:
     SmsStats:
       required:
@@ -274,22 +276,20 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    smsId:
-      name: smsId
-      in: path
-      description: The SMS message ID
-      required: true
-      schema:
-        type: string
-      example: N
+  responses:
+    SmsStats:
+      description: SMS statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SmsStats'
   securitySchemes:
     api-key:
       type: apiKey

@@ -466,220 +466,6 @@ paths:
       - oauth2:
         - all
 components:
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-  schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-    ShopDetails:
-      type: object
-      allOf:
-      - properties:
-          shopId:
-            description: The shop ID
-            type: string
-            readOnly: true
-            example: pf3
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api.getresponse.com/v3/shops/pf3
-          name:
-            description: The shop name
-            type: string
-            maxLength: 124
-            minLength: 4
-            example: Monster market
-          locale:
-            description: The language locale (ISO 639-1)
-            type: string
-            example: PL
-          currency:
-            description: The currency code (ISO 4217)
-            type: string
-            example: PLN
-          productCount:
-            description: Amount of products in the shop
-            type: integer
-            example: '10'
-          productRevenue:
-            description: Total revenue from purchased products
-            type: number
-            example: '1.23'
-          revenueCurrency:
-            description: The revenue currency code (ISO 4217)
-            type: string
-            example: PLN
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    UpdateShop:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Shop'
-    NewShop:
-      required:
-      - name
-      - locale
-      - currency
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Shop'
-    Shop:
-      type: object
-      allOf:
-      - properties:
-          shopId:
-            description: The shop ID
-            type: string
-            readOnly: true
-            example: pf3
-          href:
-            description: Direct hyperlink to a resource
-            type: string
-            format: uri
-            readOnly: true
-            example: https://api.getresponse.com/v3/shops/pf3
-          name:
-            description: The shop name
-            type: string
-            maxLength: 124
-            minLength: 4
-            example: Monster market
-          locale:
-            description: The language locale (ISO 639-1)
-            type: string
-            example: PL
-          currency:
-            description: The currency code (ISO 4217)
-            type: string
-            example: PLN
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-  requestBodies:
-    UpdateShop:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateShop'
-    NewShop:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewShop'
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
   responses:
     ShopList:
       description: The list of shops
@@ -743,6 +529,220 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ShopDetails'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+  schemas:
+    Shop:
+      type: object
+      allOf:
+      - properties:
+          shopId:
+            description: The shop ID
+            type: string
+            readOnly: true
+            example: pf3
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/shops/pf3
+          name:
+            description: The shop name
+            type: string
+            maxLength: 124
+            minLength: 4
+            example: Monster market
+          locale:
+            description: The language locale (ISO 639-1)
+            type: string
+            example: PL
+          currency:
+            description: The currency code (ISO 4217)
+            type: string
+            example: PLN
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    UpdateShop:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Shop'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    NewShop:
+      required:
+      - name
+      - locale
+      - currency
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Shop'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    ShopDetails:
+      type: object
+      allOf:
+      - properties:
+          shopId:
+            description: The shop ID
+            type: string
+            readOnly: true
+            example: pf3
+          href:
+            description: Direct hyperlink to a resource
+            type: string
+            format: uri
+            readOnly: true
+            example: https://api.getresponse.com/v3/shops/pf3
+          name:
+            description: The shop name
+            type: string
+            maxLength: 124
+            minLength: 4
+            example: Monster market
+          locale:
+            description: The language locale (ISO 639-1)
+            type: string
+            example: PL
+          currency:
+            description: The currency code (ISO 4217)
+            type: string
+            example: PLN
+          productCount:
+            description: Amount of products in the shop
+            type: integer
+            example: '10'
+          productRevenue:
+            description: Total revenue from purchased products
+            type: number
+            example: '1.23'
+          revenueCurrency:
+            description: The revenue currency code (ISO 4217)
+            type: string
+            example: PLN
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+  parameters:
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+  requestBodies:
+    NewShop:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewShop'
+    UpdateShop:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateShop'
   securitySchemes:
     api-key:
       type: apiKey

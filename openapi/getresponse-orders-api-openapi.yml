@@ -526,120 +526,58 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    OrderList:
-      description: The list of orders
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Order'
-    OrderDetails:
-      description: The order details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrderResponse'
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    orderId:
-      name: orderId
-      in: path
-      description: The order ID
-      required: true
-      schema:
-        type: string
-      example: fOh
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+    BaseMetaField:
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
+        href:
+          description: Direct hyperlink to a resource
           type: string
-        message:
-          description: Error message
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
+        metaFieldId:
+          description: The meta field ID
           type: string
-        moreInfo:
-          description: URL to error description in the API Docs
+          readOnly: true
+          example: NoF
+        name:
+          description: The meta field name
           type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
+          maxLength: 63
+          minLength: 3
+          example: Shoe size
+        value:
+          description: The meta field value
           type: string
+          maxLength: 65000
+          minLength: 0
+          example: '11'
+        valueType:
+          description: The value type enumerable
+          type: string
+          enum:
+          - string
+          - integer
+          example: integer
+        description:
+          description: The meta field description
+          type: string
+          maxLength: 255
+          minLength: 0
+          example: Description of this meta field
       type: object
+    NewAddress:
+      required:
+      - name
+      - countryCode
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Address'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     Address:
       type: object
       allOf:
@@ -727,13 +665,6 @@ components:
             minLength: 0
             example: GetResponse
       - $ref: '#/components/schemas/CreateAndUpdate'
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
     BaseTax:
       properties:
         taxId:
@@ -761,67 +692,6 @@ components:
           minimum: 0
           example: 23
       type: object
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    NewAddress:
-      required:
-      - name
-      - countryCode
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Address'
-    NewSelectedProductVariant:
-      required:
-      - variantId
-      - price
-      - quantity
-      properties:
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc
-        variantId:
-          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
-          type: string
-          example: p
-        price:
-          description: The product variant price
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 840
-        priceTax:
-          description: The product variant price tax
-          type: number
-          format: double
-          maximum: 999999999999.99
-          minimum: 0
-          example: 428
-        quantity:
-          description: The product variant quantity
-          type: integer
-          format: int32
-          minimum: 1
-          example: '2'
-        taxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewTax'
-      type: object
     NewOrder:
       required:
       - contactId
@@ -835,6 +705,23 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/NewSelectedProductVariant'
+      - $ref: '#/components/schemas/Order'
+    OrderSelectedProductVariant:
+      required:
+      - variantId
+      - price
+      - quantity
+      type: object
+      allOf:
+      - properties:
+          categories:
+            type: array
+            items:
+              $ref: '#/components/schemas/BaseCategory'
+      - $ref: '#/components/schemas/NewSelectedProductVariant'
+    UpdateOrder:
+      type: object
+      allOf:
       - $ref: '#/components/schemas/Order'
     Order:
       properties:
@@ -923,6 +810,68 @@ components:
           items:
             $ref: '#/components/schemas/NewMetaField'
       type: object
+    NewMetaField:
+      required:
+      - name
+      - value
+      - valueType
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    NewSelectedProductVariant:
+      required:
+      - variantId
+      - price
+      - quantity
+      properties:
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/aS/products/Rf/variants/aBc
+        variantId:
+          description: "The ID of a selected variant. You must first create a variant using: \n\n`POST` [Create product](https://apireference.getresponse.com/#operation/createProduct) \n\n`POST` [Create product variant](https://apireference.getresponse.com/#operation/createProductVariant)\n\n or get ID from variants created already:\n\n  `GET` [Get a list of product variants](https://apireference.getresponse.com/#operation/getProductVariantList)"
+          type: string
+          example: p
+        price:
+          description: The product variant price
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 840
+        priceTax:
+          description: The product variant price tax
+          type: number
+          format: double
+          maximum: 999999999999.99
+          minimum: 0
+          example: 428
+        quantity:
+          description: The product variant quantity
+          type: integer
+          format: int32
+          minimum: 1
+          example: '2'
+        taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewTax'
+      type: object
     OrderResponse:
       type: object
       allOf:
@@ -932,75 +881,13 @@ components:
             items:
               $ref: '#/components/schemas/OrderSelectedProductVariant'
       - $ref: '#/components/schemas/Order'
-    UpdateOrder:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Order'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    NewMetaField:
+    NewTax:
       required:
       - name
-      - value
-      - valueType
+      - rate
       type: object
       allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-    BaseMetaField:
-      properties:
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/meta-fields/NoF
-        metaFieldId:
-          description: The meta field ID
-          type: string
-          readOnly: true
-          example: NoF
-        name:
-          description: The meta field name
-          type: string
-          maxLength: 63
-          minLength: 3
-          example: Shoe size
-        value:
-          description: The meta field value
-          type: string
-          maxLength: 65000
-          minLength: 0
-          example: '11'
-        valueType:
-          description: The value type enumerable
-          type: string
-          enum:
-          - string
-          - integer
-          example: integer
-        description:
-          description: The meta field description
-          type: string
-          maxLength: 255
-          minLength: 0
-          example: Description of this meta field
-      type: object
-    OrderSelectedProductVariant:
-      required:
-      - variantId
-      - price
-      - quantity
-      type: object
-      allOf:
-      - properties:
-          categories:
-            type: array
-            items:
-              $ref: '#/components/schemas/BaseCategory'
-      - $ref: '#/components/schemas/NewSelectedProductVariant'
+      - $ref: '#/components/schemas/BaseTax'
     BaseCategory:
       properties:
         categoryId:
@@ -1042,18 +929,59 @@ components:
           maxLength: 255
           example: ext3343
       type: object
-  requestBodies:
-    UpdateOrder:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateOrder'
-    NewOrder:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewOrder'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
   headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
     TotalPages:
       description: The total number of pages
       schema:
@@ -1064,25 +992,97 @@ components:
       schema:
         type: integer
         format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+  responses:
+    OrderList:
+      description: The list of orders
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Order'
+    OrderDetails:
+      description: The order details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderResponse'
+  parameters:
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
       schema:
         type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+      example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
       schema:
         type: integer
         format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+        default: 1
+        minimum: 1
+    orderId:
+      name: orderId
+      in: path
+      description: The order ID
+      required: true
+      schema:
+        type: string
+      example: fOh
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+  requestBodies:
+    NewOrder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewOrder'
+    UpdateOrder:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateOrder'
   securitySchemes:
     api-key:
       type: apiKey

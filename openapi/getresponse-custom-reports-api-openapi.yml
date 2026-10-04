@@ -322,57 +322,13 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    customReportId:
-      name: customReportId
-      in: path
-      description: The custom report ID
-      required: true
-      schema:
-        type: string
-      example: cRi
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-  responses:
-    CustomReportDetails:
-      description: The custom report details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
+  requestBodies:
+    CreateCustomReport:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CustomReportDetails'
+            $ref: '#/components/schemas/BaseCreateCustomReport'
+  responses:
     CustomReportList:
       description: The list of custom reports
       headers:
@@ -394,40 +350,65 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/CustomReport'
+    CustomReportDetails:
+      description: The custom report details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomReportDetails'
+  headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
   schemas:
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
+    CustomReportScheduling:
       properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
+        frequency:
+          description: The custom report frequency
+          example: one_time
+          allOf:
+          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
       type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          one_time: '#/components/schemas/OneTimeReportScheduling'
+          daily: '#/components/schemas/DailyReportScheduling'
+          weekly: '#/components/schemas/WeeklyReportScheduling'
+          monthly: '#/components/schemas/MonthlyReportScheduling'
     CustomReportTypesEnum:
       type: string
       enum:
@@ -446,6 +427,99 @@ components:
       - unconfirmed_contacts_stats_report
       - transactional_email_bounce_report
       - message_activity_report
+    BaseCreateCustomReport:
+      required:
+      - name
+      - type
+      - scheduling
+      properties:
+        name:
+          description: The custom report name
+          type: string
+          maxLength: 70
+          minLength: 3
+          example: My new custom report
+        type:
+          description: The custom report type
+          type: string
+          enum:
+          - subscription_rejections
+          - message_stats
+          - unsubscribe_contacts_lists_report
+          - standard_subscriber_activity_report
+          - bounces
+          - account_summary_report
+          - user_activity
+          - list_summary_report
+          - isp_message_stats_report
+          - webinar_participants_report
+          - import_error_report
+          - message_clicks_report
+          - unconfirmed_contacts_stats_report
+          - transactional_email_bounce_report
+          - message_activity_report
+        scheduling:
+          description: Parameters responsible for defining the reporting period
+          required:
+          - frequency
+          - startDate
+          - endDate
+          properties:
+            frequency:
+              description: The custom report frequency
+              type: string
+              enum:
+              - one_time
+              example: one_time
+            startDate:
+              description: The start of the period for which the report will be generated
+              type: string
+              format: Y-m-d
+              example: '2024-01-01'
+            endDate:
+              description: The end of the period for which the report will be generated
+              type: string
+              format: Y-m-d
+              example: '2024-01-15'
+          type: object
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          subscription_rejections: '#/components/schemas/CreateSubscriptionRejectionsReport'
+          message_stats: '#/components/schemas/CreateMessageStatsReport'
+          unsubscribe_contacts_lists_report: '#/components/schemas/CreateUnsubscribeContactsListsReport'
+          standard_subscriber_activity_report: '#/components/schemas/CreateStandardSubscriberActivityReport'
+          bounces: '#/components/schemas/CreateBouncesReport'
+          account_summary_report: '#/components/schemas/CreateAccountSummaryReport'
+          user_activity: '#/components/schemas/CreateUserActivityReport'
+          list_summary_report: '#/components/schemas/CreateListSummaryReport'
+          isp_message_stats_report: '#/components/schemas/CreateISPMessageStatsReport'
+          webinar_participants_report: '#/components/schemas/CreateWebinarParticipantsReport'
+          import_error_report: '#/components/schemas/CreateImportErrorReport'
+          message_clicks_report: '#/components/schemas/CreateMessageClicksReport'
+          unconfirmed_contacts_stats_report: '#/components/schemas/CreateUnconfirmedContactsStatsReport'
+          transactional_email_bounce_report: '#/components/schemas/CreateTransactionalEmailBounceReport'
+          message_activity_report: '#/components/schemas/CreateMessageActivityReport'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    CustomReportFrequenciesEnum:
+      type: string
+      enum:
+      - monthly
+      - weekly
+      - daily
+      - one_time
+    CustomReportFileStatusesEnum:
+      type: string
+      enum:
+      - pending
+      - in-progress
+      - ready
+      - error
     CustomReportDetails:
       properties:
         customReportId:
@@ -559,87 +633,6 @@ components:
           expiresAt: 2024-02-10T00:00:00+0000
         createdAt: 2024-01-02T15:00:00+0000
         generatedAt: 2024-01-02T17:00:00+0000
-    CustomReportFrequenciesEnum:
-      type: string
-      enum:
-      - monthly
-      - weekly
-      - daily
-      - one_time
-    BaseCreateCustomReport:
-      required:
-      - name
-      - type
-      - scheduling
-      properties:
-        name:
-          description: The custom report name
-          type: string
-          maxLength: 70
-          minLength: 3
-          example: My new custom report
-        type:
-          description: The custom report type
-          type: string
-          enum:
-          - subscription_rejections
-          - message_stats
-          - unsubscribe_contacts_lists_report
-          - standard_subscriber_activity_report
-          - bounces
-          - account_summary_report
-          - user_activity
-          - list_summary_report
-          - isp_message_stats_report
-          - webinar_participants_report
-          - import_error_report
-          - message_clicks_report
-          - unconfirmed_contacts_stats_report
-          - transactional_email_bounce_report
-          - message_activity_report
-        scheduling:
-          description: Parameters responsible for defining the reporting period
-          required:
-          - frequency
-          - startDate
-          - endDate
-          properties:
-            frequency:
-              description: The custom report frequency
-              type: string
-              enum:
-              - one_time
-              example: one_time
-            startDate:
-              description: The start of the period for which the report will be generated
-              type: string
-              format: Y-m-d
-              example: '2024-01-01'
-            endDate:
-              description: The end of the period for which the report will be generated
-              type: string
-              format: Y-m-d
-              example: '2024-01-15'
-          type: object
-      type: object
-      discriminator:
-        propertyName: type
-        mapping:
-          subscription_rejections: '#/components/schemas/CreateSubscriptionRejectionsReport'
-          message_stats: '#/components/schemas/CreateMessageStatsReport'
-          unsubscribe_contacts_lists_report: '#/components/schemas/CreateUnsubscribeContactsListsReport'
-          standard_subscriber_activity_report: '#/components/schemas/CreateStandardSubscriberActivityReport'
-          bounces: '#/components/schemas/CreateBouncesReport'
-          account_summary_report: '#/components/schemas/CreateAccountSummaryReport'
-          user_activity: '#/components/schemas/CreateUserActivityReport'
-          list_summary_report: '#/components/schemas/CreateListSummaryReport'
-          isp_message_stats_report: '#/components/schemas/CreateISPMessageStatsReport'
-          webinar_participants_report: '#/components/schemas/CreateWebinarParticipantsReport'
-          import_error_report: '#/components/schemas/CreateImportErrorReport'
-          message_clicks_report: '#/components/schemas/CreateMessageClicksReport'
-          unconfirmed_contacts_stats_report: '#/components/schemas/CreateUnconfirmedContactsStatsReport'
-          transactional_email_bounce_report: '#/components/schemas/CreateTransactionalEmailBounceReport'
-          message_activity_report: '#/components/schemas/CreateMessageActivityReport'
     CustomReport:
       properties:
         customReportId:
@@ -675,69 +668,76 @@ components:
           readOnly: true
           example: 2020-11-20T08:00:00+0000
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    CustomReportFileStatusesEnum:
-      type: string
-      enum:
-      - pending
-      - in-progress
-      - ready
-      - error
-    CustomReportScheduling:
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        frequency:
-          description: The custom report frequency
-          example: one_time
-          allOf:
-          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
-      discriminator:
-        propertyName: frequency
-        mapping:
-          one_time: '#/components/schemas/OneTimeReportScheduling'
-          daily: '#/components/schemas/DailyReportScheduling'
-          weekly: '#/components/schemas/WeeklyReportScheduling'
-          monthly: '#/components/schemas/MonthlyReportScheduling'
-  headers:
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
       schema:
         type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
       schema:
         type: integer
         format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
       schema:
         type: integer
         format: int32
-  requestBodies:
-    CreateCustomReport:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseCreateCustomReport'
+        default: 100
+        maximum: 1000
+        minimum: 1
+    customReportId:
+      name: customReportId
+      in: path
+      description: The custom report ID
+      required: true
+      schema:
+        type: string
+      example: cRi
   securitySchemes:
     api-key:
       type: apiKey

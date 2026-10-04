@@ -493,57 +493,14 @@ paths:
       - oauth2:
         - all
 components:
-  requestBodies:
-    NewSuppression:
-      description: The suppression list to be added.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewSuppression'
-    UpdateSuppression:
-      description: The suppression list to be updated.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateSuppression'
-  parameters:
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    suppressionId:
-      name: suppressionId
-      in: path
-      description: The suppression ID
-      required: true
-      schema:
-        type: string
-      example: pypF
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   schemas:
+    UpdateSuppression:
+      required:
+      - name
+      - masks
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseSuppression'
     DateOrDateTime:
       oneOf:
       - type: string
@@ -552,6 +509,60 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
+    SuppressionDetails:
+      type: object
+      readOnly: true
+      allOf:
+      - $ref: '#/components/schemas/Suppression'
+      - $ref: '#/components/schemas/BaseSuppression'
+    BaseSuppression:
+      properties:
+        name:
+          description: The name of the suppression list
+          type: string
+          example: suppression-name
+        masks:
+          type: array
+          items:
+            type: string
+            example: '@example.com'
+      type: object
+    NewSuppression:
+      required:
+      - name
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseSuppression'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    Suppression:
+      required:
+      - suppressionId
+      properties:
+        suppressionId:
+          description: The suppression ID
+          type: string
+          readOnly: true
+          example: pypF
+        name:
+          description: The suppression name
+          type: string
+          example: suppression-name
+        createdOn:
+          description: Created on DateTime in the ISO8601 format
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2018-07-26T06:33:13+0000
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          readOnly: true
+          example: https://api.getresponse.com/v3/suppressions/pypF
+      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -585,68 +596,26 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    NewSuppression:
-      required:
-      - name
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseSuppression'
-    UpdateSuppression:
-      required:
-      - name
-      - masks
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseSuppression'
-    BaseSuppression:
-      properties:
-        name:
-          description: The name of the suppression list
-          type: string
-          example: suppression-name
-        masks:
-          type: array
-          items:
-            type: string
-            example: '@example.com'
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    SuppressionDetails:
-      type: object
-      readOnly: true
-      allOf:
-      - $ref: '#/components/schemas/Suppression'
-      - $ref: '#/components/schemas/BaseSuppression'
-    Suppression:
-      required:
-      - suppressionId
-      properties:
-        suppressionId:
-          description: The suppression ID
-          type: string
-          readOnly: true
-          example: pypF
-        name:
-          description: The suppression name
-          type: string
-          example: suppression-name
-        createdOn:
-          description: Created on DateTime in the ISO8601 format
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2018-07-26T06:33:13+0000
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          readOnly: true
-          example: https://api.getresponse.com/v3/suppressions/pypF
-      type: object
   headers:
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
     TotalPages:
       description: The total number of pages
       schema:
@@ -657,26 +626,33 @@ components:
       schema:
         type: integer
         format: int32
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
+  requestBodies:
+    NewSuppression:
+      description: The suppression list to be added.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewSuppression'
+    UpdateSuppression:
+      description: The suppression list to be updated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateSuppression'
   responses:
+    SuppressionDetails:
+      description: The suppression details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuppressionDetails'
     SuppressionsList:
       description: The suppressions list.
       headers:
@@ -698,19 +674,43 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Suppression'
-    SuppressionDetails:
-      description: The suppression details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SuppressionDetails'
+  parameters:
+    suppressionId:
+      name: suppressionId
+      in: path
+      description: The suppression ID
+      required: true
+      schema:
+        type: string
+      example: pypF
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
   securitySchemes:
     api-key:
       type: apiKey
