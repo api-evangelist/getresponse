@@ -1,35 +1,40 @@
-generated: '2026-08-13'
+generated: '2026-09-23'
 method: generated
-source: openapi/getresponse-a-b-tests-openapi.yml, openapi/getresponse-a-b-tests-subject-openapi.yml,
-  openapi/getresponse-accounts-openapi.yml, openapi/getresponse-addresses-openapi.yml, openapi/getresponse-autoresponders-openapi.yml,
-  openapi/getresponse-campaigns-lists-openapi.yml, openapi/getresponse-carts-openapi.yml, openapi/getresponse-categories-openapi.yml,
-  openapi/getresponse-click-tracks-openapi.yml, openapi/getresponse-contacts-openapi.yml, openapi/getresponse-custom-events-openapi.yml,
-  openapi/getresponse-custom-fields-openapi.yml, openapi/getresponse-custom-reports-openapi.yml,
-  openapi/getresponse-ecommerce-openapi.yml, openapi/getresponse-file-library-openapi.yml, openapi/getresponse-form-and-popup-openapi.yml,
-  openapi/getresponse-forms-and-popups-openapi.yml, openapi/getresponse-forms-openapi.yml, openapi/getresponse-from-fields-openapi.yml,
-  openapi/getresponse-gdpr-fields-openapi.yml, openapi/getresponse-imports-openapi.yml, openapi/getresponse-landing-page-openapi.yml,
-  openapi/getresponse-landing-pages-openapi.yml, openapi/getresponse-legacy-forms-openapi.yml,
-  openapi/getresponse-legacy-landing-pages-openapi.yml, openapi/getresponse-meta-fields-openapi.yml,
-  openapi/getresponse-multimedia-openapi.yml, openapi/getresponse-newsletters-openapi.yml, openapi/getresponse-orders-openapi.yml,
-  openapi/getresponse-predefined-fields-openapi.yml, openapi/getresponse-product-variants-openapi.yml,
-  openapi/getresponse-products-openapi.yml, openapi/getresponse-rss-newsletters-openapi.yml,
-  openapi/getresponse-search-contacts-openapi.yml, openapi/getresponse-shops-openapi.yml, openapi/getresponse-sms-automation-messages-openapi.yml,
-  openapi/getresponse-sms-messages-openapi.yml, openapi/getresponse-sms-openapi.yml, openapi/getresponse-subscription-confirmations-openapi.yml,
-  openapi/getresponse-suppressions-openapi.yml, openapi/getresponse-tags-openapi.yml, openapi/getresponse-taxes-openapi.yml,
-  openapi/getresponse-tracking-openapi.yml, openapi/getresponse-transactional-emails-openapi.yml,
-  openapi/getresponse-transactional-emails-templates-openapi.yml, openapi/getresponse-webinars-openapi.yml,
-  openapi/getresponse-website-openapi.yml, openapi/getresponse-websites-openapi.yml, openapi/getresponse-workflows-openapi.yml
+source: openapi/getresponse-a-b-tests-api-openapi.yml, openapi/getresponse-a-b-tests-subject-api-openapi.yml,
+  openapi/getresponse-accounts-api-openapi.yml, openapi/getresponse-addresses-api-openapi.yml,
+  openapi/getresponse-autoresponders-api-openapi.yml, openapi/getresponse-campaigns-lists-api-openapi.yml,
+  openapi/getresponse-carts-api-openapi.yml, openapi/getresponse-categories-api-openapi.yml,
+  openapi/getresponse-click-tracks-api-openapi.yml, openapi/getresponse-contacts-api-openapi.yml,
+  openapi/getresponse-custom-events-api-openapi.yml, openapi/getresponse-custom-fields-api-openapi.yml,
+  openapi/getresponse-custom-reports-api-openapi.yml, openapi/getresponse-ecommerce-api-openapi.yml,
+  openapi/getresponse-file-library-api-openapi.yml, openapi/getresponse-form-and-popup-api-openapi.yml,
+  openapi/getresponse-forms-and-popups-api-openapi.yml, openapi/getresponse-forms-api-openapi.yml,
+  openapi/getresponse-from-fields-api-openapi.yml, openapi/getresponse-gdpr-fields-api-openapi.yml,
+  openapi/getresponse-imports-api-openapi.yml, openapi/getresponse-landing-page-api-openapi.yml,
+  openapi/getresponse-landing-pages-api-openapi.yml, openapi/getresponse-legacy-forms-api-openapi.yml,
+  openapi/getresponse-legacy-landing-pages-api-openapi.yml, openapi/getresponse-meta-fields-api-openapi.yml,
+  openapi/getresponse-multimedia-api-openapi.yml, openapi/getresponse-newsletters-api-openapi.yml,
+  openapi/getresponse-orders-api-openapi.yml, openapi/getresponse-predefined-fields-api-openapi.yml,
+  openapi/getresponse-product-variants-api-openapi.yml, openapi/getresponse-products-api-openapi.yml,
+  openapi/getresponse-rss-newsletters-api-openapi.yml, openapi/getresponse-search-contacts-api-openapi.yml,
+  openapi/getresponse-shops-api-openapi.yml, openapi/getresponse-sms-api-openapi.yml, openapi/getresponse-sms-automation-messages-api-openapi.yml,
+  openapi/getresponse-sms-messages-api-openapi.yml, openapi/getresponse-subscription-confirmations-api-openapi.yml,
+  openapi/getresponse-suppressions-api-openapi.yml, openapi/getresponse-tags-api-openapi.yml,
+  openapi/getresponse-taxes-api-openapi.yml, openapi/getresponse-tracking-api-openapi.yml, openapi/getresponse-transactional-emails-api-openapi.yml,
+  openapi/getresponse-transactional-emails-templates-api-openapi.yml, openapi/getresponse-webinars-api-openapi.yml,
+  openapi/getresponse-website-api-openapi.yml, openapi/getresponse-websites-api-openapi.yml,
+  openapi/getresponse-workflows-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 220
   by_action_class:
-    connected: 126
-    acting: 94
+    connected: 127
+    acting: 93
   by_consequence:
-    read: 126
-    write: 86
+    read: 127
+    write: 85
     safety-critical: 1
     physical: 7
   human_in_the_loop_required: 1
@@ -2550,20 +2555,14 @@ operations:
   method: post
   operationId: getContactsFromSearchContactsConditions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
+    action-class: connected
+    consequence: read
+    subject: optional
     scope:
     - all
-    audience: null
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /shops/{shopId}
   method: get
   operationId: getShopById
@@ -2642,6 +2641,18 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /statistics/sms/{smsId}
+  method: get
+  operationId: getSmsStats
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - all
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /sms-automation/{smsId}
   method: get
   operationId: getSmsAutomationById
@@ -2713,18 +2724,6 @@ operations:
 - path: /sms/sender-names
   method: get
   operationId: getSmsSenderNameList
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    scope:
-    - all
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /statistics/sms/{smsId}
-  method: get
-  operationId: getSmsStats
   x-agentic-access:
     action-class: connected
     consequence: read
