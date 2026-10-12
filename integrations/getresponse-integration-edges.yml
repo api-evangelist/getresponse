@@ -1,0 +1,1183 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/getresponse/integrations
+- https://n8n.io/integrations/getresponse/
+- https://composio.dev/toolkits/getresponse
+checked:
+- https://composio.dev/toolkits/getresponse
+- https://monid.ai/tools/getresponse
+- https://n8n.io/integrations/getresponse/
+- https://zapier.com/apps/getresponse/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: getresponse
+  url: https://zapier.com/apps/getresponse/integrations
+  external_url: https://www.getresponse.com/
+  partner_tier: GOLD
+  triggers:
+  - key: autoresponder
+    label: New Autoresponder
+  - key: campaign
+    label: New List
+  - key: landing_page
+    label: New Landing Page
+  - key: newsletter
+    label: New Newsletter
+  - key: new_contact_v2
+    label: New Contact
+  - key: new_form
+    label: New Form
+  actions:
+  - key: contact_upsert
+    label: Create or Update Contact
+  - key: create_contact_v2
+    label: Create Contact
+  - key: create_newsletter
+    label: Create Newsletter
+  - key: remove_contact_v2
+    label: Remove Contact
+  - key: update_contact
+    label: Update Contact
+  - key: _zap_raw_request
+    label: API Request (Beta)
+  searches:
+  - key: find_campaign
+    label: Find List
+  - key: find_contact
+    label: Find Contact
+- marketplace: n8n
+  channel: open-source-node
+  app: getresponse
+  url: https://n8n.io/integrations/getresponse/
+  identity: title
+  pair_pages: 514
+  pairs:
+  - getscreenshot
+  - ghost
+  - giphy
+  - gitea
+  - github
+  - gitlab
+  - gleap
+  - gmail
+  - gocanvas
+  - godaddy
+  - gong
+  - google-ads
+  - google-ai-studio-gemini
+  - google-analytics
+  - google-bigquery
+  - google-books
+  - google-business-profile
+  - google-calendar
+  - google-chat
+  - google-cloud
+  - google-cloud-firestore
+  - google-cloud-natural-language
+  - google-cloud-realtime-database
+  - google-cloud-storage
+  - google-contacts
+  - google-docs
+  - google-drive
+  - google-forms
+  - google-gemini-chat-model
+  - google-perspective
+  - google-sheets
+  - google-slides
+  - google-tables
+  - google-tasks
+  - google-translate
+  - google-vertex-ai
+  - google-workspace-admin
+  - gotify
+  - gotowebinar
+  - gptea
+  - grafana
+  - grain
+  - graphql
+  - gravity-forms
+  - grid
+  - grist
+  - growbots
+  - gumroad
+  - gupshup
+  - guru
+  - hacker-news
+  - halopsa
+  - handwrytten
+  - hansei
+  - harry-potter-api
+  - harvest
+  - headless-testing
+  - helcim
+  - helpscout
+  - heysummit
+  - highlevel
+  - home-assistant
+  - http-request
+  - hub-planner
+  - hubspot
+  - hugging-face
+  - humantic-ai
+  - hunter
+  - hybrid-analysis
+  - iauditor-by-safetyculture
+  - idealpostcodes
+  - idealspot
+  - ideta
+  - imgbb
+  - imgur
+  - imperva-waf
+  - impira
+  - industryselect
+  - influxdb-cloud
+  - infolobby
+  - instabot
+  - instabug
+  - intakeq
+  - intercom
+  - invoice-ninja
+  - invoiced
+  - ip2location
+  - ipinfo
+  - ipregistry
+  - iris-dfir
+  - isn
+  - iterable
+  - jama
+  - jasper
+  - jenkins
+  - jina-ai
+  - jira-software
+  - jwt
+  - kadoa
+  - kafka
+  - kaggle
+  - kanban-tool
+  - karbon
+  - keap
+  - keygen
+  - keyzy
+  - kibana
+  - kitemaker
+  - klaviyo
+  - klazify
+  - knack
+  - knowbe4
+  - kobotoolbox
+  - kraftful
+  - lagrowthmachine
+  - lambdatest
+  - landbot
+  - laposta
+  - launch27
+  - launchdarkly
+  - ldap
+  - leadboxer
+  - leadpops
+  - lemlist
+  - lets-enhance
+  - libraria
+  - lighthouse
+  - lime-go
+  - line
+  - linear
+  - lingvanex
+  - linkedin
+  - linkish
+  - linode
+  - liveagent
+  - localazy
+  - loginradius
+  - lokalise
+  - lonescale
+  - lucidchart
+  - magento-2
+  - mailcheck
+  - mailchimp
+  - mailerlite
+  - mailersend
+  - mailgun
+  - mailify
+  - mailjet
+  - mailmodo
+  - malcore
+  - mandrill
+  - marcom-robot
+  - marketing-master-io
+  - marketplacer
+  - marketstack
+  - mastodon
+  - matrix
+  - mattermost
+  - mautic
+  - mav
+  - maverick
+  - medium
+  - mem
+  - messagebird
+  - metabase
+  - metatextai-inference-api
+  - mews
+  - microsoft-azure-monitor
+  - microsoft-dynamics-365-business-central-api
+  - microsoft-dynamics-crm
+  - microsoft-entra-id
+  - microsoft-entra-id-azure-active-directory
+  - microsoft-excel
+  - microsoft-graph-security
+  - microsoft-onedrive
+  - microsoft-outlook
+  - microsoft-sharepoint
+  - microsoft-sql
+  - microsoft-teams
+  - microsoft-teams-admin
+  - microsoft-to-do
+  - miestro
+  - mindee
+  - miro
+  - misp
+  - missive
+  - mist
+  - mistral-ai
+  - mixpanel
+  - mocean
+  - mondaycom
+  - mongodb
+  - monica-crm
+  - moonclerk
+  - moonmail
+  - morph
+  - mqtt
+  - msg91
+  - mux
+  - mx-toolbox
+  - my-askai
+  - myphoner
+  - mysql
+  - nanonets-ocr
+  - nasa
+  - ncscale
+  - netlify
+  - nextcloud
+  - nightfallai
+  - ninox
+  - nmkr
+  - nocodb
+  - notion
+  - nozbe-teams
+  - npm
+  - nuclia
+  - nusii-proposals
+  - nyckel
+  - nyota
+  - occasion
+  - ocrspace
+  - odoo
+  - offalerts
+  - okta
+  - omeda
+  - omniconvert
+  - omnimind
+  - on2air
+  - one-ai
+  - one-simple-api
+  - onfleet
+  - openai
+  - opencti
+  - openthesaurus
+  - openweathermap
+  - opn-formerly-omise
+  - oracle-database
+  - orbit
+  - order-desk
+  - ortto
+  - oura
+  - paddle
+  - pagerduty
+  - paperform
+  - papyrs
+  - parsehub
+  - parseprompt
+  - passcreator
+  - passslot
+  - patreon
+  - paymo
+  - paypal
+  - peekalink
+  - perplexity
+  - persio
+  - personal-ai
+  - phantombuster
+  - philips-hue
+  - phrase
+  - pinata
+  - pinboard
+  - pinterest
+  - pipedrive
+  - pipefy
+  - pirate-weather
+  - pitchly
+  - pivotal-tracker
+  - planview-leankit
+  - planyo-online-booking
+  - platformly
+  - plecto
+  - plivo
+  - postbin
+  - postgres
+  - posthog
+  - practitest
+  - predisai
+  - prodia
+  - product-hunt
+  - profitwell
+  - project-bubble-proprofs-project
+  - prompthub
+  - prospe-ai
+  - pushbullet
+  - pushcut
+  - pusher
+  - pushover
+  - qradar
+  - qualaroo
+  - qualys
+  - quentn
+  - questdb
+  - quick-base
+  - quickbooks-online
+  - quickchart
+  - quintadb
+  - rabbitmq
+  - radar
+  - raindrop
+  - rapid7-insightvm
+  - raven-tools
+  - rawg-video-games-database
+  - read-ai
+  - realphonevalidation
+  - recharge
+  - recorded-future
+  - redash
+  - reddit
+  - redis
+  - relevance-ai
+  - relink-url-shortener
+  - relysia
+  - replyio
+  - retable
+  - reverse-contact
+  - rewardful
+  - ritekit
+  - roboflow
+  - robolytix
+  - roboresponseai
+  - rocketchat
+  - rollbar
+  - rootly
+  - route4me
+  - rundeck
+  - s3
+  - sales-simplify
+  - salesforce
+  - salesmaa
+  - salesmate
+  - salesmsg
+  - salesrocks
+  - samsung-smartthings
+  - scrape-itcloud
+  - scrapeninja
+  - seamless-ai
+  - search-and-save
+  - seatable
+  - securityscorecard
+  - segment
+  - sekoia
+  - sellix
+  - sembly-ai
+  - sendgrid
+  - sendy
+  - sentryio
+  - servicenow
+  - sharly-ai
+  - shiphero
+  - shipstation
+  - shopify
+  - shortio
+  - shuffler
+  - sierra-interactive
+  - sifter
+  - signaturit
+  - signl4
+  - signrequest
+  - simpleem
+  - simplehash
+  - simplekpi
+  - simplelocalize
+  - simplero
+  - simpletexting
+  - sitecreatorio
+  - sitespeakai
+  - slack
+  - smaily
+  - smartreach
+  - smartsuite
+  - sms-it
+  - sms-magic
+  - sms77
+  - snapdocs
+  - snatchbot
+  - snipcart
+  - snowflake
+  - solve-data
+  - specter
+  - splunk
+  - spondyr
+  - spontit
+  - sportsdata
+  - spotify
+  - spydra
+  - sslmate-cert-spotter-api
+  - stackby
+  - stammerai
+  - starton
+  - statuscake
+  - storyblok
+  - strapi
+  - strava
+  - stripe
+  - studio-by-ai21-labs
+  - suitedash
+  - supabase
+  - supernormal
+  - superpowered
+  - supportivekoala
+  - survicate
+  - swagup
+  - switchboard
+  - syncly
+  - syncromsp
+  - synthesia
+  - taiga
+  - talentlms
+  - talknotes
+  - tapfiliate
+  - td-ameritrade
+  - teachable
+  - team-up
+  - teamdeck
+  - teamgate
+  - teknoir
+  - telegram
+  - testmonitor
+  - textcortex-ai
+  - textgain
+  - textkit
+  - textmagic
+  - thankster
+  - the-customer-factor
+  - the-leap
+  - thehive
+  - thehive-5
+  - thoughtfulgpt
+  - thrivecart
+  - tidb-cloud
+  - tierion
+  - tilda
+  - timescaledb
+  - timetonic
+  - tinyurl
+  - tisane-labs
+  - todoist
+  - token-metrics
+  - toket
+  - totango
+  - trackvia
+  - transifex
+  - travisci
+  - trellix-epo
+  - trello
+  - trengo
+  - trevorio
+  - turbohire
+  - tuskr
+  - tuulio
+  - twake
+  - twilio
+  - twist
+  - twitter
+  - unbounce
+  - unisender
+  - unleashed-software
+  - upkeep
+  - uplead
+  - uproc
+  - uptimerobot
+  - uptimetoolbox
+  - urlscanio
+  - uservoice
+  - venafi-tls-protect-cloud
+  - venafi-tls-protect-datacenter
+  - venly
+  - verifalia
+  - vero
+  - vimeo
+  - virustotal
+  - vivifyscrum
+  - voicit
+  - vonage
+  - vowel
+  - watchsignals
+  - waveline-extract
+  - webex-by-cisco
+  - webflow
+  - webscraperio
+  - wekan
+  - whal3s
+  - whatconverts
+  - whatsapp-business-cloud
+  - wise
+  - wizychat
+  - wonderchat
+  - wondercraft
+  - woocommerce
+  - woodpeckerco
+  - wordpress
+  - workast
+  - workboard
+  - woxo
+  - writesonic
+  - wubook-ratechecker
+  - xero
+  - xtractly
+  - ybug
+  - ycode
+  - yodiz
+  - yourls
+  - youtube
+  - zabbix
+  - zammad
+  - zendesk
+  - zenrows
+  - zoho-books
+  - zoho-crm
+  - zoho-desk
+  - zonka-feedback
+  - zoom
+  - zscaler-zia
+  - zulip
+- marketplace: composio
+  channel: agent-gateway
+  app: getresponse
+  url: https://composio.dev/toolkits/getresponse
+  identity: action-prefix
+  actions:
+  - key: GETRESPONSE_CANCEL_AB_TEST
+  - key: GETRESPONSE_CANCEL_NEWSLETTER_SEND
+  - key: GETRESPONSE_CREATE_ADDRESS
+  - key: GETRESPONSE_CREATE_AND_SEND_NEWSLETTER
+  - key: GETRESPONSE_CREATE_AUTORESPONDER
+  - key: GETRESPONSE_CREATE_CAMPAIGN
+  - key: GETRESPONSE_CREATE_CART
+  - key: GETRESPONSE_CREATE_CATEGORY
+  - key: GETRESPONSE_CREATE_CONTACT
+  - key: GETRESPONSE_CREATE_CONTACTS_BATCH
+  - key: GETRESPONSE_CREATE_CUSTOM_EVENT
+  - key: GETRESPONSE_CREATE_CUSTOM_FIELD
+  - key: GETRESPONSE_CREATE_CUSTOM_REPORT
+  - key: GETRESPONSE_CREATE_FILE
+  - key: GETRESPONSE_CREATE_FOLDER
+  - key: GETRESPONSE_CREATE_FROM_ADDRESS
+  - key: GETRESPONSE_CREATE_IMPORT
+  - key: GETRESPONSE_CREATE_META_FIELD
+  - key: GETRESPONSE_CREATE_NEWSLETTER_DRAFT
+  - key: GETRESPONSE_CREATE_ORDER
+  - key: GETRESPONSE_CREATE_PREDEFINED_FIELD
+  - key: GETRESPONSE_CREATE_PRODUCT
+  - key: GETRESPONSE_CREATE_PRODUCT_VARIANT
+  - key: GETRESPONSE_CREATE_RSS_NEWSLETTER
+  - key: GETRESPONSE_CREATE_SAVED_CONTACT_SEARCH
+  - key: GETRESPONSE_CREATE_SHOP
+  - key: GETRESPONSE_CREATE_SUBJECT_AB_TEST
+  - key: GETRESPONSE_CREATE_SUPPRESSION
+  - key: GETRESPONSE_CREATE_TAG
+  - key: GETRESPONSE_CREATE_TAX
+  - key: GETRESPONSE_CREATE_TRANSACTIONAL_EMAIL_TEMPLATE
+  - key: GETRESPONSE_DELETE_AB_TEST
+  - key: GETRESPONSE_DELETE_ADDRESS
+  - key: GETRESPONSE_DELETE_AUTORESPONDER
+  - key: GETRESPONSE_DELETE_CART
+  - key: GETRESPONSE_DELETE_CATEGORY
+  - key: GETRESPONSE_DELETE_CONTACT
+  - key: GETRESPONSE_DELETE_CUSTOM_EVENT
+  - key: GETRESPONSE_DELETE_CUSTOM_FIELD
+  - key: GETRESPONSE_DELETE_FILE
+  - key: GETRESPONSE_DELETE_FOLDER
+  - key: GETRESPONSE_DELETE_FROM_ADDRESS
+  - key: GETRESPONSE_DELETE_META_FIELD
+  - key: GETRESPONSE_DELETE_NEWSLETTER
+  - key: GETRESPONSE_DELETE_ORDER
+  - key: GETRESPONSE_DELETE_PREDEFINED_FIELD
+  - key: GETRESPONSE_DELETE_PRODUCT
+  - key: GETRESPONSE_DELETE_PRODUCT_VARIANT
+  - key: GETRESPONSE_DELETE_RSS_NEWSLETTER
+  - key: GETRESPONSE_DELETE_SAVED_CONTACT_SEARCH
+  - key: GETRESPONSE_DELETE_SHOP
+  - key: GETRESPONSE_DELETE_SUPPRESSION
+  - key: GETRESPONSE_DELETE_TAG
+  - key: GETRESPONSE_DELETE_TAX
+  - key: GETRESPONSE_DELETE_TRANSACTIONAL_EMAIL_TEMPLATE
+  - key: GETRESPONSE_DISABLE_CALLBACKS
+  - key: GETRESPONSE_GET_AB_TEST
+  - key: GETRESPONSE_GET_ACCOUNT
+  - key: GETRESPONSE_GET_ACCOUNT_BADGE
+  - key: GETRESPONSE_GET_ACCOUNT_BILLING
+  - key: GETRESPONSE_GET_ACCOUNT_BLOCKLIST
+  - key: GETRESPONSE_GET_ADDRESS
+  - key: GETRESPONSE_GET_AUTORESPONDER
+  - key: GETRESPONSE_GET_AUTORESPONDER_STATISTICS
+  - key: GETRESPONSE_GET_AUTORESPONDER_THUMBNAIL
+  - key: GETRESPONSE_GET_CALLBACK_CONFIGURATION
+  - key: GETRESPONSE_GET_CAMPAIGN
+  - key: GETRESPONSE_GET_CAMPAIGN_BLOCKLIST
+  - key: GETRESPONSE_GET_CAMPAIGN_STATISTICS
+  - key: GETRESPONSE_GET_CAMPAIGN_STATISTICS_SUMMARY
+  - key: GETRESPONSE_GET_CART
+  - key: GETRESPONSE_GET_CATEGORY
+  - key: GETRESPONSE_GET_CLICK_TRACK
+  - key: GETRESPONSE_GET_CONTACT
+  - key: GETRESPONSE_GET_CUSTOM_EVENT
+  - key: GETRESPONSE_GET_CUSTOM_FIELD
+  - key: GETRESPONSE_GET_CUSTOM_REPORT
+  - key: GETRESPONSE_GET_ECOMMERCE_PERFORMANCE
+  - key: GETRESPONSE_GET_ECOMMERCE_REVENUE_STATISTICS
+  - key: GETRESPONSE_GET_FILE
+  - key: GETRESPONSE_GET_FILE_LIBRARY_QUOTA
+  - key: GETRESPONSE_GET_FORM
+  - key: GETRESPONSE_GET_FORM_OR_POPUP
+  - key: GETRESPONSE_GET_FORM_OR_POPUP_PERFORMANCE
+  - key: GETRESPONSE_GET_FROM_ADDRESS
+  - key: GETRESPONSE_GET_GDPR_FIELD
+  - key: GETRESPONSE_GET_IMPORT
+  - key: GETRESPONSE_GET_LANDING_PAGE
+  - key: GETRESPONSE_GET_LANDING_PAGE_PERFORMANCE
+  - key: GETRESPONSE_GET_LEGACY_FORM
+  - key: GETRESPONSE_GET_LEGACY_LANDING_PAGE
+  - key: GETRESPONSE_GET_META_FIELD
+  - key: GETRESPONSE_GET_NEWSLETTER
+  - key: GETRESPONSE_GET_NEWSLETTER_STATISTICS
+  - key: GETRESPONSE_GET_NEWSLETTER_THUMBNAIL
+  - key: GETRESPONSE_GET_ORDER
+  - key: GETRESPONSE_GET_PREDEFINED_FIELD
+  - key: GETRESPONSE_GET_PRODUCT
+  - key: GETRESPONSE_GET_PRODUCT_VARIANT
+  - key: GETRESPONSE_GET_RSS_NEWSLETTER
+  - key: GETRESPONSE_GET_RSS_NEWSLETTER_STATISTICS
+  - key: GETRESPONSE_GET_SAVED_CONTACT_SEARCH
+  - key: GETRESPONSE_GET_SENDING_LIMITS
+  - key: GETRESPONSE_GET_SHOP
+  - key: GETRESPONSE_GET_SMS_AUTOMATION_MESSAGE
+  - key: GETRESPONSE_GET_SMS_MESSAGE
+  - key: GETRESPONSE_GET_SMS_STATISTICS
+  - key: GETRESPONSE_GET_SUBJECT_AB_TEST
+  - key: GETRESPONSE_GET_SUPPRESSION
+  - key: GETRESPONSE_GET_TAG
+  - key: GETRESPONSE_GET_TAX
+  - key: GETRESPONSE_GET_TRACKING
+  - key: GETRESPONSE_GET_TRANSACTIONAL_EMAIL
+  - key: GETRESPONSE_GET_TRANSACTIONAL_EMAIL_STATISTICS
+  - key: GETRESPONSE_GET_TRANSACTIONAL_EMAIL_TEMPLATE
+  - key: GETRESPONSE_GET_WEBINAR
+  - key: GETRESPONSE_GET_WEBSITE
+  - key: GETRESPONSE_GET_WEBSITE_PERFORMANCE
+  - key: GETRESPONSE_GET_WORKFLOW
+  - key: GETRESPONSE_LIST_AB_TESTS
+  - key: GETRESPONSE_LIST_ACCOUNT_LOGINS
+  - key: GETRESPONSE_LIST_ADDRESSES
+  - key: GETRESPONSE_LIST_AUTORESPONDERS
+  - key: GETRESPONSE_LIST_AUTORESPONDER_STATISTICS
+  - key: GETRESPONSE_LIST_CAMPAIGNS
+  - key: GETRESPONSE_LIST_CAMPAIGN_CONTACTS
+  - key: GETRESPONSE_LIST_CARTS
+  - key: GETRESPONSE_LIST_CATEGORIES
+  - key: GETRESPONSE_LIST_CLICK_TRACKS
+  - key: GETRESPONSE_LIST_CONTACTS
+  - key: GETRESPONSE_LIST_CONTACT_ACTIVITIES
+  - key: GETRESPONSE_LIST_CONTACT_CONSENTS
+  - key: GETRESPONSE_LIST_CUSTOM_EVENTS
+  - key: GETRESPONSE_LIST_CUSTOM_FIELDS
+  - key: GETRESPONSE_LIST_CUSTOM_REPORTS
+  - key: GETRESPONSE_LIST_FACEBOOK_PIXELS
+  - key: GETRESPONSE_LIST_FILES
+  - key: GETRESPONSE_LIST_FOLDERS
+  - key: GETRESPONSE_LIST_FORMS
+  - key: GETRESPONSE_LIST_FORMS_AND_POPUPS
+  - key: GETRESPONSE_LIST_FORM_VARIANTS
+  - key: GETRESPONSE_LIST_FROM_ADDRESSES
+  - key: GETRESPONSE_LIST_GDPR_FIELDS
+  - key: GETRESPONSE_LIST_IMAGES
+  - key: GETRESPONSE_LIST_IMPORTS
+  - key: GETRESPONSE_LIST_INDUSTRIES
+  - key: GETRESPONSE_LIST_LANDING_PAGES
+  - key: GETRESPONSE_LIST_LEGACY_FORMS
+  - key: GETRESPONSE_LIST_LEGACY_LANDING_PAGES
+  - key: GETRESPONSE_LIST_META_FIELDS
+  - key: GETRESPONSE_LIST_NEWSLETTERS
+  - key: GETRESPONSE_LIST_NEWSLETTER_STATISTICS
+  - key: GETRESPONSE_LIST_ORDERS
+  - key: GETRESPONSE_LIST_PREDEFINED_FIELDS
+  - key: GETRESPONSE_LIST_PRODUCTS
+  - key: GETRESPONSE_LIST_PRODUCT_VARIANTS
+  - key: GETRESPONSE_LIST_RSS_NEWSLETTERS
+  - key: GETRESPONSE_LIST_RSS_NEWSLETTER_STATISTICS
+  - key: GETRESPONSE_LIST_SAVED_CONTACT_SEARCHES
+  - key: GETRESPONSE_LIST_SAVED_SEARCH_CONTACTS
+  - key: GETRESPONSE_LIST_SHOPS
+  - key: GETRESPONSE_LIST_SMS_AUTOMATION_MESSAGES
+  - key: GETRESPONSE_LIST_SMS_MESSAGES
+  - key: GETRESPONSE_LIST_SMS_SENDER_NAMES
+  - key: GETRESPONSE_LIST_SUBJECT_AB_TESTS
+  - key: GETRESPONSE_LIST_SUBSCRIPTION_CONFIRMATION_TEMPLATES
+  - key: GETRESPONSE_LIST_SUPPRESSIONS
+  - key: GETRESPONSE_LIST_TAGS
+  - key: GETRESPONSE_LIST_TAXES
+  - key: GETRESPONSE_LIST_TIMEZONES
+  - key: GETRESPONSE_LIST_TRANSACTIONAL_EMAILS
+  - key: GETRESPONSE_LIST_TRANSACTIONAL_EMAIL_TEMPLATES
+  - key: GETRESPONSE_LIST_WEBINARS
+  - key: GETRESPONSE_LIST_WEBSITES
+  - key: GETRESPONSE_LIST_WORKFLOWS
+  - key: GETRESPONSE_SEARCH_CONTACTS
+  - key: GETRESPONSE_SELECT_SUBJECT_AB_TEST_WINNER
+  - key: GETRESPONSE_SEND_NEWSLETTER_DRAFT
+  - key: GETRESPONSE_SEND_SMS
+  - key: GETRESPONSE_SEND_TRANSACTIONAL_EMAIL
+  - key: GETRESPONSE_SET_DEFAULT_FROM_ADDRESS
+  - key: GETRESPONSE_TRIGGER_CUSTOM_EVENT
+  - key: GETRESPONSE_UPDATE_ACCOUNT
+  - key: GETRESPONSE_UPDATE_ACCOUNT_BADGE
+  - key: GETRESPONSE_UPDATE_ACCOUNT_BLOCKLIST
+  - key: GETRESPONSE_UPDATE_ADDRESS
+  - key: GETRESPONSE_UPDATE_AUTORESPONDER
+  - key: GETRESPONSE_UPDATE_CALLBACK_CONFIGURATION
+  - key: GETRESPONSE_UPDATE_CAMPAIGN
+  - key: GETRESPONSE_UPDATE_CAMPAIGN_BLOCKLIST
+  - key: GETRESPONSE_UPDATE_CART
+  - key: GETRESPONSE_UPDATE_CATEGORY
+  - key: GETRESPONSE_UPDATE_CONTACT
+  - key: GETRESPONSE_UPDATE_CUSTOM_EVENT
+  - key: GETRESPONSE_UPDATE_CUSTOM_FIELD
+  - key: GETRESPONSE_UPDATE_META_FIELD
+  - key: GETRESPONSE_UPDATE_ORDER
+  - key: GETRESPONSE_UPDATE_PREDEFINED_FIELD
+  - key: GETRESPONSE_UPDATE_PRODUCT
+  - key: GETRESPONSE_UPDATE_PRODUCT_VARIANT
+  - key: GETRESPONSE_UPDATE_RSS_NEWSLETTER
+  - key: GETRESPONSE_UPDATE_SAVED_CONTACT_SEARCH
+  - key: GETRESPONSE_UPDATE_SHOP
+  - key: GETRESPONSE_UPDATE_SUPPRESSION
+  - key: GETRESPONSE_UPDATE_TAX
+  - key: GETRESPONSE_UPDATE_TRANSACTIONAL_EMAIL_TEMPLATE
+  - key: GETRESPONSE_UPDATE_WORKFLOW
+  - key: GETRESPONSE_UPLOAD_IMAGE
+  - key: GETRESPONSE_UPSERT_CONTACT_CUSTOM_FIELDS
+  - key: GETRESPONSE_UPSERT_CONTACT_TAGS
+  - key: GETRESPONSE_UPSERT_META_FIELDS
+  - key: GETRESPONSE_UPSERT_PRODUCT_CATEGORIES
+  - key: GETRESPONSE_UPSERT_SAVED_SEARCH_CONTACT_CUSTOM_FIELDS
+edges:
+- partner_name: Keap
+  partner: keap
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/keap
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://keap.com/
+- partner_name: ClickFunnels Classic
+  partner: clickfunnels
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/clickfunnels-classic
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.clickfunnels.com/
+- partner_name: HubSpot
+  partner: hubspot
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/hubspot
+  direction: third-party
+  category: Marketing Automation
+  partner_url: http://www.hubspot.com/
+- partner_name: Follow Up Boss
+  partner: follow-up-boss
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/follow-up-boss
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: http://www.followupboss.com/
+- partner_name: Wix
+  partner: wix
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/wix
+  direction: third-party
+  category: Website Builders
+  partner_url: https://www.wix.com/
+- partner_name: Unbounce
+  partner: unbounce
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/unbounce
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://unbounce.com/
+- partner_name: Typeform
+  partner: typeform
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/typeform
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.typeform.com/signup?utm_medium=referral&utm_source=zapier&utm_campaign=zapier_integration&utm_content=marketplace
+- partner_name: Manychat
+  partner: manychat
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/manychat
+  direction: third-party
+  category: Social Media Marketing
+  partner_url: https://manychat.com/
+- partner_name: Mailchimp
+  partner: mailchimp
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/mailchimp
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://mailchimp.com/
+- partner_name: Facebook Lead Ads
+  partner: facebook-lead-ads
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/facebook-lead-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://www.facebook.com/business/ads/lead-ads
+- partner_name: systeme.io
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/systemeio
+  direction: third-party
+  category: Marketing
+  partner_url: https://systeme.io/
+- partner_name: Pipedrive
+  partner: pipedrive
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/pipedrive
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://pipedrive.com/
+- partner_name: WooCommerce
+  partner: woocommerce
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/woocommerce
+  direction: third-party
+  category: eCommerce
+  partner_url: https://woocommerce.com/products/woocommerce-zapier/?utm_source=zapier&utm_medium=website&utm_campaign=integration
+- partner_name: Gravity Forms
+  partner: gravity-forms
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/gravity-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.gravityforms.com/?utm_campaign=partners&utm_source=zapier-listing-learn-more&utm_medium=free-placement
+- partner_name: Zoom
+  partner: zoom
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/zoom
+  direction: third-party
+  category: Video Conferencing
+  partner_url: https://www.zoom.us/
+- partner_name: Google Forms
+  partner: google-forms
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://google.com/
+- partner_name: Teachable
+  partner: teachable
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/teachable
+  direction: third-party
+  category: Online Courses
+  partner_url: https://teachable.com/
+- partner_name: Kajabi
+  partner: kajabi
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/kajabi
+  direction: third-party
+  category: eCommerce
+  partner_url: http://kajabi.com/
+- partner_name: Squarespace Forms
+  partner: squarespace
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/squarespace-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.squarespace.com/
+- partner_name: Google Forms (Legacy)
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-forms-legacy
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://google.com/
+- partner_name: ActiveCampaign
+  partner: activecampaign
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/activecampaign
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.activecampaign.com/?utm_source=unpaid_syndication_website&utm_medium=referral&utm_campaign=zapier_listing
+- partner_name: Google Ads
+  partner: google-ads
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://ads.google.com/
+- partner_name: Google Sheets
+  partner: google-sheets
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-sheets
+  direction: third-party
+  category: Google
+  partner_url: http://sheets.google.com/
+- partner_name: Instapage
+  partner: instapage
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/instapage
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://instapage.com/
+- partner_name: Google Slides
+  partner: google-slides
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-slides
+  direction: third-party
+  category: Documents
+  partner_url: https://www.google.com/slides/about/
+- partner_name: Digistore24
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/digistore24
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.digistore24.com/
+- partner_name: Eventbrite
+  partner: eventbrite
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/eventbrite
+  direction: third-party
+  category: Event Management
+  partner_url: https://eventbrite.com/
+- partner_name: ablefy
+  partner: ablefy
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/ablefy
+  direction: third-party
+  category: eCommerce
+  partner_url: https://ablefy.io/?utm_source=zapier&utm_medium=coop&utm_campaign=about_page
+- partner_name: monday.com
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/monday
+  direction: third-party
+  category: Project Management
+  partner_url: https://monday.com/
+- partner_name: Calendly
+  partner: calendly
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/calendly
+  direction: third-party
+  category: Scheduling & Booking
+  partner_url: https://calendly.com/?utm_medium=partner&utm_source=zapier&utm_campaign=main_partner_page&utm_content=main_inbound_link
+templates:
+- title: Create GetResponse contacts from new Facebook Lead Ads leads
+  url: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/93184/create-getresponse-contacts-from-new-facebook-lead-ads-leads
+  apps:
+  - facebook-lead-ads
+  - getresponse
+- title: Create GetResponse contacts from new rows on Google Sheets
+  url: https://zapier.com/apps/getresponse/integrations/google-sheets/80825/create-getresponse-contacts-from-new-rows-on-google-sheets
+  apps:
+  - google-sheets
+  - getresponse
+- title: Add new Facebook Lead Ads leads to GetResponse as new contacts
+  url: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/10151/add-new-facebook-lead-ads-leads-to-getresponse-as-new-contacts
+  apps:
+  - facebook-lead-ads
+  - getresponse
+- title: Create contacts in GetResponse from new Webflow form submissions
+  url: https://zapier.com/apps/getresponse/integrations/webflow/406847/create-contacts-in-getresponse-from-new-webflow-form-submissions
+  apps:
+  - webflow
+  - getresponse
+- title: Add new GetResponse contacts to Google Ads customer list with email
+  url: https://zapier.com/apps/getresponse/integrations/google-ads/1386959/add-new-getresponse-contacts-to-google-ads-customer-list-with-email
+  apps:
+  - getresponse
+  - google-ads
+- title: Save Unbounce Leads to GetResponse
+  url: https://zapier.com/apps/getresponse/integrations/unbounce/53/save-unbounce-leads-to-getresponse
+  apps:
+  - unbounce
+  - getresponse
+- title: Create GetResponse contacts from new Google Sheets rows
+  url: https://zapier.com/apps/getresponse/integrations/google-sheets/6806/create-getresponse-contacts-from-new-google-sheets-rows
+  apps:
+  - google-sheets
+  - getresponse
+- title: Create Google Sheet rows for new contacts in GetResponse
+  url: https://zapier.com/apps/getresponse/integrations/google-sheets/186497/create-google-sheet-rows-for-new-contacts-in-getresponse
+  apps:
+  - getresponse
+  - google-sheets
+- title: Create GetResponse contacts from new responses from Google Forms
+  url: https://zapier.com/apps/getresponse/integrations/google-forms/36222/create-getresponse-contacts-from-new-responses-from-google-forms
+  apps:
+  - google-forms
+  - getresponse
+- title: Create GetResponse contacts from new WooCommerce orders
+  url: https://zapier.com/apps/getresponse/integrations/woocommerce/6817/create-getresponse-contacts-from-new-woocommerce-orders
+  apps:
+  - woocommerce
+  - getresponse
+- title: Add contacts from new Calendly events to GetResponse
+  url: https://zapier.com/apps/calendly/integrations/getresponse/11527/add-contacts-from-new-calendly-events-to-getresponse
+  apps:
+  - calendly
+  - getresponse
+- title: Create new GetResponse contacts via Webhooks
+  url: https://zapier.com/apps/getresponse/integrations/webhook/3819/create-new-getresponse-contacts-via-webhooks
+  apps:
+  - webhook
+  - getresponse
+template_total: 1585
