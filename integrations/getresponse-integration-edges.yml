@@ -10,6 +10,7 @@ checked:
 - https://n8n.io/integrations/getresponse/
 - https://zapier.com/apps/getresponse/integrations
 - shopify/integrations/shopify-integration-edges.yml
+- wordpress/integrations/wordpress-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -1136,6 +1137,23 @@ edges:
   listing_count: 1
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/getresponse-official/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - GetResponse Official
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
 templates:
 - title: Create GetResponse contacts from new Facebook Lead Ads leads
   url: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/93184/create-getresponse-contacts-from-new-facebook-lead-ads-leads
