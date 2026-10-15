@@ -406,7 +406,6 @@
   arazzo: null
 - slug: getresponse-monday-com
   label: monday.com
-  partner: monday-com
   partner_name: monday.com
   category: Project Management
   type: marketplace
@@ -414,5 +413,17 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/getresponse/integrations/monday
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
+  arazzo: null
+- slug: getresponse-shopify-own
+  label: Shopify (own)
+  partner: shopify
+  partner_name: Shopify (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://apps.shopify.com/getresponse-official
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
   arazzo: null
