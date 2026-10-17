@@ -342,6 +342,53 @@ paths:
         - all
 components:
   schemas:
+    Form:
+      properties:
+        formId:
+          type: string
+          readOnly: true
+          example: pL4e
+        webformId:
+          description: Same as `formId`
+          type: string
+          readOnly: true
+          example: pL4e
+        name:
+          type: string
+          example: My first form
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/forms/pL4e
+        hasVariants:
+          description: Indicates if the form has variants (A/B tests)
+          type: boolean
+          readOnly: true
+          example: true
+        scriptUrl:
+          description: The URL to a JavaScript file of the form. This is used to embed the form within a web page.
+          type: string
+          format: uri
+          readOnly: true
+          example: https://app.getresponse.com/view_webform_v2.js?u=nTfa&webforms_id=123
+        status:
+          type: string
+          enum:
+          - published
+          - unpublished
+          - draft
+          example: published
+        createdOn:
+          type: string
+          format: date-time
+          example: 2018-07-02T11:22:33+0000
+        statistics:
+          $ref: '#/components/schemas/FormStatistics'
+        campaign:
+          $ref: '#/components/schemas/CampaignReference'
+      type: object
     DateOrDateTime:
       oneOf:
       - type: string
@@ -350,6 +397,111 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
+    FormVariant:
+      properties:
+        variant:
+          description: The index of variants
+          type: string
+          readOnly: true
+          example: '0'
+        variantName:
+          type: string
+          example: Variant A
+        winner:
+          description: Is this variant the winner in the A/B test
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        status:
+          type: string
+          enum:
+          - published
+          - unpublished
+          - disabled
+        createdOn:
+          type: string
+          format: date-time
+          example: 2018-07-11T13:37:25+0000
+        statistics:
+          $ref: '#/components/schemas/FormStatistics'
+      type: object
+    CampaignReference:
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          description: Campaign ID
+          type: string
+          example: C
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/campaigns/C
+        name:
+          description: The campaign name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          example: Promo campaign
+      type: object
+    FormVariantDetails:
+      properties:
+        formId:
+          type: string
+          readOnly: true
+          example: pL4e
+        webformId:
+          description: Same as `formId`
+          type: string
+          readOnly: true
+          example: pL4e
+        variant:
+          description: The index of variants
+          type: string
+          readOnly: true
+          example: '0'
+        variantName:
+          type: string
+          example: Variant A
+        winner:
+          description: Is this variant the winner in the A/B test
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+        status:
+          type: string
+          enum:
+          - published
+          - unpublished
+          - disabled
+        createdOn:
+          type: string
+          format: date-time
+          example: 2018-07-09T15:45:12+0000
+        numberOfVisitors:
+          description: The total number of form visitors
+          type: integer
+          format: int64
+          example: 152
+        numberOfUniqueVisitors:
+          description: The number of unique form visitors
+          type: integer
+          format: int64
+          example: 136
+        numberOfSubscribers:
+          description: The number of visitors who subscribed through this form
+          type: integer
+          format: int64
+          example: 94
+        subscriptionRate:
+          description: The ratio of `numberOfSubscribers` to `numberOfVisitors`
+          type: number
+          format: double
+          example: 0.62
+      type: object
     StringBooleanEnum:
       type: string
       enum:
@@ -374,27 +526,55 @@ components:
             type: string
             example: red
       type: object
-    CampaignReference:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    FormDetails:
+      type: object
+      allOf:
+      - properties:
+          settings:
+            $ref: '#/components/schemas/FormSettings'
+          variants:
+            type: array
+            items:
+              $ref: '#/components/schemas/FormVariant'
+        type: object
+      - $ref: '#/components/schemas/Form'
+    ErrorResponse:
       required:
-      - campaignId
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
       properties:
-        campaignId:
-          description: Campaign ID
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
           type: string
-          example: C
-        href:
-          description: Direct hyperlink to a resource
+        message:
+          description: Error message
           type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/campaigns/C
-        name:
-          description: The campaign name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          example: Promo campaign
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
       type: object
     FormSettings:
       properties:
@@ -470,106 +650,6 @@ components:
           - 'null'
           example: '123'
       type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    FormDetails:
-      type: object
-      allOf:
-      - properties:
-          settings:
-            $ref: '#/components/schemas/FormSettings'
-          variants:
-            type: array
-            items:
-              $ref: '#/components/schemas/FormVariant'
-        type: object
-      - $ref: '#/components/schemas/Form'
-    FormVariant:
-      properties:
-        variant:
-          description: The index of variants
-          type: string
-          readOnly: true
-          example: '0'
-        variantName:
-          type: string
-          example: Variant A
-        winner:
-          description: Is this variant the winner in the A/B test
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-        status:
-          type: string
-          enum:
-          - published
-          - unpublished
-          - disabled
-        createdOn:
-          type: string
-          format: date-time
-          example: 2018-07-11T13:37:25+0000
-        statistics:
-          $ref: '#/components/schemas/FormStatistics'
-      type: object
-    FormVariantDetails:
-      properties:
-        formId:
-          type: string
-          readOnly: true
-          example: pL4e
-        webformId:
-          description: Same as `formId`
-          type: string
-          readOnly: true
-          example: pL4e
-        variant:
-          description: The index of variants
-          type: string
-          readOnly: true
-          example: '0'
-        variantName:
-          type: string
-          example: Variant A
-        winner:
-          description: Is this variant the winner in the A/B test
-          type: string
-          enum:
-          - 'yes'
-          - 'no'
-        status:
-          type: string
-          enum:
-          - published
-          - unpublished
-          - disabled
-        createdOn:
-          type: string
-          format: date-time
-          example: 2018-07-09T15:45:12+0000
-        numberOfVisitors:
-          description: The total number of form visitors
-          type: integer
-          format: int64
-          example: 152
-        numberOfUniqueVisitors:
-          description: The number of unique form visitors
-          type: integer
-          format: int64
-          example: 136
-        numberOfSubscribers:
-          description: The number of visitors who subscribed through this form
-          type: integer
-          format: int64
-          example: 94
-        subscriptionRate:
-          description: The ratio of `numberOfSubscribers` to `numberOfVisitors`
-          type: number
-          format: double
-          example: 0.62
-      type: object
     FormStatistics:
       properties:
         visitors:
@@ -593,89 +673,61 @@ components:
           format: double
           example: 0.59
       type: object
-    Form:
-      properties:
-        formId:
-          type: string
-          readOnly: true
-          example: pL4e
-        webformId:
-          description: Same as `formId`
-          type: string
-          readOnly: true
-          example: pL4e
-        name:
-          type: string
-          example: My first form
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/forms/pL4e
-        hasVariants:
-          description: Indicates if the form has variants (A/B tests)
-          type: boolean
-          readOnly: true
-          example: true
-        scriptUrl:
-          description: The URL to a JavaScript file of the form. This is used to embed the form within a web page.
-          type: string
-          format: uri
-          readOnly: true
-          example: https://app.getresponse.com/view_webform_v2.js?u=nTfa&webforms_id=123
-        status:
-          type: string
-          enum:
-          - published
-          - unpublished
-          - draft
-          example: published
-        createdOn:
-          type: string
-          format: date-time
-          example: 2018-07-02T11:22:33+0000
-        statistics:
-          $ref: '#/components/schemas/FormStatistics'
-        campaign:
-          $ref: '#/components/schemas/CampaignReference'
-      type: object
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    formId:
+      name: formId
+      in: path
+      description: The form ID
+      required: true
+      schema:
+        type: string
+      example: pL4e
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
@@ -688,24 +740,9 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   responses:
-    FormDetails:
-      description: The form details.
+    FormVariantList:
+      description: The list of form variants.
       headers:
         X-RateLimit-Limit:
           $ref: '#/components/headers/RateLimitLimit'
@@ -716,7 +753,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/FormDetails'
+            type: array
+            items:
+              $ref: '#/components/schemas/FormVariantDetails'
     FormList:
       description: The list of forms.
       headers:
@@ -738,8 +777,8 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Form'
-    FormVariantList:
-      description: The list of form variants.
+    FormDetails:
+      description: The form details.
       headers:
         X-RateLimit-Limit:
           $ref: '#/components/headers/RateLimitLimit'
@@ -750,46 +789,7 @@ components:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/FormVariantDetails'
-  parameters:
-    formId:
-      name: formId
-      in: path
-      description: The form ID
-      required: true
-      schema:
-        type: string
-      example: pL4e
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
+            $ref: '#/components/schemas/FormDetails'
   securitySchemes:
     api-key:
       type: apiKey

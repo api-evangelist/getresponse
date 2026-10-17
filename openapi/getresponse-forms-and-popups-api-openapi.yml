@@ -263,46 +263,9 @@ paths:
       - oauth2:
         - all
 components:
-  parameters:
-    popupId:
-      name: popupId
-      in: path
-      description: The form or popup ID
-      required: true
-      schema:
-        type: string
-      example: ce84fabc-1349-4992-a2d7-0c44c5534128
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
   headers:
-    TotalPages:
-      description: The total number of pages
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
@@ -315,13 +278,8 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
+    TotalPages:
+      description: The total number of pages
       schema:
         type: integer
         format: int32
@@ -330,29 +288,62 @@ components:
       schema:
         type: integer
         format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
   schemas:
-    PopupListItemStatistics:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    PopupListItem:
       properties:
-        views:
-          description: The total number of times your popup was viewed by website visitors
-          type: integer
-          format: int64
-          example: 9
-        uniqueVisitors:
-          description: The total number of visitors
-          type: integer
-          format: int64
-          example: 10
-        leads:
-          description: The number of leads
-          type: integer
-          format: int64
-          example: 5
-        ctr:
-          description: The number of clicks divided by the number of views, shown as a percentage
-          type: integer
-          format: int64
-          example: 52
+        popupId:
+          description: The form or popup ID
+          type: string
+          readOnly: true
+          example: ce84fabc-1349-4992-a2d7-0c44c5534128
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/popups/6b0d7d59-71d9-4708-80a6-aa0f13805111
+        name:
+          description: The form or popup name
+          type: string
+          example: My popup name
+        status:
+          description: The form or popup status
+          type: string
+          enum:
+          - published
+          - unpublished
+          readOnly: true
+        type:
+          description: The form or popup type
+          type: string
+          enum:
+          - popup
+          - inline
+          readOnly: true
+        createdAt:
+          description: The date (in GMT) the form or popup was created. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-01T10:35:00`.
+          type: string
+          format: date-time
+          example: '2024-01-10T10:00:00'
+        updatedAt:
+          description: The date (in GMT) the form or popup was updated. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-10T10:00:00`.
+          type: string
+          format: date-time
+          example: '2024-01-10T10:00:00'
+        statistics:
+          description: The landing page statistics
+          allOf:
+          - $ref: '#/components/schemas/PopupListItemStatistics'
       type: object
     PopupDetails:
       properties:
@@ -402,57 +393,6 @@ components:
           format: date-time
           example: '2024-01-10T10:00:00'
       type: object
-    PopupListItem:
-      properties:
-        popupId:
-          description: The form or popup ID
-          type: string
-          readOnly: true
-          example: ce84fabc-1349-4992-a2d7-0c44c5534128
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/popups/6b0d7d59-71d9-4708-80a6-aa0f13805111
-        name:
-          description: The form or popup name
-          type: string
-          example: My popup name
-        status:
-          description: The form or popup status
-          type: string
-          enum:
-          - published
-          - unpublished
-          readOnly: true
-        type:
-          description: The form or popup type
-          type: string
-          enum:
-          - popup
-          - inline
-          readOnly: true
-        createdAt:
-          description: The date (in GMT) the form or popup was created. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-01T10:35:00`.
-          type: string
-          format: date-time
-          example: '2024-01-10T10:00:00'
-        updatedAt:
-          description: The date (in GMT) the form or popup was updated. Shown in format `ISO 8601` without timezone offset e.g. `2024-01-10T10:00:00`.
-          type: string
-          format: date-time
-          example: '2024-01-10T10:00:00'
-        statistics:
-          description: The landing page statistics
-          allOf:
-          - $ref: '#/components/schemas/PopupListItemStatistics'
-      type: object
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     ErrorResponse:
       required:
       - httpStatus
@@ -486,6 +426,66 @@ components:
           description: UUID of the error response
           type: string
       type: object
+    PopupListItemStatistics:
+      properties:
+        views:
+          description: The total number of times your popup was viewed by website visitors
+          type: integer
+          format: int64
+          example: 9
+        uniqueVisitors:
+          description: The total number of visitors
+          type: integer
+          format: int64
+          example: 10
+        leads:
+          description: The number of leads
+          type: integer
+          format: int64
+          example: 5
+        ctr:
+          description: The number of clicks divided by the number of views, shown as a percentage
+          type: integer
+          format: int64
+          example: 52
+      type: object
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    popupId:
+      name: popupId
+      in: path
+      description: The form or popup ID
+      required: true
+      schema:
+        type: string
+      example: ce84fabc-1349-4992-a2d7-0c44c5534128
   responses:
     PopupsList:
       description: The list of forms and popups

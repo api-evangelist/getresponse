@@ -548,6 +548,10 @@ components:
       allOf:
       - $ref: '#/components/schemas/BaseProductVariant'
       - $ref: '#/components/schemas/CreateAndUpdate'
+    UpdateProductVariant:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProductVariant'
     BaseMetaField:
       properties:
         href:
@@ -587,10 +591,70 @@ components:
           minLength: 0
           example: Description of this meta field
       type: object
-    UpdateProductVariant:
+    NewMetaField:
+      required:
+      - name
+      - value
+      - valueType
       type: object
       allOf:
-      - $ref: '#/components/schemas/ProductVariant'
+      - $ref: '#/components/schemas/BaseMetaField'
+    BaseTax:
+      properties:
+        taxId:
+          description: The tax ID
+          type: string
+          readOnly: true
+          example: Sk
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
+        name:
+          description: The tax name
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: VAT
+        rate:
+          description: The rate value
+          type: number
+          format: double
+          maximum: 99.9
+          minimum: 0
+          example: 23
+      type: object
+    NewTax:
+      required:
+      - name
+      - rate
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    NewProductVariant:
+      required:
+      - name
+      - price
+      - priceTax
+      - sku
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseProductVariant'
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
     BaseProductVariant:
       properties:
         variantId:
@@ -686,6 +750,11 @@ components:
           items:
             $ref: '#/components/schemas/NewTax'
       type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     NewProductVariantImage:
       required:
       - src
@@ -713,75 +782,6 @@ components:
           format: int32
           example: '1'
       type: object
-    NewProductVariant:
-      required:
-      - name
-      - price
-      - priceTax
-      - sku
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseProductVariant'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    BaseTax:
-      properties:
-        taxId:
-          description: The tax ID
-          type: string
-          readOnly: true
-          example: Sk
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/taxes/Sk
-        name:
-          description: The tax name
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: VAT
-        rate:
-          description: The rate value
-          type: number
-          format: double
-          maximum: 99.9
-          minimum: 0
-          example: 23
-      type: object
-    NewMetaField:
-      required:
-      - name
-      - value
-      - valueType
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
     ErrorResponse:
       required:
       - httpStatus
@@ -815,60 +815,7 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   parameters:
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
-    variantId:
-      name: variantId
-      in: path
-      description: The variant ID
-      required: true
-      schema:
-        type: string
-      example: VTB
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -879,6 +826,14 @@ components:
         format: int32
         default: 1
         minimum: 1
+    variantId:
+      name: variantId
+      in: path
+      description: The variant ID
+      required: true
+      schema:
+        type: string
+      example: VTB
     productId:
       name: productId
       in: path
@@ -898,20 +853,22 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   responses:
-    ProductVariantDetails:
-      description: The product variant details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProductVariant'
     ProductVariantList:
       description: The list of product variants
       headers:
@@ -933,17 +890,60 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ProductVariant'
-  requestBodies:
-    UpdateProductVariant:
+    ProductVariantDetails:
+      description: The product variant details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpdateProductVariant'
+            $ref: '#/components/schemas/ProductVariant'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  requestBodies:
     NewProductVariant:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewProductVariant'
+    UpdateProductVariant:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateProductVariant'
   securitySchemes:
     api-key:
       type: apiKey

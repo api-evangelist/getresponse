@@ -203,34 +203,12 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    GeneralPerformanceStats:
-      description: General performance statistics
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GeneralPerformanceStats'
-    RevenueStats:
-      description: Revenue statistics
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RevenueStatistics'
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -240,45 +218,7 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   schemas:
-    RevenueStatistics:
-      properties:
-        currency:
-          description: Statistics currency
-          type: string
-          example: USD
-        timeSeries:
-          type: array
-          items:
-            properties:
-              timeInterval:
-                description: Orders and revenue are grouped by time intervals. Interval length is set automatically and depends on the `orderDate` parameter.
-                type: string
-                pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
-                example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
-              revenue:
-                description: Revenue
-                type: number
-                example: 2.45
-              orders:
-                description: Number of orders
-                type: integer
-                example: 5
-            type: object
-      type: object
     GeneralPerformanceStats:
       properties:
         currency:
@@ -322,6 +262,31 @@ components:
                 example: 1.23
             type: object
       type: object
+    RevenueStatistics:
+      properties:
+        currency:
+          description: Statistics currency
+          type: string
+          example: USD
+        timeSeries:
+          type: array
+          items:
+            properties:
+              timeInterval:
+                description: Orders and revenue are grouped by time intervals. Interval length is set automatically and depends on the `orderDate` parameter.
+                type: string
+                pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
+                example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
+              revenue:
+                description: Revenue
+                type: number
+                example: 2.45
+              orders:
+                description: Number of orders
+                type: integer
+                example: 5
+            type: object
+      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -355,6 +320,41 @@ components:
           description: UUID of the error response
           type: string
       type: object
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  responses:
+    RevenueStats:
+      description: Revenue statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RevenueStatistics'
+    GeneralPerformanceStats:
+      description: General performance statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GeneralPerformanceStats'
   securitySchemes:
     api-key:
       type: apiKey

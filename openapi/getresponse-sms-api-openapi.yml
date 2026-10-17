@@ -115,6 +115,11 @@ paths:
         class: warning
 components:
   headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
       schema:
@@ -124,27 +129,6 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    smsId:
-      name: smsId
-      in: path
-      description: The SMS message ID
-      required: true
-      schema:
-        type: string
-      example: N
   schemas:
     SmsStats:
       required:
@@ -290,6 +274,22 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SmsStats'
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    smsId:
+      name: smsId
+      in: path
+      description: The SMS message ID
+      required: true
+      schema:
+        type: string
+      example: N
   securitySchemes:
     api-key:
       type: apiKey

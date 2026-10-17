@@ -480,60 +480,44 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CustomFieldResponse'
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    customFieldId:
+      name: customFieldId
+      in: path
+      description: 'Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`.'
+      required: true
+      schema:
+        type: string
+      example: pas
   schemas:
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    CustomFieldResponse:
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          readOnly: true
-          example: pas
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/custom-fields/pas
-        name:
-          description: The name of the custom field
-          type: string
-          example: office_phone_number
-        type:
-          example: phone
-          allOf:
-          - $ref: '#/components/schemas/CustomFieldTypeEnum'
-        valueType:
-          description: Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined
-          type: string
-          readOnly: true
-          example: radio
-        format:
-          example: text
-          allOf:
-          - $ref: '#/components/schemas/CustomFieldFormatEnum'
-        fieldType:
-          description: Returns the same as `format`
-          type: string
-          readOnly: true
-          example: text
-          deprecated: true
-        hidden:
-          description: Whether the custom field is visible to contacts
-          example: 'false'
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-        values:
-          description: The list of assigned default values, starting from zero depending on the custom field format. (Please see description).
-          type: array
-          items:
-            type: string
-            example: '+48600100200'
-      type: object
     CustomField:
       properties:
         customFieldId:
@@ -597,6 +581,76 @@ components:
             type: string
             example: '+48600100200'
       type: object
+    UpdateCustomField:
+      required:
+      - hidden
+      - values
+      properties:
+        hidden:
+          description: Whether the custom field is visible to contacts
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        values:
+          description: The list of assigned values (zero or more - depending on the custom field type. Please see description)
+          type: array
+          items:
+            type: string
+            example: '+48600100200'
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    CustomFieldResponse:
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          readOnly: true
+          example: pas
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/custom-fields/pas
+        name:
+          description: The name of the custom field
+          type: string
+          example: office_phone_number
+        type:
+          example: phone
+          allOf:
+          - $ref: '#/components/schemas/CustomFieldTypeEnum'
+        valueType:
+          description: Type of returning value, it returns `type` options extended by a `string` option if the `format` was not defined
+          type: string
+          readOnly: true
+          example: radio
+        format:
+          example: text
+          allOf:
+          - $ref: '#/components/schemas/CustomFieldFormatEnum'
+        fieldType:
+          description: Returns the same as `format`
+          type: string
+          readOnly: true
+          example: text
+          deprecated: true
+        hidden:
+          description: Whether the custom field is visible to contacts
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+        values:
+          description: The list of assigned default values, starting from zero depending on the custom field format. (Please see description).
+          type: array
+          items:
+            type: string
+            example: '+48600100200'
+      type: object
     CustomFieldTypeEnum:
       type: string
       enum:
@@ -615,6 +669,15 @@ components:
       enum:
       - ASC
       - DESC
+    CustomFieldFormatEnum:
+      type: string
+      enum:
+      - text
+      - textarea
+      - radio
+      - checkbox
+      - single_select
+      - multi_select
     NewCustomField:
       required:
       - name
@@ -625,32 +688,6 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/CustomField'
-    UpdateCustomField:
-      required:
-      - hidden
-      - values
-      properties:
-        hidden:
-          description: Whether the custom field is visible to contacts
-          example: 'false'
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-        values:
-          description: The list of assigned values (zero or more - depending on the custom field type. Please see description)
-          type: array
-          items:
-            type: string
-            example: '+48600100200'
-      type: object
-    CustomFieldFormatEnum:
-      type: string
-      enum:
-      - text
-      - textarea
-      - radio
-      - checkbox
-      - single_select
-      - multi_select
     ErrorResponse:
       required:
       - httpStatus
@@ -685,8 +722,18 @@ components:
           type: string
       type: object
   headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
     RateLimitLimit:
       description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
       schema:
         type: integer
         format: int32
@@ -704,64 +751,17 @@ components:
       description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   requestBodies:
-    UpdateCustomField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCustomField'
     NewCustomField:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewCustomField'
-  parameters:
-    customFieldId:
-      name: customFieldId
-      in: path
-      description: 'Unique identifier of the custom field. You can retrieve this ID from the [list of custom fields](https://apireference.getresponse.com/#operation/getCustomFieldList) field: `customFieldId`.'
-      required: true
-      schema:
-        type: string
-      example: pas
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
+    UpdateCustomField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCustomField'
   securitySchemes:
     api-key:
       type: apiKey

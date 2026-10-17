@@ -411,11 +411,6 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
     TransactionalEmailRecipientDetails:
       type: object
       allOf:
@@ -427,39 +422,45 @@ components:
             items:
               $ref: '#/components/schemas/TransactionalEmailRecipientClickedLink'
       - $ref: '#/components/schemas/TransactionalEmailRecipient'
-    TransactionalEmailRecipientStatuses:
+    TransactionalEmailRecipientsDetails:
+      required:
+      - to
+      properties:
+        to:
+          $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
+        cc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
+        bcc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
       type: object
-      allOf:
-      - properties:
-          rejectedOn:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            readOnly: true
-            example: null
-          openedOn:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            readOnly: true
-            example: 2019-06-02T09:30:43+0200
-          bouncedOn:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            readOnly: true
-            example: null
-          complainedOn:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            readOnly: true
-            example: null
-      - $ref: '#/components/schemas/TransactionalEmailRecipientSentOnStatus'
+    TransactionalEmailRecipient:
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+          example: John Doe
+        status:
+          type: string
+          enum:
+          - unknown
+          - sent
+          - rejected
+          - opened
+          - bounced
+          - reported_spam
+          readOnly: true
+      type: object
     TransactionalEmailListElement:
       required:
       - transactionalEmailId
@@ -500,6 +501,36 @@ components:
           readOnly: true
           example: https://api3.getresponse360.com/v3/transactional-emails/tRe4i
       type: object
+    TransactionalEmail:
+      properties:
+        transactionalEmailId:
+          type: string
+          readOnly: true
+          example: tRe4i
+      type: object
+    TransactionalEmailStatistics:
+      properties:
+        timeFrame:
+          description: The statistics time frame in the ISO 8601 date format with duration interval
+          type: string
+          pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
+          example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
+        sent:
+          type: integer
+          format: int64
+        opened:
+          type: integer
+          format: int64
+        bounced:
+          type: integer
+          format: int64
+        complaint:
+          type: integer
+          format: int64
+        clicks:
+          type: integer
+          format: int64
+      type: object
     NewTransactionalEmailTag:
       required:
       - tagId
@@ -508,21 +539,11 @@ components:
           type: string
           example: vBd5
       type: object
-    FromFieldReference:
-      required:
-      - fromFieldId
-      properties:
-        fromFieldId:
-          description: The 'From' address ID
-          type: string
-          example: V
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/from-fields/V
-      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
     TransactionalEmailDetails:
       required:
       - transactionalEmailId
@@ -559,18 +580,21 @@ components:
             readOnly: true
             example: https://api3.getresponse360.com/v3/transactional-emails/tRe4i
       - $ref: '#/components/schemas/TransactionalEmail'
-    TransactionalEmailRecipientClickedLink:
+    TransactionalEmailRecipients:
+      description: A field containing the message recipients. You can enter up to 8 recipients.
+      required:
+      - to
       properties:
-        url:
-          type: string
-          format: uri
-          readOnly: true
-          example: https://example.com
-        clickedOn:
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2019-06-02T09:31:20+0200
+        to:
+          $ref: '#/components/schemas/TransactionalEmailRecipientTo'
+        cc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipient'
+        bcc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionalEmailRecipient'
       type: object
     CreateTransactionalEmail:
       required:
@@ -605,51 +629,20 @@ components:
         mapping:
           direct: '#/components/schemas/DirectContent'
           template: '#/components/schemas/TemplateContent'
-    TransactionalEmailRecipient:
+    FromFieldReference:
       required:
-      - email
+      - fromFieldId
       properties:
-        email:
+        fromFieldId:
+          description: The 'From' address ID
           type: string
-          format: email
-          example: john.doe@example.com
-        name:
+          example: V
+        href:
+          description: Direct hyperlink to a resource
           type: string
-          maxLength: 128
-          minLength: 1
-          example: John Doe
-        status:
-          type: string
-          enum:
-          - unknown
-          - sent
-          - rejected
-          - opened
-          - bounced
-          - reported_spam
+          format: uri
           readOnly: true
-      type: object
-    TransactionalEmail:
-      properties:
-        transactionalEmailId:
-          type: string
-          readOnly: true
-          example: tRe4i
-      type: object
-    TransactionalEmailRecipientsDetails:
-      required:
-      - to
-      properties:
-        to:
-          $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
-        cc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
-        bcc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipientDetails'
+          example: https://api.getresponse.com/v3/from-fields/V
       type: object
     TransactionalEmailRecipientTo:
       required:
@@ -663,63 +656,6 @@ components:
             format: date-time
             example: 2018-05-02T09:30:43+0200
       - $ref: '#/components/schemas/TransactionalEmailRecipient'
-    TransactionalEmailStatistics:
-      properties:
-        timeFrame:
-          description: The statistics time frame in the ISO 8601 date format with duration interval
-          type: string
-          pattern: /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?(\/)P(?=\w*\d)(?:\d+Y|Y)?(?:\d+M|M)?(?:\d+W|W)?(?:\d+D|D)?(?:T(?:\d+H|H)?(?:\d+M|M)?(?:\d+(?:\­.\d{1,2})?S|S)?)?$/
-          example: 2014-09-20T00:00:00+0000/P2M18DT10H0M0S
-        sent:
-          type: integer
-          format: int64
-        opened:
-          type: integer
-          format: int64
-        bounced:
-          type: integer
-          format: int64
-        complaint:
-          type: integer
-          format: int64
-        clicks:
-          type: integer
-          format: int64
-      type: object
-    TransactionalEmailRecipientSentOnStatus:
-      properties:
-        sentOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          readOnly: true
-          example: 2019-06-02T09:30:43+0200
-      type: object
-    TransactionalEmailTag:
-      required:
-      - tagId
-      properties:
-        tagId:
-          type: string
-          example: vBd5
-      type: object
-    TransactionalEmailRecipients:
-      description: A field containing the message recipients. You can enter up to 8 recipients.
-      required:
-      - to
-      properties:
-        to:
-          $ref: '#/components/schemas/TransactionalEmailRecipientTo'
-        cc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipient'
-        bcc:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionalEmailRecipient'
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -753,57 +689,71 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  requestBodies:
-    CreateTransactionalEmail:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateTransactionalEmail'
+    TransactionalEmailRecipientSentOnStatus:
+      properties:
+        sentOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          example: 2019-06-02T09:30:43+0200
+      type: object
+    TransactionalEmailRecipientStatuses:
+      type: object
+      allOf:
+      - properties:
+          rejectedOn:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            readOnly: true
+            example: null
+          openedOn:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            readOnly: true
+            example: 2019-06-02T09:30:43+0200
+          bouncedOn:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            readOnly: true
+            example: null
+          complainedOn:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            readOnly: true
+            example: null
+      - $ref: '#/components/schemas/TransactionalEmailRecipientSentOnStatus'
+    TransactionalEmailTag:
+      required:
+      - tagId
+      properties:
+        tagId:
+          type: string
+          example: vBd5
+      type: object
+    TransactionalEmailRecipientClickedLink:
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+          example: https://example.com
+        clickedOn:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2019-06-02T09:31:20+0200
+      type: object
   parameters:
-    transactionalEmailId:
-      name: transactionalEmailId
-      in: path
-      required: true
-      schema:
-        type: string
-      example: tRe4i
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -825,6 +775,20 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    transactionalEmailId:
+      name: transactionalEmailId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: tRe4i
   responses:
     TransactionalEmailStatistics:
       description: The overall statistics of transactional emails
@@ -841,19 +805,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/TransactionalEmailStatistics'
-    TransactionalEmailDetails:
-      description: Transactional email details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TransactionalEmailDetails'
     TransactionalEmail:
       description: Transactional email.
       headers:
@@ -888,6 +839,55 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/TransactionalEmailListElement'
+    TransactionalEmailDetails:
+      description: Transactional email details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionalEmailDetails'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  requestBodies:
+    CreateTransactionalEmail:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateTransactionalEmail'
   securitySchemes:
     api-key:
       type: apiKey

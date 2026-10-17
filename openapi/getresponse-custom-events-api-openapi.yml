@@ -545,32 +545,92 @@ paths:
         - all
       x-operation-class-name: TriggerCustomEvent
 components:
-  schemas:
-    TriggerCustomEventAttributeValue:
-      description: The value of the attribute. Value type depends on the attribute definition
-      oneOf:
-      - type: string
-        maxLength: 255
-        minLength: 1
-        example: lesson_3
-      - $ref: '#/components/schemas/StringBooleanEnum'
-      - type: boolean
-      - description: 'Date in extended ISO 8601 datetime format: *2019-01-01T08:00:00+00*'
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
         type: string
-        format: date-time
-        example: 2019-01-01T08:00:00+0000
-      - type: integer
-        format: int64
-        example: 1500
+    customEventId:
+      name: customEventId
+      in: path
+      description: The custom event ID
+      required: true
+      schema:
+        type: string
+      example: hp2
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  schemas:
     UpdateCustomEvent:
       type: object
       allOf:
       - $ref: '#/components/schemas/CustomEvent'
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
+    TriggerCustomEventAttribute:
+      required:
+      - name
+      - value
+      properties:
+        name:
+          description: The name of the attribute. It must be already defined for the custom event
+          type: string
+          maxLength: 64
+          minLength: 3
+          example: lesson_name
+        value:
+          $ref: '#/components/schemas/TriggerCustomEventAttributeValue'
+      type: object
     CustomEvent:
       required:
       - name
@@ -606,6 +666,10 @@ components:
           - boolean
           example: string
       type: object
+    NewCustomEvent:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CustomEvent'
     CustomEventAttributeDetails:
       required:
       - customEventAttributeId
@@ -617,51 +681,22 @@ components:
             readOnly: true
             example: gt7
       - $ref: '#/components/schemas/CustomEventAttribute'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    TriggerCustomEvent:
-      required:
-      - name
-      - contactId
-      properties:
-        name:
-          description: The name of custom event. Custom event with this name must already exist
-          type: string
-          maxLength: 64
-          minLength: 3
-          pattern: ^[a-z0-9_]{3,64}$
-          example: lesson_finished
-        contactId:
-          description: The contact ID
-          type: string
-          example: lTgH5
-        attributes:
-          description: The attributes for the trigger
-          type: array
-          items:
-            $ref: '#/components/schemas/TriggerCustomEventAttribute'
-      type: object
-    TriggerCustomEventAttribute:
-      required:
-      - name
-      - value
-      properties:
-        name:
-          description: The name of the attribute. It must be already defined for the custom event
-          type: string
-          maxLength: 64
-          minLength: 3
-          example: lesson_name
-        value:
-          $ref: '#/components/schemas/TriggerCustomEventAttributeValue'
-      type: object
-    NewCustomEvent:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/CustomEvent'
+    TriggerCustomEventAttributeValue:
+      description: The value of the attribute. Value type depends on the attribute definition
+      oneOf:
+      - type: string
+        maxLength: 255
+        minLength: 1
+        example: lesson_3
+      - $ref: '#/components/schemas/StringBooleanEnum'
+      - type: boolean
+      - description: 'Date in extended ISO 8601 datetime format: *2019-01-01T08:00:00+00*'
+        type: string
+        format: date-time
+        example: 2019-01-01T08:00:00+0000
+      - type: integer
+        format: int64
+        example: 1500
     CustomEventDetails:
       required:
       - customEventId
@@ -687,6 +722,38 @@ components:
             readOnly: true
             example: https://api.getresponse.com/v3/custom-events/vBd5
       - $ref: '#/components/schemas/CustomEvent'
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
+    TriggerCustomEvent:
+      required:
+      - name
+      - contactId
+      properties:
+        name:
+          description: The name of custom event. Custom event with this name must already exist
+          type: string
+          maxLength: 64
+          minLength: 3
+          pattern: ^[a-z0-9_]{3,64}$
+          example: lesson_finished
+        contactId:
+          description: The contact ID
+          type: string
+          example: lTgH5
+        attributes:
+          description: The attributes for the trigger
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerCustomEventAttribute'
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     ErrorResponse:
       required:
       - httpStatus
@@ -720,66 +787,7 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  requestBodies:
-    TriggerCustomEvent:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TriggerCustomEvent'
-    NewCustomEvent:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewCustomEvent'
-    UpdateCustomEvent:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCustomEvent'
   responses:
-    CustomEventDetails:
-      description: The custom event details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CustomEventDetails'
     CustomEventsList:
       description: The list of custom events
       headers:
@@ -801,43 +809,35 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/CustomEventDetails'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    customEventId:
-      name: customEventId
-      in: path
-      description: The custom event ID
-      required: true
-      schema:
-        type: string
-      example: hp2
+    CustomEventDetails:
+      description: The custom event details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomEventDetails'
+  requestBodies:
+    UpdateCustomEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCustomEvent'
+    NewCustomEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewCustomEvent'
+    TriggerCustomEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TriggerCustomEvent'
   securitySchemes:
     api-key:
       type: apiKey

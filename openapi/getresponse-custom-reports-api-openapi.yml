@@ -322,111 +322,7 @@ paths:
       - content: Add-on required
         class: warning
 components:
-  requestBodies:
-    CreateCustomReport:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseCreateCustomReport'
-  responses:
-    CustomReportList:
-      description: The list of custom reports
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/CustomReport'
-    CustomReportDetails:
-      description: The custom report details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CustomReportDetails'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   schemas:
-    CustomReportScheduling:
-      properties:
-        frequency:
-          description: The custom report frequency
-          example: one_time
-          allOf:
-          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
-      type: object
-      discriminator:
-        propertyName: frequency
-        mapping:
-          one_time: '#/components/schemas/OneTimeReportScheduling'
-          daily: '#/components/schemas/DailyReportScheduling'
-          weekly: '#/components/schemas/WeeklyReportScheduling'
-          monthly: '#/components/schemas/MonthlyReportScheduling'
-    CustomReportTypesEnum:
-      type: string
-      enum:
-      - subscription_rejections
-      - message_stats
-      - unsubscribe_contacts_lists_report
-      - standard_subscriber_activity_report
-      - bounces
-      - account_summary_report
-      - user_activity
-      - list_summary_report
-      - isp_message_stats_report
-      - webinar_participants_report
-      - import_error_report
-      - message_clicks_report
-      - unconfirmed_contacts_stats_report
-      - transactional_email_bounce_report
-      - message_activity_report
     BaseCreateCustomReport:
       required:
       - name
@@ -501,18 +397,74 @@ components:
           unconfirmed_contacts_stats_report: '#/components/schemas/CreateUnconfirmedContactsStatsReport'
           transactional_email_bounce_report: '#/components/schemas/CreateTransactionalEmailBounceReport'
           message_activity_report: '#/components/schemas/CreateMessageActivityReport'
-    SortOrderEnum:
+    CustomReport:
+      properties:
+        customReportId:
+          description: The custom report ID
+          type: string
+          readOnly: true
+          example: cRi
+        name:
+          description: The custom report name
+          type: string
+          readOnly: true
+          example: Example Report
+        href:
+          description: The direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/custom-reports/cRi
+        frequency:
+          description: The custom report frequency
+          readOnly: true
+          example: daily
+          allOf:
+          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2020-11-20T08:00:00+0000
+        generatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2020-11-20T08:00:00+0000
+      type: object
+    CustomReportScheduling:
+      properties:
+        frequency:
+          description: The custom report frequency
+          example: one_time
+          allOf:
+          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
+      type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          one_time: '#/components/schemas/OneTimeReportScheduling'
+          daily: '#/components/schemas/DailyReportScheduling'
+          weekly: '#/components/schemas/WeeklyReportScheduling'
+          monthly: '#/components/schemas/MonthlyReportScheduling'
+    CustomReportTypesEnum:
       type: string
       enum:
-      - ASC
-      - DESC
-    CustomReportFrequenciesEnum:
-      type: string
-      enum:
-      - monthly
-      - weekly
-      - daily
-      - one_time
+      - subscription_rejections
+      - message_stats
+      - unsubscribe_contacts_lists_report
+      - standard_subscriber_activity_report
+      - bounces
+      - account_summary_report
+      - user_activity
+      - list_summary_report
+      - isp_message_stats_report
+      - webinar_participants_report
+      - import_error_report
+      - message_clicks_report
+      - unconfirmed_contacts_stats_report
+      - transactional_email_bounce_report
+      - message_activity_report
     CustomReportFileStatusesEnum:
       type: string
       enum:
@@ -633,41 +585,18 @@ components:
           expiresAt: 2024-02-10T00:00:00+0000
         createdAt: 2024-01-02T15:00:00+0000
         generatedAt: 2024-01-02T17:00:00+0000
-    CustomReport:
-      properties:
-        customReportId:
-          description: The custom report ID
-          type: string
-          readOnly: true
-          example: cRi
-        name:
-          description: The custom report name
-          type: string
-          readOnly: true
-          example: Example Report
-        href:
-          description: The direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/custom-reports/cRi
-        frequency:
-          description: The custom report frequency
-          readOnly: true
-          example: daily
-          allOf:
-          - $ref: '#/components/schemas/CustomReportFrequenciesEnum'
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2020-11-20T08:00:00+0000
-        generatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2020-11-20T08:00:00+0000
-      type: object
+    CustomReportFrequenciesEnum:
+      type: string
+      enum:
+      - monthly
+      - weekly
+      - daily
+      - one_time
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     ErrorResponse:
       required:
       - httpStatus
@@ -701,14 +630,48 @@ components:
           description: UUID of the error response
           type: string
       type: object
+  responses:
+    CustomReportDetails:
+      description: The custom report details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomReportDetails'
+    CustomReportList:
+      description: The list of custom reports
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CustomReport'
+  requestBodies:
+    CreateCustomReport:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseCreateCustomReport'
   parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -730,6 +693,13 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
     customReportId:
       name: customReportId
       in: path
@@ -738,6 +708,36 @@ components:
       schema:
         type: string
       example: cRi
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   securitySchemes:
     api-key:
       type: apiKey

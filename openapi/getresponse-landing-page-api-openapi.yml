@@ -128,6 +128,21 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   schemas:
     DateOrDateTime:
       oneOf:
@@ -137,39 +152,6 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-    LpsStats:
-      required:
-      - lpsId
-      properties:
-        lpsId:
-          description: The landing page ID
-          type: string
-          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
-        name:
-          type: string
-          example: Some example landing page
-        pageViews:
-          description: The total number of times your landing page was viewed or refreshed
-          type: integer
-          format: int64
-          example: 9
-        visits:
-          description: The number of browsing sessions initiated on your landing page
-          type: integer
-          format: int64
-          example: 5
-        uniqueVisitors:
-          description: The number of people who visited your landing page
-          type: integer
-          format: int64
-          example: 5
-        thumbnailUrl:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://us-wbe-img2.gr-cdn.com/user/X/Y.webp
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -203,35 +185,39 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  responses:
     LpsStats:
-      description: Landing page statistics
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LpsStats'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
+      required:
+      - lpsId
+      properties:
+        lpsId:
+          description: The landing page ID
+          type: string
+          example: 6ee7597f-9bde-4b92-9411-2fb228c9fa34
+        name:
+          type: string
+          example: Some example landing page
+        pageViews:
+          description: The total number of times your landing page was viewed or refreshed
+          type: integer
+          format: int64
+          example: 9
+        visits:
+          description: The number of browsing sessions initiated on your landing page
+          type: integer
+          format: int64
+          example: 5
+        uniqueVisitors:
+          description: The number of people who visited your landing page
+          type: integer
+          format: int64
+          example: 5
+        thumbnailUrl:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://us-wbe-img2.gr-cdn.com/user/X/Y.webp
+      type: object
   parameters:
     Fields:
       name: fields
@@ -248,6 +234,20 @@ components:
       schema:
         type: string
       example: ce84fabc-1349-4992-a2d7-0c44c5534128
+  responses:
+    LpsStats:
+      description: Landing page statistics
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LpsStats'
   securitySchemes:
     api-key:
       type: apiKey

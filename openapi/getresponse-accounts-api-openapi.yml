@@ -1033,179 +1033,36 @@ paths:
       - oauth2:
         - all
 components:
-  responses:
-    AccountBlocklist:
-      description: Blocklist masks for the whole account.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Blocklist'
-    AccountBadgeDetails:
-      description: Account badge status
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccountBadgeDetails'
-    IndustryList:
-      description: Industry tags list
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/IndustryTag'
-    SendingLimitsList:
-      description: Send limits
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/SendingLimitsListItem'
-    Callback:
-      description: Callback configuration
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Callback'
-    AccountLoginHistoryList:
-      description: Login history information
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AccountsLoginHistoryListElement'
-    AccountBillingDetails:
-      description: Billing information.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccountBilling'
-    AccountTimezoneList:
-      description: List of time zones
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Timezone'
-    AccountDetails:
-      description: Your account information
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Account'
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   schemas:
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    TimezoneCountry:
-      properties:
-        country:
-          type: string
-          example: Poland
-      type: object
-    SendingLimitsListItem:
-      properties:
-        timeFrame:
-          description: Time frame, measured in seconds
-          type: integer
-          example: 2592000
-        limit:
-          description: The number of email sends available within a given time frame
-          type: integer
-          example: 2500
-        used:
-          description: The number of email sends used within the given time frame
-          type: integer
-          example: 0
-      type: object
-    Timezone:
-      required:
-      - timezoneId
-      allOf:
-      - $ref: '#/components/schemas/TimezoneId'
-      - $ref: '#/components/schemas/TimezoneName'
-      - $ref: '#/components/schemas/TimezoneOffset'
-      - $ref: '#/components/schemas/TimezoneCountry'
     AccountDetailsCountryCode:
       properties:
         countryCodeId:
@@ -1217,16 +1074,24 @@ components:
           type: string
           example: PL
       type: object
+    IndustryTag:
+      required:
+      - industryTagId
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IndustryTagId'
+      - $ref: '#/components/schemas/IndustryTagProperties'
     UpdateBlocklist:
       required:
       - masks
       type: object
       allOf:
       - $ref: '#/components/schemas/Blocklist'
-    UpdateAccount:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Account'
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
     AccountBilling:
       properties:
         listSize:
@@ -1320,24 +1185,55 @@ components:
                 - $ref: '#/components/schemas/StringBooleanEnum'
             type: object
       type: object
-    StatusEnum:
+    IndustryTagProperties:
+      properties:
+        name:
+          type: string
+          readOnly: true
+          example: Marketing agencies
+        description:
+          type: string
+          readOnly: true
+          example: Marketing agencies big and small, with fluent and wise agents...
+      type: object
+    TimezoneCountry:
+      properties:
+        country:
+          type: string
+          example: Poland
+      type: object
+    Callback:
+      properties:
+        url:
+          description: URL to use to post notifications
+          format: uri
+        actions:
+          $ref: '#/components/schemas/CallbackActions'
+      type: object
+    Blocklist:
+      properties:
+        masks:
+          type: array
+          items:
+            type: string
+            example: jack@somedomain.com
+      type: object
+    StringBooleanEnum:
       type: string
       enum:
-      - enabled
-      - disabled
-    IndustryTag:
-      required:
-      - industryTagId
+      - 'true'
+      - 'false'
+    UpdateAccount:
       type: object
       allOf:
-      - $ref: '#/components/schemas/IndustryTagId'
-      - $ref: '#/components/schemas/IndustryTagProperties'
-    TimezoneId:
+      - $ref: '#/components/schemas/Account'
+    IndustryTagId:
       properties:
-        timezoneId:
-          type: integer
-          format: int32
-          example: 1
+        industryTagId:
+          description: Industry tag ID
+          type: string
+          format: integer
+          example: '1'
       type: object
     AccountsLoginHistoryListElement:
       properties:
@@ -1364,15 +1260,45 @@ components:
           format: ipv4
           example: 192.0.0.1
       type: object
-    UpdateCallbacks:
+    TimezoneId:
       properties:
-        url:
-          description: URL to use to post notifications, required if callbacks are not yet enabled
-          type: string
-          format: uri
-          example: https://example.com/callback
-        actions:
-          $ref: '#/components/schemas/CallbackActions'
+        timezoneId:
+          type: integer
+          format: int32
+          example: 1
+      type: object
+    SendingLimitsListItem:
+      properties:
+        timeFrame:
+          description: Time frame, measured in seconds
+          type: integer
+          example: 2592000
+        limit:
+          description: The number of email sends available within a given time frame
+          type: integer
+          example: 2500
+        used:
+          description: The number of email sends used within the given time frame
+          type: integer
+          example: 0
+      type: object
+    CallbackActions:
+      properties:
+        open:
+          description: Is `open` callback enabled
+          type: boolean
+        click:
+          description: Is `click` callback enabled
+          type: boolean
+        subscribe:
+          description: Is `subscribe` callback enabled
+          type: boolean
+        unsubscribe:
+          description: Is `unsubscribe` callback enabled
+          type: boolean
+        survey:
+          description: Is `survey` callback enabled
+          type: boolean
       type: object
     Account:
       properties:
@@ -1469,81 +1395,24 @@ components:
           - 24h
           example: 24h
       type: object
-    IndustryTagProperties:
-      properties:
-        name:
-          type: string
-          readOnly: true
-          example: Marketing agencies
-        description:
-          type: string
-          readOnly: true
-          example: Marketing agencies big and small, with fluent and wise agents...
-      type: object
-    TimezoneName:
-      properties:
-        name:
-          description: Time zone name as defined by https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          type: string
-          example: Europe/Warsaw
-      type: object
-    CallbackActions:
-      properties:
-        open:
-          description: Is `open` callback enabled
-          type: boolean
-        click:
-          description: Is `click` callback enabled
-          type: boolean
-        subscribe:
-          description: Is `subscribe` callback enabled
-          type: boolean
-        unsubscribe:
-          description: Is `unsubscribe` callback enabled
-          type: boolean
-        survey:
-          description: Is `survey` callback enabled
-          type: boolean
-      type: object
-    TimezoneOffset:
-      properties:
-        offset:
-          type: string
-          pattern: /^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$/
-          example: +01:00
-      type: object
-    Blocklist:
-      properties:
-        masks:
-          type: array
-          items:
-            type: string
-            example: jack@somedomain.com
-      type: object
-    Callback:
+    UpdateCallbacks:
       properties:
         url:
-          description: URL to use to post notifications
+          description: URL to use to post notifications, required if callbacks are not yet enabled
+          type: string
           format: uri
+          example: https://example.com/callback
         actions:
           $ref: '#/components/schemas/CallbackActions'
       type: object
-    IndustryTagId:
-      properties:
-        industryTagId:
-          description: Industry tag ID
-          type: string
-          format: integer
-          example: '1'
-      type: object
-    AccountBadgeDetails:
-      properties:
-        status:
-          description: Current badge status
-          example: enabled
-          allOf:
-          - $ref: '#/components/schemas/StatusEnum'
-      type: object
+    Timezone:
+      required:
+      - timezoneId
+      allOf:
+      - $ref: '#/components/schemas/TimezoneId'
+      - $ref: '#/components/schemas/TimezoneName'
+      - $ref: '#/components/schemas/TimezoneOffset'
+      - $ref: '#/components/schemas/TimezoneCountry'
     ErrorResponse:
       required:
       - httpStatus
@@ -1577,47 +1446,29 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
+    TimezoneName:
+      properties:
+        name:
+          description: Time zone name as defined by https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          type: string
+          example: Europe/Warsaw
+      type: object
+    AccountBadgeDetails:
+      properties:
+        status:
+          description: Current badge status
+          example: enabled
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+      type: object
+    TimezoneOffset:
+      properties:
+        offset:
+          type: string
+          pattern: /^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$/
+          example: +01:00
+      type: object
   requestBodies:
-    UpdateAccount:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateAccount'
-    UpdateCallbacks:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateCallbacks'
     UpdateAccountBadge:
       content:
         application/json:
@@ -1636,40 +1487,189 @@ components:
                 - website_builder_elegant
                 - referral
             type: object
+    UpdateCallbacks:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCallbacks'
     UpdateAccountBlocklist:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UpdateBlocklist'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
+    UpdateAccount:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAccount'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
       schema:
         type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
+  responses:
+    IndustryList:
+      description: Industry tags list
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/IndustryTag'
+    SendingLimitsList:
+      description: Send limits
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SendingLimitsListItem'
+    Callback:
+      description: Callback configuration
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Callback'
+    AccountDetails:
+      description: Your account information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
+    AccountLoginHistoryList:
+      description: Login history information
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountsLoginHistoryListElement'
+    AccountBlocklist:
+      description: Blocklist masks for the whole account.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Blocklist'
+    AccountBillingDetails:
+      description: Billing information.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBilling'
+    AccountBadgeDetails:
+      description: Account badge status
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBadgeDetails'
+    AccountTimezoneList:
+      description: List of time zones
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Timezone'
   securitySchemes:
     api-key:
       type: apiKey

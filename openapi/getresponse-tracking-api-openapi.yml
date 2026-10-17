@@ -123,6 +123,32 @@ paths:
         - all
 components:
   schemas:
+    FacebookPixel:
+      properties:
+        name:
+          type: string
+          readOnly: true
+          example: integration-pixel
+        pixelId:
+          type: string
+          readOnly: true
+          example: '123'
+      type: object
+    Tracking:
+      properties:
+        grid:
+          type: string
+          readOnly: true
+          example: 2fEBK5kj4ReCxUvd
+        snippet:
+          type: string
+          readOnly: true
+          example: <script type="text/javascript" src="script_url_will_be_here" async></script>
+        snippetV2:
+          type: string
+          readOnly: true
+          example: <script type="text/javascript">function () {}</script>
+      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -156,32 +182,21 @@ components:
           description: UUID of the error response
           type: string
       type: object
-    Tracking:
-      properties:
-        grid:
-          type: string
-          readOnly: true
-          example: 2fEBK5kj4ReCxUvd
-        snippet:
-          type: string
-          readOnly: true
-          example: <script type="text/javascript" src="script_url_will_be_here" async></script>
-        snippetV2:
-          type: string
-          readOnly: true
-          example: <script type="text/javascript">function () {}</script>
-      type: object
-    FacebookPixel:
-      properties:
-        name:
-          type: string
-          readOnly: true
-          example: integration-pixel
-        pixelId:
-          type: string
-          readOnly: true
-          example: '123'
-      type: object
+  headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   responses:
     Tracking:
       description: The Tracking Snippets
@@ -213,21 +228,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/FacebookPixel'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
   securitySchemes:
     api-key:
       type: apiKey

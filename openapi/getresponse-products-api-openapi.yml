@@ -780,6 +780,98 @@ paths:
         - all
       x-type: upsert
 components:
+  requestBodies:
+    UpsertProductCategory:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertProductCategory'
+    UpdateProduct:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateProduct'
+    UpsertMetaField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpsertMetaField'
+    NewProduct:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewProduct'
+  responses:
+    ProductDetails:
+      description: The product details
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+    ProductList:
+      description: The list of products
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Product'
+    MetaFieldList:
+      description: The list of meta fields
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetaField'
+    SimpleProductCategoryList:
+      description: The list of product categories
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/BaseCategory'
   schemas:
     DateOrDateTime:
       oneOf:
@@ -789,6 +881,16 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
+    UpsertMetaField:
+      description: This method assigns metafields. It doesn't unassign or delete them.
+      required:
+      - metaFields
+      properties:
+        metaFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpsertSingleMetaField'
+      type: object
     BaseMetaField:
       properties:
         href:
@@ -828,186 +930,14 @@ components:
           minLength: 0
           example: Description of this meta field
       type: object
-    NewProduct:
+    NewMetaField:
       required:
       - name
-      - variants
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Product'
-    BaseProductVariant:
-      properties:
-        variantId:
-          description: The product ID
-          type: string
-          readOnly: true
-          example: VTB
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/products/9I/variants/VTB
-        name:
-          description: The product name
-          type: string
-          maxLength: 255
-          minLength: 1
-          example: Red Monster Cap
-        url:
-          description: The external URL to the product variant
-          type: string
-          format: uri
-          maxLength: 2048
-          example: https://somedomain.com/products-variants/986
-        sku:
-          description: The stock-keeping unit of a variant. Must be unique within the product
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: SKU-1254-56-457-5689
-        price:
-          description: The price
-          type: number
-          format: double
-          example: 20
-        priceTax:
-          description: The price including tax
-          type: number
-          format: double
-          example: 27.5
-        previousPrice:
-          description: The price before the change
-          type:
-          - number
-          - 'null'
-          format: double
-          example: 25
-        previousPriceTax:
-          description: The price before the change including tax
-          type:
-          - number
-          - 'null'
-          format: double
-          example: 33.6
-        quantity:
-          description: The quantity of variant items
-          type: integer
-          format: int64
-          default: 1
-        position:
-          description: The position of a variant
-          type: integer
-          format: int64
-          example: 1
-        barcode:
-          description: The barcode of a variant
-          type: string
-          maxLength: 255
-          minLength: 2
-          example: '12455687'
-        externalId:
-          description: The external ID is the identifying string or number of the variant given by another software
-          type: string
-          maxLength: 255
-          example: ext1456
-        description:
-          description: The description of a variant
-          type: string
-          maxLength: 1000
-          minLength: 2
-          example: Red Cap with GetResponse Monster print
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewProductVariantImage'
-        metaFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewMetaField'
-        taxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewTax'
-      type: object
-    UpsertMetaField:
-      description: This method assigns metafields. It doesn't unassign or delete them.
-      required:
-      - metaFields
-      properties:
-        metaFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpsertSingleMetaField'
-      type: object
-    UpsertSingleMetaField:
-      required:
-      - metaFieldId
-      properties:
-        metaFieldId:
-          description: MetaField ID
-          type: string
-          example: NoF
-      type: object
-    NewProductVariantImage:
-      required:
-      - src
-      - position
-      properties:
-        imageId:
-          description: The image ID
-          type: string
-          readOnly: true
-          example: hY
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/shops/pf3/images/hY
-        src:
-          description: The source URL of an image
-          type: string
-          format: uri
-          example: http://somedomain.com/images/src/img58db7ec64bab9.png
-        position:
-          description: The position of an image
-          type: integer
-          format: int32
-          example: '1'
-      type: object
-    NewProductVariant:
-      required:
-      - name
-      - price
-      - priceTax
-      - sku
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseProductVariant'
-    UpsertSingleProductCategory:
-      required:
-      - categoryId
-      properties:
-        categoryId:
-          description: The category ID
-          type: string
-          example: atQ
-        isDefault:
-          description: This is a default category
-          type: boolean
-          example: true
-      type: object
-    MetaField:
+      - value
+      - valueType
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseMetaField'
-      - $ref: '#/components/schemas/CreateAndUpdate'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     BaseTax:
       properties:
         taxId:
@@ -1035,48 +965,6 @@ components:
           minimum: 0
           example: 23
       type: object
-    NewMetaField:
-      required:
-      - name
-      - value
-      - valueType
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseMetaField'
-    CreateAndUpdate:
-      properties:
-        createdOn:
-          description: The creation date
-          type: string
-          format: date-time
-          readOnly: true
-        updatedOn:
-          description: The date of the last update
-          type: string
-          format: date-time
-          readOnly: true
-      type: object
-    UpsertProductCategory:
-      description: This method makes it possible to assign product categories, and to set a default product category. It doesn't remove or unassign product categories.
-      required:
-      - categories
-      properties:
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpsertSingleProductCategory'
-      type: object
-    UpdateProduct:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Product'
-    NewTax:
-      required:
-      - name
-      - rate
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseTax'
     Product:
       type: object
       allOf:
@@ -1175,12 +1063,207 @@ components:
           maxLength: 255
           example: ext3343
       type: object
+    NewTax:
+      required:
+      - name
+      - rate
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseTax'
+    UpsertSingleProductCategory:
+      required:
+      - categoryId
+      properties:
+        categoryId:
+          description: The category ID
+          type: string
+          example: atQ
+        isDefault:
+          description: This is a default category
+          type: boolean
+          example: true
+      type: object
     NewProductCategory:
       required:
       - name
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseCategory'
+    NewProductVariant:
+      required:
+      - name
+      - price
+      - priceTax
+      - sku
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseProductVariant'
+    MetaField:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseMetaField'
+      - $ref: '#/components/schemas/CreateAndUpdate'
+    NewProduct:
+      required:
+      - name
+      - variants
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Product'
+    UpsertProductCategory:
+      description: This method makes it possible to assign product categories, and to set a default product category. It doesn't remove or unassign product categories.
+      required:
+      - categories
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpsertSingleProductCategory'
+      type: object
+    CreateAndUpdate:
+      properties:
+        createdOn:
+          description: The creation date
+          type: string
+          format: date-time
+          readOnly: true
+        updatedOn:
+          description: The date of the last update
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    BaseProductVariant:
+      properties:
+        variantId:
+          description: The product ID
+          type: string
+          readOnly: true
+          example: VTB
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/products/9I/variants/VTB
+        name:
+          description: The product name
+          type: string
+          maxLength: 255
+          minLength: 1
+          example: Red Monster Cap
+        url:
+          description: The external URL to the product variant
+          type: string
+          format: uri
+          maxLength: 2048
+          example: https://somedomain.com/products-variants/986
+        sku:
+          description: The stock-keeping unit of a variant. Must be unique within the product
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: SKU-1254-56-457-5689
+        price:
+          description: The price
+          type: number
+          format: double
+          example: 20
+        priceTax:
+          description: The price including tax
+          type: number
+          format: double
+          example: 27.5
+        previousPrice:
+          description: The price before the change
+          type:
+          - number
+          - 'null'
+          format: double
+          example: 25
+        previousPriceTax:
+          description: The price before the change including tax
+          type:
+          - number
+          - 'null'
+          format: double
+          example: 33.6
+        quantity:
+          description: The quantity of variant items
+          type: integer
+          format: int64
+          default: 1
+        position:
+          description: The position of a variant
+          type: integer
+          format: int64
+          example: 1
+        barcode:
+          description: The barcode of a variant
+          type: string
+          maxLength: 255
+          minLength: 2
+          example: '12455687'
+        externalId:
+          description: The external ID is the identifying string or number of the variant given by another software
+          type: string
+          maxLength: 255
+          example: ext1456
+        description:
+          description: The description of a variant
+          type: string
+          maxLength: 1000
+          minLength: 2
+          example: Red Cap with GetResponse Monster print
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewProductVariantImage'
+        metaFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewMetaField'
+        taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewTax'
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    NewProductVariantImage:
+      required:
+      - src
+      - position
+      properties:
+        imageId:
+          description: The image ID
+          type: string
+          readOnly: true
+          example: hY
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/shops/pf3/images/hY
+        src:
+          description: The source URL of an image
+          type: string
+          format: uri
+          example: http://somedomain.com/images/src/img58db7ec64bab9.png
+        position:
+          description: The position of an image
+          type: integer
+          format: int32
+          example: '1'
+      type: object
+    UpdateProduct:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Product'
     ErrorResponse:
       required:
       - httpStatus
@@ -1214,73 +1297,16 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  requestBodies:
-    UpsertProductCategory:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpsertProductCategory'
-    NewProduct:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewProduct'
-    UpsertMetaField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpsertMetaField'
-    UpdateProduct:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateProduct'
+    UpsertSingleMetaField:
+      required:
+      - metaFieldId
+      properties:
+        metaFieldId:
+          description: MetaField ID
+          type: string
+          example: NoF
+      type: object
   parameters:
-    shopId:
-      name: shopId
-      in: path
-      description: The shop ID
-      required: true
-      schema:
-        type: string
-      example: pf3
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -1310,77 +1336,51 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-  responses:
-    SimpleProductCategoryList:
-      description: The list of product categories
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/BaseCategory'
-    MetaFieldList:
-      description: The list of meta fields
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MetaField'
-    ProductDetails:
-      description: The product details
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Product'
-    ProductList:
-      description: The list of products
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Product'
+    shopId:
+      name: shopId
+      in: path
+      description: The shop ID
+      required: true
+      schema:
+        type: string
+      example: pf3
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   securitySchemes:
     api-key:
       type: apiKey

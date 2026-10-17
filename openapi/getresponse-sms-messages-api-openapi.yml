@@ -450,94 +450,18 @@ paths:
         class: warning
 components:
   schemas:
-    SmsDetails:
-      type: object
-      allOf:
-      - properties:
-          sendSettings:
-            description: How the message will be delivered to the subscriber
-            type:
-            - object
-            - 'null'
-            allOf:
-            - properties:
-                contacts:
-                  description: The details of recipients who are in your contact list (recipientsType = \"contacts\"). If the recipient is not in your GetResponse contacts, the property is null.
-                  type:
-                  - object
-                  - 'null'
-                  allOf:
-                  - properties:
-                      selectedCampaigns:
-                        $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
-                      selectedSegments:
-                        $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
-                      excludedCampaigns:
-                        $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
-                      excludedSegments:
-                        $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
-                      selectedContacts:
-                        description: The list of contact IDs.
-                        type: array
-                        items:
-                          type: string
-                          example: V2
-                      phoneNumberCustomFieldId:
-                        description: Custom Field ID which was used to select contact's phone number. ID reffers to custom field resource [Custom field details](#operation/getCustomFieldById).
-                        type: string
-                        example: c2
-                    type: object
-                importedNumbers:
-                  description: The details of recipients whose numbers are imported (recipientsType = \"importedNumbers\"). If the recipient is in your GetResponse contacts, the property is null.
-                  type:
-                  - object
-                  - 'null'
-                  allOf:
-                  - properties:
-                      count:
-                        description: Number of phone numbers entered manually
-                        type: integer
-                        example: 10
-                    type: object
-              type: object
-          clickTracks:
-            description: Details of links attached to SMS message. Maximum 20 links will be returned.
-            type: array
-            items:
-              allOf:
-              - properties:
-                  clickTrackId:
-                    description: The click track ID
-                    type: string
-                    example: a2
-                  href:
-                    description: Direct hyperlink to a resource
-                    type: string
-                    example: https://api.getresponse.com/v3/click-tracks/a2
-                  url:
-                    description: The link URL
-                    type: string
-                    example: https://example.com
-                  label:
-                    description: The link label
-                    type: string
-                    example: example-link
-                  amount:
-                    description: Number of clicks on a link
-                    type: integer
-                    example: 2
-                  uniqueAmount:
-                    description: Number of unique clicks on link
-                    type: integer
-                    example: 1
-                type: object
-      - $ref: '#/components/schemas/SmsListItem'
-    MessageSendSettingExcludedCampaigns:
-      description: The list of campaign IDs to exclude subscribers.
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
       type: array
       items:
         type: string
-        example: eC
+        example: eSs
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
     CampaignReference:
       required:
       - campaignId
@@ -560,83 +484,12 @@ components:
           readOnly: true
           example: Promo campaign
       type: object
-    MessageSendSettingSelectedCampaigns:
-      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
+    MessageSendSettingExcludedCampaigns:
+      description: The list of campaign IDs to exclude subscribers.
       type: array
       items:
         type: string
-        example: C
-    SmsSenderNameStatusesEnum:
-      type: string
-      enum:
-      - pending
-      - active
-      - rejected
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    BaseSendSms:
-      required:
-      - name
-      - content
-      - recipientsType
-      properties:
-        name:
-          description: The SMS message name
-          type: string
-          maxLength: 100
-          minLength: 1
-          example: New message
-        content:
-          description: The SMS message content
-          type: string
-          minLength: 1
-          example: Sample SMS content
-        recipientsType:
-          description: The recipient type. To send a text message to contacts in your list, select `contacts`. To message contacts who are not in any of your lists, select `importedNumbers`
-          type: string
-          enum:
-          - contacts
-          - importedNumbers
-          example: contacts
-      type: object
-      discriminator:
-        propertyName: recipientsType
-        mapping:
-          contacts: '#/components/schemas/SendSmsToContacts'
-          importedNumbers: '#/components/schemas/SendSmsToImportedNumbers'
-    SmsSenderName:
-      properties:
-        senderNameId:
-          description: The sender name id
-          type: string
-          readOnly: true
-          example: sNi
-        name:
-          description: The sender name
-          type: string
-          readOnly: true
-          example: Example Sender
-        status:
-          description: Status of the sender name
-          readOnly: true
-          example: active
-          allOf:
-          - $ref: '#/components/schemas/SmsSenderNameStatusesEnum'
-        isDefault:
-          description: Is the sender name default
-          type: boolean
-          readOnly: true
-          example: true
-      type: object
-    MessageSendSettingExcludedSegments:
-      description: The list of segment IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eSs
+        example: eC
     SmsListItem:
       properties:
         smsId:
@@ -752,12 +605,153 @@ components:
                 example: 8
             type: object
       type: object
-    MessageSendSettingSelectedSegments:
-      description: The list of segment IDs to choose subscribers from.
+    BaseSendSms:
+      required:
+      - name
+      - content
+      - recipientsType
+      properties:
+        name:
+          description: The SMS message name
+          type: string
+          maxLength: 100
+          minLength: 1
+          example: New message
+        content:
+          description: The SMS message content
+          type: string
+          minLength: 1
+          example: Sample SMS content
+        recipientsType:
+          description: The recipient type. To send a text message to contacts in your list, select `contacts`. To message contacts who are not in any of your lists, select `importedNumbers`
+          type: string
+          enum:
+          - contacts
+          - importedNumbers
+          example: contacts
+      type: object
+      discriminator:
+        propertyName: recipientsType
+        mapping:
+          contacts: '#/components/schemas/SendSmsToContacts'
+          importedNumbers: '#/components/schemas/SendSmsToImportedNumbers'
+    SmsSenderName:
+      properties:
+        senderNameId:
+          description: The sender name id
+          type: string
+          readOnly: true
+          example: sNi
+        name:
+          description: The sender name
+          type: string
+          readOnly: true
+          example: Example Sender
+        status:
+          description: Status of the sender name
+          readOnly: true
+          example: active
+          allOf:
+          - $ref: '#/components/schemas/SmsSenderNameStatusesEnum'
+        isDefault:
+          description: Is the sender name default
+          type: boolean
+          readOnly: true
+          example: true
+      type: object
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
       type: array
       items:
         type: string
-        example: Se
+        example: C
+    SmsDetails:
+      type: object
+      allOf:
+      - properties:
+          sendSettings:
+            description: How the message will be delivered to the subscriber
+            type:
+            - object
+            - 'null'
+            allOf:
+            - properties:
+                contacts:
+                  description: The details of recipients who are in your contact list (recipientsType = \"contacts\"). If the recipient is not in your GetResponse contacts, the property is null.
+                  type:
+                  - object
+                  - 'null'
+                  allOf:
+                  - properties:
+                      selectedCampaigns:
+                        $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+                      selectedSegments:
+                        $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+                      excludedCampaigns:
+                        $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+                      excludedSegments:
+                        $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+                      selectedContacts:
+                        description: The list of contact IDs.
+                        type: array
+                        items:
+                          type: string
+                          example: V2
+                      phoneNumberCustomFieldId:
+                        description: Custom Field ID which was used to select contact's phone number. ID reffers to custom field resource [Custom field details](#operation/getCustomFieldById).
+                        type: string
+                        example: c2
+                    type: object
+                importedNumbers:
+                  description: The details of recipients whose numbers are imported (recipientsType = \"importedNumbers\"). If the recipient is in your GetResponse contacts, the property is null.
+                  type:
+                  - object
+                  - 'null'
+                  allOf:
+                  - properties:
+                      count:
+                        description: Number of phone numbers entered manually
+                        type: integer
+                        example: 10
+                    type: object
+              type: object
+          clickTracks:
+            description: Details of links attached to SMS message. Maximum 20 links will be returned.
+            type: array
+            items:
+              allOf:
+              - properties:
+                  clickTrackId:
+                    description: The click track ID
+                    type: string
+                    example: a2
+                  href:
+                    description: Direct hyperlink to a resource
+                    type: string
+                    example: https://api.getresponse.com/v3/click-tracks/a2
+                  url:
+                    description: The link URL
+                    type: string
+                    example: https://example.com
+                  label:
+                    description: The link label
+                    type: string
+                    example: example-link
+                  amount:
+                    description: Number of clicks on a link
+                    type: integer
+                    example: 2
+                  uniqueAmount:
+                    description: Number of unique clicks on link
+                    type: integer
+                    example: 1
+                type: object
+      - $ref: '#/components/schemas/SmsListItem'
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     ErrorResponse:
       required:
       - httpStatus
@@ -791,6 +785,49 @@ components:
           description: UUID of the error response
           type: string
       type: object
+    SmsSenderNameStatusesEnum:
+      type: string
+      enum:
+      - pending
+      - active
+      - rejected
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    smsId:
+      name: smsId
+      in: path
+      description: The SMS message ID
+      required: true
+      schema:
+        type: string
+      example: N
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   responses:
     SmsDetails:
       description: The SMS message details
@@ -840,27 +877,13 @@ components:
           schema:
             $ref: '#/components/schemas/SmsListItem'
   headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
     TotalPages:
       description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
       schema:
         type: integer
         format: int32
@@ -869,43 +892,20 @@ components:
       schema:
         type: integer
         format: int32
-  parameters:
-    smsId:
-      name: smsId
-      in: path
-      description: The SMS message ID
-      required: true
-      schema:
-        type: string
-      example: N
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
+    TotalCount:
+      description: The total number of resources found for the specified conditions
       schema:
         type: integer
         format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
       schema:
         type: integer
         format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   requestBodies:
     SendSms:
       content:

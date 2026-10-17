@@ -818,82 +818,62 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-    ConditionType:
+    SearchContactsConditionsDetails:
       required:
-      - conditionType
+      - sectionLogicOperator
+      - section
       properties:
-        conditionType:
+        sectionLogicOperator:
+          description: Match 'any' (`or` value) or 'all' (`and` value) of the following conditions
           type: string
           enum:
-          - name
-          - email
-          - custom
-          - subscription_date
-          - subscription_method
-          - opened
-          - not_opened
-          - phase
-          - last_send_date
-          - last_click_date
-          - last_open_date
-          - webinar
-          - clicked
-          - not_clicked
-          - sent
-          - not_sent
-          - geo
-          - gdpr
-          - score
-          - engagement_score
-          - tag
-          - goal
-          - crm
-          - ecommerce_number_of_purchases
-          - ecommerce_total_spent
-          - ecommerce_product_purchased
-          - ecommerce_brand_purchased
-          - ecommerce_abandoned_cart
-          - sms_sent
-          - sms_link_clicked
-          - sms_link_not_clicked
-          - custom_event
+          - or
+          - and
+          example: or
+        section:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchContactSection'
       type: object
-      discriminator:
-        propertyName: conditionType
-        mapping:
-          name: '#/components/schemas/NameCondition'
-          email: '#/components/schemas/EmailCondition'
-          custom: '#/components/schemas/CustomFieldCondition'
-          subscription_date: '#/components/schemas/SubscriptionDateCondition'
-          subscription_method: '#/components/schemas/SubscriptionMethodCondition'
-          opened: '#/components/schemas/OpenedCondition'
-          not_opened: '#/components/schemas/NotOpenedCondition'
-          phase: '#/components/schemas/AutoresponderDayCondition'
-          last_send_date: '#/components/schemas/LastSendDateCondition'
-          last_click_date: '#/components/schemas/LastClickDateCondition'
-          last_open_date: '#/components/schemas/LastOpenDateCondition'
-          webinar: '#/components/schemas/WebinarCondition'
-          clicked: '#/components/schemas/LinkClickedCondition'
-          not_clicked: '#/components/schemas/LinkNotClickedCondition'
-          sent: '#/components/schemas/MessageSentCondition'
-          not_sent: '#/components/schemas/MessageNotSentCondition'
-          geo: '#/components/schemas/GeolocationCondition'
-          gdpr: '#/components/schemas/GdprCondition'
-          score: '#/components/schemas/ScoringCondition'
-          engagement_score: '#/components/schemas/EngagementScoreCondition'
-          tag: '#/components/schemas/TagCondition'
-          goal: '#/components/schemas/GoalCondition'
-          crm: '#/components/schemas/CrmCondition'
-          ecommerce_number_of_purchases: '#/components/schemas/ECommerceNumberOfPurchasesCondition'
-          ecommerce_total_spent: '#/components/schemas/ECommerceTotalSpentCondition'
-          ecommerce_product_purchased: '#/components/schemas/ECommerceProductPurchasedCondition'
-          ecommerce_brand_purchased: '#/components/schemas/ECommerceBrandPurchasedCondition'
-          sms_sent: '#/components/schemas/SmsSentCondition'
-          sms_link_clicked: '#/components/schemas/SmsLinkClickedCondition'
-          sms_link_not_clicked: '#/components/schemas/SmsLinkNotClickedCondition'
-          ecommerce_abandoned_cart: '#/components/schemas/ECommerceAbandonedCartCondition'
-          custom_event: '#/components/schemas/CustomEventCondition'
-    SubscribersTypeEnumForSegments:
+      example:
+        subscribersType:
+        - subscribed
+        sectionLogicOperator: or
+        section:
+        - campaignIdsList:
+          - tamqY
+          logicOperator: or
+          subscriberCycle:
+          - receiving_autoresponder
+          - not_receiving_autoresponder
+          subscriptionDate: all_time
+          conditions:
+          - conditionType: crm
+            pipelineScope: PSVq
+            stageScope: all
+    NewContactCustomFieldValues:
+      properties:
+        customFieldValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewContactCustomFieldValue'
+      type: object
+    NewContactCustomFieldValue:
+      required:
+      - customFieldId
+      - value
+      properties:
+        customFieldId:
+          description: Custom field ID
+          type: string
+          example: kL6Nh
+        value:
+          type: array
+          items:
+            type: string
+            example: 18-35
+      type: object
+    SubscribersTypeEnumForSearching:
       properties:
         subscribersType:
           description: Only one subscription status
@@ -902,11 +882,18 @@ components:
             type: string
             enum:
             - subscribed
+            - undelivered
+            - removed
+            - unconfirmed
             example:
             - subscribed
-          default:
-          - subscribed
       type: object
+    UpsertContactCustomFields:
+      required:
+      - customFieldValues
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/NewContactCustomFieldValues'
     SearchContactSection:
       required:
       - campaignIdsList
@@ -996,31 +983,6 @@ components:
           readOnly: true
           example: Promo campaign
       type: object
-    BaseSearchContacts:
-      description: The short description of a saved search.
-      properties:
-        searchContactId:
-          description: The unique search-contact identifier
-          type: string
-          readOnly: true
-          example: pV3r
-        name:
-          description: The unique name of search-contact
-          type: string
-          example: custom test filter
-        createdOn:
-          description: The UTC date time format ISO 8601, e.g. 2018-04-10T10:02:57+0000
-          type: string
-          format: date-time
-          readOnly: true
-          example: 2018-04-10T10:02:57+0000
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://app.getresponse.com/v3/search-contacts/pV3r
-      type: object
     SearchedContactDetails:
       properties:
         contactId:
@@ -1102,50 +1064,12 @@ components:
           example: 2024-02-12T11:00:00+0000
       type: object
       readOnly: true
-    SearchContactsDetails:
-      description: Search contact details.
-      required:
-      - searchContactId
-      - name
-      - createdOn
-      - href
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
-      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
-      - $ref: '#/components/schemas/BaseSearchContacts'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    SubscribersTypeEnumForSearching:
-      properties:
-        subscribersType:
-          description: Only one subscription status
-          type: array
-          items:
-            type: string
-            enum:
-            - subscribed
-            - undelivered
-            - removed
-            - unconfirmed
-            example:
-            - subscribed
-      type: object
     BaseSearchContactsDetails:
       required:
       - searchContactId
       type: object
       allOf:
       - $ref: '#/components/schemas/BaseSearchContacts'
-    UpsertContactCustomFields:
-      required:
-      - customFieldValues
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/NewContactCustomFieldValues'
     NewSearchContacts:
       description: New search contacts.
       required:
@@ -1157,72 +1081,6 @@ components:
       - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
       - $ref: '#/components/schemas/SearchContactsConditionsDetails'
       - $ref: '#/components/schemas/BaseSearchContacts'
-    NewContactCustomFieldValues:
-      properties:
-        customFieldValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewContactCustomFieldValue'
-      type: object
-    UpdateSearchContacts:
-      description: New search contacts.
-      required:
-      - name
-      - sectionLogicOperator
-      - section
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
-      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
-      - $ref: '#/components/schemas/BaseSearchContacts'
-    SearchContactsConditionsDetails:
-      required:
-      - sectionLogicOperator
-      - section
-      properties:
-        sectionLogicOperator:
-          description: Match 'any' (`or` value) or 'all' (`and` value) of the following conditions
-          type: string
-          enum:
-          - or
-          - and
-          example: or
-        section:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchContactSection'
-      type: object
-      example:
-        subscribersType:
-        - subscribed
-        sectionLogicOperator: or
-        section:
-        - campaignIdsList:
-          - tamqY
-          logicOperator: or
-          subscriberCycle:
-          - receiving_autoresponder
-          - not_receiving_autoresponder
-          subscriptionDate: all_time
-          conditions:
-          - conditionType: crm
-            pipelineScope: PSVq
-            stageScope: all
-    NewContactCustomFieldValue:
-      required:
-      - customFieldId
-      - value
-      properties:
-        customFieldId:
-          description: Custom field ID
-          type: string
-          example: kL6Nh
-        value:
-          type: array
-          items:
-            type: string
-            example: 18-35
-      type: object
     SearchContactsBySearchForm:
       required:
       - subscribersType
@@ -1232,6 +1090,50 @@ components:
       allOf:
       - $ref: '#/components/schemas/SubscribersTypeEnumForSearching'
       - $ref: '#/components/schemas/SearchContactsConditionsDetails'
+    BaseSearchContacts:
+      description: The short description of a saved search.
+      properties:
+        searchContactId:
+          description: The unique search-contact identifier
+          type: string
+          readOnly: true
+          example: pV3r
+        name:
+          description: The unique name of search-contact
+          type: string
+          example: custom test filter
+        createdOn:
+          description: The UTC date time format ISO 8601, e.g. 2018-04-10T10:02:57+0000
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2018-04-10T10:02:57+0000
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://app.getresponse.com/v3/search-contacts/pV3r
+      type: object
+    SubscribersTypeEnumForSegments:
+      properties:
+        subscribersType:
+          description: Only one subscription status
+          type: array
+          items:
+            type: string
+            enum:
+            - subscribed
+            example:
+            - subscribed
+          default:
+          - subscribed
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     ErrorResponse:
       required:
       - httpStatus
@@ -1265,71 +1167,142 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  responses:
-    BaseSearchContactsList:
-      description: The saved search contact.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/BaseSearchContactsDetails'
     SearchContactsDetails:
       description: Search contact details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SearchContactsDetails'
+      required:
+      - searchContactId
+      - name
+      - createdOn
+      - href
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
+      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
+      - $ref: '#/components/schemas/BaseSearchContacts'
+    UpdateSearchContacts:
+      description: New search contacts.
+      required:
+      - name
+      - sectionLogicOperator
+      - section
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/SubscribersTypeEnumForSegments'
+      - $ref: '#/components/schemas/SearchContactsConditionsDetails'
+      - $ref: '#/components/schemas/BaseSearchContacts'
+    ConditionType:
+      required:
+      - conditionType
+      properties:
+        conditionType:
+          type: string
+          enum:
+          - name
+          - email
+          - custom
+          - subscription_date
+          - subscription_method
+          - opened
+          - not_opened
+          - phase
+          - last_send_date
+          - last_click_date
+          - last_open_date
+          - webinar
+          - clicked
+          - not_clicked
+          - sent
+          - not_sent
+          - geo
+          - gdpr
+          - score
+          - engagement_score
+          - tag
+          - goal
+          - crm
+          - ecommerce_number_of_purchases
+          - ecommerce_total_spent
+          - ecommerce_product_purchased
+          - ecommerce_brand_purchased
+          - ecommerce_abandoned_cart
+          - sms_sent
+          - sms_link_clicked
+          - sms_link_not_clicked
+          - custom_event
+      type: object
+      discriminator:
+        propertyName: conditionType
+        mapping:
+          name: '#/components/schemas/NameCondition'
+          email: '#/components/schemas/EmailCondition'
+          custom: '#/components/schemas/CustomFieldCondition'
+          subscription_date: '#/components/schemas/SubscriptionDateCondition'
+          subscription_method: '#/components/schemas/SubscriptionMethodCondition'
+          opened: '#/components/schemas/OpenedCondition'
+          not_opened: '#/components/schemas/NotOpenedCondition'
+          phase: '#/components/schemas/AutoresponderDayCondition'
+          last_send_date: '#/components/schemas/LastSendDateCondition'
+          last_click_date: '#/components/schemas/LastClickDateCondition'
+          last_open_date: '#/components/schemas/LastOpenDateCondition'
+          webinar: '#/components/schemas/WebinarCondition'
+          clicked: '#/components/schemas/LinkClickedCondition'
+          not_clicked: '#/components/schemas/LinkNotClickedCondition'
+          sent: '#/components/schemas/MessageSentCondition'
+          not_sent: '#/components/schemas/MessageNotSentCondition'
+          geo: '#/components/schemas/GeolocationCondition'
+          gdpr: '#/components/schemas/GdprCondition'
+          score: '#/components/schemas/ScoringCondition'
+          engagement_score: '#/components/schemas/EngagementScoreCondition'
+          tag: '#/components/schemas/TagCondition'
+          goal: '#/components/schemas/GoalCondition'
+          crm: '#/components/schemas/CrmCondition'
+          ecommerce_number_of_purchases: '#/components/schemas/ECommerceNumberOfPurchasesCondition'
+          ecommerce_total_spent: '#/components/schemas/ECommerceTotalSpentCondition'
+          ecommerce_product_purchased: '#/components/schemas/ECommerceProductPurchasedCondition'
+          ecommerce_brand_purchased: '#/components/schemas/ECommerceBrandPurchasedCondition'
+          sms_sent: '#/components/schemas/SmsSentCondition'
+          sms_link_clicked: '#/components/schemas/SmsLinkClickedCondition'
+          sms_link_not_clicked: '#/components/schemas/SmsLinkNotClickedCondition'
+          ecommerce_abandoned_cart: '#/components/schemas/ECommerceAbandonedCartCondition'
+          custom_event: '#/components/schemas/CustomEventCondition'
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    searchContactId:
+      name: searchContactId
+      in: path
+      description: The saved search contact identifier
+      required: true
+      schema:
+        type: string
+      example: pV3r
+  responses:
     SearchedContactsList:
       description: The contact list.
       headers:
@@ -1351,64 +1324,91 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/SearchedContactDetails'
+    SearchContactsDetails:
+      description: Search contact details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchContactsDetails'
+    BaseSearchContactsList:
+      description: The saved search contact.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/BaseSearchContactsDetails'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   requestBodies:
-    SearchContactsConditionsDetails:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SearchContactsBySearchForm'
-    NewSearchContacts:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewSearchContacts'
     UpdateSearchContacts:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UpdateSearchContacts'
+    NewSearchContacts:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewSearchContacts'
+    SearchContactsConditionsDetails:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchContactsBySearchForm'
     UpsertContactCustomFields:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UpsertContactCustomFields'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    searchContactId:
-      name: searchContactId
-      in: path
-      description: The saved search contact identifier
-      required: true
-      schema:
-        type: string
-      example: pV3r
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
   securitySchemes:
     api-key:
       type: apiKey

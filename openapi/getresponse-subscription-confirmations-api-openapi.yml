@@ -174,7 +174,43 @@ paths:
       - oauth2:
         - all
 components:
+  headers:
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
   schemas:
+    SubscriptionConfirmationSubject:
+      properties:
+        subscriptionConfirmationSubjectId:
+          description: Subscription confirmation subject ID
+          type: string
+          example: AS3A
+        subject:
+          description: Subject
+          type: string
+          example: Action Requested - please confirm your subscription.
+        isPrivate:
+          description: Is private
+          example: 'false'
+          allOf:
+          - $ref: '#/components/schemas/StringBooleanEnum'
+      type: object
+    StringBooleanEnum:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
     SubscriptionConfirmationBody:
       properties:
         subscriptionConfirmationBodyId:
@@ -210,27 +246,6 @@ components:
           type: string
           example: '[HTML_CODE]'
       type: object
-    StringBooleanEnum:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    SubscriptionConfirmationSubject:
-      properties:
-        subscriptionConfirmationSubjectId:
-          description: Subscription confirmation subject ID
-          type: string
-          example: AS3A
-        subject:
-          description: Subject
-          type: string
-          example: Action Requested - please confirm your subscription.
-        isPrivate:
-          description: Is private
-          example: 'false'
-          allOf:
-          - $ref: '#/components/schemas/StringBooleanEnum'
-      type: object
     ErrorResponse:
       required:
       - httpStatus
@@ -264,6 +279,22 @@ components:
           description: UUID of the error response
           type: string
       type: object
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    languageCode:
+      name: languageCode
+      in: path
+      description: ISO 639-1 Language Code Standard
+      required: true
+      schema:
+        type: string
+      example: en
   responses:
     SubscriptionConfirmationBodyList:
       description: List of subscription confirmation bodies
@@ -295,37 +326,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/SubscriptionConfirmationSubject'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-  parameters:
-    languageCode:
-      name: languageCode
-      in: path
-      description: ISO 639-1 Language Code Standard
-      required: true
-      schema:
-        type: string
-      example: en
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
   securitySchemes:
     api-key:
       type: apiKey

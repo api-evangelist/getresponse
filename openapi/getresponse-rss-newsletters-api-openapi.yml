@@ -714,6 +714,12 @@ paths:
       x-operation-class-name: GetRssNewslettersStatistics
 components:
   schemas:
+    MessageSendSettingExcludedSegments:
+      description: The list of segment IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: eSs
     DateOrDateTime:
       oneOf:
       - type: string
@@ -722,19 +728,6 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-    MessageSendSettingSelectedContacts:
-      description: The list of selected contacts.
-      type: array
-      items:
-        type: string
-        example: eSs
-    RssNewsletterListItem:
-      type: object
-      allOf:
-      - properties:
-          flags:
-            $ref: '#/components/schemas/MessageFlagsString'
-      - $ref: '#/components/schemas/RssNewsletterListing'
     MessageStatisticsListElement:
       properties:
         timeInterval:
@@ -788,87 +781,40 @@ components:
           type: integer
           format: int32
       type: object
+    MessageSendSettingSelectedSegments:
+      description: The list of segment IDs to choose subscribers from.
+      type: array
+      items:
+        type: string
+        example: Se
+    MessageFlagsArray:
+      description: The message flags.
+      type: array
+      items:
+        type: string
+        enum:
+        - clicktrack
+        - google_analytics
+    MessageEditorEnum:
+      description: 'Indicates how the message was created: `custom` means a custom-made message, `text` means plain text content, `getresponse` means that the message was created using the GetResponse editor.'
+      type: string
+      enum:
+      - custom
+      - text
+      - getresponse
+      - legacy
+      - html2
+    StatusEnum:
+      type: string
+      enum:
+      - enabled
+      - disabled
     MessageSendSettingExcludedCampaigns:
       description: The list of campaign IDs to exclude subscribers.
       type: array
       items:
         type: string
         example: eC
-    RssNewsletterDetails:
-      type: object
-      allOf:
-      - properties:
-          clickTracks:
-            description: The list of tracked links
-            type: array
-            items:
-              $ref: '#/components/schemas/ClickTrack'
-          flags:
-            $ref: '#/components/schemas/MessageFlagsArray'
-      - $ref: '#/components/schemas/RssNewsletter'
-    NewRssNewsletter:
-      required:
-      - rssFeedUrl
-      - subject
-      - status
-      - fromField
-      - content
-      - sendSettings
-      type: object
-      allOf:
-      - properties:
-          flags:
-            $ref: '#/components/schemas/MessageFlagsArray'
-      - $ref: '#/components/schemas/RssNewsletter'
-    MessageFlagsString:
-      description: 'Comma-separated list of message flags. The possible values are: `openrate`, `clicktrack`, and `google_analytics`.'
-      type: string
-      example: clicktrack,google_analytics
-    MessageSendSettingSelectedCampaigns:
-      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
-      type: array
-      items:
-        type: string
-        example: C
-    StatusEnum:
-      type: string
-      enum:
-      - enabled
-      - disabled
-    FromFieldReference:
-      required:
-      - fromFieldId
-      properties:
-        fromFieldId:
-          description: The 'From' address ID
-          type: string
-          example: V
-        href:
-          description: Direct hyperlink to a resource
-          type: string
-          format: uri
-          readOnly: true
-          example: https://api.getresponse.com/v3/from-fields/V
-      type: object
-    ClickTrack:
-      properties:
-        clickTrackId:
-          type: string
-          example: C
-        url:
-          description: The tracked link
-          type: string
-          format: uri
-          example: https://example.com
-        name:
-          description: The tracked link name
-          type: string
-          example: press here
-        amount:
-          description: The number of clicks on a link in a message
-          type: string
-          example: '15'
-      type: object
     RssNewsletterSendSettingsDetails:
       required:
       - frequency
@@ -912,19 +858,51 @@ components:
           daily: '#/components/schemas/RssNewsletterSendDailySettings'
           weekly: '#/components/schemas/RssNewsletterSendWeeklySettings'
           monthly: '#/components/schemas/RssNewsletterSendMonthlySettings'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
-    MessageFlagsArray:
-      description: The message flags.
+    RssNewsletterDetails:
+      type: object
+      allOf:
+      - properties:
+          clickTracks:
+            description: The list of tracked links
+            type: array
+            items:
+              $ref: '#/components/schemas/ClickTrack'
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    NewRssNewsletter:
+      required:
+      - rssFeedUrl
+      - subject
+      - status
+      - fromField
+      - content
+      - sendSettings
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    MessageSendSettingSelectedCampaigns:
+      description: A one-element array containing the Campaign ID to filter subscribers. Any additional elements in the array will be ignored.
       type: array
       items:
         type: string
-        enum:
-        - clicktrack
-        - google_analytics
+        example: C
+    UpdateRssNewsletter:
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsArray'
+      - $ref: '#/components/schemas/RssNewsletter'
+    MessageSendSettingSelectedContacts:
+      description: The list of selected contacts.
+      type: array
+      items:
+        type: string
+        example: eSs
     RssNewsletterListing:
       required:
       - rssNewsletterId
@@ -986,19 +964,26 @@ components:
           format: date-time
           readOnly: true
       type: object
-    UpdateRssNewsletter:
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    FromFieldReference:
+      required:
+      - fromFieldId
+      properties:
+        fromFieldId:
+          description: The 'From' address ID
+          type: string
+          example: V
+        href:
+          description: Direct hyperlink to a resource
+          type: string
+          format: uri
+          readOnly: true
+          example: https://api.getresponse.com/v3/from-fields/V
       type: object
-      allOf:
-      - properties:
-          flags:
-            $ref: '#/components/schemas/MessageFlagsArray'
-      - $ref: '#/components/schemas/RssNewsletter'
-    MessageSendSettingSelectedSuppressions:
-      description: The list of suppression IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: Ss
     MessageContent:
       description: The message content.
       properties:
@@ -1013,6 +998,116 @@ components:
           maxLength: 524288
           example: test 12 Some test
       type: object
+    MessageFlagsString:
+      description: 'Comma-separated list of message flags. The possible values are: `openrate`, `clicktrack`, and `google_analytics`.'
+      type: string
+      example: clicktrack,google_analytics
+    RssNewsletterSendSettingsListing:
+      required:
+      - frequency
+      - filter
+      properties:
+        frequency:
+          description: When to send the message
+          type: string
+          example: asap
+        filter:
+          description: The filter settings for an RSS post
+          type: string
+          enum:
+          - recent
+          - engaged
+          - shared
+          - commented
+        maxArticles:
+          description: How many articles to display in a list
+          type: integer
+          format: int32
+          maximum: 30
+          minimum: 1
+        selectedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
+        selectedSegments:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
+        selectedSuppressions:
+          $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
+        excludedCampaigns:
+          $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
+        excludedSegments:
+          $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
+      type: object
+      discriminator:
+        propertyName: frequency
+        mapping:
+          asap: '#/components/schemas/RssNewsletterListSendAsapSettings'
+          daily: '#/components/schemas/RssNewsletterListSendDailySettings'
+          weekly: '#/components/schemas/RssNewsletterListSendWeeklySettings'
+          monthly: '#/components/schemas/RssNewsletterListSendMonthlySettings'
+    ErrorResponse:
+      required:
+      - httpStatus
+      - code
+      - codeDescription
+      - message
+      - moreInfo
+      - context
+      - uuid
+      properties:
+        httpStatus:
+          description: HTTP response code
+          type: integer
+          format: int32
+        code:
+          description: API error code
+          type: integer
+          format: int32
+        codeDescription:
+          description: API error code description
+          type: string
+        message:
+          description: Error message
+          type: string
+        moreInfo:
+          description: URL to error description in the API Docs
+          type: string
+        context:
+          type: object
+        uuid:
+          description: UUID of the error response
+          type: string
+      type: object
+    RssNewsletterListItem:
+      type: object
+      allOf:
+      - properties:
+          flags:
+            $ref: '#/components/schemas/MessageFlagsString'
+      - $ref: '#/components/schemas/RssNewsletterListing'
+    ClickTrack:
+      properties:
+        clickTrackId:
+          type: string
+          example: C
+        url:
+          description: The tracked link
+          type: string
+          format: uri
+          example: https://example.com
+        name:
+          description: The tracked link name
+          type: string
+          example: press here
+        amount:
+          description: The number of clicks on a link in a message
+          type: string
+          example: '15'
+      type: object
+    MessageSendSettingSelectedSuppressions:
+      description: The list of suppression IDs to exclude subscribers.
+      type: array
+      items:
+        type: string
+        example: Ss
     RssNewsletter:
       required:
       - rssNewsletterId
@@ -1074,147 +1169,7 @@ components:
           format: date-time
           readOnly: true
       type: object
-    MessageSendSettingExcludedSegments:
-      description: The list of segment IDs to exclude subscribers.
-      type: array
-      items:
-        type: string
-        example: eSs
-    MessageEditorEnum:
-      description: 'Indicates how the message was created: `custom` means a custom-made message, `text` means plain text content, `getresponse` means that the message was created using the GetResponse editor.'
-      type: string
-      enum:
-      - custom
-      - text
-      - getresponse
-      - legacy
-      - html2
-    RssNewsletterSendSettingsListing:
-      required:
-      - frequency
-      - filter
-      properties:
-        frequency:
-          description: When to send the message
-          type: string
-          example: asap
-        filter:
-          description: The filter settings for an RSS post
-          type: string
-          enum:
-          - recent
-          - engaged
-          - shared
-          - commented
-        maxArticles:
-          description: How many articles to display in a list
-          type: integer
-          format: int32
-          maximum: 30
-          minimum: 1
-        selectedCampaigns:
-          $ref: '#/components/schemas/MessageSendSettingSelectedCampaigns'
-        selectedSegments:
-          $ref: '#/components/schemas/MessageSendSettingSelectedSegments'
-        selectedSuppressions:
-          $ref: '#/components/schemas/MessageSendSettingSelectedSuppressions'
-        excludedCampaigns:
-          $ref: '#/components/schemas/MessageSendSettingExcludedCampaigns'
-        excludedSegments:
-          $ref: '#/components/schemas/MessageSendSettingExcludedSegments'
-      type: object
-      discriminator:
-        propertyName: frequency
-        mapping:
-          asap: '#/components/schemas/RssNewsletterListSendAsapSettings'
-          daily: '#/components/schemas/RssNewsletterListSendDailySettings'
-          weekly: '#/components/schemas/RssNewsletterListSendWeeklySettings'
-          monthly: '#/components/schemas/RssNewsletterListSendMonthlySettings'
-    MessageSendSettingSelectedSegments:
-      description: The list of segment IDs to choose subscribers from.
-      type: array
-      items:
-        type: string
-        example: Se
-    ErrorResponse:
-      required:
-      - httpStatus
-      - code
-      - codeDescription
-      - message
-      - moreInfo
-      - context
-      - uuid
-      properties:
-        httpStatus:
-          description: HTTP response code
-          type: integer
-          format: int32
-        code:
-          description: API error code
-          type: integer
-          format: int32
-        codeDescription:
-          description: API error code description
-          type: string
-        message:
-          description: Error message
-          type: string
-        moreInfo:
-          description: URL to error description in the API Docs
-          type: string
-        context:
-          type: object
-        uuid:
-          description: UUID of the error response
-          type: string
-      type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
   parameters:
-    rssNewsletterId:
-      name: rssNewsletterId
-      in: path
-      description: The RSS newsletter ID
-      required: true
-      schema:
-        type: string
-      example: dGer
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -1236,20 +1191,24 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
-  requestBodies:
-    NewRssNewsletter:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewRssNewsletter'
-    UpdateRssNewsletter:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateRssNewsletter'
+    rssNewsletterId:
+      name: rssNewsletterId
+      in: path
+      description: The RSS newsletter ID
+      required: true
+      schema:
+        type: string
+      example: dGer
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
   responses:
-    MessageStatisticsList:
-      description: The list of autoresponders statistic split by time interval.
+    RssNewsletterDetails:
+      description: The RSS newsletter details.
       headers:
         X-RateLimit-Limit:
           $ref: '#/components/headers/RateLimitLimit'
@@ -1257,18 +1216,10 @@ components:
           $ref: '#/components/headers/RateLimitRemaining'
         X-RateLimit-Reset:
           $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/MessageStatisticsListElement'
+            $ref: '#/components/schemas/RssNewsletterDetails'
     SingleMessageStatisticsList:
       description: The list of autoresponder statistics split by time interval.
       headers:
@@ -1290,19 +1241,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/MessageStatisticsListElement'
-    RssNewsletterDetails:
-      description: The RSS newsletter details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RssNewsletterDetails'
     RssNewsletterList:
       description: The list of RSS newsletters.
       headers:
@@ -1324,6 +1262,68 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/RssNewsletterListItem'
+    MessageStatisticsList:
+      description: The list of autoresponders statistic split by time interval.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageStatisticsListElement'
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  requestBodies:
+    NewRssNewsletter:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewRssNewsletter'
+    UpdateRssNewsletter:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateRssNewsletter'
   securitySchemes:
     api-key:
       type: apiKey

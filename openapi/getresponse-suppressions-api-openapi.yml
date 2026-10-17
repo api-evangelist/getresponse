@@ -494,13 +494,6 @@ paths:
         - all
 components:
   schemas:
-    UpdateSuppression:
-      required:
-      - name
-      - masks
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseSuppression'
     DateOrDateTime:
       oneOf:
       - type: string
@@ -509,35 +502,6 @@ components:
       - type: string
         format: date-time
         example: 2018-01-15T13:30:42+0000
-    SuppressionDetails:
-      type: object
-      readOnly: true
-      allOf:
-      - $ref: '#/components/schemas/Suppression'
-      - $ref: '#/components/schemas/BaseSuppression'
-    BaseSuppression:
-      properties:
-        name:
-          description: The name of the suppression list
-          type: string
-          example: suppression-name
-        masks:
-          type: array
-          items:
-            type: string
-            example: '@example.com'
-      type: object
-    NewSuppression:
-      required:
-      - name
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/BaseSuppression'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     Suppression:
       required:
       - suppressionId
@@ -563,6 +527,36 @@ components:
           readOnly: true
           example: https://api.getresponse.com/v3/suppressions/pypF
       type: object
+    NewSuppression:
+      required:
+      - name
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseSuppression'
+    BaseSuppression:
+      properties:
+        name:
+          description: The name of the suppression list
+          type: string
+          example: suppression-name
+        masks:
+          type: array
+          items:
+            type: string
+            example: '@example.com'
+      type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    UpdateSuppression:
+      required:
+      - name
+      - masks
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BaseSuppression'
     ErrorResponse:
       required:
       - httpStatus
@@ -596,84 +590,12 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
-  requestBodies:
-    NewSuppression:
-      description: The suppression list to be added.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewSuppression'
-    UpdateSuppression:
-      description: The suppression list to be updated.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateSuppression'
-  responses:
     SuppressionDetails:
-      description: The suppression details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SuppressionDetails'
-    SuppressionsList:
-      description: The suppressions list.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        CurrentPage:
-          $ref: '#/components/headers/CurrentPage'
-        TotalPages:
-          $ref: '#/components/headers/TotalPages'
-        TotalCount:
-          $ref: '#/components/headers/TotalCount'
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Suppression'
+      type: object
+      readOnly: true
+      allOf:
+      - $ref: '#/components/schemas/Suppression'
+      - $ref: '#/components/schemas/BaseSuppression'
   parameters:
     suppressionId:
       name: suppressionId
@@ -683,13 +605,6 @@ components:
       schema:
         type: string
       example: pypF
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
     Page:
       name: page
       in: query
@@ -711,6 +626,91 @@ components:
         default: 100
         maximum: 1000
         minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  responses:
+    SuppressionsList:
+      description: The suppressions list.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        CurrentPage:
+          $ref: '#/components/headers/CurrentPage'
+        TotalPages:
+          $ref: '#/components/headers/TotalPages'
+        TotalCount:
+          $ref: '#/components/headers/TotalCount'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Suppression'
+    SuppressionDetails:
+      description: The suppression details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuppressionDetails'
+  requestBodies:
+    UpdateSuppression:
+      description: The suppression list to be updated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateSuppression'
+    NewSuppression:
+      description: The suppression list to be added.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewSuppression'
   securitySchemes:
     api-key:
       type: apiKey

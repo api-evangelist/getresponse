@@ -470,18 +470,85 @@ paths:
       - oauth2:
         - all
 components:
-  schemas:
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+    PerPage:
+      name: perPage
+      in: query
+      description: Requested number of results per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        maximum: 1000
+        minimum: 1
+    Fields:
+      name: fields
+      in: query
+      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
+      required: false
+      schema:
+        type: string
+    predefinedFieldId:
+      name: predefinedFieldId
+      in: path
+      description: The predefined field identifier
+      required: true
+      schema:
+        type: string
+      example: 6neM
+  headers:
+    TotalPages:
+      description: The total number of pages
+      schema:
+        type: integer
+        format: int32
+    RateLimitLimit:
+      description: The total number of requests available per time frame
+      schema:
+        type: integer
+        format: int32
+    CurrentPage:
+      description: The current page number
+      schema:
+        type: integer
+        format: int32
+    TotalCount:
+      description: The total number of resources found for the specified conditions
+      schema:
+        type: integer
+        format: int32
+    RateLimitRemaining:
+      description: The number of requests left in the current time frame
+      schema:
+        type: integer
+        format: int32
+    RateLimitReset:
+      description: Seconds left in the current time frame, e.g. "432 seconds"
+      schema:
+        type: string
+  requestBodies:
+    NewPredefinedField:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPredefinedField'
     UpdatePredefinedField:
-      required:
-      - value
-      properties:
-        value:
-          type: string
-          maxLength: 350
-          minLength: 1
-          pattern: ^[A-Za-z_]{1,350}$
-          example: my_new_value
-      type: object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePredefinedField'
+  schemas:
     CampaignReference:
       required:
       - campaignId
@@ -512,11 +579,6 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/PredefinedField'
-    SortOrderEnum:
-      type: string
-      enum:
-      - ASC
-      - DESC
     PredefinedField:
       properties:
         predefinedFieldId:
@@ -543,6 +605,11 @@ components:
         campaign:
           $ref: '#/components/schemas/CampaignReference'
       type: object
+    SortOrderEnum:
+      type: string
+      enum:
+      - ASC
+      - DESC
     ErrorResponse:
       required:
       - httpStatus
@@ -576,61 +643,18 @@ components:
           description: UUID of the error response
           type: string
       type: object
-  requestBodies:
-    NewPredefinedField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPredefinedField'
     UpdatePredefinedField:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdatePredefinedField'
-  headers:
-    RateLimitLimit:
-      description: The total number of requests available per time frame
-      schema:
-        type: integer
-        format: int32
-    TotalCount:
-      description: The total number of resources found for the specified conditions
-      schema:
-        type: integer
-        format: int32
-    RateLimitReset:
-      description: Seconds left in the current time frame, e.g. "432 seconds"
-      schema:
-        type: string
-    RateLimitRemaining:
-      description: The number of requests left in the current time frame
-      schema:
-        type: integer
-        format: int32
-    TotalPages:
-      description: The total number of pages
-      schema:
-        type: integer
-        format: int32
-    CurrentPage:
-      description: The current page number
-      schema:
-        type: integer
-        format: int32
+      required:
+      - value
+      properties:
+        value:
+          type: string
+          maxLength: 350
+          minLength: 1
+          pattern: ^[A-Za-z_]{1,350}$
+          example: my_new_value
+      type: object
   responses:
-    PredefinedFieldDetails:
-      description: The predefined field details.
-      headers:
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PredefinedField'
     PredefinedFieldsList:
       description: The list of predefined fields.
       headers:
@@ -652,43 +676,19 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/PredefinedField'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: List of fields that should be returned. Id is always returned. Fields should be separated by comma
-      required: false
-      schema:
-        type: string
-    Page:
-      name: page
-      in: query
-      description: Page number
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 1
-        minimum: 1
-    PerPage:
-      name: perPage
-      in: query
-      description: Requested number of results per page
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-        maximum: 1000
-        minimum: 1
-    predefinedFieldId:
-      name: predefinedFieldId
-      in: path
-      description: The predefined field identifier
-      required: true
-      schema:
-        type: string
-      example: 6neM
+    PredefinedFieldDetails:
+      description: The predefined field details.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PredefinedField'
   securitySchemes:
     api-key:
       type: apiKey
