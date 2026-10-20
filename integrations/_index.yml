@@ -15,6 +15,7 @@
   evidence: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/93184/create-getresponse-contacts-from-new-facebook-lead-ads-leads
   template: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/93184/create-getresponse-contacts-from-new-facebook-lead-ads-leads
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-create-getresponse-contacts-from-new-rows-on-google-sheets
@@ -29,6 +30,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/google-sheets/80825/create-getresponse-contacts-from-new-rows-on-google-sheets
   template: https://zapier.com/apps/getresponse/integrations/google-sheets/80825/create-getresponse-contacts-from-new-rows-on-google-sheets
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-add-new-facebook-lead-ads-leads-to-getresponse-as-new-contacts
@@ -43,6 +45,7 @@
   evidence: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/10151/add-new-facebook-lead-ads-leads-to-getresponse-as-new-contacts
   template: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/10151/add-new-facebook-lead-ads-leads-to-getresponse-as-new-contacts
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-add-new-getresponse-contacts-to-google-ads-customer-list-with-email
@@ -57,6 +60,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/google-ads/1386959/add-new-getresponse-contacts-to-google-ads-customer-list-with-email
   template: https://zapier.com/apps/getresponse/integrations/google-ads/1386959/add-new-getresponse-contacts-to-google-ads-customer-list-with-email
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-save-unbounce-leads-to-getresponse
@@ -71,6 +75,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/unbounce/53/save-unbounce-leads-to-getresponse
   template: https://zapier.com/apps/getresponse/integrations/unbounce/53/save-unbounce-leads-to-getresponse
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-create-getresponse-contacts-from-new-google-sheets-rows
@@ -85,6 +90,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/google-sheets/6806/create-getresponse-contacts-from-new-google-sheets-rows
   template: https://zapier.com/apps/getresponse/integrations/google-sheets/6806/create-getresponse-contacts-from-new-google-sheets-rows
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-create-google-sheet-rows-for-new-contacts-in-getresponse
@@ -99,6 +105,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/google-sheets/186497/create-google-sheet-rows-for-new-contacts-in-getresponse
   template: https://zapier.com/apps/getresponse/integrations/google-sheets/186497/create-google-sheet-rows-for-new-contacts-in-getresponse
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-create-getresponse-contacts-from-new-responses-from-google-forms
@@ -113,6 +120,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/google-forms/36222/create-getresponse-contacts-from-new-responses-from-google-forms
   template: https://zapier.com/apps/getresponse/integrations/google-forms/36222/create-getresponse-contacts-from-new-responses-from-google-forms
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-create-getresponse-contacts-from-new-woocommerce-orders
@@ -127,6 +135,7 @@
   evidence: https://zapier.com/apps/getresponse/integrations/woocommerce/6817/create-getresponse-contacts-from-new-woocommerce-orders
   template: https://zapier.com/apps/getresponse/integrations/woocommerce/6817/create-getresponse-contacts-from-new-woocommerce-orders
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: getresponse-add-contacts-from-new-calendly-events-to-getresponse
@@ -141,279 +150,8 @@
   evidence: https://zapier.com/apps/calendly/integrations/getresponse/11527/add-contacts-from-new-calendly-events-to-getresponse
   template: https://zapier.com/apps/calendly/integrations/getresponse/11527/add-contacts-from-new-calendly-events-to-getresponse
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
-  arazzo: null
-- slug: getresponse-keap
-  label: Keap
-  partner: keap
-  partner_name: Keap
-  category: CRM (Customer Relationship Management)
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/keap
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-clickfunnels-classic
-  label: ClickFunnels Classic
-  partner: clickfunnels
-  partner_name: ClickFunnels Classic
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/clickfunnels-classic
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-hubspot
-  label: HubSpot
-  partner: hubspot
-  partner_name: HubSpot
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/hubspot
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-follow-up-boss
-  label: Follow Up Boss
-  partner: follow-up-boss
-  partner_name: Follow Up Boss
-  category: CRM (Customer Relationship Management)
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/follow-up-boss
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-wix
-  label: Wix
-  partner: wix
-  partner_name: Wix
-  category: Website Builders
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/wix
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-typeform
-  label: Typeform
-  partner: typeform
-  partner_name: Typeform
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/typeform
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-manychat
-  label: Manychat
-  partner: manychat
-  partner_name: Manychat
-  category: Social Media Marketing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/manychat
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-mailchimp
-  label: Mailchimp
-  partner: mailchimp
-  partner_name: Mailchimp
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/mailchimp
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-systeme-io
-  label: systeme.io
-  partner_name: systeme.io
-  category: Marketing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/systemeio
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: getresponse-pipedrive
-  label: Pipedrive
-  partner: pipedrive
-  partner_name: Pipedrive
-  category: CRM (Customer Relationship Management)
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/pipedrive
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-gravity-forms
-  label: Gravity Forms
-  partner: gravity-forms
-  partner_name: Gravity Forms
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/gravity-forms
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-zoom
-  label: Zoom
-  partner: zoom
-  partner_name: Zoom
-  category: Video Conferencing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/zoom
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-teachable
-  label: Teachable
-  partner: teachable
-  partner_name: Teachable
-  category: Online Courses
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/teachable
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-kajabi
-  label: Kajabi
-  partner: kajabi
-  partner_name: Kajabi
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/kajabi
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-squarespace-forms
-  label: Squarespace Forms
-  partner: squarespace
-  partner_name: Squarespace Forms
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/squarespace-forms
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-google-forms-legacy
-  label: Google Forms (Legacy)
-  partner_name: Google Forms (Legacy)
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/google-forms-legacy
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: getresponse-activecampaign
-  label: ActiveCampaign
-  partner: activecampaign
-  partner_name: ActiveCampaign
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/activecampaign
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-instapage
-  label: Instapage
-  partner: instapage
-  partner_name: Instapage
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/instapage
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-google-slides
-  label: Google Slides
-  partner: google-slides
-  partner_name: Google Slides
-  category: Documents
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/google-slides
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-digistore24
-  label: Digistore24
-  partner_name: Digistore24
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/digistore24
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: getresponse-eventbrite
-  label: Eventbrite
-  partner: eventbrite
-  partner_name: Eventbrite
-  category: Event Management
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/eventbrite
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: getresponse-ablefy
-  label: ablefy
-  partner: ablefy
-  partner_name: ablefy
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/ablefy
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: getresponse-monday-com
-  label: monday.com
-  partner_name: monday.com
-  category: Project Management
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/getresponse/integrations/monday
-  source: edge
-  status: pending-partner-spec
   arazzo: null
 - slug: getresponse-zapier
   label: Zapier
@@ -528,4 +266,301 @@
   source: edge
   relationship: platform-app
   status: not-a-workflow
+  arazzo: null
+- slug: getresponse-keap
+  label: Keap
+  partner: keap
+  partner_name: Keap
+  category: CRM (Customer Relationship Management)
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/keap
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-clickfunnels-classic
+  label: ClickFunnels Classic
+  partner: clickfunnels
+  partner_name: ClickFunnels Classic
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/clickfunnels-classic
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-hubspot
+  label: HubSpot
+  partner: hubspot
+  partner_name: HubSpot
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/hubspot
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-follow-up-boss
+  label: Follow Up Boss
+  partner: follow-up-boss
+  partner_name: Follow Up Boss
+  category: CRM (Customer Relationship Management)
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/follow-up-boss
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-wix
+  label: Wix
+  partner: wix
+  partner_name: Wix
+  category: Website Builders
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/wix
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-typeform
+  label: Typeform
+  partner: typeform
+  partner_name: Typeform
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/typeform
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-manychat
+  label: Manychat
+  partner: manychat
+  partner_name: Manychat
+  category: Social Media Marketing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/manychat
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-mailchimp
+  label: Mailchimp
+  partner: mailchimp
+  partner_name: Mailchimp
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/mailchimp
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-systeme-io
+  label: systeme.io
+  partner_name: systeme.io
+  category: Marketing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/systemeio
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: getresponse-gravity-forms
+  label: Gravity Forms
+  partner: gravity-forms
+  partner_name: Gravity Forms
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/gravity-forms
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-zoom
+  label: Zoom
+  partner: zoom
+  partner_name: Zoom
+  category: Video Conferencing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/zoom
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-teachable
+  label: Teachable
+  partner: teachable
+  partner_name: Teachable
+  category: Online Courses
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/teachable
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-kajabi
+  label: Kajabi
+  partner: kajabi
+  partner_name: Kajabi
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/kajabi
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-squarespace-forms
+  label: Squarespace Forms
+  partner: squarespace
+  partner_name: Squarespace Forms
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/squarespace-forms
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-pipedrive
+  label: Pipedrive
+  partner: pipedrive
+  partner_name: Pipedrive
+  category: CRM (Customer Relationship Management)
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/pipedrive
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-google-forms-legacy
+  label: Google Forms (Legacy)
+  partner: google-forms
+  partner_name: Google Forms (Legacy)
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-forms-legacy
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-activecampaign
+  label: ActiveCampaign
+  partner: activecampaign
+  partner_name: ActiveCampaign
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/activecampaign
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-instapage
+  label: Instapage
+  partner: instapage
+  partner_name: Instapage
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/instapage
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-google-slides
+  label: Google Slides
+  partner: google-slides
+  partner_name: Google Slides
+  category: Documents
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/google-slides
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-digistore24
+  label: Digistore24
+  partner_name: Digistore24
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/digistore24
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: getresponse-eventbrite
+  label: Eventbrite
+  partner: eventbrite
+  partner_name: Eventbrite
+  category: Event Management
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/eventbrite
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: getresponse-ablefy
+  label: ablefy
+  partner: ablefy
+  partner_name: ablefy
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/ablefy
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: getresponse-monday-com
+  label: monday.com
+  partner: monday-com
+  partner_name: monday.com
+  category: Project Management
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/getresponse/integrations/monday
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
   arazzo: null
