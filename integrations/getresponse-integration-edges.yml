@@ -24,6 +24,9 @@ checked:
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
 - adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -839,6 +842,82 @@ edges:
   detected: '2026-10-22'
   detected_by: mirror-platform-listings.py
   category: Adobe Commerce Marketplace extension
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/getresponse/getresponse
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: getresponse/getresponse
+      version: 0.0.2
+      released: '2015-11-25'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/getresponse/getresponse
+      repo_leg: github-org:getresponse
+      publisher_leg: email:getresponse.com
+      matched_by: domain
+      abandoned: true
+    - name: getresponse/magento2-module
+      version: 2.4.2
+      released: '2026-09-23'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/getresponse/magento2-module
+      repo_leg: github-org:getresponse
+      publisher_leg: org:getresponse
+      matched_by: github-org
+    - name: getresponse/oauth2-getresponse
+      version: 1.0.0
+      released: '2019-05-08'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/getresponse/oauth2-getresponse
+      repo_leg: github-org:getresponse
+      publisher_leg: org:getresponse
+      matched_by: github-org
+    - name: getresponse/sdk-php
+      version: 3.0.0
+      released: '2023-08-22'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/getresponse/sdk-php
+      repo_leg: github-org:getresponse
+      publisher_leg: org:getresponse
+      matched_by: github-org
+    - name: getresponse/sdk-php-client
+      version: 2.0.1
+      released: '2023-08-22'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/getresponse/sdk-php-client
+      repo_leg: github-org:getresponse
+      publisher_leg: org:getresponse
+      matched_by: github-org
+    - name: getresponse/share-code-plugin
+      version: 7.0.3
+      released: '2022-07-10'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/getresponse/share-code-plugin
+      repo_leg: github-org:getresponse
+      publisher_leg: email:getresponse.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates:
 - title: Create GetResponse contacts from new Facebook Lead Ads leads
   url: https://zapier.com/apps/facebook-lead-ads/integrations/getresponse/93184/create-getresponse-contacts-from-new-facebook-lead-ads-leads
